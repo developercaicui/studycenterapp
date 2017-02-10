@@ -1,5 +1,5 @@
 html{
-	font-family: sans-serif;
+	font-family:"STXihei","黑体","幼圆",sans-serif;
 }
 html,body,header,section,footer,div,ul,ol,li,img,a,span,em,del,legend,center,strong,var,fieldset,form,label,dl,dt,dd,cite,input,hr,time,mark,code,figcaption,figure,textarea,h1,h2,h3,h4,h5,h6,p{
 	margin:0;
@@ -12,7 +12,6 @@ html,body {
 	-webkit-text-size-adjust:none;
 	-webkit-tap-highlight-color:rgba(0, 0, 0, 0);
 	-webkit-user-select:none;
-	background-color: #fff;
 }
 nav,article,aside,details,main,header,footer,section,fieldset,figcaption,figure{
 	display: block;

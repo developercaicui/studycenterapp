@@ -5,18 +5,20 @@
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" type="text/css" href="../css/api.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/common-component.css">
     <link rel="stylesheet" type="text/css" href="../css/font-icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/caicui.css">
     <script type="text/javascript" src="../script/api.js"></script>
     <script type="text/javascript" src="../script/zepto.js"></script>
-    <title>财萃Pad</title>
   </head>
   <body>
     <div class="backdrop"></div>
     <ul class="set-photo">
-      <li>上传图片</li>
-      <li tapmode="" onclick="getPic('camera',1024,768)">拍照</li>
-      <li tapmode="" onclick="getPic('album',1024,768)">选择本地图片</li>
+      <li>编辑图片</li>
+      <li tapmode="" onclick="getPic('camera','1024','768')">拍照</li>
+      <li tapmode="" onclick="getPic('library','1024','768')">选择本地图片</li>
     </ul>
     <script type="text/javascript" src="../script/comm.js"></script>
     <script type="text/javascript" src="../script/doT.min.js"></script>
@@ -25,14 +27,21 @@
     <script type="text/javascript" src="../script/saveTasksProgress.js"></script>
     <script type="text/javascript">
       apiready = function () {
-          $api.setStorage('sign-photo', 2);
+          $api.setStorage('sel-photo', 2);
           $('.backdrop').click(function () {
-              $api.setStorage('sign-photo', 1);
-              api.closeFrame();
+              $api.setStorage('sel-photo', 1);
+              api.setFrameAttr({
+                  name: 'select-photo-f',
+                  hidden: true
+              });
           });
       };
       function upload(img) {
-          $('.set-photo').hide();
+          api.showProgress({
+              title: '上传中',
+              modal: true
+          });
+          $('.set-photo').addClass('none');
           var headers = {
               'X-Requested-With': 'XMLHttpRequest'
           };
@@ -64,9 +73,9 @@
                       name: 'select_photo_change',
                       extra: ret.data
                   });
-                  setTimeout(function(){
+                  setTimeout(function () {
                       api.closeFrame();
-                  },500);
+                  }, 300);
               } else {
                   api.toast({
                       msg: ret.msg,
@@ -77,17 +86,17 @@
       }
       function getPic(type, w, h) {
           $('.backdrop').unbind();
-          if (api && api.systemType == '131231312') {
+          if (api && api.systemType == '121312') {
               var imageCrop = api.require('imageCrop');
               switch (type) {
                   case 'camera':
                       imageCrop.takePhoto(function (ret, err) {
                           $('.backdrop').click(function () {
-                              $api.setStorage('sign-photo', 1);
+                              $api.setStorage('sel-photo', 1);
                               api.closeFrame();
                           });
                           if (err) {
-                              $api.setStorage('sign-photo', 1);
+                              $api.setStorage('sel-photo', 1);
                               api.closeFrame();
                               return false;
                           }
@@ -101,21 +110,21 @@
                                   return false;
                               }
                               imageCrop.clipPhoto({
-                                  "imgPath": ret.imgPath,
-                                  "height": h,
-                                  "width": w
+                                  imgPath: ret.imgPath,
+                                  height: h,
+                                  width: w
                               }, function (ret1, err1) {
                                   if (err1) {
                                       api.toast({
                                           msg: err1.msg,
                                           location: 'middle'
                                       });
-                                      $api.setStorage('sign-photo', 1);
+                                      $api.setStorage('sel-photo', 1);
                                       api.closeFrame();
                                       return false;
                                   }
                                   $('body').bind('click', function () {
-                                      $api.setStorage('sign-photo', 1);
+                                      $api.setStorage('sel-photo', 1);
                                       api.closeFrame();
                                   });
                                   if (ret1 && ret1.imgPath) {
@@ -128,11 +137,17 @@
                   case 'album':
                       imageCrop.getPhoto(function (ret, err) {
                           $('.backdrop').click(function () {
-                              $api.setStorage('sign-photo', 1);
-                              api.closeFrame();
+                              $api.setStorage('sel-photo', 1);
+                              api.setFrameAttr({
+                                  name: 'select-photo-f',
+                                  hidden: true
+                              });
                           });
                           if (err) {
-                              api.closeFrame();
+                              api.setFrameAttr({
+                                  name: 'select-photo-f',
+                                  hidden: true
+                              });
                               return false;
                           }
                           if (ret && ret.imgPath) {
@@ -145,9 +160,9 @@
                                   return false;
                               }
                               imageCrop.clipPhoto({
-                                  "imgPath": ret.imgPath,
-                                  "height": h,
-                                  "width": w
+                                  imgPath: ret.imgPath,
+                                  height: h,
+                                  width: w
                               }, function (ret1, err1) {
                                   if (err1) {
                                       api.toast({
@@ -172,16 +187,24 @@
                   encodingType: 'jpg',
                   destinationType: 'url',
                   targetWidth: w,
-                  targetHeight: h,
-                  allowEdit: false
+                  targetHeight: h
+                  //allowEdit: true
               }, function (ret, err) {
                   $('.backdrop').click(function () {
-                      $api.setStorage('sign-photo', 1);
-                      api.closeFrame();
+                      $api.setStorage('sel-photo', 1);
+                      api.hideProgress();
+                      api.setFrameAttr({
+                          name: 'select-photo-f',
+                          hidden: true
+                      });
                   });
                   if (err) {
-                      $api.setStorage('sign-photo', 1);
-                      api.closeFrame();
+                      $api.setStorage('sel-photo', 1);
+                      api.hideProgress();
+                      api.setFrameAttr({
+                          name: 'select-photo-f',
+                          hidden: true
+                      });
                       return false;
                   }
                   if (ret && ret.data) {
@@ -190,19 +213,13 @@
                               msg: '无法上传此种格式的图片',
                               location: 'middle'
                           });
-                          api.closeFrame();
                           return false;
                       }
                       upload(ret.data);
-                      api.showProgress({
-                          title: '上传中',
-                          modal: true
-                      });
                   }
               });
           }
       }
-                     
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 /*课程测试题页面js*/
-//document.documentElement.style.fontSize = (document.documentElement.clientWidth / 1280) * 100 + 'px';
+document.documentElement.style.fontSize = (document.documentElement.clientWidth / 1280) * 100 + 'px';
 //变量信息
 var courseId;//课程id
 var course_detail;//章节课程信息
@@ -8,6 +8,7 @@ var chapter_info;//当前章节详情信息
 var task_info = '';//当前任务信息
 var task_info_detail;
 var task_arr;//所有的任务信息
+
 
 var exam_info = '';//测试题信息
 var user_exam = [];//用户答案
@@ -20,28 +21,25 @@ var swiper;
 
 apiready = function() {
 	//获取参数
-    courseId = api.pageParam.courseId;//课程id
-    course_detail = api.pageParam.course_detail;//课程详情
-    courseName = course_detail.courseName;//课程名字
+	courseId = api.pageParam.courseId;//课程id
+	course_detail = api.pageParam.course_detail;//课程详情
+	courseName = course_detail.courseName;//课程名字
     if(!isEmpty(api.pageParam.last_progress)){
         last_progress = api.pageParam.last_progress;//当前的进度
     }
-
-
 	task_info = api.pageParam.task_info;//任务信息
-	//chapter_info = api.pageParam.chapter_info;//章节信息
+	//chapter_info = api.pageParam.chapter_info;//任务信息
     task_arr = save_tasks(course_detail);
     task_info_detail = api.pageParam.task_info_detail;
 	var examenId = task_info.id;
 
-
 	api.showProgress({
 		title : '加载中',
-		modal : true
+		modal : false
 	});
 	ajaxRequest('api/v2.1/testcenter/testexamination', 'get', {
 		examenId : examenId
-	}, function(ret, err) {//004.006获取课程的详细信息
+	}, function(ret, err) {//004.014获取试卷考题
 		if (err) {
 			api.hideProgress();
 			api.toast({
@@ -56,6 +54,8 @@ apiready = function() {
 			var exam_tpl = $('#exam_tpl').html();
 			var content = doT.template(exam_tpl);
 			$('#exam_content').html(content(exam_info));
+
+
 			start_time = get_now_dates();
 			//开始做题的时间
 			$('#result_question').html('本次测试共' + exam_info.totalCount + '道题，<span>' + exam_info.totalCount + '</span>题错误');
@@ -99,24 +99,13 @@ apiready = function() {
 					return '<span class="' + className + '">' + (index + 1) + '</span>';
 				},
 				onInit : function(swiper) {
-					$.each($('.course-test-title'), function (k, v) {
-						$(v).find('img').attr('src',static_url+$(v).find('img').attr('src'));
-					});
-					if (swiper.slides.length > 15) {
-						$('.swiper-pagination-bullet').eq(15).nextAll().hide();
-					}
+                    $.each($('.course-test-title'), function (k, v) {
+                        $(v).find('img').attr('src',static_url+$(v).find('img').attr('src'));
+                    });
+					$('.swiper-pagination-bullet').eq(15).nextAll().hide();
 				},
 				onSlideChangeEnd : function(swiper) {
 					var num = parseInt($('.swiper-pagination-bullet-active').text());
-					/*
-					if (num > 10) {
-						$('.swiper-pagination-bullet').show().eq(num - 9).prevAll().hide();
-						$('.swiper-pagination-bullet').eq(num + 5).nextAll().hide();
-					}else{
-						$('.swiper-pagination-bullet').show().eq(num - 9).prevAll().show();
-						$('.swiper-pagination-bullet').show().eq(num + 5).nextAll().hide();
-					}
-					*/
 					if(swiper.slides.length>15){
 						if (num > 8) {
 							$('.swiper-pagination-bullet').show().eq(num - 7).prevAll().hide();
@@ -125,7 +114,12 @@ apiready = function() {
 							$('.swiper-pagination-bullet').show().eq(15).nextAll().hide();
 						}
 					}
-
+					/*
+					if (num > 10) {
+						$('.swiper-pagination-bullet').show().eq(num - 9).prevAll().hide();
+						$('.swiper-pagination-bullet').eq(num + 5).nextAll().hide();
+					}
+					*/
 					//切换测试题时保存学习进度
 					var now_progress = parseInt(swiper.activeIndex) + 1;
 					var total = swiper.slides.length;
@@ -138,6 +132,9 @@ apiready = function() {
 					}
 					saveTaskProgress(now_progress, total, state);
 				}
+
+
+
 			});
 
 			//根据任务进度，判断默认从第几页开始
@@ -147,7 +144,6 @@ apiready = function() {
 					swiper.slideTo(tmpSlide - 1, 1000, false);
 				}
 			}
-
 			is_all_over = true;
 			//保存任务进度
 			var now_progress = parseInt(swiper.activeIndex) + 1;
@@ -274,6 +270,7 @@ function select_matrix(obj) {
 	}
 }
 
+//交卷
 function jiaojuan() {
 	if (is_all_over == false) {
 		api.toast({
@@ -284,298 +281,298 @@ function jiaojuan() {
 	//选择题需要判断是否正确，填空和问答只要填写就算正确，多任务题暂时没做处理
 	err_num = [];
     uncomplate_num = [];
-
-	var i = 0;//用于记录错题的题号
-	var j = 0;//用于记录未做的题号
+	//记录错题的题号
+    var i = 0;//用于记录错题的题号
+    var j = 0;//用于记录未做的题号
 	var user_results = [];
 	//用户的答案
 	var exam_detail = exam_info.items;
-	//试题详情
-	$('.exam-yf').each(function(k, v) {
-		var tmp_exam_child = exam_detail[k];
-		//api.alert({msg:tmp_exam_child});return;
-		var examNum = $(this).data('num');
-		//测试题题号
-		var examType = $(this).data('type');
-		if (isEmpty(tmp_exam_child)) {
-			return;
-		}
-		if (isEmpty(tmp_exam_child.title)) {
-			var tmp_examTitle = '';
-		} else {
-			var tmp_examTitle = tmp_exam_child.title;
-		}
-		//测试题类型
-		if (examType == 'radio' || examType == 'checkbox') {
-			//api.alert({msg:tmp_exam_child});return;
-			var tmp_data = {
-				"title" : tmp_examTitle,
-				"type" : tmp_exam_child.questionTypes,
-				"data" : []
-			};
-			//单选和多选的题型
-			var ele_obj = $(this).find('.selector-detail');
-			//(1)先判断是否做了这道题
-			var isComplated = false;//默认未做题
-			ele_obj.each(function(kk, vv) {
-				if ($(this).hasClass('question-selected')) {
-					isComplated = true;
-				}
-			});
-			//(2)如果做了,再判断是否正确
-			if(isComplated == true){
-				var isRight = true;
-				ele_obj.each(function(kk, vv) {
-					//记录答案
-					if ($(this).hasClass('question-selected')) {
-						var tmp_answer = {
-							"title" : JSON.parse(tmp_exam_child.context)[kk].title,
-							"isChecked" : true
-						};
-					} else {
-						var tmp_answer = {
-							"title" : JSON.parse(tmp_exam_child.context)[kk].title,
-							"isChecked" : false
-						};
-					}
-					tmp_data.data.push(tmp_answer);
-					//判断是否正确
-					var temp_check = $(this).data('check');
-					if (temp_check == false) {
-						if ($(this).hasClass('question-selected')) {
-							isRight = 'wrong';
-						}
-					} else {
-						if (!$(this).hasClass('question-selected')) {
-							isRight = 'wrong';
-						}
-					}
-				});
-				if (isRight == 'wrong') {
-					err_num[i] = parseInt(examNum) + 1;
-					i++;
-				}
-			}else{
-				uncomplate_num[j] = parseInt(examNum) + 1;
-				j++;
-				isRight = 'uncomplate';
-			}
+    //试题详情
+    $('.exam-yf').each(function(k, v) {
+        var tmp_exam_child = exam_detail[k];
+        //api.alert({msg:tmp_exam_child});return;
+        var examNum = $(this).data('num');
+        //测试题题号
+        var examType = $(this).data('type');
+        if (isEmpty(tmp_exam_child)) {
+            return;
+        }
+        if (isEmpty(tmp_exam_child.title)) {
+            var tmp_examTitle = '';
+        } else {
+            var tmp_examTitle = tmp_exam_child.title;
+        }
+        //测试题类型
+        if (examType == 'radio' || examType == 'checkbox') {
+            //api.alert({msg:tmp_exam_child});return;
+            var tmp_data = {
+                "title" : tmp_examTitle,
+                "type" : tmp_exam_child.questionTypes,
+                "data" : []
+            };
+            //单选和多选的题型
+            var ele_obj = $(this).find('.selector-detail');
+            //(1)先判断是否做了这道题
+            var isComplated = false;//默认未做题
+            ele_obj.each(function(kk, vv) {
+                if ($(this).hasClass('question-selected')) {
+                    isComplated = true;
+                }
+            });
+            //(2)如果做了,再判断是否正确
+            if(isComplated == true){
+                var isRight = true;
+                ele_obj.each(function(kk, vv) {
+                    //记录答案
+                    if ($(this).hasClass('question-selected')) {
+                        var tmp_answer = {
+                            "title" : JSON.parse(tmp_exam_child.context)[kk].title,
+                            "isChecked" : true
+                        };
+                    } else {
+                        var tmp_answer = {
+                            "title" : JSON.parse(tmp_exam_child.context)[kk].title,
+                            "isChecked" : false
+                        };
+                    }
+                    tmp_data.data.push(tmp_answer);
+                    //判断是否正确
+                    var temp_check = $(this).data('check');
+                    if (temp_check == false) {
+                        if ($(this).hasClass('question-selected')) {
+                            isRight = 'wrong';
+                        }
+                    } else {
+                        if (!$(this).hasClass('question-selected')) {
+                            isRight = 'wrong';
+                        }
+                    }
+                });
+                if (isRight == 'wrong') {
+                    err_num[i] = parseInt(examNum) + 1;
+                    i++;
+                }
+            }else{
+                uncomplate_num[j] = parseInt(examNum) + 1;
+                j++;
+                isRight = 'uncomplate';
+            }
 
-			var tmp_arr = {
-				"exerciseId" : tmp_exam_child.id, //试题的id
-				"isRight" : isRight, //标记用户该题答案正确与否:  right－正确|wrong－错误|unknown－正确
-				"result" : tmp_data
-			};
-			user_results.push(tmp_arr);
-		} else if (examType == 'blank') {
-			//单个填空
-			var tempval = $.trim($(this).find('input').val());
-			var isRight = 'unknown';
-			if (tempval == '') {
-				err_num[i] = parseInt(examNum) + 1;
-				i++;
-				isRight = 'wrong';
-			}
-			var tmp_arr = {
-				"exerciseId" : tmp_exam_child.id, //试题的id
-				"isRight" : isRight, //标记用户该题答案正确与否:  right－正确|wrong－错误|unknown－正确
-				"result" : [{
-					"title" : tmp_examTitle,
-					"type" : "blank",
-					"data" : [{
-						"blank" : tempval
-					}]
-				}]
-			};
-			user_results.push(tmp_arr);
-		} else if (examType == 'matrixBlank') {
-			//矩形填空
-			//$(this).find('input').each(function() {
-			//	if ($.trim($(this).val()) == '') {
-			//		err_num[i] = parseInt(examNum) + 1;
-			//		i++;
-			//		return false;
-			//	}
-			//})
-			var temp_this_items = [];
-			var isRight = 'unknown';
-			$(this).find('td').each(function() {
-				var tmp_X = $(this).attr('data-x');
-				var tmp_Y = $(this).attr('data-y');
-				var tmp_islabel = $(this).attr('data-islable');
-				if (tmp_islabel == 'false') {
-					var tmp_val = $.trim($(this).find('input').val());
-					var tmp_title = '';
-					if (tmp_val == '') {
-						isRight = 'wrong';
-					}
-				} else {
-					var tmp_val = '';
-					var tmp_title = $(this).text();
-				}
-				temp_this_items.push({
-					"x" : tmp_X,
-					"y" : tmp_Y,
-					"title" : tmp_title,
-					"isChecked" : false,
-					"isLable" : tmp_islabel,
-					"blank" : tmp_val
-				});
-			});
-			var tmp_arr = {
-				"exerciseId" : tmp_exam_child.id, //试题的id
-				"isRight" : isRight, //标记用户该题答案正确与否:  right－正确|wrong－错误|unknown－正确
-				"result" : [{
-					"title" : tmp_examTitle,
-					"type" : "matrixBlank",
-					"data" : [{
-						"rows" : JSON.parse(tmp_exam_child.context).rows,
-						"cols" : JSON.parse(tmp_exam_child.context).cols,
-						"items" : temp_this_items
-					}]
-				}]
-			};
-			user_results.push(tmp_arr);
-			if (isRight == 'wrong') {
-				err_num[i] = parseInt(examNum) + 1;
-				i++;
-			}
-		} else if (examType == 'question') {
-			//问答
-			var tempval = $.trim($(this).find('textarea').val());
-			var isRight = 'unknown';
-			if (tempval == '') {
-				err_num[i] = parseInt(examNum) + 1;
-				i++;
-				isRight = 'wrong';
-			}
-			var tmp_arr = {
-				"exerciseId" : tmp_exam_child.id, //试题的id
-				"isRight" : isRight, //标记用户该题答案正确与否:  right－正确|wrong－错误|unknown－正确
-				"result" : [{
-					"title" : tmp_examTitle,
-					"type" : "question",
-					"data" : [{
-						"blank" : tempval
-					}]
-				}]
-			};
-			user_results.push(tmp_arr);
-		} else if (examType == 'matrixRadio' || examType == 'matrixCheckbox') {
-			//矩形单选和矩形多选的题型
-			var temp_this_items = [];
-			var isRight = 'unknown';
-			$(this).find('td').each(function() {
-				var tmp_X = $(this).attr('data-x');
-				var tmp_Y = $(this).attr('data-y');
-				var tmp_islabel = $(this).attr('data-islable');
-				if (tmp_islabel == 'false') {
-					var circle_green = $(this).find('.circle_green');
-					var temp_check = circle_green.data('check');
-					if (temp_check == true) {
-						if (circle_green.hasClass('hide')) {
-							isRight = 'wrong';
-						}
-					} else {
-						if (!circle_green.hasClass('hide')) {
-							isRight = 'wrong';
-						}
-					}
+            var tmp_arr = {
+                "exerciseId" : tmp_exam_child.id, //试题的id
+                "isRight" : isRight, //标记用户该题答案正确与否:  right－正确|wrong－错误|unknown－正确
+                "result" : tmp_data
+            };
+            user_results.push(tmp_arr);
+        } else if (examType == 'blank') {
+            //单个填空
+            var tempval = $.trim($(this).find('input').val());
+            var isRight = 'unknown';
+            if (tempval == '') {
+                err_num[i] = parseInt(examNum) + 1;
+                i++;
+                isRight = 'wrong';
+            }
+            var tmp_arr = {
+                "exerciseId" : tmp_exam_child.id, //试题的id
+                "isRight" : isRight, //标记用户该题答案正确与否:  right－正确|wrong－错误|unknown－正确
+                "result" : [{
+                    "title" : tmp_examTitle,
+                    "type" : "blank",
+                    "data" : [{
+                        "blank" : tempval
+                    }]
+                }]
+            };
+            user_results.push(tmp_arr);
+        } else if (examType == 'matrixBlank') {
+            //矩形填空
+            //$(this).find('input').each(function() {
+            //	if ($.trim($(this).val()) == '') {
+            //		err_num[i] = parseInt(examNum) + 1;
+            //		i++;
+            //		return false;
+            //	}
+            //})
+            var temp_this_items = [];
+            var isRight = 'unknown';
+            $(this).find('td').each(function() {
+                var tmp_X = $(this).attr('data-x');
+                var tmp_Y = $(this).attr('data-y');
+                var tmp_islabel = $(this).attr('data-islable');
+                if (tmp_islabel == 'false') {
+                    var tmp_val = $.trim($(this).find('input').val());
+                    var tmp_title = '';
+                    if (tmp_val == '') {
+                        isRight = 'wrong';
+                    }
+                } else {
+                    var tmp_val = '';
+                    var tmp_title = $(this).text();
+                }
+                temp_this_items.push({
+                    "x" : tmp_X,
+                    "y" : tmp_Y,
+                    "title" : tmp_title,
+                    "isChecked" : false,
+                    "isLable" : tmp_islabel,
+                    "blank" : tmp_val
+                });
+            });
+            var tmp_arr = {
+                "exerciseId" : tmp_exam_child.id, //试题的id
+                "isRight" : isRight, //标记用户该题答案正确与否:  right－正确|wrong－错误|unknown－正确
+                "result" : [{
+                    "title" : tmp_examTitle,
+                    "type" : "matrixBlank",
+                    "data" : [{
+                        "rows" : JSON.parse(tmp_exam_child.context).rows,
+                        "cols" : JSON.parse(tmp_exam_child.context).cols,
+                        "items" : temp_this_items
+                    }]
+                }]
+            };
+            user_results.push(tmp_arr);
+            if (isRight == 'wrong') {
+                err_num[i] = parseInt(examNum) + 1;
+                i++;
+            }
+        } else if (examType == 'question') {
+            //问答
+            var tempval = $.trim($(this).find('textarea').val());
+            var isRight = 'unknown';
+            if (tempval == '') {
+                err_num[i] = parseInt(examNum) + 1;
+                i++;
+                isRight = 'wrong';
+            }
+            var tmp_arr = {
+                "exerciseId" : tmp_exam_child.id, //试题的id
+                "isRight" : isRight, //标记用户该题答案正确与否:  right－正确|wrong－错误|unknown－正确
+                "result" : [{
+                    "title" : tmp_examTitle,
+                    "type" : "question",
+                    "data" : [{
+                        "blank" : tempval
+                    }]
+                }]
+            };
+            user_results.push(tmp_arr);
+        } else if (examType == 'matrixRadio' || examType == 'matrixCheckbox') {
+            //矩形单选和矩形多选的题型
+            var temp_this_items = [];
+            var isRight = 'unknown';
+            $(this).find('td').each(function() {
+                var tmp_X = $(this).attr('data-x');
+                var tmp_Y = $(this).attr('data-y');
+                var tmp_islabel = $(this).attr('data-islable');
+                if (tmp_islabel == 'false') {
+                    var circle_green = $(this).find('.circle_green');
+                    var temp_check = circle_green.data('check');
+                    if (temp_check == true) {
+                        if (circle_green.hasClass('hide')) {
+                            isRight = 'wrong';
+                        }
+                    } else {
+                        if (!circle_green.hasClass('hide')) {
+                            isRight = 'wrong';
+                        }
+                    }
 
-					if (circle_green.hasClass('hide')) {
-						var tmp_ischeck = false;
-					} else {
-						var tmp_ischeck = true;
-					}
-					var tmp_title = '';
-				} else {
-					var tmp_ischeck = false;
-					var tmp_title = $(this).text();
-				}
-				temp_this_items.push({
-					"x" : tmp_X,
-					"y" : tmp_Y,
-					"title" : tmp_title,
-					"isChecked" : tmp_ischeck,
-					"isLable" : tmp_islabel,
-					"blank" : ''
-				});
-			});
-			var tmp_arr = {
-				"exerciseId" : tmp_exam_child.id, //试题的id
-				"isRight" : isRight, //标记用户该题答案正确与否:  right－正确|wrong－错误|unknown－正确
-				"result" : [{
-					"title" : tmp_examTitle,
-					"type" : examType,
-					"data" : [{
-						"rows" : JSON.parse(tmp_exam_child.context).rows,
-						"cols" : JSON.parse(tmp_exam_child.context).cols,
-						"items" : temp_this_items
-					}]
-				}]
-			};
-			user_results.push(tmp_arr);
-			if (isRight == 'wrong') {
-				err_num[i] = parseInt(examNum) + 1;
-				i++;
-			}
-		} else if (examType == 'multiTask ') {
-			//多任务
-			var tmp_arr = {
-				"exerciseId" : tmp_exam_child.id, //试题的id
-				"isRight" : 'unknown', //标记用户该题答案正确与否:  right－正确|wrong－错误|unknown－正确
-				"result" : [{
-					"title" : tmp_examTitle,
-					"type" : 'multiTask',
-					"data" : []
-				}]
-			};
-			user_results.push(tmp_arr);
-		}
-	});
-	//显示做题结果的弹窗
-	$('#result_question').html("本次测试共" + exam_info.totalCount + "道题，<span>" + parseInt(parseInt(err_num.length)+parseInt(uncomplate_num.length))+ "</span>题错误");
-	$('.qesition_complete').removeClass('none');
+                    if (circle_green.hasClass('hide')) {
+                        var tmp_ischeck = false;
+                    } else {
+                        var tmp_ischeck = true;
+                    }
+                    var tmp_title = '';
+                } else {
+                    var tmp_ischeck = false;
+                    var tmp_title = $(this).text();
+                }
+                temp_this_items.push({
+                    "x" : tmp_X,
+                    "y" : tmp_Y,
+                    "title" : tmp_title,
+                    "isChecked" : tmp_ischeck,
+                    "isLable" : tmp_islabel,
+                    "blank" : ''
+                });
+            });
+            var tmp_arr = {
+                "exerciseId" : tmp_exam_child.id, //试题的id
+                "isRight" : isRight, //标记用户该题答案正确与否:  right－正确|wrong－错误|unknown－正确
+                "result" : [{
+                    "title" : tmp_examTitle,
+                    "type" : examType,
+                    "data" : [{
+                        "rows" : JSON.parse(tmp_exam_child.context).rows,
+                        "cols" : JSON.parse(tmp_exam_child.context).cols,
+                        "items" : temp_this_items
+                    }]
+                }]
+            };
+            user_results.push(tmp_arr);
+            if (isRight == 'wrong') {
+                err_num[i] = parseInt(examNum) + 1;
+                i++;
+            }
+        } else if (examType == 'multiTask ') {
+            //多任务
+            var tmp_arr = {
+                "exerciseId" : tmp_exam_child.id, //试题的id
+                "isRight" : 'unknown', //标记用户该题答案正确与否:  right－正确|wrong－错误|unknown－正确
+                "result" : [{
+                    "title" : tmp_examTitle,
+                    "type" : 'multiTask',
+                    "data" : []
+                }]
+            };
+            user_results.push(tmp_arr);
+        }
+    });
+        //显示做题结果的弹窗
+    $('#result_question').html("本次测试共" + exam_info.totalCount + "道题，<span>" + parseInt(parseInt(err_num.length)+parseInt(uncomplate_num.length))+ "</span>题错误");
+    $('.qesition_complete').removeClass('none');
 
-	//展开全部解析
+    //展开全部解析
 
-	$('.answer-analysis-btn').removeClass('open');
-	$('.answer-analysis-cont').hide();
+    $('.answer-analysis-btn').removeClass('open');
+    $('.answer-analysis-cont').hide();
 
-	$('.answer-analysis-btn').each(function(){
-		showAnalysis(this, $(this).index());
-	});
+    $('.answer-analysis-btn').each(function(){
+        showAnalysis(this, $(this).index());
+    });
 
-	//错误题的页码变红色
-	if (!isEmpty(err_num)) {
-		$('#footerTest').find('.swiper-pagination-bullet').removeClass('danger').removeClass('success');
-		$('#footerTest').find('.swiper-pagination-bullet').each(function() {
-			var page_num = $(this).text();
-			var temp_this = $(this);
-			$.each(err_num, function(kk, vv) {
-				if (vv == page_num) {
-					temp_this.addClass('danger');
-				}else{
+    //错误题的页码变红色
+    if (!isEmpty(err_num)) {
+        $('#footerTest').find('.swiper-pagination-bullet').removeClass('danger').removeClass('success');
+        $('#footerTest').find('.swiper-pagination-bullet').each(function() {
+            var page_num = $(this).text();
+            var temp_this = $(this);
+            $.each(err_num, function(kk, vv) {
+                if (vv == page_num) {
+                    temp_this.addClass('danger');
+                }else{
                     temp_this.addClass('success');
                 }
-			});
-		});
-	}
-	//没做的题不变色
-	if (!isEmpty(uncomplate_num)) {
-		$('#footerTest').find('.swiper-pagination-bullet').each(function() {
-			var page_num = $(this).text();
-			var temp_this = $(this);
-			$.each(uncomplate_num, function(kk, vv) {
-				if (vv == page_num) {
-					//temp_this.removeClass('danger');
-					//temp_this.removeClass('success');
-					temp_this.addClass('danger');
-					temp_this.removeClass('success');
-				}
-			});
-		});
-	}
+            });
+        });
+    }
+    //没做的题不变色
+    if (!isEmpty(uncomplate_num)) {
+        $('#footerTest').find('.swiper-pagination-bullet').each(function() {
+            var page_num = $(this).text();
+            var temp_this = $(this);
+            $.each(uncomplate_num, function(kk, vv) {
+                if (vv == page_num) {
+                    temp_this.addClass('danger');
+                    temp_this.removeClass('success');
+                   // temp_this.removeClass('danger');
+                   // temp_this.removeClass('success');
+                }
+            });
+        });
+    }
 	if (start_time != 0) {
 		var now_times = Date.parse(new Date()) / 1000;
 		var before_times = Date.parse(new Date(start_time)) / 1000;
@@ -627,6 +624,7 @@ function again_task() {
         swiper.slideTo(_ss, 1000, false);
     } else {
         //没有错题，则跳转到第一页
+
         swiper.slideTo(0, 1000, false);
     }
     $('.qesition_complete').addClass('none');
@@ -660,23 +658,24 @@ function next_task() {
     }
 }
 
-
-
 //执行新任务
 function exeNewTask() {
 	//判断当前任务类型
 	if (task_info.taskType == 'video') {
 		//跳转到播放页面
+        //api.closeFrame({name:'video-menu'});
+        //api.closeWin({name:'video'});
 		api.openWin({
 			name : 'video',
 			url : 'video.html',
 			delay : 200,
 			slidBackEnabled : false,
+            reload : true,
 			pageParam : {
 				from : 'course-test',
 				courseId : courseId,
 				course_detail : course_detail,
-                last_progress : 0,
+				last_progress : 0,
 				task_info : task_info
 			}
 		});
@@ -700,189 +699,83 @@ function exeNewTask() {
 }
 
 
-
-
 //笔记
 function createNotes() {
+	if (is_all_over == false) {
+		api.toast({
+			msg : '请等待页面加载完'
+		});
+		return false;
+	}
 	//打开横屏的创建笔记页面
-	var tmp_progress = parseInt(swiper.activeIndex) + 1;
-	api.openFrame({
-        delay:200,
-		name : 'video-note',
-		url : 'video-note.html',
-		bgColor: 'rgba(0,0,0,0)',
-		rect : {
-			x : 0,
-			y : 0,
-			w : api.winWidth,
-			h : api.winHeight
-		},
+	api.openWin({
+		name : 'create-notes',
+		url : 'create-notes.html',
+		delay : 200,
 		pageParam : {
 			//下个页面要用到的一些参数
-            task_info_detail :task_info_detail,
-            course_detail : course_detail,
-            task_info : task_info,
-            progress : tmp_progress,
-            times : tmp_progress,
-            courseId : course_detail.courseId,
-            charpterid : task_info_detail.charpterId,
-            chapterName : task_info_detail.chapterName,
-            chapter_info : {
-                chapterId : task_info_detail.chapterId,
-                chapterTitle : task_info_detail.chapterName
-            }
+			courseId : courseId,
+			course_detail : course_detail,
+			task_info : task_info,
+			progress : parseInt(swiper.activeIndex) + 1,
+			times : parseInt(swiper.activeIndex) + 1,
+            task_info_detail :task_info_detail
 		}
 	});
-	api.openFrame({
-        delay:200,
-		name : 'video-note-edit',
-		url : 'note-edit-f.html',
-		rect : {
-			x : api.winWidth / 2,
-			y : headLh,
-			w : api.winWidth / 2,
-			h : api.winHeight - headLh
-		},
-		pageParam : ( {
-			qf : 1,
-            course_detail : course_detail,
-            task_info : task_info,
-            progress : tmp_progress,
-            times : tmp_progress,
-            courseId : course_detail.courseId,
-            charpterid : task_info_detail.charpterId,
-            chapterName : task_info_detail.chapterName,
-            chapter_info : {
-                chapterId : task_info_detail.chapterId,
-                chapterTitle : task_info_detail.chapterName
-            },
-			title : task_info_detail.chapterName,
-			from : 'examPage'
-		})
-
-	});
-	api.openFrame({
-        delay:200,
-		name : 'footer-editor',
-		url : 'footer-editor.html',
-		rect : {
-			x : api.winWidth / 2,
-			y : api.winHeight - footSh,
-			w : api.winWidth / 2,
-			h : footSh
-		},
-		pageParam : ( {
-			editorStyle : '3'
-		})
-	});
-
 }
 
 //提问
 function createQuestion() {
-	var tmp_progress = parseInt(swiper.activeIndex) + 1;
-	api.openFrame({
-        delay:200,
-		name : 'video-answer',
-		url : 'video-answer.html',
-		bgColor: 'rgba(0,0,0,0)',
-		rect : {
-			x : 0,
-			y : 0,
-			w : api.winWidth,
-			h : api.winHeight
-		},
+	if (is_all_over == false) {
+		api.toast({
+			msg : '请等待页面加载完'
+		});
+		return false;
+	}
+	api.openWin({
+		name : 'create-question',
+		url : 'create-question.html',
+		delay : 200,
 		pageParam : {
 			//下个页面要用到的一些参数
-            course_detail : course_detail,
-            task_info : task_info,
-            progress : tmp_progress,
-            times : tmp_progress,
-            courseId : course_detail.courseId,
-            charpterid : task_info_detail.charpterId,
-            chapterName : task_info_detail.chapterName,
-            chapter_info : {
-                chapterId : task_info_detail.chapterId,
-                chapterTitle : task_info_detail.chapterName
-            },
-			title : course_detail.courseName,
-			from : 'examPage'
-		}
-	});
-
-	api.openFrame({
-        delay:200,
-		name : 'video-answer-edit',
-		url : 'answer-edit-f.html',
-		rect : {
-			x : api.winWidth / 2,
-			y : headLh,
-			w : api.winWidth / 2,
-			h : api.winHeight - headLh
-		},
-		pageParam : {
-			//下个页面要用到的一些参数
+			courseId : courseId,
 			course_detail : course_detail,
 			//study_progress : study_progress,
-            task_info_detail :task_info_detail,
 			task_info : task_info,
-			//chapter_info :chapter_info,
-			taskType : 'exam',
-            progress : tmp_progress,
-			times : tmp_progress,
-			title : course_detail.courseName,
-			from : 'examPage',
-            chapter_info : {
-                chapterId : task_info_detail.chapterId,
-                chapterTitle : task_info_detail.chapterName
-            }
+			progress : parseInt(swiper.activeIndex) + 1,
+			times : parseInt(swiper.activeIndex) + 1,
+            task_info_detail : task_info_detail
 		}
-	});
-
-	api.openFrame({
-        delay:200,
-		name : 'footer-editor',
-		url : 'footer-editor.html',
-		rect : {
-			x : api.winWidth / 2,
-			y : api.winHeight - footSh,
-			w : api.winWidth / 2,
-			h : footSh
-		},
-		pageParam : ( {
-			editorStyle : '2'
-		})
 	});
 }
 
 //保存任务进度
-// function saveTaskProgress(now_progress, total, state) {
-// 	var user_nickname = get_loc_val('mine', 'nickName');
-// 	var user_token = $api.getStorage('token');
-// 	var user_memberId = get_loc_val('mine', 'memberId');
-// 	var post_param = {
-// 		memberId : user_memberId, //必须，用户id	ff8080815065f95a01506627ad4c0007
-// 		progress : now_progress, //必须，当前进度值，视频为秒，试卷为题数量，文档为页码	5
-// 		taskId : task_info.taskId, //必须，任务id	1
-// 		chapterId : task_info_detail.chapterId, //必须，章节id	chapterId
-// 		courseId : course_detail.courseId, //必须，课程id	ff808081486933e6014889882d9c0590
-// 		taskName : task_info.title, //必须，任务名称	taskName
-// 		chapterName : task_info_detail.chapterName, //必须，章节名称	chapterName
-// 		courseName : course_detail.courseName, //必须，课程名称	courseName
-// 		total : total, //必须，任务总长度	48
-// 		subjectId : course_detail.subjectId, //必须，科目id	ff808081473905e7014762542d940078
-// 		categoryId : course_detail.categoryId, //必须，证书id	ff808081473905e701475cd3c2080001
-// 		token : user_token, //必须，用户token	144594636417159iPhoneCourse
-// 		memberName : user_nickname, //必须，用户昵称	zhangxiaoyu01
-// 		state : state//必须，进度状态默认init，完成：complate	complate
-// 	};
-// 	ajaxRequest('api/v2.1/chapter/taskProgress', 'post', post_param, function(ret, err) {//008.024保存任务进度日志（new）tested
-// 		if (ret && ret.state == 'success') {
-// 			//$api.setStorage(user_nickname +'self'+ courseId,'');//清除整个课程结构的课程进度
-// 			//$api.setStorage(user_nickname  +'last'+ courseId, '');//清除上一次的进度
-// 		}
-// 	})
-// }
+//function saveTaskProgress(now_progress, total, state) {
+//	var user_nickname = get_loc_val('mine', 'nickName');
+//	var user_token = $api.getStorage('token');
+//	var user_memberId = get_loc_val('mine', 'memberId');
+//	var post_param = {
+//		memberId : user_memberId, //必须，用户id	ff8080815065f95a01506627ad4c0007
+//		progress : now_progress, //必须，当前进度值，视频为秒，试卷为题数量，文档为页码	5
+//		taskId : task_info.taskId, //必须，任务id	1
+//		chapterId : task_info_detail.chapterId, //必须，章节id	chapterId
+//		courseId : course_detail.courseId, //必须，课程id	ff808081486933e6014889882d9c0590
+//		taskName : task_info.title, //必须，任务名称	taskName
+//		chapterName : task_info_detail.chapterName, //必须，章节名称	chapterName
+//		courseName : course_detail.courseName, //必须，课程名称	courseName
+//		total : total, //必须，任务总长度	48
+//		subjectId : course_detail.subjectId, //必须，科目id	ff808081473905e7014762542d940078
+//		categoryId : course_detail.categoryId, //必须，证书id	ff808081473905e701475cd3c2080001
+//		token : user_token, //必须，用户token	144594636417159iPhoneCourse
+//		memberName : user_nickname, //必须，用户昵称	zhangxiaoyu01
+//		state : state//必须，进度状态默认init，完成：complate	complate
+//	};
+//	ajaxRequest('api/v2.1/chapter/taskProgress', 'post', post_param, function(ret, err) {//008.024保存任务进度日志（new）tested
+//		if (ret && ret.state == 'success') {
+//
+//		}
+//	})
+//}
 
 /*点击切换回到顶部*/
 window.onload = function() {
@@ -893,6 +786,7 @@ window.onload = function() {
         $('.qesition_complete').addClass('none');
     });
 };
+
 //获取当前的日期时间,返回格式:'2015-10-24 13:51:45'
 function get_now_dates() {
 	var date_obj = new Date();

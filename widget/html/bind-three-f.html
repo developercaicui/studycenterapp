@@ -5,26 +5,23 @@
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" type="text/css" href="../css/api.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/common-component.css">
     <link rel="stylesheet" type="text/css" href="../css/font-icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/caicui.css">
     <script type="text/javascript" src="../script/api.js"></script>
     <script type="text/javascript" src="../script/zepto.js"></script>
-    <title>财萃Pad</title>
+    <link rel="stylesheet" href="../css/Sstyle.css">
   </head>
   <body>
-    <div onclick="open_img()" tapmode="" class="headPic js-WEqualH">
-      <div class="head"></div>
-    </div>
-    <div class="signmain">
-      <ul class="form">
-        <li>
-          <input name="nickname" type="text" placeholder="用户名" class="input-txt input-haspic"><span class="tm">可用于登录</span>
-          <input name="imgPath" type="hidden" value="">
-        </li>
-        <li>
-          <div onclick="next()" tapmode="" class="btn btn-block">开始</div>
-        </li>
-      </ul>
+    <div class="grayHastop pot">
+      <div onclick="open_img()" tapmode="" class="headPic js-WEqualH">
+        <div class="head"></div>
+      </div>
+      <input name="nickname" type="text" placeholder="用户名" class="input-txt input-haspic">
+      <input name="imgPath" type="hidden" value="http://pic25.nipic.com/20121209/9252150_194258033000_2.jpg" class="input-txt input-haspic">
+      <input type="button" value="开始" onclick="next()" tapmode="" class="greenBtm start adjust-height">
     </div>
     <script type="text/javascript" src="../script/comm.js"></script>
     <script type="text/javascript" src="../script/doT.min.js"></script>
@@ -87,10 +84,13 @@
                   return false;
               }
               if (ret && ret.state == 'success') {
-                 api.sendEvent({
-                     name:'to_ucenter'
-                 });
-                  return false;
+                  api.openWin({
+                      name: 'index',
+                      url: '../index.html',
+                      delay: 200,
+                      slidBackEnabled: false,
+                      pageParam: {to_ucenter: 1}
+                  });
               } else {
                   api.toast({
                       msg: err_conf_007[ret.msg],
@@ -100,6 +100,7 @@
           });
       }
       apiready = function () {
+          commonFun.adjustHeight(0.077);
           api.addEventListener({
               name: 'photo_change'
           }, function (ret, err) {
@@ -108,6 +109,9 @@
               $('.head').attr('src', static_url + value.path);
               width = value.width;
               height = value.height;
+              api.sendEvent({
+                  name: 'modify'
+              });
           });
       };
     </script>

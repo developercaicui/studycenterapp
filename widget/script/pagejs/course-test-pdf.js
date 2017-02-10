@@ -1,30 +1,33 @@
 /*课程测试题页面js*/
-//document.documentElement.style.fontSize = (document.documentElement.clientWidth / 1280) * 100 + 'px';
+document.documentElement.style.fontSize = (document.documentElement.clientWidth / 1280) * 100 + 'px';
 //变量信息
 var courseId;//课程id
 var course_detail;//章节课程信息
 var last_progress = 0;//当前的进度
+
 var task_info = '';//当前任务信息
 var task_info_detail;
 var task_arr;//所有的任务信息
-
-
 var swiper;
 
+
+
 apiready = function() {
-	//获取参数
-	course_detail = api.pageParam.course_detail;//课程详情
-	courseId = course_detail.courseId;//课程id
-	courseName = course_detail.courseName;//课程名字
+    //获取参数
+    courseId = api.pageParam.courseId;//课程id
+    course_detail = api.pageParam.course_detail;//课程详情
+    courseName = course_detail.courseName;//课程名字
     if(!isEmpty(api.pageParam.last_progress)){
         last_progress = api.pageParam.last_progress;//当前的进度
     }
 
-	task_info = api.pageParam.task_info;//任务信息
+    task_info = api.pageParam.task_info;//任务信息
+    //chapter_info = api.pageParam.chapter_info;//任务信息
     task_arr = save_tasks(course_detail);
     task_info_detail = api.pageParam.task_info_detail;
 
 
+	//二级章节信息
 	var pdf_tpl = $('#pdf_tpl').html();
 	var content = doT.template(pdf_tpl);
 	$('#pdf_content').html(content(task_info));
@@ -98,8 +101,6 @@ function next_task() {
 }
 
 
-
-
 //执行新任务
 function exeNewTask() {
 	//判断当前任务类型
@@ -110,11 +111,12 @@ function exeNewTask() {
 			url : 'video.html',
 			delay : 200,
 			slidBackEnabled : false,
+            reload : true,
 			pageParam : {
 				from : 'course-test',
 				courseId : courseId,
 				course_detail : course_detail,
-				study_progress : study_progress,
+                last_progress : 0,
 				task_info : task_info
 			}
 		});
@@ -125,125 +127,52 @@ function exeNewTask() {
 			url : 'course-test.html',
 			reload : true,
 			pageParam : {
-				name : 'video-exam',
+                name : 'video-exam',
                 last_progress : 0,
-				courseId : courseId,
-				course_detail : course_detail,
-				task_info : task_info,
-				from : 'course-test'
+                courseId : courseId,
+                course_detail : course_detail,
+                task_info : task_info,
+                from : 'course-test'
 			},
 			delay : 200
 		});
 	}
 }
 
-//下个任务
-/*
-function next_task() {
-	child_task_num++;
-
-	task_info = chapters_child_info.tasks[child_task_num];
-	//当前任务信息
-	if (isEmpty(task_info)) {
-		child_task_num = 0;
-		chapters_child_num++;
-		chapters_child_info = chapters_info.children[chapters_child_num];
-		//当前二级章节信息
-		if (isEmpty(chapters_child_info)) {
-			chapters_num++;
-			chapters_child_num = 0;
-			chapters_info = course_detail.chapters[chapters_num];
-			//当前一级章节信息
-			chapters_child_info = chapters_info.children[chapters_child_num];
-			//当前二级章节信息
-		}
-		task_info = chapters_child_info.tasks[child_task_num];
-		//当前任务信息
-		if (isEmpty(task_info)) {
-			api.alert({
-				title : '温馨提示',
-				msg : '该课程已学习完毕，返回列表页',
-				buttons : ['返回']
-			}, function(ret, err) {
-				if (ret.buttonIndex == 1) {
-					api.sendEvent({
-						name : 'changeScreen'
-					});
-					api.closeWin();
-					//课程结束，关闭页面
-				}
-			});
-		}
-	}
-	//判断当前任务类型
-	if (task_info.taskType == 'exam') {
-		//如果为测试题，打开测试题页面
-		api.openWin({
-			name : 'course-test',
-			url : 'course-test.html',
-			reload : true,
-			pageParam : {
-				name : 'video-exam',
-				title : task_info.title,
-				courseId : courseId,
-				last_progress : last_progress,
-				course_detail : course_detail,
-				chapters_num : chapters_num,
-				chapters_child_num : chapters_child_num,
-				child_task_num : child_task_num,
-				task_info : task_info
-			},
-			delay : 200
-		});
-	} else if (task_info.taskType == 'video') {
-		//跳转到播放页面
-		api.openWin({
-			name : 'video',
-			url : 'video.html',
-			delay : 200,
-			slidBackEnabled : false,
-			pageParam : {
-				from : 'course-studying',
-				courseId : courseId,
-				last_progress : last_progress,
-				course_detail : course_detail,
-				chapters_num : chapters_num,
-				chapters_child_num : chapters_child_num,
-				child_task_num : child_task_num,
-				task_info : task_info
-			}
-		});
-		api.closeWin();
-	}
-}
-*/
 //保存任务进度
-// function saveTaskProgress(now_progress, total, state) {
-// 	var user_nickname = get_loc_val('mine', 'nickName');
-// 	var user_token = $api.getStorage('token');
-// 	var user_memberId = get_loc_val('mine', 'memberId');
-// 	var post_param = {
-// 		memberId : user_memberId, //必须，用户id	ff8080815065f95a01506627ad4c0007
-// 		progress : now_progress, //必须，当前进度值，视频为秒，试卷为题数量，文档为页码	5
-// 		taskId : task_info.taskId, //必须，任务id	1
-// 		chapterId : task_info_detail.chapterId, //必须，章节id	chapterId
-// 		courseId : course_detail.courseId, //必须，课程id	ff808081486933e6014889882d9c0590
-// 		taskName : task_info.title, //必须，任务名称	taskName
-// 		chapterName : task_info_detail.chapterTitle, //必须，章节名称	chapterName
-// 		courseName : course_detail.courseName, //必须，课程名称	courseName
-// 		total : total, //必须，任务总长度	48
-// 		subjectId : course_detail.subjectId, //必须，科目id	ff808081473905e7014762542d940078
-// 		categoryId : course_detail.categoryId, //必须，证书id	ff808081473905e701475cd3c2080001
-// 		token : user_token, //必须，用户token	144594636417159iPhoneCourse
-// 		memberName : user_nickname, //必须，用户昵称	zhangxiaoyu01
-// 		state : state//必须，进度状态默认init，完成：complate	complate
-// 	};
-// 	ajaxRequest('api/v2.1/chapter/taskProgress', 'post', post_param, function(ret, err) {//008.024保存任务进度日志（new）tested
-// 		if (ret && ret.state == 'success') {
-// 			//$api.setStorage(user_nickname + 'self' + courseId, '');
-// 			//清除整个课程结构的课程进度
-// 			//$api.setStorage(user_nickname + 'last' + courseId, '');
-// 			//清除上一次的进度
-// 		}
-// 	})
-// }
+//function saveTaskProgress(now_progress, total, state) {
+//	var user_nickname = get_loc_val('mine', 'nickName');
+//	var user_token = $api.getStorage('token');
+//	var user_memberId = get_loc_val('mine', 'memberId');
+//	var post_param = {
+//		memberId : user_memberId, //必须，用户id	ff8080815065f95a01506627ad4c0007
+//		progress : now_progress, //必须，当前进度值，视频为秒，试卷为题数量，文档为页码	5
+//		taskId : task_info.taskId, //必须，任务id	1
+//		chapterId : task_info_detail.chapterId, //必须，章节id	chapterId
+//		courseId : course_detail.courseId, //必须，课程id	ff808081486933e6014889882d9c0590
+//		taskName : task_info.title, //必须，任务名称	taskName
+//		chapterName : task_info_detail.chapterName, //必须，章节名称	chapterName
+//		courseName : course_detail.courseName, //必须，课程名称	courseName
+//		total : total, //必须，任务总长度	48
+//		subjectId : course_detail.subjectId, //必须，科目id	ff808081473905e7014762542d940078
+//		categoryId : course_detail.categoryId, //必须，证书id	ff808081473905e701475cd3c2080001
+//		token : user_token, //必须，用户token	144594636417159iPhoneCourse
+//		memberName : user_nickname, //必须，用户昵称	zhangxiaoyu01
+//		state : state//必须，进度状态默认init，完成：complate	complate
+//	};
+//	ajaxRequest('api/v2.1/chapter/taskProgress', 'post', post_param, function(ret, err) {//008.024保存任务进度日志（new）tested
+//		if (ret && ret.state == 'success') {
+//			//$api.setStorage(user_nickname + 'self' + courseId, '');
+//			//清除整个课程结构的课程进度
+//			//$api.setStorage(user_nickname + 'last' + courseId, '');
+//			//清除上一次的进度
+//		}
+//	})
+//}
+
+/*点击切换回到顶部*/
+window.onload = function() {
+	$('.swiper-button-next,.swiper-pagination-bullet,.swiper-button-prev').on('click', function() {
+		$('body').scrollTop(0);
+	});
+}; 
