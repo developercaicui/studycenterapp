@@ -14,6 +14,115 @@
     <script type="text/javascript" src="../script/zepto.js"></script>    
     <link rel="stylesheet" href="../css/Sstyle.css">    
     <style type="text/css">
+      .user-center-content > div,
+      .user-center-content > ul {
+        margin-top: 0.3rem;
+        background: #fff;
+        border-top: 1px solid #e6e6e6;
+        border-bottom: 1px solid #e6e6e6;
+      }
+      .user-center-content .user-info {
+        position: relative;
+        padding: 0.2rem 0.3rem;
+        height: 1.68rem;
+      }
+      .user-center-content .user-info img {
+        height: 1.28rem;
+        width: 1.28rem;
+      }
+      .user-center-content .user-info .user-name {
+        position: absolute;
+        left: 2rem;
+        top: 0.38rem;
+      }
+      .user-center-content .user-info .user-name h5 {
+        font-size: 0.32rem;
+        font-weight: normal;
+        line-height: 1;
+        color: #5a5a5a;
+      }
+      .user-center-content .user-info .user-name p {
+        color: #000;
+        font-size: 0.26rem;
+        margin-top: 0.2rem;
+        white-space: nowrap;
+      }
+      .user-center-content .user-info .user-name p span {
+        color: #00a185;
+        padding: 0 5%;
+        font-size: 0.3rem;
+      }
+      .user-center-content .user-info .message-bells {
+        position: absolute;
+        top: 0.2rem;
+        right: 0.3rem;
+        height: 1.2rem;
+        width: 1rem;
+        line-height: 1;
+      }
+      .user-center-content .user-info .message-bells i {
+        font-size: 0.36rem;
+        color: #666;
+        position: absolute;
+        right: 0.22rem;
+        top: 0.16rem;
+      }
+      .user-center-content li {
+        position: relative;
+        line-height: 0.9rem;
+      }
+      .user-center-content li:not(:last-child) {
+        border-bottom: 1px solid #e6e6e6;
+      }
+      .user-center-content li [class*="icon-"] {
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translate(0, -50%);
+        left: 0.3rem;
+        font-size: 0.5rem;
+        color: #22a891;
+      }
+      .user-center-content li [class*="icon-"].icon-arrow-right {
+        left: auto;
+        right: 0.2rem;
+        font-size: 0.28rem;
+        color: #999;
+      }
+      .user-center-content .user-center-font {
+        font-size: 0.32rem;
+        color: #5a5a5a;
+        padding-left: 1.2rem;
+      }
+      .user-center-content .user-center-account {
+        font-size: 0.26rem;
+        color: #969696;
+        position: absolute;
+        right: 8.2%;
+        top: 0rem;
+      }
+      .user-center-content .checkbox {
+        height: 0.5rem;
+        width: 0.9rem;
+        top: 0.2rem;
+        right: 0.3rem;
+        position: absolute;
+      }
+      .user-center-content .checkbox input {
+        background: transparent !important;
+        box-shadow: inset 0 0 3rem 0 #fff;
+      }
+      .user-center-content .about-course {
+        height: 40%;
+      }
+      .user-center-content .about-course > div {
+        height: 25.1%;
+      }
+      .user-center-content .message-feedback {
+        height: 10%;
+      }
+      .user-center-content .message-feedback > div {
+        height: 100%;
+      }
       .user-center-font{
       overflow: hidden;
       text-overflow: ellipsis;

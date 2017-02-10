@@ -85,7 +85,7 @@
                 } else if (ret && ret.state == 'success') {
                     tasksProgressServer = ret.data;
                     tasksProgressServerLength = ret.data.length;
-                    // alert('/v2/study/getTasksProgre'+JSON.stringify(tasksProgressDB)+JSON.stringify(tasksProgressServer))
+                     // alert('/v2/study/getTasksProgre'+JSON.stringify(tasksProgressDB)+JSON.stringify(tasksProgressServer))
                     // for(var i=0;i<tasksProgressDBLength;i++){
                     //     var different = 0;
                     //     for(var j=0;j<tasksProgressServerLength;j++){

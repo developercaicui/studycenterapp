@@ -1,82 +1,65 @@
 <!DOCTYPE html>
-<html class="detail">
+<html class="bg-hasedit">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" type="text/css" href="../css/api.css">
-    <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/common-component.css">
     <link rel="stylesheet" type="text/css" href="../css/font-icon.css">
-    <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/caicui.css">
     <script type="text/javascript" src="../script/api.js"></script>
     <script type="text/javascript" src="../script/zepto.js"></script>
-    <link rel="stylesheet" href="../css/about-note.css">
+    <title>讨论详情</title>
   </head>
   <body>
-    <div class="my-talk my-talk-detail">
-      <div id="main1" class="talk-content my-talk-content"></div>
-      <div id="content" class="my-talk-list talk-detail-reply"></div>
-    </div>
+    <div id="main1"></div>
     <script id="tpl_main" type="text/x-dot-template">
-          <div class="my-talk-list">
-            <div class="my-talk-wrap">
-              <div class="talk-user clear-fix">{{if(!isEmpty(it.headImg)) { }}
-                <div class="takl-user-photo"><img src="{{=static_url+it.headImg}}" alt=""></div>{{ } }}
-                <div class="talk-user-message clear-fix">
-                  <p class="line-1"><span>{{=it.nikeName}}</span>{{if(!isEmpty(it.levelimg)) { }}<img src="{{=static_url+it.levelimg}}" alt="">{{ } }}<span class="talk-right"><img src="../image/note-message-o.png" alt="" class="t-img-message"><b class="font-20">{{=!isEmpty(it.replyCount)? it.replyCount :0}}</b></span></p>
-                  <p class="line-22"><span>{{ if(!isEmpty(it.updateTime)) { }}{{=formatDate(it.updateTime,'Y')+'-'+formatDate(it.updateTime,'M')+'-'+formatDate(it.updateTime,'D')}} {{ } }}</span><span>{{ if(!isEmpty(it.updateTime)) { }} {{=formatDate(it.updateTime,'h')+':'+formatDate(it.updateTime,'m')}}{{ } }}</span></p>
-                </div>
+          <dl class="cont-list">
+            <dt><img src="{{=static_url+it.headImg}}" class="avatar"></dt>
+            <dd>
+              <div class="name"><span>{{=it.nikeName}}</span></div>
+              <div class="title">{{=it.title}}</div>
+              <div class="describe">{{=!isEmpty(it.content)?it.content:''}}</div>{{ if(it.soundPath &&　it.soundlen>0) { }}
+              <div tapmode url="{{=static_url+it.soundPath}}" onclick="playAudio(this)" bg time="{{=it.soundlen}}" class="voice-player"></div>{{ } }}
+              {{ if(it.imgPath){ }}
+              <div class="pic-group">
+                {{ var imgPath=it.imgPath.split(','); }}
+                {{ for(var i in imgPath) { }}
+                {{if(i<=2) { }}
+                <li style="background-image:url({{=static_url+imgPath[i]}})" tapmode onclick="openImageBrower('{{=it.imgPath}}','{{=i}}')"></li>
+                <!--img(src="{{=static_url+imgPath[i]}}")-->{{ } }}
+                {{ } }}<b>共{{=it.imgPath.split(',').length}}张</b>
+              </div>{{ } }}
+              <div class="footer">
+                <div class="count"><i class="icon-replys"></i><span>{{=isEmpty(it.replyCount)?'0':it.replyCount}}</span></div>
+                <div class="time"><span>{{ if(!isEmpty(it.updateTime)) { }}{{=formatDate(it.updateTime,'Y')+'-'+formatDate(it.updateTime,'M')+'-'+formatDate(it.updateTime,'D')}} {{ } }}</span><span>{{ if(!isEmpty(it.updateTime)) { }}{{=formatDate(it.updateTime,'h')+':'+formatDate(it.updateTime,'m')}} {{ } }}</span></div>
               </div>
-              <div class="talk-content-describe">
-                <div class="current-talk">
-                  <h5>{{=!isEmpty(it.title)?it.title:''}}</h5>
-                  <p>  {{=!isEmpty(it.content)?it.content:''}}</p>
-                </div>{{if(!isEmpty(it.soundPath) && it.soundlen>0) { }}
-                <div tapmode url="{{=static_url+it.soundPath}}" onclick="playAudio(this)" bg time="{{=it.soundlen}}" class="voice-player"></div>{{ } }}
-                {{if(!isEmpty(it.imgPath)) { }}
-                <ul class="pic-group">
-                  {{ var imgPath=it.imgPath.split(','); }}
-                  {{ for(var i in imgPath) { }}
-                  {{if(i<=2){ }}
-                  <li style="background-image:url({{=static_url+imgPath[i]}})" tapmode onclick="openImageBrower('{{=it.imgPath}}','{{=i}}')"></li>{{ } }}
-                  {{ } }}
-                  {{ if(imgPath.length>=3) { }}<b>共{{=it.imgPath.split(',').length}}张</b>{{ } }}
-                </ul>{{ } }}
-              </div>
-            </div>
-          </div>
+            </dd>
+          </dl>
     </script>
-    <script id="tpl_content" type="text/x-dot-template">
-      {{for(var p in it.res1){ }}
-      {{if(it.res1[p].isdisplay!=false) { }}
-          <div class="my-talk-out">
-            <div class="my-talk-wrap">
-              <div class="talk-user clear-fix">{{if(!isEmpty(it.res1[p].headImg)) { }}
-                <div class="takl-user-photo"><img src="{{=static_url+it.res1[p].headImg}}" alt=""></div>{{ } }}
-                <div class="talk-user-message clear-fix">
-                  <p class="line-1">{{if(!isEmpty(it.res1[p].nikeName)) { }}<span>{{=it.res1[p].nikeName}}</span>{{ } }}
-                    {{if(!isEmpty(it.res1[p].levelimg)) { }}<img src="{{=static_url+it.res1[p].levelimg}}" alt="">{{ } }}<span class="talk-right"><b class="font-20">{{=it.res2++}}楼</b></span>
-                  </p>
-                  <p><span>{{ if(!isEmpty(it.res1[p].updateTime)) { }} {{=formatDate(it.res1[p].updateTime,'Y')+'-'+formatDate(it.res1[p].updateTime,'M')+'-'+formatDate(it.res1[p].updateTime,'D')}} {{ } }}</span><span> {{ if(!isEmpty(it.res1[p].updateTime)) { }}{{=formatDate(it.res1[p].updateTime,'h')+':'+formatDate(it.res1[p].updateTime,'m')}} {{ } }}</span></p>
-                </div>
+    <div id="main2" class="reply-list"></div>
+    <script id="tpl_main2" type="text/x-dot-template">
+      {{for(var p in it){ }}
+      {{if(it[p].isdisplay!=false) { }}
+          <dl class="cont-list">
+            <dt><img src="{{=static_url+it[p].headImg}}" class="avatar"></dt>
+            <dd>
+              <div class="name"><span>{{=it[p].nikeName}}</span>
+                <div class="time"><span>{{ if(!isEmpty(it[p].updateTime)) { }}{{=formatDate(it[p].updateTime,'Y')+'-'+formatDate(it[p].updateTime,'M')+'-'+formatDate(it[p].updateTime,'D')}} {{}}}</span><span>{{ if(!isEmpty(it[p].updateTime)) { }}{{=formatDate(it[p].updateTime,'h')+':'+formatDate(it[p].updateTime,'m')}}{{ } }}</span></div>
               </div>
-              <div class="talk-reply-content">
-                <p>  {{=!isEmpty(it.res1[p].content)?it.res1[p].content:''}}</p>{{ if(!isEmpty(it.res1[p].soundPath) &&  it.res1[p].soundlen>0) { }}
-                <div tapmode url="{{=static_url+it.res1[p].soundPath}}" onclick="playAudio(this)" bg time="{{=it.res1[p].soundlen}}" class="voice-player"></div>{{ } }}
-                {{if(!isEmpty(it.res1[p].imgPath)) { }}
-                <ul class="pic-group">
-                  {{ var imgPath=it.res1[p].imgPath.split(','); }}
-                  {{ for(var i in imgPath) { }}
-                  {{if(i<=2){ }}
-                  <li style="background-image:url({{=static_url+imgPath[i]}})" tapmode onclick="openImageBrower('{{=it.res1[p].imgPath}}','{{=i}}')"></li>{{ } }}
-                  {{ } }}
-                  {{ if(imgPath.length>=3) { }}<b>共{{=it.res1[p].imgPath.split(',').length}}张</b>{{ } }}
-                </ul>{{ } }}
-              </div>
-            </div>
-          </div>{{ } }}
+              <div class="describe">{{=!isEmpty(it[p].content)?it[p].content:'' }}</div>{{ if(!isEmpty(it[p].soundPath) && it[p].soundlen>0 ) { }}
+              <div tapmode url="{{=static_url+it[p].soundPath}}" onclick="playAudio(this)" bg time="{{=it[p].soundlen}}" class="voice-player"></div>{{ } }}
+              {{ if(it[p].imgPath){ }}
+              <ul class="pic-group">
+                {{ var imgPath=it[p].imgPath.split(','); }}
+                {{ for(var i in imgPath) { }}
+                {{if(i<=2) { }}
+                <li style="background-image:url({{=static_url+imgPath[i]}})" tapmode onclick="openImageBrower('{{=it[p].imgPath}}','{{=i}}')"></li>{{ } }}
+                {{ } }}
+                {{ if(imgPath.length>=3){ }}<b>共{{=it[p].imgPath.split(',').length}}张</b>{{ } }}
+              </ul>{{ } }}
+            </dd>
+          </dl>{{ } }}
       {{ } }}
     </script>
     <script type="text/javascript" src="../script/comm.js"></script>
@@ -84,6 +67,97 @@
     <script type="text/javascript" src="../script/caicui.js"></script>
     <script type="text/javascript" src="../script/db.js"></script>
     <script type="text/javascript" src="../script/saveTasksProgress.js"></script>
-    <script src="../script/pagejs/talk-detail-f.js"></script>
+    <script type="text/javascript">
+      var id = '';
+      apiready = function(){
+          id = api.pageParam.id;
+          getData(1);
+          var currentPage = 1;
+          api.setRefreshHeaderInfo({
+              visible: true,
+              loadingImg: 'widget://image/arrow-down-o.png',
+              bgColor: '#f3f3f3',
+              textColor: '#787b7c',
+              textDown: '下拉更多',
+              textUp: '松开刷新',
+              showTime: false
+           }, function(ret, err) {
+              getData(1);
+              currentPage = 1;
+          });
+          //关闭自己
+          api.addEventListener({
+              name: 'closeFrameAll'
+          }, function (ret, err) {
+              api.closeFrame();
+          });
+          //滚动到底部
+          api.addEventListener({
+              name: 'scrolltobottom'
+          }, function (ret, err) {
+              currentPage++;
+              getData(currentPage);
+          });
+      
+          //回复后的刷新
+          //setTimeout(function(){
+              api.addEventListener({
+                  name: 'talk_detail_f_hf'
+              }, function (ret,err){
+                  getData(1);
+              });
+          //},800);
+      };
+      var pageSize = 10;
+      function getData(page){
+          var param = {};
+          param.id = id;
+          param.pageNo = page;
+          param.pageSize = pageSize;
+          param.ordertype = 2;
+          param.token = $api.getStorage('token');
+          ajaxRequest('api/studytools/discussdetail/v2.1', 'get', param, function (ret, err) {//003.301.1  讨论详情和回复列表
+              if (err) {
+                  api.toast({
+                      msg : err.msg,
+                      location : 'middle'
+                  });
+                  return false;
+              }
+              if (ret && ret.state == 'success') {
+                  var tpl_main = $('#tpl_main').html();
+                  var content_main = doT.template(tpl_main);
+                  var tpl_main2 = $('#tpl_main2').html();
+                  var cont;
+                  if (page == 1) {
+                      $('#main1').html(content_main(ret.data));
+                      if (ret.data.replys.length > 0) {
+                          cont = doT.template(tpl_main2);
+                          $('#main2').html(cont(ret.data.replys));
+                      }
+                  } else {
+                      if (ret.data.replys.length > 0) {
+                          cont = doT.template(tpl_main2);
+                          $('#main2').append(cont(ret.data.replys));
+                      }
+                  }
+                  //                        var memberId = get_loc_val('mine', 'memberId');
+                  //                        if(api.pageParam.memberId == memberId){
+                  //                            api.sendEvent({
+                  //                                name: 'notes_bj_lx',
+                  //                                extra: {key1: ret.data.imgPath,soundPath:ret.data.soundPath,soundlen:ret.data.soundlen,content:ret.data.content}
+                  //                            });
+                  //                        }
+                  api.parseTapmode();
+                  audioDom();
+              } else {
+                  /*api.toast({
+                      msg : ret.msg,
+                      location : 'middle'
+                  });*/
+              }
+          });
+       }
+    </script>
   </body>
 </html>

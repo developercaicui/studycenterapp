@@ -5,15 +5,12 @@
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" type="text/css" href="../css/api.css">
-    <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/common-component.css">
     <link rel="stylesheet" type="text/css" href="../css/font-icon.css">
-    <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/caicui.css">
     <script type="text/javascript" src="../script/api.js"></script>
     <script type="text/javascript" src="../script/zepto.js"></script>
     <link rel="stylesheet" href="../css/swiper.min.css">
-    <link rel="stylesheet" href="../css/user-center.css">
+    <!--link(rel='stylesheet', href='../css/user-center.css')-->
     <link rel="stylesheet" href="../css/about-video.css">
   </head>
   <body>
@@ -42,14 +39,14 @@
     </div>
     <!--测试题-->
     <script id="exam_tpl" type="text/x-dot-template">{{~it.items:value:key}}
-      <div class="course-content swiper-slide">
+      <div class="cours-contenet swiper-slide">
         <input type="checkbox" class="select-tag">
         <div class="course-test-title">
-          <p>{{ if(!isEmpty(value.title)) { }}  {{=value.title}} {{ } }}</p>
+          <p>{{ if(!isEmpty(value.title)) { }} {{=value.title}}  {{ } }}</p>
         </div>{{ if(value.questionTypes=='radio'){ }}
         <!--单项选择题-->
         <div data-type="{{=value.questionTypes}}" data-num="{{=key}}" class="course-test-selector exam-yf">{{~JSON.parse(value.context):val:kk}}
-          <div data-select="{{=numToAbc(kk)}}" onclick="select_radio(this,'{{=key}}')" tapmode data-check="{{=val.isChecked}}" class="selector-detail clear-fix"><span>{{=numToAbc(kk)}}</span>
+          <div data-select="{{=numToAbc(kk)}}" onclick="select_radio(this,'{{=key}}')" tapmode data-check="{{=val.isChecked}}" class="selector-detail clearfix"><span>{{=numToAbc(kk)}}</span>
             <p>{{=val.title}}</p>
           </div>{{~}}
         </div>{{ }else if(value.questionTypes=='checkbox'){ }}
@@ -124,7 +121,7 @@
         </div>{{ } }}
         <!-- 答案解析-->
         <div class="answer-analysis">
-          <div onclick="showAnalysis(this,'{{=key}}')" tapmode class="answer-analysis-btn">查看解析<i class="icon-arrow-down"></i></div>
+          <div tapmode onclick="showAnalysis(this,{{=key}})" class="answer-analysis-btn">查看解析<i class="icon-arrow-down"></i></div>
           <div class="answer-analysis-cont">
             <h3 class="showResult"></h3>
             <div class="answer-text"><i class="icon-folder"></i>
@@ -143,10 +140,5 @@
     <script type="text/javascript" src="../script/jquery.min.js"></script>
     <script type="text/javascript" src="../script/swiper.js"></script>
     <script type="text/javascript" src="../script/pagejs/course-test-f.js"></script>
-    <script type="text/javascript">
-      $(function () {
-          $('.qesition_complete').css({height: document.documentElement.clientHeight - $('.footer-black').height()});
-      });
-    </script>
   </body>
 </html>
