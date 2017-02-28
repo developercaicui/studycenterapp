@@ -256,10 +256,12 @@ var common_url, static_url;
 if (debug) {
     //测试地址
     common_url = 'http://demo.caicui.com';
+    //common_url = 'https://demoapi.caicui.com';
     static_url = 'http://demo.caicui.com';
 } else {
     //正式地址
     common_url = 'http://api.caicui.com';
+    //common_url = 'https://apis.caicui.com';
     static_url = 'http://static.caicui.com';
 }
 
@@ -923,7 +925,6 @@ function mydown(result) {
             break;
         case '2':
         case 2:
-
             //暂停-》开始下载
             stop_down(function(r) {
                 if (api.systemType == "ios" && parseInt(r.status) == 0) {

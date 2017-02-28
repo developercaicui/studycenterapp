@@ -266,6 +266,10 @@ function play_video() {
             }
             if(newProgress){
               last_progress = DB.getTaskProgressSync(task_info.taskId).progress;
+              
+            }
+            if( last_progress == videoTimes || last_progress == (videoTimes-1) || last_progress == (videoTimes+1)){
+                last_progress = 0;
             }
             //alert(task_info.apiKey+'===='+UserId+'====='+(isEmpty(CCconfig[UserId]) ? 0 : 1));
             //用户学习进度
@@ -305,9 +309,8 @@ function play_video() {
     
             demo.open(param, function(ret, err) {
 
-                $api.rmStorage('saveTaskProgress');
+                //$api.rmStorage('saveTaskProgress');
                 newProgress = false;
-
 
                 if (ret.status == 'filedel') {
                     if (!isEmpty($api.getStorage('cache' + videoid))) {
@@ -426,7 +429,8 @@ function play_video() {
                             prevVideo();
                         }
                     })
-                } else if (ret.btnType == 4) { //对应播放下一个按钮
+                }
+                if (ret.btnType == 4) { //对应播放下一个按钮
                     is_check = false;
                     //播放下一个视频
                     demo.stop(function(res) {
