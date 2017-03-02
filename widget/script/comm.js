@@ -1494,8 +1494,13 @@ function stop_down(callback) { //暂停下载
 function my_to_down() {
     var data = $api.getStorage('my_to_down');
     
+    //已完成
+    if(data.type == 4 || data.type == '4'){
+        return false;
+    }
     //4G网络是否下载
-    if(api.connectionType == '4g' || api.connectionType == '4G' && api.connectionType != 'wifi'){
+   
+    if((api.connectionType == '4g' || api.connectionType == '4G') && (data.type == 2 || data.type == '2' || data.type == 3 || data.type == '3') && api.connectionType != 'wifi'){
         api.confirm({
             title: '友情提示',
             msg: '当前处于4G网络，会消耗您的大量流量，您确定要下载吗？',
@@ -1511,6 +1516,12 @@ function my_to_down() {
         });
          return false;
     }
+    
+    if((api.connectionType == '4g' || api.connectionType == '4G') && (data.type == 1 || data.type == '1') && api.connectionType != 'wifi'){
+        mydown(data);
+        return false;
+    }
+    
 
     if (api.connectionType == 'wifi') { //为wifi可以下载
 
