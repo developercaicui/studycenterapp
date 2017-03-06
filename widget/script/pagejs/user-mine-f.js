@@ -197,7 +197,8 @@ apiready = function() {
 	$('.headimg').attr('src', avatar + '?s=' + Math.random());
 	$('.user-info').removeClass('none');
 	//财迷排名
-	get_ranking();
+	//get_ranking();
+	$('.ranking').html(3249)
 	//学员信息统计
 	get_count();
 	//已读消息更新接听
