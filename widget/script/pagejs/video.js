@@ -239,9 +239,9 @@ function check_net(videoid) {
             });
         } else if (api.connectionType == '2g' || api.connectionType == '3g' || api.connectionType == '4g' || api.connectionType == '2G' || api.connectionType == '3G' || api.connectionType == '4G') {
             is_check = true;
-            api.alert({
-                msg: '正处于移动网络，会产生大量流量费用。请注意！'
-            });
+            // api.alert({
+            //     msg: '正处于移动网络，会产生大量流量费用。请注意！'
+            // });
         } else {
             is_check = false;
         }
@@ -306,8 +306,27 @@ function play_video() {
                 });
                 return false;
             }
-    
+
             demo.open(param, function(ret, err) {
+
+                //4G下是否播放视频
+                if ((isEmpty($api.getStorage(videoid)) || $api.getStorage(videoid) != 'YES')) {
+                    if(api.connectionType == '4g' || api.connectionType == '4G' && (ret.btnType != 1 && ret.btnType !=2 && ret.btnType!=3&& ret.btnType != 4 && ret.btnType !=5 && ret.btnType!=6&& ret.btnType != 7 && ret.btnType !=8 && ret.btnType!=9 && ret.btnType!=-1 && ret.btnType!='-1' && ret.btnType!='play')){
+                        demo.stop();
+                        api.confirm({
+                            title: '友情提示',
+                            msg: '当前正处于移动网络，会产生大量流量费用，您确定要播放吗？',
+                            buttons: ['确定', '取消']
+                        }, function(ret, err) {
+                            if (2 == ret.buttonIndex) {//用户取消
+                                closeThisWin(last_progress);
+                            }
+                            if (1 == ret.buttonIndex) {//确定
+                                demo.start({ type: 1 });
+                            }
+                        });
+                    }
+                }
 
                 //$api.rmStorage('saveTaskProgress');
                 newProgress = false;
