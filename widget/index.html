@@ -362,7 +362,9 @@
             model: true
         });
         set_token(function(res, error) {
+
             if (error) {
+                api.hideProgress();
                 api.toast({
                     msg: error.msg,
                     location: 'middle'
@@ -419,6 +421,7 @@
                     }
                 });
             } else {
+                api.hideProgress();
                 var err = '';
                 if (!isEmpty(err_conf_007[res.msg])) {
                     err = err_conf_007[res.msg];
@@ -427,6 +430,7 @@
                         location: 'middle'
                     });
                 }
+                
             }
         });
     }
@@ -1042,10 +1046,7 @@
 
     }
     var is_resume;
-    apiready = function() {
-
-
-
+    apiready = function() {      
 
 
         var tasksProgress = {
@@ -1514,6 +1515,9 @@
                 }
             }
         });
+
+        
+
     };
     </script>
 </body>
