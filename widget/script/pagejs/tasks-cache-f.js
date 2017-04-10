@@ -62,6 +62,8 @@ var is_debug = false;
 	         api.hideProgress();
 	         api.refreshHeaderLoadDone();
 	     }, 100);
+		 $('body').removeClass('checking');
+
 	     var len = 0; 
 	      course_detail = JSON.parse(api.pageParam.data.replace(/\n|\r|\t|\\|<[^<]*>/g,''));
 	      var task_tpl = $('#task_tpl').html();
