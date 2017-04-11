@@ -989,6 +989,7 @@ function mydown(result) {
     }
     
 
+
     switch (type) {
         case '1':
         case 1:

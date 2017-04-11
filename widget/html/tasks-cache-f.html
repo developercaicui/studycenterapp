@@ -41,9 +41,16 @@
           color: #00a085;
           font-size: .3rem;
       }
-      .chapter-task .video-catego>span {
+      /*.chapter-task .video-catego>span {
         background: url(../image/tv.png) no-repeat;
         background-size: 100% 100%;
+      }*/
+      .chapter-task .video-catego>span {
+          display: inline-block;
+        background: url(../image/video.png) no-repeat;
+        background-size: 100% 100%;
+        width: 0.60rem;
+        height: 0.5rem;
       }
       .chapter-task li>span {
           height: 0.54rem;
@@ -103,6 +110,7 @@
           width: 15%;
           float: right;
       }
+      
       @font-face {
         font-family: 'icomoon';
         src: url("../fonts/icomoon2.ttf");
@@ -125,7 +133,7 @@
           
             {{~val3.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
-            <li class="video-catego" style="display: none;"><i class="icon-video" style="font-size:.5rem;"></i>
+            <li class="video-catego" style="display: none;"><span class="taskVideo"></span>
             <div>
                   <dl class="taskList">
                     <dt tapmode  onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}')">
@@ -150,10 +158,10 @@
           {{ }else{ }}
             {{~val2.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
-            <li class="video-catego" style="display: none;"><i class="icon-video" style="font-size:.5rem;"></i>
+            <li class="video-catego" style="display: none;"><span class="taskVideo"></span>
             <div>
                   <dl class="taskList">
-                    <dt tapmode  onclick="next(3,'{{=key}}','{{=key2}}',-1,this,'{{=val2.chapterId}}')">
+                    <dt tapmode  onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}')">
                       <p style="color:#000;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 3.2rem;">{{=val4.title}}</p>
                       <p class="v-name"><span class="span11"></span><span>0%</span></p>
                       <p class="v-progress"><span style="font-size: 0;" data-taskid="{{=val.taskId}}" class="taskProgress"></span></p>
@@ -176,10 +184,10 @@
       {{ }else{ }}
         {{~val.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
-            <li class="video-catego" style="display: none;"><i class="icon-video" style="font-size:.5rem;"></i>
+            <li class="video-catego" style="display: none;"><span class="taskVideo"></span>
             <div>
                   <dl class="taskList">
-                    <dt tapmode  onclick="next(3,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')">
+                    <dt tapmode  onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}')">
                       <p style="color:#000;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 3.2rem;">{{=val4.title}}</p>
                       <p class="v-name"><span class="span11"></span><span>0%</span></p>
                       <p class="v-progress"><span style="font-size: 0;" data-taskid="{{=val.taskId}}" class="taskProgress"></span></p>
