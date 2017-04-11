@@ -988,8 +988,6 @@ function mydown(result) {
         })
     }
     
-
-
     switch (type) {
         case '1':
         case 1:
@@ -1007,16 +1005,16 @@ function mydown(result) {
         case '2':
         case 2:
             //暂停-》开始下载
-            // stop_down(function(r) {
-                if (api.systemType == "ios" && parseInt(r.status) == 0) {
-                    return false;
-                }
+//             stop_down(function(r) {
+//              if (api.systemType == "ios" && parseInt(r.status) == 0) {
+//                  return false;
+//              }
                 // $api.rmStorage(memberId + 'downed');
                 result.type = 3;
                 set_down(data);
                 $api.setStorage('downloadIng',1);
                 mydown(result);
-            // });
+//             });
             break;
         case '5':
         case 5:

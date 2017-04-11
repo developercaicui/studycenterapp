@@ -48,9 +48,15 @@
     <script type="text/javascript">
       function my_close() {
           api.sendEvent({
-              name: 'flush_catalog'
+              name: 'flush_cache'
           });
+          
+//        api.sendEvent({
+//            name: 'reloadPage'
+//        });
+          
           api.closeWin();
+          
       }
       apiready = function () {
           var header = $api.byId('header');

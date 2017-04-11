@@ -322,6 +322,7 @@
     <script type="text/javascript" src="../script/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8">
       function next(leave, num1, num2, num3, obj, cid) {
+      	  $api.setStorage("setchapterId",cid);
       	  var downState = $(obj).next().find(".down-progress").attr("type");
           if (pageName == 'catalog') {
               var courseId = api.pageParam.course_id;

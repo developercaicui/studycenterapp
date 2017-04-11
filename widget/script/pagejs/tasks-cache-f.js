@@ -37,7 +37,7 @@ var is_debug = false;
     for (j=1; j<pathlen;j++ ){
         var domInfo = videoDownInfo[strs[j]];
         var domid = strs[j];
-
+		
         if(!isEmpty(domInfo)){
             var domprogress = videoDownInfo[strs[j]].progress;
             var domstatus = videoDownInfo[strs[j]].status;
@@ -53,9 +53,8 @@ var is_debug = false;
             $(".task"+domid).parent().prev().find(".v-name").find("span").eq(1).text(domprogress+"%");
         } 
     }
-    //处理进度条
-
 }
+
     // tasksCache();
     function initDom(){
 	     setTimeout(function() {
@@ -67,13 +66,13 @@ var is_debug = false;
 	      course_detail = JSON.parse(api.pageParam.data.replace(/\n|\r|\t|\\|<[^<]*>/g,''));
 	      var task_tpl = $('#task_tpl').html();
 	      var content = doT.template(task_tpl);
+
 	      $('#chaTask').html(content(course_detail)).show();
 	      initDomDownStatus();
 	      
 
-
     }
-    
+
     apiready = function(){
       
       
@@ -87,17 +86,17 @@ var is_debug = false;
       },2000)
       init_check();
       
-      api.setRefreshHeaderInfo({
-        visible: true,
-        loadingImg: 'widget://image/arrow-down-o.png',
-        bgColor: '#f3f3f3',
-        textColor: '#787b7c',
-        textDown: '下拉更多',
-        textUp: '松开刷新',
-        showTime: false
-      }, function(ret, err) {
-        initDom();
-      });
+//    api.setRefreshHeaderInfo({
+//      visible: true,
+//      loadingImg: 'widget://image/arrow-down-o.png',
+//      bgColor: '#f3f3f3',
+//      textColor: '#787b7c',
+//      textDown: '下拉更多',
+//      textUp: '松开刷新',
+//      showTime: false
+//    }, function(ret, err) {
+//      initDom();
+//    });
       
       
       api.addEventListener({
@@ -111,12 +110,7 @@ var is_debug = false;
              		if($(v).find(".icon-check").hasClass("active")){
              			var ccid = $(v).find(".icon-check").attr("dataccid");
              			ccids.push(ccid);
-             			for(var i=0;i<videoDownInfo.length;i++){
-             				if(ccid = videoDownInfo[i]){
-             					delete videoDownInfo[i]
-             				}
-             			
-             			}
+        
              		}
              	}
              })
@@ -147,13 +141,7 @@ var is_debug = false;
              		}
 	             	
 	             })
-	             api.hideProgress();
-	             getdownrecord();
-	            
-	            
-	            $('body').removeClass('checking');
-              	$('.icon-check').removeClass('active');
-              	
+	             api.hideProgress();            	
               	var len = 0;
 				$.each($(".video-catego"),function(k,v){
 		         	 if($(v).css("display") != "none"){
@@ -165,6 +153,7 @@ var is_debug = false;
 	    		   $('body').addClass('null');
 	    		   return false;
 	            }
+
 	         },1000)
           } else if (ret.value.sethomepage == 2) { //取消
               $('body').removeClass('checking');
@@ -532,7 +521,9 @@ function set_down_status(str){
 }
 
 //点击本章任务
-function task_event(obj, num, task_id) {
+function task_event(obj, num, task_id,chapter_id) {
+
+	$api.setStorage("setchapterId",chapter_id);
     task_info = task_arr[task_id].taskInfo; //任务信息
     // 如果要打开新的窗口，则关闭旧窗口
     var downState = $(obj).next().find(".down-progress").attr("type");

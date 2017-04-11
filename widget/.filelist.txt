@@ -121,8 +121,8 @@
 /A6995057458724/script/highcharts.js
 /A6995057458724/html/faild-load.html
 /A6995057458724/html/cache-list.html
-/A6995057458724/image/task.png
 /A6995057458724/html/course-question-f.html
+/A6995057458724/image/task.png
 /A6995057458724/image/note-star-o.png
 /A6995057458724/image/dot-status2.svg
 /A6995057458724/build/jade/modules/header.jade
@@ -190,8 +190,8 @@
 /A6995057458724/html/my-note-list-f.html
 /A6995057458724/build/jade/template/audio.jade
 /A6995057458724/script/raphael-min.js
-/A6995057458724/html/video-buffer.html
 /A6995057458724/image/z_icon6.png
+/A6995057458724/html/video-buffer.html
 /A6995057458724/html/course-note-detail.html
 /A6995057458724/build/jade/template/course-aq-f.jade
 /A6995057458724/config.xml

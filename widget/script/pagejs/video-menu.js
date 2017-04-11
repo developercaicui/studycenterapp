@@ -1,3 +1,11 @@
+
+var is_debug = false;
+var getStatusTime = null;
+  var videoDownInfo =new Object(); //缓存每个节点的下载状态，一个节点一个id
+var videochangelist = $api.getStorage("videochangelist") ? $api.getStorage("videochangelist") : ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
+var couselist = ""; //记录缓存包括的课程id
+var lastgettime = 1388509261;//记录每次获取数据库的时间点，下次获取就只获取该时间点之后变化的记录(第一次获取可以获取2014年1月1日1时1分1秒//)
+
 /*video-menu视频右侧章节列表页面js*/
 document.documentElement.style.fontSize = (document.documentElement.clientWidth / 1280) * 100 + 'px';
 
@@ -283,6 +291,11 @@ apiready = function() {
 
     chapter_data = res;
     */
+   
+   
+    //1:获取所有下载记录并解析
+    getdownrecord();
+   
     task_arr = save_tasks(course_detail);
 
     task_info_detail = task_arr[task_info.taskId];
@@ -290,8 +303,53 @@ apiready = function() {
     getChapterTask();
 
 
-};
+	
+    //2:根据couselist获取所有缓存课程的章节详情，如果在线，从服务器获取，否则本地数据库获取
+    clearInterval(getStatusTime);
+    getStatusTime = setInterval(function(){
+       getdownrecord();
+    },2000)
 
+};
+function initDomDownStatus(){
+
+    if(isEmpty($api.getStorage("videochangelist"))){
+        return false;
+    }
+
+    var strs = $api.getStorage("videochangelist").split(","); //字符分割
+    var pathlen = strs.length;
+    //从1开始，因为拼接videochangelist的时候用,开始的
+       // alert(strs+"====="+JSON.stringify(videoDownInfo))
+    for (j=1; j<pathlen;j++ ){
+        var domInfo = videoDownInfo[strs[j]];
+        var domid = strs[j];
+		
+        if(!isEmpty(domInfo)){
+            var domprogress = videoDownInfo[strs[j]].progress;
+            var domstatus = videoDownInfo[strs[j]].status;
+            var domtasknum = videoDownInfo[strs[j]].tasknum;
+            // ------------------设置界面对应id节点dom下载状态，并设置为可见--------------------------
+//          alert(domid+"==="+api.pageParam.chapterId);
+            if($(".task"+domid).attr("id") == $api.getStorage("setchapterId")){
+                $(".task"+domid).parents("li").show();
+            }
+            $(".task"+domid).attr("type",domstatus);
+            $(".task"+domid).find(".val").html(domprogress);
+            $(".task"+domid).parent().prev().find(".v-progress").find("span").css("width",domprogress+"%");
+            $(".task"+domid).parent().prev().find(".v-name").find("span").eq(1).text(domprogress+"%");
+        } 
+    }
+    $.each($(".down-progress"),function(k,v){
+    	if($(v).attr("id") == $api.getStorage("setchapterId")){
+    		$(v).parents("li").show();
+    	}
+    	
+    })
+   
+}
+
+    // tasksCache();
 
 //获取章节列表
 function getChapterList() {
@@ -360,11 +418,13 @@ function getChapterTask() {
                 arr.push(task_arr[i]['taskInfo']);
             }
         }
-        // var arr = api.pageParam.course_detail;
+        var arr = api.pageParam.course_detail;
         var task_tpl = $('#task_tpl').html();
         var content = doT.template(task_tpl);
+     
         //$('#chaTask').html(content(chapter_data)).show().siblings().hide();
         $('#chaTask').html(content(arr)).show();
+        initDomDownStatus();
         is_over_task = true;
         isSolidcircle('progress', task_info_detail.chapterId, '', courseId, 'video-menu');
         //已加载完毕

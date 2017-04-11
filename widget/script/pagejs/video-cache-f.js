@@ -1,6 +1,6 @@
 var getStatusTime = null;
 var videoDownInfo =new Object(); //缓存每个节点的下载状态，一个节点一个id
-var videochangelist = $api.getStorage("videochangelist") ? $api.getStorage("videochangelist") : ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
+var videochangelist = ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
 var couselist = ""; //记录缓存包括的课程id
 var lastgettime = 1388509261;//记录每次获取数据库的时间点，下次获取就只获取该时间点之后变化的记录(第一次获取可以获取2014年1月1日1时1分1秒//)
 
@@ -170,12 +170,6 @@ function get_data() {
     $('body').removeClass('checking');
     /*后台代码*/
      memberId = getstor('memberId');
-    var data = $api.getStorage(memberId + 'video-buffer');
-    if (isEmpty(data) || data.length == 0) { //没有下载列表
-        $('#content').html('');
-        $('body').addClass('null');
-        return false;
-    }
     mydata = [];
     set_data(0);
     // var len = Object.keys(data).length; //  2
@@ -216,7 +210,7 @@ function initDomDownStatus(){
     var strs = $api.getStorage("videochangelist").split(","); //字符分割
     var pathlen = strs.length;
     //从1开始，因为拼接videochangelist的时候用,开始的
-    // alert(strs+"====="+JSON.stringify(videoDownInfo))
+//     alert(strs+"====="+JSON.stringify(videoDownInfo))
     for (j=1; j<pathlen;j++ ){
         var domInfo = videoDownInfo[strs[j]];
         var domid = strs[j];
@@ -237,9 +231,9 @@ function initDomDownStatus(){
     //处理圈圈
     isSolidcircle('circle', '', '');
     init_process();
-    //------------------设置结束--------------------------
-    // console.log(strs[j]);
-    // console.log(domInfo);
+//    ------------------设置结束--------------------------
+       console.log(strs[j]);
+       console.log(domInfo);
 }
 function setCapterState(){
     if(isEmpty($api.getStorage("videochangelist"))){
@@ -249,7 +243,7 @@ function setCapterState(){
     var strs = $api.getStorage("videochangelist").split(","); //字符分割
     var pathlen = strs.length;
     //从1开始，因为拼接videochangelist的时候用,开始的
-    // alert(strs+"====="+JSON.stringify(videoDownInfo))
+//     alert(strs+"====="+JSON.stringify(videoDownInfo))
     for (j=1; j<pathlen;j++ ){
         var domInfo = videoDownInfo[strs[j]];
         var domid = strs[j];
@@ -276,6 +270,7 @@ function setCapterState(){
         }    
     }
 }
+
 //1:获取所有下载记录并解析
 getdownrecord();
 //2:根据couselist获取所有缓存课程的章节详情，如果在线，从服务器获取，否则本地数据库获取
@@ -562,6 +557,12 @@ apiready = function() {
     }, function(ret, err) {
         mydata = [];
         get_data();
+    });
+    
+    api.addEventListener({
+        name: 'reloadPage'
+    }, function(ret, err) {
+        location.reload();
     });
     api.addEventListener({
         name: 'down_speed'

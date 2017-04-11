@@ -5,7 +5,7 @@ var total = 0;
 
 var getStatusTime = null;
 var videoDownInfo =new Object(); //缓存每个节点的下载状态，一个节点一个id
-var videochangelist = $api.getStorage("videochangelist") ? $api.getStorage("videochangelist") : ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
+var videochangelist = ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
 var couselist = ""; //记录缓存包括的课程id
 var lastgettime = 1388509261;//记录每次获取数据库的时间点，下次获取就只获取该时间点之后变化的记录(第一次获取可以获取2014年1月1日1时1分1秒//)
 
@@ -131,7 +131,6 @@ function procRecord(videorecord){
                 videoDownInfo[strs[j]].status = videorecord.state;
             }
         }
-
     }
     $api.setStorage("videochangelist",videochangelist);
     initDomDownStatus();
@@ -647,9 +646,13 @@ apiready = function() {
   	api.addEventListener({
   		name : 'flush_catalog'
   	}, function(ret) {
-
   		getData();
   	});
+  	api.addEventListener({
+        name: 'reloadPage'
+    }, function(ret, err) {
+        location.reload();
+    });
     api.addEventListener({
         name : 'down_speed'
     }, function(ret) {
