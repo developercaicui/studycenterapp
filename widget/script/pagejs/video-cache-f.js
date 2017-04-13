@@ -232,8 +232,8 @@ function initDomDownStatus(){
     isSolidcircle('circle', '', '');
     init_process();
 //    ------------------设置结束--------------------------
-       console.log(strs[j]);
-       console.log(domInfo);
+//     console.log(strs[j]);
+//     console.log(domInfo);
 }
 function setCapterState(){
     if(isEmpty($api.getStorage("videochangelist"))){

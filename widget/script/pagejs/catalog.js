@@ -5,7 +5,7 @@ var total = 0;
 
 var getStatusTime = null;
 var videoDownInfo =new Object(); //缓存每个节点的下载状态，一个节点一个id
-var videochangelist = ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
+var videochangelist = $api.getStorage("videochangelist") ? $api.getStorage("videochangelist") : ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
 var couselist = ""; //记录缓存包括的课程id
 var lastgettime = 1388509261;//记录每次获取数据库的时间点，下次获取就只获取该时间点之后变化的记录(第一次获取可以获取2014年1月1日1时1分1秒//)
 
@@ -272,7 +272,7 @@ initDom();
 getStatusTime = setInterval(function(){
     getdownrecord();
     setSpace();
-},2000)
+},1000)
 //3:定时器调用获取变化的数据，并调整界面下载状态
 // getdownrecord();
 //
@@ -387,7 +387,7 @@ function set_down_status(str){
     if(!isEmpty(chapterIdC) && !isEmpty(chapterIdA) && !isEmpty(chapterIdB)) id=chapterIdC;
     // var obj = $('#' + id);
     var obj = $('.task' + item);
-    // alert(type)
+   
     switch (type) {
         case 'error':
             $('.down-progress[type="1"]').attr({
@@ -517,7 +517,7 @@ function set_down_status(str){
             // });
             // $('.down_speed').html('').addClass('none');
             $(obj).attr({
-                type : 1
+                type : 2
             });
             break;
         case '5':
@@ -544,20 +544,33 @@ function set_down_status(str){
             break;
         case '3':
         case 3:
-            var type1 = $('.down-progress[type="1"]');
-            if(type1 && type1.length){
-              $(obj).attr({
-                  type : 5
-              });
-            }else{
-              // $('.down-progress[type="1"]').attr({
-              //     type : 2
-              // });
-              $(obj).attr({
-                  type : 1
-              });
+        	
+           
+            var isDownding = $api.getStorage('isDownding');
+                    
+            if(isDownding == "false"){
+            	isDownding = false;
+            }else if(isDownding == 'true'){
+            	isDownding = true;
             }
-            
+            if(isDownding){
+	             var type1 = $('.down-progress[type="1"]');
+	            if(type1 && type1.length){
+	              $(obj).attr({
+	                  type : 5
+	              });
+	            }else{
+	              // $('.down-progress[type="1"]').attr({
+	              //     type : 2
+	              // });
+	           
+	              
+	            }
+            }else{
+	            $(obj).attr({
+	                  type : 1
+	              });
+            }
             
             break;
         case 'ing':
@@ -646,9 +659,10 @@ apiready = function() {
   	api.addEventListener({
   		name : 'flush_catalog'
   	}, function(ret) {
+  		
   		getData();
   	});
-  	api.addEventListener({
+	api.addEventListener({
         name: 'reloadPage'
     }, function(ret, err) {
         location.reload();

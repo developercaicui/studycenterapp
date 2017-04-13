@@ -95,7 +95,7 @@
                     <div class="down_data none">{{=JSON.stringify(it[k].data)}}</div>
                   </dd><i class="icon-arrow-right"></i>
                 </dl>
-              </li>
+              </li><div class="tasksBoxs">
               {{~val3.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
             <div class="taskList {{=is_show}} none">
@@ -114,7 +114,7 @@
                 </dd>
               </dl>
             </div>{{ } }}
-            {{~}}
+            {{~}}</div>
               {{~}}
             </ul>{{ }else{ }}
             {{ var is_show=is_loadB(val2.chapterId);}}
@@ -135,7 +135,7 @@
                   <div class="down_data none">{{=JSON.stringify(it[k].data)}}</div>
                 </dd><i class="icon-arrow-right"></i>
               </dl>
-              </li>
+              </li><div class="tasksBoxs">
               {{~val2.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
             <div class="taskList {{=is_show}} none">
@@ -155,7 +155,7 @@
               </dl>
             </div>
             {{ } }}
-            {{~}}
+            {{~}}</div>
             </ul>{{ } }}
             {{~}}
           </li>
@@ -178,7 +178,7 @@
                 <div class="down_data none">{{=JSON.stringify(it[k].data)}}</div>
               </dd><i class="icon-arrow-right"></i>
             </dl>
-          </li>
+          </li><div class="tasksBoxs">
           {{~val.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
             <div class="taskList {{=is_show}} none">
@@ -198,7 +198,7 @@
               </dl>
             </div>
             {{ } }}
-            {{~}}
+            {{~}}</div>
         </ul>{{ } }}
         {{~}}
       </div>{{~}}

@@ -168,13 +168,13 @@ var is_debug = false;
     }
       
 function init_check() {
-$('.chapter-task').on("click",".icon-check",function() {
-    if ($(this).hasClass('active')) {
-        $(this).removeClass('active')
-    } else {
-        $(this).addClass('active');
-    }
-});
+	$('.chapter-task').on("click",".icon-check",function() {
+	    if ($(this).hasClass('active')) {
+	        $(this).removeClass('active')
+	    } else {
+	        $(this).addClass('active');
+	    }
+	});
 }  
 
 function next(obj, num1 , courseId) {

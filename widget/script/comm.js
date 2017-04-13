@@ -724,7 +724,7 @@ function video_cache(method, title, ccid, UserId, apiKey, callback) {
                 //api.alert({
                 //    msg:param
                 //});
-                
+               
                 cache_model.download(param, function(ret, err) {
 
                     if (api.systemType == "ios" && parseInt(ret.status) == 2) {
@@ -851,7 +851,8 @@ function down(_this) {
         versionId = $(_this).attr('versionId'),
         index = $(_this).attr('key'),
         tasks = $.trim($(_this).siblings('.down_data').html());
-
+	$api.setStorage("clickStatus",type);
+	
     if (isEmpty(tasks)) {
         api.toast({
             msg: '无视频任务',
@@ -974,17 +975,21 @@ function mydown(result) {
             index : param.index,
             videoNum : 10
         }
+
         //保存任务数据库
         cache_model.insertDowndCourseState(downObj,function(ret,err){
-            //
+            
+              $api.setStorage('isDownding',ret.isDownding);
+              
         })
+        
         // 保存课程信息库
         cache_model.inserCourseDetailJson({
             "userId" : memberId,
             "courseId" : param.courseId,
             "courseJson" : JSON.stringify(param.courseJson)
         },function(ret,err){
-
+//			alert(JSON.stringify(ret))
         })
     }
     
@@ -998,23 +1003,23 @@ function mydown(result) {
                 }
                 // $api.rmStorage(memberId + 'downed');
                 data.type = 2;
-                set_down(data);
+                  set_down(data);
                 $api.setStorage('downloadIng',0);
             });
             break;
         case '2':
         case 2:
             //暂停-》开始下载
-//             stop_down(function(r) {
-//              if (api.systemType == "ios" && parseInt(r.status) == 0) {
-//                  return false;
-//              }
-                // $api.rmStorage(memberId + 'downed');
+               stop_down(function(r) {
+                if (api.systemType == "ios" && parseInt(r.status) == 0) {
+                    return false;
+                }
+                   $api.rmStorage(memberId + 'downed');
                 result.type = 3;
-                set_down(data);
+                  set_down(data);
                 $api.setStorage('downloadIng',1);
                 mydown(result);
-//             });
+               });
             break;
         case '5':
         case 5:
@@ -1044,11 +1049,11 @@ function mydown(result) {
                     var downloadIng = $api.getStorage('downloadIng');
                     if(downloadIng){
                       result.type = 5;
-                      set_down(data);
+                        set_down(data);
                     }else{
                       $api.setStorage('downloadIng',1);
                       result.type = 1;
-                      set_down(data);
+                        set_down(data);
                     }
                     var task_data = [];
     
@@ -1077,12 +1082,21 @@ function mydown(result) {
                         if (isEmpty(task_data[m]) || isEmpty(task_data[m].data.videoCcid) || isEmpty(task_data[m].data.apiKey)) {
                             return false;
                         }
+                        
                         var title = task_data[m].data.title,
                             videoCcid = task_data[m].data.videoCcid,
                             videoSiteId = task_data[m].data.videoSiteId,
                             apiKey = task_data[m].data.apiKey,
                             taskId = task_data[m].data.taskId;
-                        if (is_down) {
+                        var isDownding = $api.getStorage('isDownding');
+                        var clickStatus = $api.getStorage('clickStatus');
+                        if(isDownding == "false"){
+                        	isDownding = false;
+                        }else if(isDownding == 'true'){
+                        	isDownding = true;
+                        }
+                        
+                        if (isDownding && clickStatus != 2) {
                             //一级章节下载记录
                             if (!isEmpty(chapterIdA) && isEmpty(chapterIdB) && isEmpty(chapterIdC)) {
                                 $api.setStorage(memberId + chapterIdA + 'progress', 1);
@@ -1137,8 +1151,11 @@ function mydown(result) {
                                     write_file(memberId + 'Queue.db', JSON.stringify(Queue), function(ret, err) {})
                                 }
                             });
+                            
                             return false;
+                            
                         }
+                        video_cache('download', title, videoCcid, videoSiteId, apiKey, lslcallback);
                         //下载中ui监听
                         // data.type = 'ing';
                         // data.type = 1;
@@ -1497,7 +1514,7 @@ function mydown(result) {
                             retlsl.videoId = videoCcid;
                             lslcallback(retlsl);
                         }
-                        video_cache('download', title, videoCcid, videoSiteId, apiKey, lslcallback);
+                        
                     }
 
                 }
@@ -1612,7 +1629,7 @@ function down_stop(callback) { //删除下载
     if (cache_model == null) {
         cache_model = api.require('lbbVideo');
     }
-    cache_model.downloadStop(function(ret, err) {
+    cache_model.downloadStop({"userId":getstor('memberId')},function(ret, err) {
 
         $api.rmStorage(memberId + 'downed');
         if (downed) {
@@ -1760,7 +1777,7 @@ function delVideoFile(videoId) {
     //  alert(videoId);
     var userid = getstor("memberId");
     $api.rmStorage(videoId);
-    cache_model.downloadStop(function(){});
+    cache_model.downloadStop({"userId":getstor('memberId')},function(){});
     $api.rmStorage('cache' + videoId);
     cache_model.rmVideo({
     	userId : userid,
