@@ -30,65 +30,61 @@ var tmpTwo = 0; //临时二级章节索引
 var tmpThree = 0; //临时三级章节索引
 var taskNum = 0; //临时任务索引
 var tmpDeep = 0; //章节层级
-function set_down_status(str) {
+function set_down_status(str){
     //var data=JSON.parse(str);
-    var data = str;
-    var type = data.type,
+    var data=str;
+    var type = data.type, 
         chapterIdA = isEmpty(data.chapterIdA) ? '' : data.chapterIdA,
         chapterIdB = isEmpty(data.chapterIdB) ? '' : data.chapterIdB,
-        chapterIdC = isEmpty(data.chapterIdC) ? '' : data.chapterIdC;
-    var id = '';
-    if (type == 'wait') {
-        setTimeout(function() {
-            api.hideProgress();
-        }, 1000);
-    } else {
-        api.hideProgress();
-    }
+        chapterIdC = isEmpty(data.chapterIdC) ? '' : data.chapterIdC,
+        item = data.item;
+    var id='';
     //一级章节下载记录
-    if (!isEmpty(chapterIdA) && isEmpty(chapterIdB) && isEmpty(chapterIdC)) id = chapterIdA;
+    if(!isEmpty(chapterIdA) && isEmpty(chapterIdB) && isEmpty(chapterIdC)) id=chapterIdA;
     //二级章节下载记录
-    if (!isEmpty(chapterIdA) && !isEmpty(chapterIdB) && isEmpty(chapterIdC)) id = chapterIdB;
+    if(!isEmpty(chapterIdA) && !isEmpty(chapterIdB) && isEmpty(chapterIdC)) id=chapterIdB;
     //三级章节下载记录
-    if (!isEmpty(chapterIdC) && !isEmpty(chapterIdA) && !isEmpty(chapterIdB)) id = chapterIdC;
-    var obj = $('#' + id);
+    if(!isEmpty(chapterIdC) && !isEmpty(chapterIdA) && !isEmpty(chapterIdB)) id=chapterIdC;
+    // var obj = $('#' + id);
+    var obj = $('.task' + item);
+   
     switch (type) {
         case 'error':
             $('.down-progress[type="1"]').attr({
-                type: 2
+                type : 2
             }).siblings('.down_speed').html('').addClass('none');
             api.toast({
-                msg: '下载失败！',
-                location: 'middle'
+                msg : '下载失败！',
+                location : 'middle'
             });
             break;
         case 'redown':
             $('.down-progress[type="1"]').attr({
-                type: 3
+                type :  3
             }).siblings('.down_speed').html('').addClass('none');
             api.toast({
-                msg: '下载失败！',
-                location: 'middle'
+                msg : '下载失败！',
+                location : 'middle'
             });
             break;
         case 'filedel':
             $(obj).attr({
-                type: 2
+                type : 2
             });
+            var num = $api.getStorage(memberId + id + 'progress');
+            $(obj).find('.val').text(num);
             var _w = $('#svgDown').width();
-            var percent = data.progress / 100,
-                perimeter = Math.PI * _w * 0.9;
+            var percent = num / 100, perimeter = Math.PI * _w * 0.9;
             $(obj).find('circle').eq(1).css('stroke-dasharray', parseInt(perimeter * percent) + " " + parseInt(perimeter * (1 - percent)));
-            $(obj).find('.val').text(data.progress);
             api.alert({
-                msg: '缓存文件被清理,请重新下载',
-                location: 'middle'
-            });
+                msg : '缓存文件被清理,请重新下载',
+                location : 'middle'
+            }); 
             break;
         case 'no_video':
             api.toast({
-                msg: '无视频任务',
-                location: 'middle'
+                msg : '无视频任务',
+                location : 'middle'
             });
             break;
         case 'less_space':
@@ -96,14 +92,14 @@ function set_down_status(str) {
             clearTimeout(down_setTimeout);
             is_count = false;
             $(obj).attr({
-                type: 2
+                type : 2
             });
             $('.down-progress[type="1"]').attr({
-                type: 2
+                type : 2
             }).siblings('.down_speed').html('').addClass('none');
             api.toast({
-                msg: '可用空间不足,下载已暂停',
-                location: 'middle'
+                msg : '可用空间不足,下载已暂停',
+                location : 'middle'
             });
             break;
         case 'not_wifi':
@@ -111,14 +107,14 @@ function set_down_status(str) {
             clearTimeout(down_setTimeout);
             is_count = false;
             $(obj).attr({
-                type: 2
+                type : 2
             });
             $('.down-progress[type="1"]').attr({
-                type: 2
+                type : 2
             }).siblings('.down_speed').html('').addClass('none');
             api.toast({
-                msg: '脱离WiFi环境自动暂停下载',
-                location: 'middle'
+                msg : '脱离WiFi环境自动暂停下载',
+                location : 'middle'
             });
             break;
         case 'deny_down':
@@ -126,14 +122,14 @@ function set_down_status(str) {
             clearTimeout(down_setTimeout);
             is_count = false;
             $(obj).attr({
-                type: 2
+                type : 2
             });
             $('.down-progress[type="1"]').attr({
-                type: 2
+                type : 2
             }).siblings('.down_speed').html('').addClass('none');
             api.toast({
-                msg: '当前正在移动网络，请在WIFI环境中下载',
-                location: 'middle'
+                msg : '当前正在移动网络，请在WIFI环境中下载',
+                location : 'middle'
             });
             break;
         case 'shut_network':
@@ -141,14 +137,14 @@ function set_down_status(str) {
             clearTimeout(down_setTimeout);
             is_count = false;
             $(obj).attr({
-                type: 2
+                type : 2
             });
             $('.down-progress[type="1"]').attr({
-                type: 2
+                type : 2
             }).siblings('.down_speed').html('').addClass('none');
             api.toast({
-                msg: '网络已断开，请检查网络状态',
-                location: 'middle'
+                msg : '网络已断开，请检查网络状态',
+                location : 'middle'
             });
             break;
         case 'wait':
@@ -156,7 +152,7 @@ function set_down_status(str) {
             clearTimeout(down_setTimeout);
             is_count = false;
             $(obj).attr({
-                'type': 2
+                'type' : 2
             }).siblings('.down_speed').html('').addClass('none');
             break;
         case '1':
@@ -165,56 +161,103 @@ function set_down_status(str) {
             clearTimeout(down_setTimeout);
             is_count = false;
             //下载中->暂停
-            $('.down-progress[type="1"]').attr({
-                type: 2
-            }).siblings('.down_speed').html('').addClass('none');
+            // $('.down-progress[type="1"]').attr({
+            //     type : 2
+            // }).siblings('.down_speed').html('').addClass('none');
+
             $(obj).attr({
-                'type': 2
+                'type' : 2
             });
             break;
         case '2':
         case 2:
             //暂停->下载中
-            $('.down-progress[type="1"]').attr({
-                type: 2
-            });
-            $('.down_speed').html('').addClass('none');
+            // $('.down-progress[type="1"]').attr({
+            //     type : 2
+            // });
+            // $('.down_speed').html('').addClass('none');
             $(obj).attr({
-                type: 1
+                type : 2
             });
+            break;
+        case '5':
+        case 5:
+            //等待->下载中
+            // $('.down-progress[type="1"]').attr({
+            //     type : 2
+            // });
+            // $('.down_speed').html('').addClass('none');
+            // $(obj).attr({
+            //     type : 1
+            // });
+
+            var type1 = $('.down-progress[type="1"]');
+            if(type1 && type1.length){
+              type1.attr({
+                type : 2
+              })
+            }
+            $(obj).attr({
+                type : 1
+            });
+
             break;
         case '3':
         case 3:
-            $('.down-progress[type="1"]').attr({
-                type: 2
-            });
+        	        
+            var isDownding = $api.getStorage('isDownding');
+                    
+            if(isDownding == "false"){
+            	isDownding = false;
+            }else if(isDownding == 'true'){
+            	isDownding = true;
+            }
+            if(isDownding){
+	             var type1 = $('.down-progress[type="1"]');
+	            if(type1 && type1.length){
+	              $(obj).attr({
+	                  type : 5
+	              });
+	            }else{
+	              // $('.down-progress[type="1"]').attr({
+	              //     type : 2
+	              // });
+	           
+	              
+	            }
+            }else{
+	            $(obj).attr({
+	                  type : 1
+	              });
+            }
+            
             break;
         case 'ing':
             $('.down-progress[type="1"]').attr({
-                type: 2
+                type : 2
             });
             $(obj).attr({
-                type: 1
+                type : 1
             });
             break;
         case 'progress':
-            $.each($('.down_speed'), function(k, v) {
-                if ($(v).siblings('.down-progress').attr('id') != id) {
+            $.each($('.down_speed'),function(k,v){
+                if($(v).siblings('.down-progress').attr('id')!=id){
                     $(v).html('').addClass('none');
                 }
             });
-            $(obj).attr({
-                type: 1
-            });
-            var _w = $('#svgDown').width();
-            var percent = data.progress / 100,
-                perimeter = Math.PI * _w * 0.9;
+            // $(obj).attr({
+            //     type : 1
+            // });
+            var percent = data.progress / 100, perimeter = Math.PI * 0.9 * $('#svgDown').width();
             $(obj).find('circle').eq(1).css('stroke-dasharray', parseInt(perimeter * percent) + " " + parseInt(perimeter * (1 - percent)));
             if (data.progress >= 100) {
                 $(obj).attr({
-                    type: 4
+                    type : 4
                 }).siblings('.down_speed').html('').addClass('none');
             }
+
+            $('.space').html("可用空间" + data.size + "MB<span></span>");
             $(obj).find('.val').text(data.progress);
             break;
         case 'end':
@@ -222,7 +265,7 @@ function set_down_status(str) {
             clearTimeout(down_setTimeout);
             is_count = false;
             $(obj).attr({
-                type: 4
+                type : 4
             }).siblings('.down_speed').html('').addClass('none');
             break;
     }
