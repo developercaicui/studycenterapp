@@ -340,6 +340,7 @@ function toggleCapt(e) {
 }
 //章节折叠、显示任务
 function toggleTasks(e) {
+	
 	$(".list").removeClass("activeTask");
 	$(e).closest(".list").next(".fath").toggleClass('hide-child');
 	$(e).closest(".list").addClass("activeTask");

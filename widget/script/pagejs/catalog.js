@@ -659,14 +659,19 @@ apiready = function() {
   	api.addEventListener({
   		name : 'flush_catalog'
   	}, function(ret) {
-  		
+  		lastgettime = 1388509261;
+        videochangelist = "";
+        couselist = "";
+        videoDownInfo =new Object();
+        getdownrecord();
+
   		getData();
   	});
-	api.addEventListener({
-        name: 'reloadPage'
-    }, function(ret, err) {
-        location.reload();
-    });
+//	api.addEventListener({
+//      name: 'reloadPage'
+//  }, function(ret, err) {
+//      location.reload();
+//  });
     api.addEventListener({
         name : 'down_speed'
     }, function(ret) {

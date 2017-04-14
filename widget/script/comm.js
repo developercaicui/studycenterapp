@@ -730,8 +730,11 @@ function video_cache(method, title, ccid, UserId, apiKey, callback) {
                     if (api.systemType == "ios" && parseInt(ret.status) == 2) {
                         return false;
                     }
-                    
-//                    callback(ret, err);
+//                  if(ret.finish == "YES"){
+//                  	alert(JSON.stringify(ret))
+//                  }
+//                  alert(JSON.stringify(ret))
+//                  callback(ret, err);
                 });
             }
         });
@@ -959,7 +962,7 @@ function mydown(result) {
     if(data.type != 4){
         var param = $api.getStorage('my_to_down');
         var memberId = getstor('memberId');
-        // cache_model = api.require('lbbVideo');
+           cache_model = api.require('lbbVideo');
         
         var downObj = {
             userId : memberId,
@@ -977,6 +980,7 @@ function mydown(result) {
         }
 
         //保存任务数据库
+   
         cache_model.insertDowndCourseState(downObj,function(ret,err){
             
               $api.setStorage('isDownding',ret.isDownding);
@@ -1155,12 +1159,19 @@ function mydown(result) {
                             return false;
                             
                         }
-                        video_cache('download', title, videoCcid, videoSiteId, apiKey, lslcallback);
+                        video_cache('download', title, videoCcid, videoSiteId, apiKey, autoDownCallback);
                         //下载中ui监听
                         // data.type = 'ing';
                         // data.type = 1;
                         // set_down(data);
-
+						
+						var autoDownCallback = function(ret,err){
+							alert(JSON.stringify(ret))
+						
+						}
+						
+						
+						
                         var lslcallback = function(ret, err) {
                             //alert(JSON.stringify(ret));
                             // api.sendEvent({
@@ -1777,7 +1788,7 @@ function delVideoFile(videoId) {
     //  alert(videoId);
     var userid = getstor("memberId");
     $api.rmStorage(videoId);
-    cache_model.downloadStop({"userId":getstor('memberId')},function(){});
+//  cache_model.downloadStop({"userId":getstor('memberId')},function(){});
     $api.rmStorage('cache' + videoId);
     cache_model.rmVideo({
     	userId : userid,

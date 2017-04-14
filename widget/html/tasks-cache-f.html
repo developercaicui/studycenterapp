@@ -117,6 +117,19 @@
         font-weight: normal;
         font-style: normal;
       }
+      .down-progress[status='ing'] i:before,
+		.down-progress .ing i:before,
+		.down-progress[type='1'] i:before {
+		  content: '\e972';
+		  font-size: 0.25rem;
+		}
+		.down-progress[status='wait'] i:before,
+		.down-progress.wait i:before,
+		.down-progress[type='2'] i:before,
+		 .down-progress[type='5'] i:before {
+		  content: '\e973';
+		  font-size: 0.4rem;
+		}
     </style>
   </head>
   <body>
@@ -143,7 +156,7 @@
                     </dt>
                     <dd>
                       <i dataid="{{=val3.chapterId}}" dataccid="{{=val4.videoCcid}}" class="icon-check chapterb"></i>
-                      <div id="{{=val3.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="{{=val3.chapterId}}" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="{{=val3.chapterTitle}}" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-download3"></i>
+                      <div id="{{=val3.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="{{=val3.chapterId}}" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="{{=val3.chapterTitle}}" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-down1"></i>
                     <div class="val"></div>
                   </div>
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
@@ -168,7 +181,7 @@
                     </dt>
                     <dd>
                       <i dataid="{{=val2.chapterId}}" dataccid="{{=val4.videoCcid}}" class="icon-check chapterb"></i>
-                      <div id="{{=val2.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-download3"></i>
+                      <div id="{{=val2.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-down1"></i>
                     <div class="val"></div>
                   </div>
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
@@ -184,7 +197,7 @@
       {{ }else{ }}
         {{~val.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
-            <li class="video-catego" style="display: none;"><span class="taskVideo"></span>
+            <li class="video-catego" style="display: none;width: 100%;padding-top: 0.2rem;border-bottom: 1px solid #d4d4d4;"><span class="taskVideo"></span>
             <div>
                   <dl class="taskList">
                     <dt tapmode  onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}','{{=val.chapterId}}')">
@@ -194,7 +207,7 @@
                     </dt>
                     <dd>
                       <i dataid="{{=val.chapterId}}" dataccid="{{=val4.videoCcid}}" class="icon-check chapterb"></i>
-                      <div id="{{=val.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-download3"></i>
+                      <div id="{{=val.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-down1"></i>
                     <div class="val"></div>
                   </div>
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>

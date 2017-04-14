@@ -808,6 +808,9 @@ ul.download .down-progress {
   left: 0;
 /*background rgba(200,30,0,.3)*/
 }
+.down-progress i{
+	font-size: 0.4rem;
+}
 .down-progress[status='ing'] i:before,
 .down-progress .ing i:before,
 .down-progress[type='1'] i:before {
@@ -1688,7 +1691,7 @@ ul.download .down-progress {
   display: none;
 }
 .cache-course {
-  margin: 0.2rem 0;
+/*   margin: 0.2rem 0; */
 }
 .cache-course.note-chapter .cache-list > dl p {
   top: 0.4rem;

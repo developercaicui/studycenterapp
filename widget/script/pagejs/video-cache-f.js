@@ -1,6 +1,6 @@
 var getStatusTime = null;
 var videoDownInfo =new Object(); //缓存每个节点的下载状态，一个节点一个id
-var videochangelist = ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
+var videochangelist = $api.getStorage("videochangelist") ? $api.getStorage("videochangelist") : "";; //记录每次定时器和数据库同步数据后发生改变的dom节点id
 var couselist = ""; //记录缓存包括的课程id
 var lastgettime = 1388509261;//记录每次获取数据库的时间点，下次获取就只获取该时间点之后变化的记录(第一次获取可以获取2014年1月1日1时1分1秒//)
 
@@ -179,10 +179,11 @@ function get_data() {
         if(api.pageParam.courseId){
             param.courseId = api.pageParam.courseId
         }
+        
         function initDom() {
            cache_model.getCourseJsonWithCourseId(param,function(ret,err){
-
-           if(ret.data.length<1){
+		
+           if(JSON.parse(ret.data).length<1){
            		$('#content').html('');
         		$('body').addClass('null');
         		return false;
@@ -200,76 +201,6 @@ function get_data() {
                 initDomDownStatus();
            })
         }
-        
-      //更新界面下载状态有变化的下载节点
-function initDomDownStatus(){
-    if(isEmpty($api.getStorage("videochangelist"))){
-        return false;
-    }
-
-    var strs = $api.getStorage("videochangelist").split(","); //字符分割
-    var pathlen = strs.length;
-    //从1开始，因为拼接videochangelist的时候用,开始的
-//     alert(strs+"====="+JSON.stringify(videoDownInfo))
-    for (j=1; j<pathlen;j++ ){
-        var domInfo = videoDownInfo[strs[j]];
-        var domid = strs[j];
-        // alert(JSON.stringify(domInfo))
-        if(!isEmpty(domInfo)){
-            var domprogress = videoDownInfo[strs[j]].progress;
-            var domstatus = videoDownInfo[strs[j]].status;
-            var domtasknum = videoDownInfo[strs[j]].tasknum;
-            // alert(domid+"==="+domprogress+"==="+domstatus)
-            // ------------------设置界面对应id节点dom下载状态，并设置为可见--------------------------
-            
-            $(".task"+domid).attr("type",domstatus);
-            $(".task"+domid).find(".val").html(domprogress);
-            // alert($(".task"+domid).html())
-        }    
-    }
-    setCapterState();
-    //处理圈圈
-    isSolidcircle('circle', '', '');
-    init_process();
-//    ------------------设置结束--------------------------
-//     console.log(strs[j]);
-//     console.log(domInfo);
-}
-function setCapterState(){
-    if(isEmpty($api.getStorage("videochangelist"))){
-        return false;
-    }
-
-    var strs = $api.getStorage("videochangelist").split(","); //字符分割
-    var pathlen = strs.length;
-    //从1开始，因为拼接videochangelist的时候用,开始的
-//     alert(strs+"====="+JSON.stringify(videoDownInfo))
-    for (j=1; j<pathlen;j++ ){
-        var domInfo = videoDownInfo[strs[j]];
-        var domid = strs[j];
-        // alert(JSON.stringify(domInfo))
-        if(!isEmpty(domInfo)){
-            var domprogress = videoDownInfo[strs[j]].progress;
-            var domstatus = videoDownInfo[strs[j]].status;
-            var domtasknum = videoDownInfo[strs[j]].tasknum;
-            
-            var taskList = $(".task"+domid).closest(".list").nextAll(".taskList");
-            $.each(taskList,function(v,k){
-                if($(this).find(".down-progress").attr("type") == 1){
-                    domstatus = 1;
-                    return false;
-                }else if($(this).find(".down-progress").attr("type") == 2){
-                    domstatus = 2;
-                }else if($(this).find(".down-progress").attr("type") == 5){
-                    domstatus = 5;
-                }
-            })
-            $(".task"+domid).attr("type",domstatus);
-            $(".task"+domid).find(".val").html(domprogress);
-            // alert($(".task"+domid).html())
-        }    
-    }
-}
 
 //1:获取所有下载记录并解析
 getdownrecord();
@@ -279,12 +210,9 @@ clearInterval(getStatusTime);
 getStatusTime = setInterval(function(){
     getdownrecord();
 },2000)
-           // var dat = [{"createTime":1476694332,"effectiveDay":280,"taskTotal":"35","chapters":[{"chapterId":"8a22ecb557d16e020157d1e4beb11e02","isFree":"false","knowledgePointId":"402890814d6f6abb014d6fe6d3340020","chapterFiles":null,"chapterExtends":null,"chapterTitle":"CMA Part1 财务规划 绩效与控制","tasks":null,"isLeaf":"false","children":[{"chapterId":"8a22ecb557d16e020157d1e5ba0c1e04","isFree":"false","knowledgePointId":"402890814d6f6abb014d6fe6d3340020","chapterFiles":null,"chapterExtends":null,"chapterTitle":"第一章：规划、预算编制与预测","tasks":null,"isLeaf":"false","children":[{"chapterId":"8a22ecb557d16e020157d1e625771e06","isFree":"false","knowledgePointId":"402890814d6f6abb014d6fe6d33c0022","chapterFiles":null,"chapterExtends":null,"chapterTitle":"知识点1 战略规划概述","tasks":[{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"DE3A00C3A7FF861F9C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":787,"taskType":"video","title":"战略规划概述-a ","taskId":"8a22ecb557d16e020157d1f31cfd1e2a","taskLevel":null,"id":"8a22ecb557c831f00157d0a032a80025"},{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"C0120B91BFC60E0E9C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":242,"taskType":"video","title":"战略规划概述-c-测评练习","taskId":"8a22ecb557d16e020157d1f34c391e2b","taskLevel":null,"id":"8a22ecb557c831f00157d09d9e0c0016"},{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"0A7E6A7E2F0BA1149C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":642,"taskType":"video","title":"战略规划概述-b","taskId":"8a22ecb557d16e020157d1f787a81e2c","taskLevel":null,"id":"8a22ecb557c831f00157d0a05dca0029"}],"isLeaf":"true","children":null},{"chapterId":"8a22ecb557d16e020157d1e64ade1e07","isFree":"false","knowledgePointId":null,"chapterFiles":null,"chapterExtends":null,"chapterTitle":"知识点2 波特五因素分析","tasks":[{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"1D7652DC58EF06C59C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":739,"taskType":"video","title":"  波特五因素分析-a","taskId":"8a22ecb557d16e020157d1f7c63e1e2d","taskLevel":null,"id":"8a22ecb557c831f00157d09dc8370017"},{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"4DCD9DFD7C2E95A89C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":343,"taskType":"video","title":"波特五因素分析-b-测评练习","taskId":"8a22ecb557d16e020157d1f7fa2b1e2e","taskLevel":null,"id":"8a22ecb557c831f00157d09de63f0018"}],"isLeaf":"true","children":null},{"chapterId":"8a22ecb557d16e020157d1e684291e08","isFree":"false","knowledgePointId":null,"chapterFiles":null,"chapterExtends":null,"chapterTitle":"知识点3 战略规划工具 SWOT分析","tasks":[{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"FD53E6F218B6B8849C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":489,"taskType":"video","title":"SWOT分析-a","taskId":"8a22ecb557d16e020157d1f837b41e2f","taskLevel":null,"id":"8a22ecb557c831f00157d09e0f200019"},{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"BED972B069868F069C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":196,"taskType":"video","title":"SWOT分析-b-测评练习 ","taskId":"8a22ecb557d16e020157d1f868151e30","taskLevel":null,"id":"8a22ecb557c831f00157d09e3eda001a"}],"isLeaf":"true","children":null},{"chapterId":"8a22ecb557d16e020157d1e701c31e09","isFree":"false","knowledgePointId":null,"chapterFiles":null,"chapterExtends":null,"chapterTitle":"知识点4 战略规划工具 5C分析","tasks":[{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"6FCCABFFA4FD95899C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":326,"taskType":"video","title":"5C分析-a","taskId":"8a22ecb557d16e020157d1f8ec571e31","taskLevel":null,"id":"8a22ecb557c831f00157d09e6456001b"},{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"B92C0784CF99BC4F9C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":45,"taskType":"video","title":"5C分析-b-测评练习","taskId":"8a22ecb557d16e020157d1f917f61e32","taskLevel":null,"id":"8a22ecb557c831f00157d09e905a001c"}],"isLeaf":"true","children":null},{"chapterId":"8a22ecb557d16e020157d1e794f51e0a","isFree":"false","knowledgePointId":null,"chapterFiles":null,"chapterExtends":null,"chapterTitle":"知识点5 战略规划工具 波士顿矩阵","tasks":[{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"016D5B47557C7FD79C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":756,"taskType":"video","title":"波士顿矩阵-a","taskId":"8a22ecb557d16e020157d1f94ffe1e33","taskLevel":null,"id":"8a22ecb557c831f00157d09ec3eb001d"},{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"11B7A31FB96EDD149C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":249,"taskType":"video","title":"波士顿矩阵-b","taskId":"8a22ecb557d16e020157d1f97c691e34","taskLevel":null,"id":"8a22ecb557c831f00157d09ee9de001e"}],"isLeaf":"true","children":null},{"chapterId":"8a22ecb557d16e020157d1e7bc0b1e0b","isFree":"false","knowledgePointId":null,"chapterFiles":null,"chapterExtends":null,"chapterTitle":"知识点6 战略规划工具 其他分析工具","tasks":[{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"174AAB94972B160F9C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":339,"taskType":"video","title":"其他分析工具-a","taskId":"8a22ecb557d16e020157d1f9b7371e35","taskLevel":null,"id":"8a22ecb557c831f00157d09f0f06001f"},{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"D8ECDC8D38D18DE89C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":61,"taskType":"video","title":"其他分析工具-b-测评练习","taskId":"8a22ecb557d16e020157d1f9ec371e36","taskLevel":null,"id":"8a22ecb557c831f00157d09f461f0020"}],"isLeaf":"true","children":null}]},{"chapterId":"8a22ecb557d16e020157d1e5e52c1e05","isFree":"false","knowledgePointId":"402890814d6f6abb014d6fe6d4f40086","chapterFiles":null,"chapterExtends":null,"chapterTitle":"第二章：成本管理","tasks":null,"isLeaf":"false","children":[{"chapterId":"8a22ecb557d16e020157d1e7edd01e0c","isFree":"false","knowledgePointId":"402890814d6f6abb014d6fe6d56700a0","chapterFiles":null,"chapterExtends":null,"chapterTitle":"知识点1 固定和变动间接成本","tasks":[{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"D4AAB0C9FF06DBBA9C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":593,"taskType":"video","title":"固定和变动间接成本-a","taskId":"8a22ecb557d16e020157d1fa42cc1e37","taskLevel":null,"id":"8a22ecb557c831f00157d09f69660021"},{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"7C853C8EEB4E5C1C9C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":179,"taskType":"video","title":"固定和变动间接成本-b-测评练习 ","taskId":"8a22ecb557d16e020157d1fa71101e38","taskLevel":null,"id":"8a22ecb557c831f00157d09f8ee60022"}],"isLeaf":"true","children":null},{"chapterId":"8a22ecb557d16e020157d1e819d71e0d","isFree":"false","knowledgePointId":null,"chapterFiles":null,"chapterExtends":null,"chapterTitle":"知识点2 间接成本分摊方法","tasks":[{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"9662C2BF70EB52E69C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":634,"taskType":"video","title":"间接成本分摊方法-a","taskId":"8a22ecb557d16e020157d1fab7791e39","taskLevel":null,"id":"8a22ecb557c831f00157d09fbc9a0023"},{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"FA97618ED57A76819C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":248,"taskType":"video","title":"间接成本分摊方法-b-测评练习","taskId":"8a22ecb557d16e020157d1faec371e3a","taskLevel":null,"id":"8a22ecb557c831f00157d09fdbdb0024"}],"isLeaf":"true","children":null},{"chapterId":"8a22ecb557d16e020157d1e847e81e0e","isFree":"false","knowledgePointId":null,"chapterFiles":null,"chapterExtends":null,"chapterTitle":"知识点3 服务部门成本的分配","tasks":[{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"C3A4A9C4764CEEEC9C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":1098,"taskType":"video","title":"服务部门成本的分配-a","taskId":"8a22ecb557d16e020157d1fb1d8c1e3b","taskLevel":null,"id":"8a22ecb557c831f00157d09ceb290014"},{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"B8AD532F6C4C91319C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":297,"taskType":"video","title":"服务部门成本的分配-b-测评练习","taskId":"8a22ecb557d16e020157d1fb48cc1e3c","taskLevel":null,"id":"8a22ecb557c831f00157d09d238e0015"}],"isLeaf":"true","children":null}]}]},{"chapterId":"8a22ecb557d16e020157d1e51dcf1e03","isFree":"false","knowledgePointId":null,"chapterFiles":null,"chapterExtends":null,"chapterTitle":"CMA Part2 财务决策","tasks":null,"isLeaf":"false","children":[{"chapterId":"8a22ecb557d16e020157d1e9d6ae1e0f","isFree":"false","knowledgePointId":null,"chapterFiles":null,"chapterExtends":null,"chapterTitle":"第一章 财务报表分析","tasks":null,"isLeaf":"false","children":[{"chapterId":"8a22ecb557d16e020157d1ea1fce1e11","isFree":"false","knowledgePointId":null,"chapterFiles":null,"chapterExtends":null,"chapterTitle":"第一章 课程介绍","tasks":[{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"97EEE0B1E5641AC09C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":291,"taskType":"video","title":"资本筹集中需要考虑的其他问题（上）-测评题 ","taskId":"8a22ecb557d16e020157d1ed8f8f1e1d","taskLevel":null,"id":"8a22ecb557c831f00157d0b0ab850037"}],"isLeaf":"true","children":null},{"chapterId":"8a22ecb557d16e020157d1eb93571e19","isFree":"false","knowledgePointId":null,"chapterFiles":null,"chapterExtends":null,"chapterTitle":"知识点5 资本筹集中需要考虑的其他问题（下）","tasks":[{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"4ED3EADD1827E0BD9C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":1017,"taskType":"video","title":"资本筹集中需要考虑的其他问题（下） ","taskId":"8a22ecb557d16e020157d1ec6dc91e1a","taskLevel":null,"id":"8a22ecb557c831f00157d0b08a9e0036"},{"attachmentPath":"","apiKey":"q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez","videoCcid":"0583C9FC0E64DA2B9C33DC5901307461","videoSiteId":"D550E277598F7D23","videoTime":288,"taskType":"video","title":"资本筹集中需要考虑的其他问题（下）-测评题 ","taskId":"8a22ecb557d16e020157d1ec9f121e1b","taskLevel":null,"id":"8a22ecb557c831f00157d0b064f00035"}],"isLeaf":"true","children":null}]}]}],"coverPath":"/upload/201610/a53af9b49e8144c1a4400128b09b65de.jpg","courseId":"8a22ecb557d16e020157d1d7526f1dff","outline":"","teacherName":"CMA 明星讲师团","taskNum":"35","subjectName":"CMA中文","courseIndex":1,"teacherHonor":"吴奇奇 张秀军","availability":"","bigCoverPath":"","chapterNum":"40","knowledgePointId":"ff8080814d6642aa014d69f812880246","courseModuleType":"KNOWLEDGE_MODULE","aim":"<p>\r\n\t内容涵盖：\r\n</p>\r\n<p>\r\n\tCMA新版前导课、基础课精彩节选,微课化、利用碎片时间学习,内容转化精彩纷呈,配合大量生动案例,课后测评巩固知识。\r\n</p>\r\n<span>适合人群：</span><span><br />\r\n</span><span>零基础、非财务专业</span><span><br />\r\n</span><span>在校大学生</span><span><br />\r\n</span><span>财务初级从业人员</span>","teacherImage":"/upload/201412/e5b55ad1a15448d5bf5f5d1d3ae8f59a.png","subjectId":"ff808081486933e601489c4662f60851","versionId":"8a22ecb557d16e020157d1d7526f1dff","courseBackgroundImage":"/upload/201610/a53af9b49e8144c1a4400128b09b65de.jpg","subjectIndex":10,"courseName":"CMA 中文 （体验课）","lastModifyTime":1476694}]
-            // var res = {
-            //         data:dat
-            //     };
-            // mydata.push(res);
-            // init_data();
+//            var dat = {"data":[{"orderId_item_id":"8a22ecb5527d428e0152e40b7401013d","expirationTime":1472636819,"isU":"false","buyTime":1455524902,"activeTime":1457084819,"courseId":"ff808081473905e7014762700dfa0081","activeState":"acitve","lockStatus":0},{"orderId_item_id":"8a22ecb553ca891a0153cb8c5a64037c","expirationTime":1475045015,"isU":"false","buyTime":1459408886,"activeTime":1459493015,"courseId":"ff808081473905e7014762700dfa0081","activeState":"acitve","lockStatus":0},{"orderId_item_id":"ff8080814c7e427e014ca1d4720e0c33","expirationTime":1444196286,"isU":"false","buyTime":1428644271,"activeTime":1428644286,"courseId":"ff808081473905e7014762700dfa0081","activeState":"acitve","lockStatus":0}],"state":"success","msg":""}
+//             mydata.push(dat);
+//             init_data();
         // } else { //某个课程缓存列表
         //     if (!isEmpty(data) && !in_array(api.pageParam.courseId, data)) {
         //         $('#content').html('');
@@ -305,6 +233,324 @@ getStatusTime = setInterval(function(){
     }
 }
 
+
+function initDomDownStatus(){
+	    if(isEmpty($api.getStorage("videochangelist"))){
+	        return false;
+	    }
+	
+	    var strs = $api.getStorage("videochangelist").split(","); //字符分割
+	    var pathlen = strs.length;
+	    //从1开始，因为拼接videochangelist的时候用,开始的
+	//     alert(strs+"====="+JSON.stringify(videoDownInfo))
+	    for (j=1; j<pathlen;j++ ){
+	        var domInfo = videoDownInfo[strs[j]];
+	        var domid = strs[j];
+	        // alert(JSON.stringify(domInfo))
+	        if(!isEmpty(domInfo)){
+	            var domprogress = videoDownInfo[strs[j]].progress;
+	            var domstatus = videoDownInfo[strs[j]].status;
+	            var domtasknum = videoDownInfo[strs[j]].tasknum;
+	            // alert(domid+"==="+domprogress+"==="+domstatus)
+	            // ------------------设置界面对应id节点dom下载状态，并设置为可见--------------------------
+	            
+	            $(".task"+domid).attr("type",domstatus);
+	            $(".task"+domid).find(".val").html(domprogress);
+	            // alert($(".task"+domid).html())
+	        }    
+	    }
+	    setCapterState();
+	    //处理圈圈
+	    isSolidcircle('circle', '', '');
+	    init_process();
+	//    ------------------设置结束--------------------------
+	
+	   showCacheList();
+//	   showCaptCFn2();
+//	   showCaptBFn2();
+//		showCourseFn2();
+//		   showCourseFn();
+	}
+	function setCapterState(){
+	    if(isEmpty($api.getStorage("videochangelist"))){
+	        return false;
+	    }
+	
+	    var strs = $api.getStorage("videochangelist").split(","); //字符分割
+	    var pathlen = strs.length;
+	    var waitNum = 0,
+	    	ingNum = 0,
+	    	okNum = 0,
+	    	stopNum = 0;
+	    //从1开始，因为拼接videochangelist的时候用,开始的
+	//     alert(strs+"====="+JSON.stringify(videoDownInfo))
+	    for (j=1; j<pathlen;j++ ){
+	        var domInfo = videoDownInfo[strs[j]];
+	        var domid = strs[j];
+	        // alert(JSON.stringify(domInfo))
+	        if(!isEmpty(domInfo)){
+	            var domprogress = videoDownInfo[strs[j]].progress;
+	            var domstatus = videoDownInfo[strs[j]].status;
+	            var domtasknum = videoDownInfo[strs[j]].tasknum;
+	            
+	            var taskList = $(".task"+domid).closest(".list").nextAll(".taskList");
+	            $.each(taskList,function(v,k){
+	                if($(this).find(".down-progress").attr("type") == 1){
+	                    domstatus = 1;
+						ingNum++;
+	                }else if($(this).find(".down-progress").attr("type") == 2){
+	                    domstatus = 2;
+	                    stopNum++;
+	                }else if($(this).find(".down-progress").attr("type") == 5){
+	                    domstatus = 5;
+	                    waitNum++;
+	                }else if($(this).find(".down-progress").attr("type") == 4){
+	                    domstatus = 4;
+	                    okNum++;
+	                }
+	            })
+	           
+	            if(ingNum>0){
+		            $(".task"+domid).attr("type",1);		        
+	            }else if(waitNum>0 || stopNum>0){
+	            	$(".task"+domid).attr("type",2);
+	            }else if(ingNum<1 && (waitNum<1 || stopNum<1) && okNum>0){
+	            	$(".task"+domid).attr("type",4);
+	            }
+	            $(".task"+domid).find(".val").html(domprogress);
+	            // alert($(".task"+domid).html())
+	        }    
+	    }
+	}
+function showCacheList(){
+//	if($(".cache-course").length<1){
+//		$('#content').html('');
+//		$('body').addClass('null');
+//		return false;
+//	}
+//
+    $.each($(".cache-course"),function(kk,vv){
+    	if( $(vv).find(".mycaptC").length>0 && $(vv).find(".mycaptB").length>0 && $(vv).find(".mycaptA").length>0 ){
+    	   showCaptCFn($(vv));
+		   showCaptBFn($(vv));
+		   showCaptAFn($(vv));
+		   showCourseFn($(vv));	
+    	}else if( $(vv).find(".mycaptC").length<1 && $(vv).find(".mycaptB").length>0 && $(vv).find(".mycaptA").length>0){
+    		showCaptCFn2($(vv));
+		    showCaptBFn2($(vv));
+		    showCourseFn2($(vv));	
+    	}else if( $(vv).find(".mycaptC").length<1 && $(vv).find(".mycaptB").length<1 && $(vv).find(".mycaptA").length>0 ){
+    		showCaptCFn3($(vv));
+    		showCourseFn3($(vv));
+    	}
+        
+	})
+}
+
+function showCaptCFn(obj){
+	
+	$.each(obj.find(".mycaptC"),function(k,v){
+//		if($(v).css("display") != "none"){
+			var taskList = $(v).next(".tasksBoxs").find(".taskList");
+	        var len =0;
+	        $.each(taskList,function(key,val){
+//	        	alert($(val).find(".down-progress").attr("type"))
+                if($(val).find(".down-progress").attr("type") == 1){
+                    len++;
+                }else if($(val).find(".down-progress").attr("type") == 2){
+                    len++;
+                }else if($(val).find(".down-progress").attr("type") == 5){
+                    len++;
+                }else if($(val).find(".down-progress").attr("type") == 4){
+                    len++;
+                }
+            });
+            //alert(len)
+		    if(len>0){
+	            $(v).show();
+	        }else{
+	            $(v).hide();
+	        }
+//		}
+	})
+	
+}
+function showCaptBFn(obj){
+    $.each(obj.find(".mycaptB"),function(k,v){
+//		if($(v).css("display") != "none"){
+			var mycaptCList = $(v).find(".mycaptC");
+	        var len =0;
+	        $.each(mycaptCList,function(key,val){
+	        	if($(this).css("display") != "none"){
+	        		len++;
+	        	}
+            });
+		    if(len>0){
+	            $(v).show();
+	        }else{
+	            $(v).hide();
+	        }
+//		}
+	})
+}
+function showCaptAFn(obj){
+    $.each(obj.find(".mycaptA"),function(k,v){
+        var mycaptBList = $(v).find(".mycaptB");
+        var len =0;
+        $.each(mycaptBList,function(key,val){
+        	if($(this).css("display") != "none"){
+        		len++;
+        	}
+        });
+        
+        if(len>0){
+            $(v).show();
+        }else{
+            $(v).hide();
+        }
+    })
+}
+function showCourseFn(obj){
+	
+    $.each(obj,function(k,v){
+        var mycaptAList = $(v).find(".mycaptA");
+        var len =0;
+        $.each(mycaptAList,function(key,val){
+        	if($(this).css("display") != "none"){
+        		len++;
+        	}
+        });       
+        if(len>0){
+            $(v).show();
+        }else{
+            $(v).hide();
+        }
+    })
+    noCache();
+}
+
+function noCache(){
+	var courseNum = 0;
+	$.each($(".cache-course"),function(kk,vv){
+		if($(this).css("display") != "none"){
+    		courseNum++;
+    	}
+	});
+	
+	if(courseNum<1){
+		$('#content').html('');
+		$('body').addClass('null');
+		return false;
+	}
+}
+
+function showCaptCFn2(obj){
+	$.each(obj.find(".mycaptB"),function(k,v){
+//		if($(v).css("display") != "none"){
+			var taskList = $(v).find(".tasksBoxs").eq(0).find(".taskList");
+	        var len =0;
+	        $.each(taskList,function(key,val){
+//	        	alert($(val).find(".down-progress").attr("type"))
+                if($(val).find(".down-progress").attr("type") == 1){
+                    len++;
+                }else if($(val).find(".down-progress").attr("type") == 2){
+                    len++;
+                }else if($(val).find(".down-progress").attr("type") == 5){
+                    len++;
+                }else if($(val).find(".down-progress").attr("type") == 4){
+                    len++;
+                }
+            });
+		    if(len>0){
+	            $(this).show();   
+	        }else{
+	            $(this).hide();
+	        }
+//		}
+	})	
+}
+function showCaptBFn2(obj){
+    $.each(obj.find(".mycaptA"),function(k,v){
+//		if($(v).css("display") != "none"){
+			var mycaptCList = $(v).find(".mycaptB");
+	        var len =0;
+	        $.each(mycaptCList,function(key,val){
+	        	if($(this).css("display") != "none"){
+	        		len++;
+	        	}
+            });
+		    if(len>0){
+	            $(v).show();
+	        }else{
+	            $(v).hide();
+	        }
+//		}
+	})
+}
+function showCourseFn2(obj){
+	
+    $.each(obj,function(k,v){
+        var mycaptAList = $(v).find(".mycaptA");
+        var len =0;
+        $.each(mycaptAList,function(key,val){
+        	if($(this).css("display") != "none"){
+        		len++;
+        	}
+        });       
+        if(len>0){
+            $(v).show();
+        }else{
+            $(v).hide();
+        }
+    })
+    noCache();
+}
+
+//种类三
+function showCaptCFn3(obj){
+	$.each(obj.find(".mycaptA"),function(k,v){
+//		if($(v).css("display") != "none"){
+			var taskList = $(v).next(".tasksBoxs").find(".taskList");
+	        var len =0;
+	        $.each(taskList,function(key,val){
+//	        	alert($(val).find(".down-progress").attr("type"))
+                if($(val).find(".down-progress").attr("type") == 1){
+                    len++;
+                }else if($(val).find(".down-progress").attr("type") == 2){
+                    len++;
+                }else if($(val).find(".down-progress").attr("type") == 5){
+                    len++;
+                }else if($(val).find(".down-progress").attr("type") == 4){
+                    len++;
+                }
+            });
+		    if(len>0){
+	            $(this).show();   
+	        }else{
+	            $(this).hide();
+	        }
+//		}
+	})	
+}
+
+function showCourseFn3(obj){
+	
+    $.each(obj,function(k,v){
+        var mycaptAList = $(v).find(".mycaptA");
+        var len =0;
+        $.each(mycaptAList,function(key,val){
+        	if($(this).css("display") != "none"){
+        		len++;
+        	}
+        });       
+        if(len>0){
+            $(v).show();
+        }else{
+            $(v).hide();
+        }
+    })
+	noCache();
+}
 function get_input(name) {
     var data = [];
     $.each($("." + name), function(k, v) {
@@ -555,15 +801,21 @@ apiready = function() {
     api.addEventListener({
         name: 'flush_cache'
     }, function(ret, err) {
-        mydata = [];
-        get_data();
+//      mydata = [];
+//      lastgettime = 1388509261;
+//      videochangelist = "";
+//      couselist = "";
+//      videoDownInfo =new Object();
+//      getdownrecord();
+//      get_data();
+//      initDomDownStatus();
     });
     
-    api.addEventListener({
-        name: 'reloadPage'
-    }, function(ret, err) {
-        location.reload();
-    });
+//  api.addEventListener({
+//      name: 'reloadPage'
+//  }, function(ret, err) {
+//      location.reload();
+//  });
     api.addEventListener({
         name: 'down_speed'
     }, function(ret) {
@@ -601,8 +853,18 @@ apiready = function() {
         textUp: '松开刷新',
         showTime: false
     }, function(ret, err) {
-        mydata = [];
-        get_data();
+    	
+    	
+        api.hideProgress();
+        api.refreshHeaderLoadDone();
+        location.reload();
+        if($(".cache-course").length<1){
+			$('#content').html('');
+			$('body').addClass('null');
+			return false;
+		}
+	   
+        
     });
 //  api.addEventListener({
 //      name: 'opena'
