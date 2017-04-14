@@ -731,7 +731,19 @@ function video_cache(method, title, ccid, UserId, apiKey, callback) {
                         return false;
                     }
 //                  if(ret.finish == "YES"){
-//                  	alert(JSON.stringify(ret))
+//                  	
+//                  	var nextVideoTask = JSON.parse(ret.wait)[0].videoId;
+////                  	alert($("#"+nextVideoTask).length);
+////                  	$("#"+nextVideoTask).find(".down-progress").trigger("click");
+//                  	var downRecordArr = $api.getStorage('downRecordArr');
+//
+//                  	for(var i=0;i<downRecordArr.length;i++){
+//                  		if(nextVideoTask = downRecordArr[i].videoId){
+//                  			
+//                  			video_cache("download", "", downRecordArr[i].videoId, downRecordArr[i].UserId, downRecordArr[i].apiKey, "");
+//                  		}
+//                  	}
+//                  	
 //                  }
 //                  alert(JSON.stringify(ret))
 //                  callback(ret, err);
@@ -856,6 +868,7 @@ function down(_this) {
         tasks = $.trim($(_this).siblings('.down_data').html());
 	$api.setStorage("clickStatus",type);
 	
+	
     if (isEmpty(tasks)) {
         api.toast({
             msg: '无视频任务',
@@ -967,20 +980,27 @@ function mydown(result) {
         var downObj = {
             userId : memberId,
             courseId : param.courseId,
-            courseName : param.courseName,
+            apiKey : result.tasks.apiKey,
             videoId : param.tasks.videoCcid,
             expirationTime : param.expirationTime,
             path : param.path,
-            pathName : param.pathname,
             isbuy : param.isbuy,
             islock : param.islock,
             activestate : param.activestate,
-            index : param.index,
             videoNum : 10
         }
-
+        var UserId = result.tasks.videoSiteId;
+        
+        downObj['UserId'] = UserId;
+        getCCconfig(function(CCconfig) {
+            if (CCconfig) {
+                downObj['isEncryption'] = isEmpty(CCconfig[UserId]) ? 0 : 1;
+               
+            }
+        });
+		
         //保存任务数据库
-   
+  
         cache_model.insertDowndCourseState(downObj,function(ret,err){
             
               $api.setStorage('isDownding',ret.isDownding);
@@ -995,6 +1015,24 @@ function mydown(result) {
         },function(ret,err){
 //			alert(JSON.stringify(ret))
         })
+        var downRecordArr = $api.getStorage('downRecordArr') ? $api.getStorage('downRecordArr') : [];
+        var isExait=0;
+        for(var i=0;i<downRecordArr.length;i++){
+        	if(downRecordArr[i].videoId && downRecordArr[i].videoId == param.tasks.videoCcid){
+        		isExait++;
+        	}
+        }
+        if(isExait<1){
+	        var downRecord = {};
+	        downRecord.videoId = param.tasks.videoCcid;
+	        downRecord.UserId = result.tasks.videoSiteId;
+	        downRecord.apiKey = result.tasks.apiKey;
+	        downRecordArr.push(downRecord);
+	        $api.setStorage('downRecordArr',downRecordArr);
+	        
+        
+        }
+        
     }
     
     switch (type) {

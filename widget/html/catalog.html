@@ -166,7 +166,7 @@
             </li><div class="fath">
             {{~val3.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
-            <div class="taskList {{=is_show}}">
+            <div class="taskList {{=is_show}}" id="{{=val4.videoCcid}}">
               <dl style="padding-left: .8rem;">
           
                 <dt onclick="next(3,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val3.chapterId}}')"><i type="1" data-chapId="{{=val3.chapterId}}" class="dot-status"></i><span class="taskVideo"></span>
@@ -411,7 +411,7 @@
           if (num2 == -1) {
               var tmp_chapters = course_detail.chapters[num1].tasks;
           } else if (num3 == -1) {
-               //var tmp_chapters = course_detail.chapters[num1].children[num2].tasks;
+               var tmp_chapters = course_detail.chapters[num1].children[num2].tasks;
           } else {
               var tmp_chapters = course_detail.chapters[num1].children[num2].children[num3].tasks;
           }

@@ -672,6 +672,7 @@ apiready = function() {
 //  }, function(ret, err) {
 //      location.reload();
 //  });
+
     api.addEventListener({
         name : 'down_speed'
     }, function(ret) {

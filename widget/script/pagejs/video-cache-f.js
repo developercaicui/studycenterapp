@@ -283,18 +283,20 @@ function initDomDownStatus(){
 	    	okNum = 0,
 	    	stopNum = 0;
 	    //从1开始，因为拼接videochangelist的时候用,开始的
-	//     alert(strs+"====="+JSON.stringify(videoDownInfo))
+	     
 	    for (j=1; j<pathlen;j++ ){
 	        var domInfo = videoDownInfo[strs[j]];
 	        var domid = strs[j];
-	        // alert(JSON.stringify(domInfo))
+	         
 	        if(!isEmpty(domInfo)){
 	            var domprogress = videoDownInfo[strs[j]].progress;
 	            var domstatus = videoDownInfo[strs[j]].status;
 	            var domtasknum = videoDownInfo[strs[j]].tasknum;
 	            
-	            var taskList = $(".task"+domid).closest(".list").nextAll(".taskList");
+	            var taskList = $(".task"+domid).closest(".list").next(".tasksBoxs").find(".taskList");
+	            
 	            $.each(taskList,function(v,k){
+//	            alert($(this).find(".down-progress").attr("type"))
 	                if($(this).find(".down-progress").attr("type") == 1){
 	                    domstatus = 1;
 						ingNum++;
@@ -309,7 +311,7 @@ function initDomDownStatus(){
 	                    okNum++;
 	                }
 	            })
-	           
+	           	
 	            if(ingNum>0){
 		            $(".task"+domid).attr("type",1);		        
 	            }else if(waitNum>0 || stopNum>0){
