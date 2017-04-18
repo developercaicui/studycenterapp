@@ -169,7 +169,7 @@
             <div class="taskList {{=is_show}}" id="{{=val4.videoCcid}}">
               <dl style="padding-left: .8rem;">
           
-                <dt onclick="next(3,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val3.chapterId}}')"><i type="1" data-chapId="{{=val3.chapterId}}" class="dot-status"></i><span class="taskVideo"></span>
+                <dt onclick="next(3,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val3.chapterId}}')"><i type="1" data-chapId="{{=val3.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskVideo"></span>
                   <p style="padding-left: .9rem;">{{=val4.title}}</p>
                   <!--p  {{=progress+'='+val2.chapterId}}-->
                 </dt>
@@ -184,7 +184,7 @@
             </div>{{ }else if(val4.taskType=='exam'){ }}
             <div class="taskList {{=is_show}}">
               <dl style="padding-left: .8rem;">
-                <dt onclick="next(3,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val3.chapterId}}')"><i type="1" data-chapId="{{=val3.chapterId}}" class="dot-status"></i><span class="taskExam"></span>
+                <dt onclick="next(3,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val3.chapterId}}')"><i type="1" data-chapId="{{=val3.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
                   <p style="padding-left: .9rem;">{{=val4.title}}</p>
                   <!--p  {{=progress+'='+val2.chapterId}}-->
                 </dt>
@@ -227,7 +227,7 @@
             <div class="taskList {{=is_show}}">
               <dl>
           
-                <dt onclick="next(2,'{{=key}}','{{=key2}}',-1,this,'{{=val2.chapterId}}')"><i type="1" data-chapId="{{=val2.chapterId}}" class="dot-status"></i><span class="taskVideo"></span>
+                <dt onclick="next(2,'{{=key}}','{{=key2}}',-1,this,'{{=val2.chapterId}}')"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskVideo"></span>
                   <p style="padding-left: .9rem;">{{=val4.title}}</p>
                   <!--p  {{=progress+'='+val2.chapterId}}-->
 
@@ -244,7 +244,7 @@
             </div>{{ }else if(val4.taskType=='exam'){ }}
             <div class="taskList {{=is_show}}">
               <dl>
-                <dt onclick="next(2,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val2.chapterId}}')"><i type="1" data-chapId="{{=val2.chapterId}}" class="dot-status"></i><span class="taskExam"></span>
+                <dt onclick="next(2,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val2.chapterId}}')"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
                   <p style="padding-left: .9rem;">{{=val4.title}}</p>
                   <!--p  {{=progress+'='+val2.chapterId}}-->
                 </dt>
@@ -287,7 +287,7 @@
             <div class="taskList {{=is_show}}">
       
               <dl>
-                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" data-chapId="{{=val.chapterId}}" class="dot-status"></i><span class="taskVideo"></span>
+                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskVideo"></span>
                   <p style="padding-left: .9rem;">{{=val4.title}}</p>
           
                 </dt>
@@ -302,7 +302,7 @@
             </div>{{ }else if(val4.taskType=='exam'){ }}
             <div class="taskList {{=is_show}}">
               <dl>
-                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" data-chapId="{{=val.chapterId}}" class="dot-status"></i><span class="taskExam"></span>
+                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
                   <p style="padding-left: .9rem;">{{=val4.title}}</p>
 
                 </dt>
@@ -736,6 +736,37 @@
       
                                           }
                                       });
+                                      
+                                      $('.fath').each(function (k,v) {
+			                              $(v).find('.dot-status').each(function (key,val) {
+				                              var tmp_chapID = $(val).attr('data-chapId');
+				                              var tmp_taskID = $(val).attr('data-taskid');
+		//		                              alert(tmp_chapID +"===="+ tmp_taskID)
+				                              if (!isEmpty(tmp_chapID) && !isEmpty(tmp_taskID)) {
+				                                  var tmp_task_progress = arr[tmp_chapID][tmp_taskID];
+				                                  
+				                                  if (isEmpty(tmp_task_progress) || isEmpty(tmp_task_progress.isok)) {
+		//		                                      $(this).css('width', '0%');
+													  $(val).attr('type', 1);
+				                                  } else if (tmp_task_progress.isok == 3) {
+		//		                                      $(this).css('width', '100%');
+													  $(val).attr('type', 3);
+				                                  } else if (tmp_task_progress.isok == 0) {
+		//		                                      $(this).css('width', '0%');
+													  $(val).attr('type', 1);
+				                                  } else if (tmp_task_progress.isok == 1) {
+				                                      var tmpwidth = ((tmp_task_progress.progress * 100) / tmp_task_progress.total).toFixed(2) + '%';
+		//		                                      $(this).css('width', tmpwidth);
+													  $(val).attr('type', 2);
+				                                  }
+				                              } else {
+		//		                                  $(this).css('width', '0%');
+												  $(val).attr('type', 1);
+				                              }
+				                          });
+		                              
+		                              })
+                                      
                                   }
                               } else if (type == 'progress') {
                                   //如果是获取任务进度条
@@ -912,6 +943,36 @@
       
                                   }
                               });
+                              $('.fath').each(function (k,v) {
+	                              $(v).find('.dot-status').each(function (key,val) {
+		                              var tmp_chapID = $(val).attr('data-chapId');
+		                              var tmp_taskID = $(val).attr('data-taskid');
+//		                              alert(tmp_chapID +"===="+ tmp_taskID)
+		                              if (!isEmpty(tmp_chapID) && !isEmpty(tmp_taskID)) {
+		                                  var tmp_task_progress = arr[tmp_chapID][tmp_taskID];
+		                                  
+		                                  if (isEmpty(tmp_task_progress) || isEmpty(tmp_task_progress.isok)) {
+//		                                      $(this).css('width', '0%');
+											  $(val).attr('type', 1);
+		                                  } else if (tmp_task_progress.isok == 3) {
+//		                                      $(this).css('width', '100%');
+											  $(val).attr('type', 3);
+		                                  } else if (tmp_task_progress.isok == 0) {
+//		                                      $(this).css('width', '0%');
+											  $(val).attr('type', 1);
+		                                  } else if (tmp_task_progress.isok == 1) {
+		                                      var tmpwidth = ((tmp_task_progress.progress * 100) / tmp_task_progress.total).toFixed(2) + '%';
+//		                                      $(this).css('width', tmpwidth);
+											  $(val).attr('type', 2);
+		                                  }
+		                              } else {
+//		                                  $(this).css('width', '0%');
+										  $(val).attr('type', 1);
+		                              }
+		                          });
+                              
+                              })
+                              
                           }
                       } else if (type == 'progress') {
                           //如果是获取任务进度条

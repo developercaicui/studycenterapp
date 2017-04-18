@@ -199,6 +199,8 @@ function get_data() {
                 
                 init_data();
                 initDomDownStatus();
+                //处理圈圈
+	    isSolidcircle('circle', '', '');
            })
         }
 
@@ -238,9 +240,9 @@ function initDomDownStatus(){
 	    if(isEmpty($api.getStorage("videochangelist"))){
 	        return false;
 	    }
-	
 	    var strs = $api.getStorage("videochangelist").split(","); //字符分割
 	    var pathlen = strs.length;
+	
 	    //从1开始，因为拼接videochangelist的时候用,开始的
 	//     alert(strs+"====="+JSON.stringify(videoDownInfo))
 	    for (j=1; j<pathlen;j++ ){
@@ -254,83 +256,54 @@ function initDomDownStatus(){
 	            // alert(domid+"==="+domprogress+"==="+domstatus)
 	            // ------------------设置界面对应id节点dom下载状态，并设置为可见--------------------------
 	            
+            	$("#course"+domid).find(".progress-bar2").css("width",domprogress.toFixed(2)+"%");
+            	$("#course"+domid).find(".progress-val2").text(domprogress.toFixed(2)+"%");
+	            
 	            $(".task"+domid).attr("type",domstatus);
 	            $(".task"+domid).find(".val").html(domprogress);
 	            // alert($(".task"+domid).html())
 	        }    
 	    }
 	    setCapterState();
-	    //处理圈圈
-	    isSolidcircle('circle', '', '');
+	    
 	    init_process();
-	//    ------------------设置结束--------------------------
+		//    ------------------设置结束--------------------------
 	
 	   showCacheList();
-//	   showCaptCFn2();
-//	   showCaptBFn2();
-//		showCourseFn2();
-//		   showCourseFn();
+
+		
 	}
 	function setCapterState(){
-	    if(isEmpty($api.getStorage("videochangelist"))){
-	        return false;
-	    }
-	
-	    var strs = $api.getStorage("videochangelist").split(","); //字符分割
-	    var pathlen = strs.length;
-	    var waitNum = 0,
-	    	ingNum = 0,
-	    	okNum = 0,
-	    	stopNum = 0;
-	    //从1开始，因为拼接videochangelist的时候用,开始的
-	     
-	    for (j=1; j<pathlen;j++ ){
-	        var domInfo = videoDownInfo[strs[j]];
-	        var domid = strs[j];
-	         
-	        if(!isEmpty(domInfo)){
-	            var domprogress = videoDownInfo[strs[j]].progress;
-	            var domstatus = videoDownInfo[strs[j]].status;
-	            var domtasknum = videoDownInfo[strs[j]].tasknum;
-	            
-	            var taskList = $(".task"+domid).closest(".list").next(".tasksBoxs").find(".taskList");
-	            
-	            $.each(taskList,function(v,k){
-//	            alert($(this).find(".down-progress").attr("type"))
-	                if($(this).find(".down-progress").attr("type") == 1){
-	                    domstatus = 1;
-						ingNum++;
-	                }else if($(this).find(".down-progress").attr("type") == 2){
-	                    domstatus = 2;
-	                    stopNum++;
-	                }else if($(this).find(".down-progress").attr("type") == 5){
-	                    domstatus = 5;
-	                    waitNum++;
-	                }else if($(this).find(".down-progress").attr("type") == 4){
-	                    domstatus = 4;
-	                    okNum++;
-	                }
-	            })
-	           	
-	            if(ingNum>0){
-		            $(".task"+domid).attr("type",1);		        
-	            }else if(waitNum>0 || stopNum>0){
-	            	$(".task"+domid).attr("type",2);
-	            }else if(ingNum<1 && (waitNum<1 || stopNum<1) && okNum>0){
-	            	$(".task"+domid).attr("type",4);
-	            }
-	            $(".task"+domid).find(".val").html(domprogress);
-	            // alert($(".task"+domid).html())
-	        }    
-	    }
+        $.each($(".tasksBoxs"),function(k,v){
+             var waitNum = 0,
+                 ingNum = 0,
+                 okNum = 0,
+                 stopNum = 0;
+            var taskList = $(v).prev(".list").find(".down-progress");
+            var len =0;
+            $.each($(v).find(".down-progress"),function(key,val){
+                if($(val).attr("type") == 1){
+                     ingNum++;
+                 }else if($(val).attr("type") == 2){
+                     stopNum++;
+                 }else if($(val).attr("type") == 5){
+                     waitNum++;
+                 }else if($(val).attr("type") == 4){
+                     okNum++;
+                 }
+            });
+            if(ingNum>0){
+                 taskList.attr("type",1);                
+             }else if(waitNum>0 || stopNum>0){
+                 taskList.attr("type",2);
+             }else if(ingNum<1 && (waitNum<1 || stopNum<1) && okNum>0){
+                 taskList.attr("type",4);
+             }
+             // taskList.html(domprogress);
+    	})
+
 	}
 function showCacheList(){
-//	if($(".cache-course").length<1){
-//		$('#content').html('');
-//		$('body').addClass('null');
-//		return false;
-//	}
-//
     $.each($(".cache-course"),function(kk,vv){
     	if( $(vv).find(".mycaptC").length>0 && $(vv).find(".mycaptB").length>0 && $(vv).find(".mycaptA").length>0 ){
     	   showCaptCFn($(vv));

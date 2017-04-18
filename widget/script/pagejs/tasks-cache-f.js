@@ -97,7 +97,7 @@ var is_debug = false;
       clearInterval(getStatusTime);
       getStatusTime = setInterval(function(){
           getdownrecord();
-      },2000)
+      },1000)
       init_check();
       
 //    api.setRefreshHeaderInfo({

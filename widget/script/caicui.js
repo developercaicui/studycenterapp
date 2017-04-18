@@ -864,6 +864,24 @@ function DosaveDataBase() {
 				}
 
 		});
+//		var CcPlayTime = $api.getStorage('CcPlayTime'+task_info.videoCcid);
+//		if(isEmpty(CcPlayTime)){
+//			$api.setStorage('CcPlayTime'+task_info.videoCcid,now_progress);
+//		}else{
+//			if(CcPlayTime < now_progress){
+//				$api.setStorage('CcPlayTime'+task_info.videoCcid,now_progress);
+//			}			
+//		}
+//		if (cache_model == null) {
+//	        cache_model = api.require('lbbVideo');
+//	    }
+//	    cache_model.updatePlayTime({
+//	    	"userId":getstor('memberId'),
+//	    	"videoId":task_info.videoCcid,
+//	    	"playTime":$api.getStorage('CcPlayTime'+task_info.videoCcid)
+//	    	},function(){
+//	    
+//	    })
 
 		//验证本次保存时间和上次保存时间的差值，必须为正数，否则提示用户本地时间异常????
 		//   DB.getTaskProgress(post_param.taskId,function(data){

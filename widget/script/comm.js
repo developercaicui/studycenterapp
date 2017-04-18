@@ -724,25 +724,15 @@ function video_cache(method, title, ccid, UserId, apiKey, callback) {
                 //api.alert({
                 //    msg:param
                 //});
-               
+               	
                 cache_model.download(param, function(ret, err) {
-
+					
                     if (api.systemType == "ios" && parseInt(ret.status) == 2) {
                         return false;
                     }
 //                  if(ret.finish == "YES"){
+//                  	alert(param.isEncryption +"===="+JSON.stringify(ret));
 //                  	
-//                  	var nextVideoTask = JSON.parse(ret.wait)[0].videoId;
-////                  	alert($("#"+nextVideoTask).length);
-////                  	$("#"+nextVideoTask).find(".down-progress").trigger("click");
-//                  	var downRecordArr = $api.getStorage('downRecordArr');
-//
-//                  	for(var i=0;i<downRecordArr.length;i++){
-//                  		if(nextVideoTask = downRecordArr[i].videoId){
-//                  			
-//                  			video_cache("download", "", downRecordArr[i].videoId, downRecordArr[i].UserId, downRecordArr[i].apiKey, "");
-//                  		}
-//                  	}
 //                  	
 //                  }
 //                  alert(JSON.stringify(ret))
@@ -1000,7 +990,7 @@ function mydown(result) {
         });
 		
         //保存任务数据库
-  
+  		
         cache_model.insertDowndCourseState(downObj,function(ret,err){
             
               $api.setStorage('isDownding',ret.isDownding);
@@ -1015,23 +1005,7 @@ function mydown(result) {
         },function(ret,err){
 //			alert(JSON.stringify(ret))
         })
-        var downRecordArr = $api.getStorage('downRecordArr') ? $api.getStorage('downRecordArr') : [];
-        var isExait=0;
-        for(var i=0;i<downRecordArr.length;i++){
-        	if(downRecordArr[i].videoId && downRecordArr[i].videoId == param.tasks.videoCcid){
-        		isExait++;
-        	}
-        }
-        if(isExait<1){
-	        var downRecord = {};
-	        downRecord.videoId = param.tasks.videoCcid;
-	        downRecord.UserId = result.tasks.videoSiteId;
-	        downRecord.apiKey = result.tasks.apiKey;
-	        downRecordArr.push(downRecord);
-	        $api.setStorage('downRecordArr',downRecordArr);
-	        
         
-        }
         
     }
     
@@ -1610,40 +1584,7 @@ function get_dowm(chapterIdA, chapterIdB, chapterIdC) {
     var precent = isEmpty($api.getStorage(type)) || $api.getStorage(type) == undefined || $api.getStorage(type) == 'NaN' ? 0 : $api.getStorage(type);
     return precent;
 }
-// function get_dowm2(videoId){
-//     if(isEmpty(videoId)){
-//         return false;
-//     }
-//     cache_model = api.require('lbbVideo');
 
-//     var param = {
-//         "userId" : getstor('memberId'),
-//         "videoId" : videoId
-//     }
-//     cache_model.getTaskData(param,function(ret,err){
-//         // var getData = null;
-//         // ret = JSON.parse(ret.data.replace(/\\/g,''));
-        
-//         // if(!isEmpty(ret)){
-//         //     getData = {
-//         //         progress : ret[0].progress,
-//         //         state : ret[0].state,
-//         //         playTime : ret[0].playTime
-//         //     }
-//         // }else{
-//         //     getData =  {
-//         //         progress : 0,
-//         //         state : 3,
-//         //         playTime : 0
-//         //     }
-//         // } 
-//         // alert(JSON.stringify(ret))
-//         $(".task"+videoId).attr("type",1);
-//         $(".task"+videoId).find(".val").html(10)
-//         init_process();
-//     })
-
-// }
 function is_loadA(chata) {
     var memberId = getstor('memberId');
     chata = memberId + chata + 'progress';

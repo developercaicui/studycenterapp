@@ -165,12 +165,11 @@
    
     <!--本章任务-->
     <script id="task_tpl" type="text/x-dot-template">
-    {{~it.chapters:val:key}}
+    {{~it.chapters:val:key}}<ul>
       {{ if(val.isLeaf=='false'){ }}
-          {{~val.children:val2:key2}}<ul>
+          {{~val.children:val2:key2}}
           {{ if(val2.isLeaf=='false'){ }}
           {{~val2.children:val3:key3}}
-          
             {{~val3.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
             <li class="video-catego" style="display: none;"><span class="taskVideo"></span>
@@ -264,12 +263,12 @@
             <div>
                   <dl class="taskList">
                     <dt tapmode  onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}')">
-                      <p style="color:#000;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 3.2rem;">{{=val4.title}}</p>
+                      <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 3.2rem;">{{=val4.title}}</p>
                       <p class="v-name"><span class="span11"></span><span>0%</span></p>
                       <p class="v-progress"><span style="font-size: 0;" data-taskid="{{=val.taskId}}" class="taskProgress"></span></p>
                     </dt>
                     <dd>
-                      <i dataid="{{=val.chapterId}}" dataccid="{{=val4.videoCcid}}" class="icon-check chapterb"></i>
+                      
                       <div id="{{=val.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-down1"></i>
                     <div class="val"></div>
                   </div>
@@ -298,7 +297,7 @@
 	        </li>
             {{ } }}
             {{~}}
-      </ul>{{ } }}
+      {{ } }}
       {{~}}
     
     
