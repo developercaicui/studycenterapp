@@ -345,6 +345,11 @@ function toggleTasks(e) {
 	$(e).closest(".list").next(".fath").toggleClass('hide-child');
 	$(e).closest(".list").addClass("activeTask");
 }
+//课程折叠
+function toggleCourse(e) {
+		$(e).toggleClass('hide-child');
+}
+
 
 /**
  * 获取课程里所有的任务

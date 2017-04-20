@@ -724,7 +724,7 @@ function video_cache(method, title, ccid, UserId, apiKey, callback) {
                 //api.alert({
                 //    msg:param
                 //});
-               	
+               
                 cache_model.download(param, function(ret, err) {
 					
                     if (api.systemType == "ios" && parseInt(ret.status) == 2) {
@@ -994,7 +994,7 @@ function mydown(result) {
         cache_model.insertDowndCourseState(downObj,function(ret,err){
             
               $api.setStorage('isDownding',ret.isDownding);
-              
+//            alert($api.getStorage('isDownding'))
         })
         
         // 保存课程信息库
@@ -1008,7 +1008,7 @@ function mydown(result) {
         
         
     }
-    
+//  alert(type)
     switch (type) {
         case '1':
         case 1:
@@ -1106,13 +1106,15 @@ function mydown(result) {
                             taskId = task_data[m].data.taskId;
                         var isDownding = $api.getStorage('isDownding');
                         var clickStatus = $api.getStorage('clickStatus');
+                        
                         if(isDownding == "false"){
                         	isDownding = false;
                         }else if(isDownding == 'true'){
                         	isDownding = true;
                         }
-                        
-                        if (isDownding && clickStatus != 2) {
+                       
+                        if (!isEmpty(isDownding) && clickStatus != 2) {
+                       
                             //一级章节下载记录
                             if (!isEmpty(chapterIdA) && isEmpty(chapterIdB) && isEmpty(chapterIdC)) {
                                 $api.setStorage(memberId + chapterIdA + 'progress', 1);
@@ -1171,6 +1173,7 @@ function mydown(result) {
                             return false;
                             
                         }
+                 
                         video_cache('download', title, videoCcid, videoSiteId, apiKey, autoDownCallback);
                         //下载中ui监听
                         // data.type = 'ing';
@@ -1852,8 +1855,7 @@ function delVideoFile(videoId) {
 }
 
 function getdownrecord(){
-
-    cache_model = api.require('lbbVideo');
+	cache_model = api.require('lbbVideo');
     var param = {
         "userId" : getstor('memberId'),
         "readTime" : lastgettime

@@ -155,7 +155,11 @@ apiready = function() {
 		if (num == 0) {
 			$('.message-bells .msg-mark').addClass('none');
 		} else {
-			$('.message-bells .msg-mark').html(num);
+			if(num > 99){
+        		$('.message-bells .msg-mark').html("99+");
+        	}else{
+        		$('.message-bells .msg-mark').html(num);
+        	}
 		}
 
 	} else {
@@ -179,7 +183,11 @@ apiready = function() {
 				if (ret.totalCount == 0) {
 					$('.message-bells .msg-mark').addClass('none');
 				} else {
-					$('.message-bells .msg-mark').html(ret.totalCount);
+					if(ret.totalCount > 99){
+		        		$('.message-bells .msg-mark').html("99+");
+		        	}else{
+		        		$('.message-bells .msg-mark').html(ret.totalCount);
+		        	}
 				}
 				$api.setStorage('center_num', ret.totalCount);
 			} else {
@@ -206,7 +214,11 @@ apiready = function() {
 	}, function(ret) {
 		if ($api.getStorage('center_num') && $api.getStorage('center_num') != 0) {
 			var num = $api.getStorage('center_num');
-			$('.message-bells .msg-mark').html(num);
+			if(num > 99){
+        		$('.message-bells .msg-mark').html("99+");
+        	}else{
+        		$('.message-bells .msg-mark').html(num);
+        	}
 		} else {
 			$('.message-bells .msg-mark').addClass('none');
 		}

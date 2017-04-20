@@ -357,7 +357,13 @@ apiready = function() {
 function initDomDownStatus(){
 
     if(isEmpty($api.getStorage("videochangelist"))){
-        return false;
+        $.each($(".down-progress"),function(k,v){
+	    	if($(v).attr("id") == $api.getStorage("setchapterId")){
+	    		$(v).parents("li").show();
+	    	}
+	    	
+	    })
+	    return false;
     }
 
     var strs = $api.getStorage("videochangelist").split(","); //字符分割
@@ -373,7 +379,7 @@ function initDomDownStatus(){
             var domstatus = videoDownInfo[strs[j]].status;
             var domtasknum = videoDownInfo[strs[j]].tasknum;
             // ------------------设置界面对应id节点dom下载状态，并设置为可见--------------------------
-//          alert(domid+"==="+api.pageParam.chapterId);
+            
             if($(".task"+domid).attr("id") == $api.getStorage("setchapterId")){
                 $(".task"+domid).parents("li").show();
             }
@@ -463,6 +469,7 @@ function getChapterTask() {
             }
         }
         var arr = api.pageParam.course_detail;
+        
         var task_tpl = $('#task_tpl').html();
         var content = doT.template(task_tpl);
      	

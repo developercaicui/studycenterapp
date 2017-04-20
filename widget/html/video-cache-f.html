@@ -73,7 +73,7 @@
             {{ if(val2.isLeaf=='false'){ }}
             <ul class="list mycaptB {{=is_loadB(val2.chapterId)}}">
               <dl class="haschild">
-                <dt onclick="toggleChild(this)"><i class="icon-arrow-down"></i>
+                <dt onclick="toggleCapt(this)"><i class="icon-arrow-down"></i>
                   <p>{{=val2.chapterTitle}}</p>
                 </dt>
                 <dd><i dataid="{{=val2.chapterId}}" class="icon-check chapterb"></i></dd>
@@ -95,7 +95,7 @@
                     <div class="down_data none">{{=JSON.stringify(it[k].data)}}</div>
                   </dd><i class="icon-arrow-right"></i>
                 </dl>
-              </li><div class="tasksBoxs">
+              </li><div class="tasksBoxs fath">
               {{~val3.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
             <div class="taskList {{=is_show}} none">
@@ -135,7 +135,7 @@
                   <div class="down_data none">{{=JSON.stringify(it[k].data)}}</div>
                 </dd><i class="icon-arrow-right"></i>
               </dl>
-              </li><div class="tasksBoxs">
+              </li><div class="tasksBoxs fath">
               {{~val2.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
             <div class="taskList {{=is_show}} none">
@@ -178,7 +178,7 @@
                 <div class="down_data none">{{=JSON.stringify(it[k].data)}}</div>
               </dd><i class="icon-arrow-right"></i>
             </dl>
-          </li><div class="tasksBoxs">
+          </li><div class="tasksBoxs fath">
           {{~val.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
             <div class="taskList {{=is_show}} none">

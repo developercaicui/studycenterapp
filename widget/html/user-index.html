@@ -14,29 +14,114 @@
     <script type="text/javascript" src="../script/zepto.js"></script>
     <title>个人中心头2</title>
     <link rel="stylesheet" href="../css/Sstyle.css">
+    <style type="text/css">
+            .stybox ul.das-top {
+  /*margin: 0.4rem 1%;*/
+  line-height: 0.4rem;
+  font-size: 0.15rem;
+  color: #fff;
+  overflow: hidden;
+}
+.stybox ul.das-top li {
+  width: 100%;
+  height: 2rem;
+  font-size: 0.18rem;
+  vertical-align: top;
+  position: relative;
+  background: #00a085;
+}
+.stybox ul.das-top li:nth-child(2) {
+  background: #d9544f;
+}
+.stybox ul.das-top li:nth-child(3) {
+  background: #418bca;
+}
+.stybox ul.das-top li:nth-child(4) {
+  background: #3f4e62;
+}
+.stybox ul.das-top li h1,
+.stybox ul.das-top li h2,
+.stybox ul.das-top li p {
+  /*white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;*/
+  padding-left: 0.3rem;
+}
+.stybox ul.das-top li h1 {
+  line-height: 0.6rem;
+  border-bottom: 1px solid #fff;
+  font-size: 0.28rem;
+}
+.stybox ul.das-top li h2 {
+  font-size: 0.28rem;
+  /*margin-top: 0.3rem;*/
+  padding-top: 0.3rem;
+}
+.stybox ul.das-top li h2,
+.stybox ul.das-top li p {
+  margin-right: 2rem;
+}
+.stybox ul.das-top li p,
+.stybox ul.das-top li b {
+  opacity: 0.7;
+}
+.stybox ul.das-top li .circle {
+  position: absolute;
+  bottom: 0.27rem;
+  right: 0.8rem;
+  text-align: center;
+}
+.stybox ul.das-top li .circle .circle-progress {
+  width: 1rem;
+  height: 1rem;
+}
+.stybox ul.das-top li .circle .circle-progress .val {
+  font-size: 0.26rem;
+  line-height: 0.96rem;
+  bottom: 0;
+}
+.stybox ul.das-top li .circle .num {
+  font-size: 0.25rem;
+  color:#fff;
+}
+.stybox ul.das-top li .circle .num b{
+  opacity: 1;
+}
+.stybox ul.das-top li .circle .circle-progress circle {
+  stroke-width: 2;
+}
+.activity li{
+    width: 100%;
+    height: 2.5rem;
+    font-size: 0.18rem;
+    vertical-align: top;
+    position: relative;
+}
+    </style>
   </head>
   <body>
+  <div class="stybox">
     <!-- 在学-->
-    <div id="course_content" class="mycourse"></div>
+    <ul id="course_content" class="das-top"></ul>
     <!-- 学习用时占比-->
-    <div class="user-index-tit userIndexOnline">
-      <div class="userIndex-titLef">学习用时占比</div>
-    </div>
-    <div class="user-index-time clearfix">
+    <ul id="activity" class="activity"></ul>
+
+    
+    <!-- <div class="user-index-time clearfix">
       <div id="graph" class="Chart left"></div>
       <ul id="content-used" class="ChartMag clearfix"></ul>
-    </div>
+    </div> -->
     <!-- 学习概况-->
-    <div class="user-index-tit userIndexOnline">
+    <!-- <div class="user-index-tit userIndexOnline">
       <div class="userIndex-titLef">学习概况</div>
       <ul class="userIndex-rigTab right clearfix">
         <li><b></b>平均时长</li>
         <li><b></b>我的学习时长</li>
       </ul>
     </div>
-    <div id="container" style="min-width:310px; height: 180px; margin: 0 auto;" class="user-index-survey"></div>
+    <div id="container" style="min-width:310px; height: 180px; margin: 0 auto;" class="user-index-survey"></div> -->
     <!-- 能力评估-->
-    <div class="user-index-tit none">
+    <!-- <div class="user-index-tit none">
       <div class="userIndex-titLef">能力评估</div><span class="userIndex-titRig pover-tit-rig">财迷中排名第<b class="ranking">93</b>位</span>
     </div>
     <div style="position:relative;" class="user-index-pover clearfix none">
@@ -44,10 +129,10 @@
         <div class="povBcount"><span class="ringBcount"></span>%</div>
       </div>
       <div id="content_able" class="user-index-pover-rig"></div>
-    </div>
+    </div> -->
     <div style="visibility:hidden;" class="bottom-navigator">
-      <script id="tpl_able" type="text/x-dot-template">
-              <!-- 能力评估各种颜色进度-->{{ if(it.chapter!=undefined && it.chapter!=null && it.chapter!='undefined' && it.chapter!='null') { }}
+      <!-- <script id="tpl_able" type="text/x-dot-template">
+              {{ if(it.chapter!=undefined && it.chapter!=null && it.chapter!='undefined' && it.chapter!='null') { }}
               <ul tapmode onclick="change_able('{{=it.chapter}}',this)" class="porB progress">
                 <li class="clearfixear tag clearfix">
                   <p>章节定向</p><span class="progressBcount">{{=it.chapter}}</span>
@@ -82,26 +167,44 @@
                 </li>
                 <li class="povPgmBg"><span class="povPgm progressPro"></span></li>
               </ul>{{ } }}
-      </script>
-      <script id="tpl_used" type="text/x-dot-template">{{for(var p in it.data) { }}
+      </script> -->
+      <!-- <script id="tpl_used" type="text/x-dot-template">{{for(var p in it.data) { }}
               <li><span></span>{{=it.data[p].label}}  <b class="question">{{=((it.data[p].value/it.n).toFixed(2))*100}}</b>%</li>{{ } }}
-      </script>
+      </script> -->
       <script id="tpl_course" type="text/x-dot-template">
-            {{var total=it.total;}}
-            {{var data=it.courselist[0];}}
             <div onclick="openCourse()" tapmode class="user-index-tit">
-              <div class="userIndex-titLef">在学课程</div><img src="../image/center-arrow.png" class="oli-rigIcon"><span class="userIndex-titRig">{{=total}}</span>
+              <div class="userIndex-titLef">在学课程</div><img src="../image/center-arrow.png" class="oli-rigIcon">
             </div>
-            <div tapmode data-chaptername="{{=data.chapterName}}" data-coursename="{{=data.courseName}}" onclick="course_det(this,'course-studying-top','{{=data.courseId}}','{{=data.chapterId}}','{{=data.categoryId}}','{{=data.subjectID}}','{{=data.subjectName}}','{{=data.categoryName}}')" class="user-index-class clearfix"><img src="{{=static_url+data.courseBkImage}}" class="userClass-pic">
+            <div class="user-index-class clearfix">
+       
+                {{var data=it.courselist.slice(0,3);}}
+      {{ for(var p in data) { }}
+            <li tapmode onclick="CourseDetail('{{=data[p].courseId}}','{{=data[p].chapterId}}','{{=data[p].subjectID}}','{{=data[p].categoryId}}','{{=data[p].courseName}}','{{=data[p].chapterName}}','{{=data[p].subjectName}}','{{=data[p].categoryName}}')">
+
+              <h2>{{=data[p].courseName}}</h2>{{ if(!isEmpty(data[p].expirationTime)){ }}
+                <span style="" class="hasTime">有效期至:{{=formatDate(data[p].expirationTime,'Y')+'-'+formatDate(data[p].expirationTime,'M')+'-'+formatDate(data[p].expirationTime,'D')}}</span>{{ } }}
+              {{ if(!isEmpty(data[p].showProgress) && !isEmpty(data[p].taskTotal)) { }}
+              <div class="circle">
+                <div class="circle-progress">
+                  <div class="val">{{=parseInt((data[p].showProgress/data[p].taskTotal).toFixed(4)*100)>90 ?  100 :parseInt((data[p].showProgress/data[p].taskTotal).toFixed(4)*100) }}</div>
+                </div>
+                <div class="num"><span>{{=data[p].showProgress}}/</span><b>{{=data[p].taskTotal}}</b></div>
+              </div>{{ }else{ }}
+              <div class="circle">
+                <div class="circle-progress">
+                  <div class="val">0</div>
+                </div>
+                <div class="num"><span>0/</span><b>{{=data[p].taskTotal?data[p].taskTotal:0}}</b></div>{{ } }}
+              </div>
+            </li>
+            {{ } }}
+
+            </div>
+            <!-- <div tapmode data-chaptername="{{=data.chapterName}}" data-coursename="{{=data.courseName}}" onclick="course_det(this,'course-studying-top','{{=data.courseId}}','{{=data.chapterId}}','{{=data.categoryId}}','{{=data.subjectID}}','{{=data.subjectName}}','{{=data.categoryName}}')" class="user-index-class clearfix"><img src="{{=static_url+data.courseBkImage}}" class="userClass-pic">
               <ul class="userClass-wod">
                 <li data-id="{{=data.courseId}}" class="userClass-wodTit">{{=data.courseName}}</li>{{ if(!isEmpty(data.expirationTime)){ }}
-                <!--li.hasTime 有效期至:{{=formatDate(data.expirationTime,'Y')+'-'+formatDate(data.expirationTime,'M')+'-'+formatDate(data.expirationTime,'D')}} {{=formatDate(data.expirationTime,'h')+':'+formatDate(data.expirationTime,'m')}}-->
                 <li style="margin-top: 0.4rem;" class="hasTime">有效期至:{{=formatDate(data.expirationTime,'Y')+'-'+formatDate(data.expirationTime,'M')+'-'+formatDate(data.expirationTime,'D')}}</li>{{ } }}
-                <!--| {{ if(!isEmpty(data.chapterName)){ }}-->
-                <!--li.userClass-wodtag 上次学到：{{=data.chapterName}}-->
-                <!--| {{ }else{ }}-->
-                <!--li.userClass-wodtag 开始学习此课程-->
-                <!--| {{ } }}-->{{ if(!isEmpty(data.showProgress) && !isEmpty(data.taskTotal)) { }}
+                {{ if(!isEmpty(data.showProgress) && !isEmpty(data.taskTotal)) { }}
                 <li class="userClass-wodprogress progress">
                   <div class="progress-box2">
                     <div class="progress2">
@@ -119,9 +222,24 @@
                   </div>
                 </li>{{ } }}
               </ul>
-            </div>
+            </div> -->
       </script>
     </div>
+  </div>
+  <script id="tpl_activity" type="text/x-dot-template">
+            <div class="user-index-tit userIndexOnline">
+              <div class="userIndex-titLef">财萃活动</div><img src="../image/center-arrow.png" class="oli-rigIcon">
+            </div>
+            <div class="clearfix">
+      {{ for(var p in it.data) { }}
+            <li tapmode">
+              <div style="background-image:url({{=static_url+it.data[p].imagePath}});height: 100%;background-size: 100% 100%;background-repeat: no-repeat;" class="cpl-head">
+            </li>
+            {{ } }}
+
+            </div>
+    
+      </script>
     <script type="text/javascript" src="../script/comm.js"></script>
     <script type="text/javascript" src="../script/doT.min.js"></script>
     <script type="text/javascript" src="../script/caicui.js"></script>

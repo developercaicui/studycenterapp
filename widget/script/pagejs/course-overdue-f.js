@@ -1,4 +1,4 @@
-var pageSize = 10;
+var pageSize = 9999;
 function renew() {
 	var systemType = api.systemType;
 	if (systemType == 'ios') {
@@ -58,6 +58,45 @@ function getData(page) {
 		if (ret && ret.state == 'success') {
             var is_show;
             var systemType = api.systemType;  // 比如: ios
+            
+            var stooges = ret.data.courselist;
+			var categoryIdArr = [];
+			for(var i=0;i<stooges.length;i++){
+				if(categoryIdArr && categoryIdArr.length){
+					var isPush = true;
+					for(var j=0;j<categoryIdArr.length;j++){
+						if(stooges[i].categoryId == categoryIdArr[j].categoryId){
+							isPush = false;
+						}
+					}
+					if(isPush){
+						categoryIdArr.push({
+							categoryId :　stooges[i].categoryId,
+							categoryName : stooges[i].categoryName,
+							subjectName : stooges[i].subjectName,
+							courseLists : []
+						})
+					}
+				}else{
+					categoryIdArr.push({
+						categoryId :　stooges[i].categoryId,
+						categoryName : stooges[i].categoryName,
+						subjectName : stooges[i].subjectName,
+						courseLists : []
+					})
+				}
+				
+			}
+			
+			var courseLists = [];
+			for(var i=0;i<categoryIdArr.length;i++){
+				for(var j=0;j<stooges.length;j++){
+					if(categoryIdArr[i].categoryId == stooges[j].categoryId){
+						categoryIdArr[i].courseLists.push(stooges[j]);
+					}
+				}
+			}
+			
 			total = ret.data.total;
 			if (page == 1) {
 				if (isEmpty(ret.data.courselist)) {
@@ -69,7 +108,7 @@ function getData(page) {
                 }else{
                     is_show=true;
                 }
-				$('#content').html(content({data:ret.data.courselist,is_show:is_show}));
+				$('#content').html(content({data:categoryIdArr,is_show:is_show}));
 			} else {
 				if (isEmpty(ret.data.courselist)) {
 					return false;
@@ -79,7 +118,7 @@ function getData(page) {
                 }else{
                     is_show=true;
                 }
-				$('#content').append(content({data:ret.data.courselist,is_show:is_show}));
+				$('#content').append(content({data:categoryIdArr,is_show:is_show}));
 			}
 			api.parseTapmode();
 		} else {

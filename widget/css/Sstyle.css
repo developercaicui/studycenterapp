@@ -295,7 +295,7 @@ input,button,textarea {
 	position:relative;
  	width:100%;
  	height: 0.7rem;
- 	margin-top:0.2rem;
+ 	/*margin-top:0.2rem;*/
  	background:#fff;
  	box-shadow: 0 -0.02px 2px #adadad;
  }
@@ -324,7 +324,7 @@ input,button,textarea {
 .user-index-class{
 	position:relative;
 	width:100%;
-	height:2.2rem;
+	/*height:2.2rem;*/
 	background:#fff;
  	box-shadow: 0 0.02px 2px #adadad;
 }
@@ -962,12 +962,13 @@ input,button,textarea {
 }
 
 .course-stydy{
-	width:5.89rem;
+/* 	width:5.89rem;
 	margin:0.17rem auto 0;
 	border-radius: 0.1rem;
-	box-shadow:0 0 5px rgba(0, 0, 0, .1);
+	box-shadow:0 0 5px rgba(0, 0, 0, .1); */
 	background:#fff;
     overflow: hidden;
+    border-bottom: 1px solid #e1e1e1;
 }
 .courseStyTp{
 	height:2rem;
@@ -975,7 +976,7 @@ input,button,textarea {
 }
 .courseStyBm{
     position:relative;
-    border-top:1px solid #efefef;
+   /*  border-top:1px solid #efefef; */
     width:95%;
     margin:0 auto;
     height:1rem;
@@ -1017,18 +1018,34 @@ input,button,textarea {
     /*height:1.8rem;*/
 /*}*/
 .courseStyTp .wod{
-	width:3.31rem;
+	/* width:3.31rem;
 	height: 1.6rem;
 	float:right;
 	margin:0.18rem 0.05rem 0 0;
-	position: relative;
+	position: relative; */
+	width: 3.31rem;
+    height: 1.7rem;
+    float: left;
+    margin-left: 0.3rem;
+    padding: 0.18rem 0.05rem 0 0;
+    position: relative;
 }
 .courseStyTp .wod .wodTit{
-	color:#585858;
+/* 	color:#585858;
 	font-size:0.23rem;
 	height: 0.9rem;
+	    line-height: .3rem;
+	    overflow: hidden; */
+        color: #585858;
+    font-size: 0.23rem;
     line-height: .3rem;
+    height: 0.5rem;
     overflow: hidden;
+    padding-top: 0.05rem;
+    word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .courseStyTp .wod .wodTitH{
 	height: 0.9rem;
@@ -1042,10 +1059,10 @@ input,button,textarea {
 	font-size:0.21rem;
 	height: .3rem;
 	word-break: break-all;
-	white-space: nowrap;
+	/* white-space: nowrap; */
 	margin-top:0.05rem;
-	overflow : hidden;
-	text-overflow: ellipsis;
+/* 	overflow : hidden;
+	text-overflow: ellipsis; */
 }
 .wodPro{
 	width: 95%;
@@ -1246,15 +1263,16 @@ input,button,textarea {
 }
 /*课程已过期*/
 .hasTime{
-	width:100%;
-	height:0.32rem;
-	color:#fff;
-	line-height:0.34rem;
-	text-align:center;
-	background:#bebebe;
-	text-indent: 0.2rem;
-	font-size:0.18rem;
-	margin-top:0.05rem;
+	width: 45%;
+    height: 0.32rem;
+    color: #fff;
+    line-height: 0.38rem;
+    text-align: center;
+    background: #999999;
+    /* text-indent: 0.2rem; */
+    font-size: 0.18rem;
+    margin-top: 0.2rem;
+    margin-left: .3rem;
 }
 .againBt{
 	width:2.4rem;
@@ -1408,15 +1426,16 @@ input,button,textarea {
 	/* margin-top:0.2rem; */
 }
 .catanav li{
-	width: 1.77rem;
-	float: left;
-	border-left: 2px solid #a0a0a0;
-	list-style: none;
-	height: 100%;
-	box-sizing: border-box;
-	padding-left: 0.45rem;
-	font-size: 0.3rem;
-	line-height: 100%;
+	width: 2.3rem;
+    float: left;
+    border-left: 2px solid #a0a0a0;
+    list-style: none;
+    height: 100%;
+    box-sizing: border-box;
+    /* padding-left: 0.45rem; */
+    font-size: 0.3rem;
+    line-height: 100%;
+    text-align: center;
 }
 .catanav li:first-child{
     border: 0;
@@ -1427,7 +1446,7 @@ input,button,textarea {
 }
 .catanav li img{
 	height: 0.32rem;
-	float: left;
+	/* float: left; */
 	margin-right: 0.1rem;
 }
 

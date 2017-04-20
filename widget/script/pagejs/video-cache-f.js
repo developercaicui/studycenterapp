@@ -200,7 +200,8 @@ function get_data() {
                 init_data();
                 initDomDownStatus();
                 //处理圈圈
-	    isSolidcircle('circle', '', '');
+	    		isSolidcircle('circle', '', '');
+	    		showCacheList();
            })
         }
 
@@ -269,7 +270,7 @@ function initDomDownStatus(){
 	    init_process();
 		//    ------------------设置结束--------------------------
 	
-	   showCacheList();
+	   
 
 		
 	}
@@ -370,19 +371,44 @@ function showCaptBFn(obj){
 }
 function showCaptAFn(obj){
     $.each(obj.find(".mycaptA"),function(k,v){
+    	
         var mycaptBList = $(v).find(".mycaptB");
-        var len =0;
-        $.each(mycaptBList,function(key,val){
-        	if($(this).css("display") != "none"){
-        		len++;
-        	}
-        });
-        
-        if(len>0){
-            $(v).show();
+        if(mycaptBList.length>0){
+        	var len =0;
+	        $.each(mycaptBList,function(key,val){
+	        	if($(this).css("display") != "none"){
+	        		len++;
+	        	}
+	        });
+	        
+	        if(len>0){
+	            $(v).show();
+	        }else{
+	            $(v).hide();
+	        }
         }else{
-            $(v).hide();
+        	var taskList = $(v).next(".tasksBoxs").eq(0).find(".taskList");
+        	var len =0;
+	        $.each(taskList,function(key,val){
+//	        	alert($(val).find(".down-progress").attr("type"))
+                if($(val).find(".down-progress").attr("type") == 1){
+                    len++;
+                }else if($(val).find(".down-progress").attr("type") == 2){
+                    len++;
+                }else if($(val).find(".down-progress").attr("type") == 5){
+                    len++;
+                }else if($(val).find(".down-progress").attr("type") == 4){
+                    len++;
+                }
+            });
+            //alert(len)
+		    if(len>0){
+	            $(v).show();
+	        }else{
+	            $(v).hide();
+	        }
         }
+        
     })
 }
 function showCourseFn(obj){
@@ -773,6 +799,7 @@ apiready = function() {
     memberId = getstor('memberId');
     mydata = [];
     get_data();
+    
     api.addEventListener({
         name: 'flush_cache'
     }, function(ret, err) {

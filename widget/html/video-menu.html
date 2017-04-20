@@ -54,6 +54,7 @@
             color: #00a186;
             position: absolute;
             right: 0.2rem;
+            line-height: .7rem;
         }
         .chapter-task li>div {
             left: 15%;
@@ -200,8 +201,8 @@
 	                </dt>
 	                <dd>
                
-                      <div id="{{=val3.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="{{=val3.chapterId}}" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="{{=val3.chapterTitle}}" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-down1"></i>
-	                    <div class="val"></div>
+                      <div id="{{=val3.chapterId}}" class="down-progress task{{=val4.videoCcid}}">
+	                    <span>{{=val4.totalCount}}题</span>
 	                  </div>
                   	  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                     </dd>
@@ -243,8 +244,8 @@
 	                </dt>
 	                <dd>
  
-                      <div id="{{=val2.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-down1"></i>
-	                    <div class="val"></div>
+                      <div id="{{=val2.chapterId}}" class="down-progress task{{=val4.videoCcid}}">
+	                    <span>{{=val4.totalCount}}题</span>
 	                  </div>
                   	  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                     </dd>
@@ -287,8 +288,8 @@
 	                </dt>
 	                <dd>
  
-                      <div id="{{=val.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-down1"></i>
-	                    <div class="val"></div>
+                      <div id="{{=val.chapterId}}" class="down-progress task{{=val4.videoCcid}}">
+	                    <span>{{=val4.totalCount}}题</span>
 	                  </div>
                   	  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                     </dd>

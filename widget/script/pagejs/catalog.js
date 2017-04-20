@@ -49,8 +49,9 @@ function getdownrecord(){
     }
     cache_model.getTaskData(param,function(ret,err){
         //------------------结束获取--------------------------
+//    alert(JSON.stringify(ret))
         var saverecordObj = JSON.parse(ret.data);
-//      alert(JSON.stringify(ret))
+
         ///设置下一次读取下载的某个时间之后变化的所有记录
         lastgettime = saverecordObj.readTime;
         //循环处理每一条返回的下载记录，并统计分析最后变化值

@@ -1,5 +1,30 @@
 var is_debug = false;
-
+function CourseDetail(co, ch, su, ca, cn,chapterName,subjectName,categoryName) {
+    var course_detail = {};
+    course_detail.chapterId = ch;
+    course_detail.courseId = co;
+    course_detail.subjectId = su;
+    course_detail.categoryId = ca;
+    course_detail.courseName = cn;
+    course_detail.chapterName = chapterName;
+    course_detail.subjectName = subjectName;
+    course_detail.categoryName = categoryName;
+    $api.setStorage('Course_info', course_detail);
+    //var detail = {};
+    //detail.course_id = co;
+    ////课程id
+    //detail.charpterid = ch;
+    ////章节id
+    //detail.courseName = cn;
+    ////课程名称
+    api.openWin({
+        name : 'course-studying-top',
+        url : 'course-studying-top.html',
+        slidBackEnabled : false,
+        pageParam:course_detail,
+        reload : true
+    });
+}
 function get_line_process() {
     $('ul.porB').each(function() {
         var _s = $(this).find('.progressPro');
@@ -482,7 +507,45 @@ function get_study(flag) {
                 "subjectID": "61160404-1edf-42c9-8b9d-63ee08b40d37",
                 "subjectName": "F1 business...",
                 "courseId": "ff8080814e44227f014e479bb5a50074",
-                "courseName": "CIMA Enterprise Operations（E1）",
+                "courseName": "CIMA Enterprise Operations（E1）CIMA 阶段U+CIMA 阶段U+",
+                "taskTotal": 20,
+                "courseBkImage": "/upload/201507/924f877d5ca942428216a8ddee8b04b9.jpg",
+                "teacherName": "Maggie",
+                "teacherImage": "/upload/201507/26ec729997fc4aee8438a196577748d9.jpg",
+                "teacherHonor": "",
+                "lastmodifyTime": 34234,
+                "expirationTime": '145555454',
+                "chapterId": "ff8080814e48c660014e4c5c22500041",
+                "chapterName": "Human resource practices",
+                "taskprogress": 19
+            },
+            {
+                "isU": true,
+                "categoryId": "ff8080814e44227f014e4797ca600073",
+                "categoryName": "CIMA 阶段U+",
+                "subjectID": "61160404-1edf-42c9-8b9d-63ee08b40d37",
+                "subjectName": "F1 business...",
+                "courseId": "ff8080814e44227f014e479bb5a50074",
+                "courseName": "CIMA Enterprise Operations（E1）CIMA 阶段U+CIMA 阶段U+",
+                "taskTotal": 20,
+                "courseBkImage": "/upload/201507/924f877d5ca942428216a8ddee8b04b9.jpg",
+                "teacherName": "Maggie",
+                "teacherImage": "/upload/201507/26ec729997fc4aee8438a196577748d9.jpg",
+                "teacherHonor": "",
+                "lastmodifyTime": 34234,
+                "expirationTime": '145555454',
+                "chapterId": "ff8080814e48c660014e4c5c22500041",
+                "chapterName": "Human resource practices",
+                "taskprogress": 19
+            },
+            {
+                "isU": true,
+                "categoryId": "ff8080814e44227f014e4797ca600073",
+                "categoryName": "CIMA 阶段U+",
+                "subjectID": "61160404-1edf-42c9-8b9d-63ee08b40d37",
+                "subjectName": "F1 business...",
+                "courseId": "ff8080814e44227f014e479bb5a50074",
+                "courseName": "CIMA Enterprise Operations（E1）CIMA 阶段U+CIMA 阶段U+",
                 "taskTotal": 20,
                 "courseBkImage": "/upload/201507/924f877d5ca942428216a8ddee8b04b9.jpg",
                 "teacherName": "Maggie",
@@ -498,8 +561,10 @@ function get_study(flag) {
         var tpl = $('#tpl_course').html();
         var content = doT.template(tpl);
         $('#course_content').html(content(data));
+        circleProgress();
         return false;
     }
+    circleProgress();
     var tpl = $('#tpl_course').html();
     var content = doT.template(tpl);
     var data = isEmpty($api.getStorage(memberId + 'learningcourse')) ? '' : $api.getStorage(memberId + 'learningcourse');
@@ -568,6 +633,7 @@ function get_study(flag) {
                       }
                   }
               }
+              // alert(JSON.stringify(filterLastProgress))
               var ret={
                 data : {
                   total : learningcourseData.data.total,
@@ -575,6 +641,7 @@ function get_study(flag) {
                 }
               }
               $('#course_content').html(content(ret.data));
+              circleProgress();
               for (var p in ret.data.courselist[0]) {
                   if (p == 'courseBkImage') {
                       var img = ret.data.courselist[0][p];
@@ -598,7 +665,7 @@ function get_study(flag) {
 
             
         }
-        progressBar();
+        //progressBar();
     });
 }
 
@@ -633,6 +700,39 @@ function course_det(_this, xyc, a, b, e, f, subjectName, categoryName) {
     });
 }
 
+//财萃活动
+function get_activity(){
+    if(is_debug){
+    var data = {"data":[{"content":"<div style=\"background-position:center top;background-image:url(/upload/201703/a5894537d133450abec29197165634ca.jpg);background-repeat:no-repeat;background-color:#b4cc8e;\">\r\n\t<div class=\"exam-box\">\r\n\t\t<a href=\"http://www.caicui.com/static/Special/cfa-frm2017/\" target=\"_blank\"><img src=\"/upload/201703/6562eb20213e43e88c203a35d176ad07.jpg\" draggable=\"false\" /> </a> <br />\r\n\t</div>\r\n</div>","id":"095a0a6702f911e7afc400163e022e38","valid":true,"title":"cfafrm双语卓越班2017","other":"","imagePath":"/upload/201703/6562eb20213e43e88c203a35d176ad07.jpg","whereTag":0,"url":"http://www.caicui.com/static/Special/cfa-frm2017/"},{"content":"<div style=\"background-position:center top;background-image:url(/upload/201703/52b2e81be52948a5918f365a389925a9.jpg);background-repeat:no-repeat;background-color:#b4cc8e;\">\r\n\t<div class=\"exam-box\">\r\n\t\t<a href=\"http://www.caicui.com/static/Special/2017kaixue/\" target=\"_blank\"><img src=\"/upload/201703/fae04a90a7f941e681b68946913ab9a8.jpg\" draggable=\"false\" /> </a> <br />\r\n\t</div>\r\n</div>","id":"fd855d34057a11e7afc400163e022e38","valid":true,"title":"2017年CFA&FRM开学季","other":"","imagePath":"/upload/201703/52b2e81be52948a5918f365a389925a9.jpg","whereTag":0,"url":"http://www.caicui.com/static/Special/2017kaixue/"},{"content":"<div style=\"background-position:center top;background-image:url(/upload/201702/0acd5771a31c416c9d15155586d09fc2.png);background-repeat:no-repeat;background-color:#b4cc8e;\">\r\n\t<div class=\"exam-box\">\r\n\t\t<a href=\"http://www.caicui.com/static/Special/cma201703/\" target=\"_blank\"><img src=\"/upload/201702/b0c8ef2517f9462daf98cfa62004f913.png\" draggable=\"false\" /> </a> <br />\r\n\t</div>\r\n</div>","id":"86bf67cffcbe11e6afc400163e022e38","valid":true,"title":"CMA新课-一步通关课程专题","other":"","imagePath":"/upload/201702/b0c8ef2517f9462daf98cfa62004f913.png","whereTag":0,"url":""},{"content":"<div style=\"background-position:center top;background-image:url(/upload/201606/602c9b38117a4f89bb9a7a41d22491e6.jpg);background-repeat:no-repeat;\">\r\n\t<div class=\"exam-box\">\r\n\t\t<a href=\"http://www.caicui.com/course/list/CMA.html\" target=\"_blank\"><img src=\"/upload/201606/b9f1b1e6c1e44feb97454651a867e613.jpg\" draggable=\"false\" /> </a> \r\n\t</div>\r\n</div>","id":"6c3c7f563d1e11e6b04700163e022e38","valid":true,"title":"CMA新网课","other":"","imagePath":"/upload/201606/602c9b38117a4f89bb9a7a41d22491e6.jpg","whereTag":0,"url":"http://www.caicui.com/course/list/CMA.html"}],"state":"success","msg":""}
+    var tpl = $('#tpl_activity').html();
+    var content = doT.template(tpl);
+    $('#activity').html(content(data));
+    }
+    var tpl = $('#tpl_activity').html();
+    var content = doT.template(tpl);
+    // $('#activity').html(content(data));
+
+    ajaxRequest('api/v2.1/slide/list', 'get', { 
+        token: $api.getStorage('token'),
+        tag : 0,
+        valid : true,
+        count : 4
+    }, function(ret, err) {
+        if (err) {
+            api.toast({
+                msg: err.msg,
+                location: 'middle'
+            });
+            return false;
+        }
+        if (ret.state == 'success') {
+           var data = ret;
+           $('#activity').html(content(data));
+        }
+        
+    });
+}
+
 //在线课程详情
 function openCourse() {
     api.sendEvent({
@@ -643,11 +743,14 @@ if (is_debug) {
     //在学的课程
     get_study();
     //个人学习与所有人平均用时对比
-    get_used_avg();
+    //get_used_avg();
     //学习用时占比
-    get_used();
+    //get_used();
     //能力评估
-    get_ability();
+    //get_ability();
+
+    //财萃活动
+    get_activity();
 }
 var is_loaded = false;
 var memberId;
@@ -666,22 +769,29 @@ apiready = function() {
         //在学的课程
         get_study(1);
         //个人学习与所有人平均用时对比
-        get_used_avg(1);
+        //get_used_avg(1);
         //学习用时占比
-        get_used(1);
+        //get_used(1);
         //能力评估
-        get_ability(1);
+        //get_ability(1);
         //消息数量
+
+        //财萃活动
+        get_activity();
     });
     //在学的课程
     get_study(2);
     //个人学习与所有人平均用时对比
-    get_used_avg(2);
+    //get_used_avg(2);
     //学习用时占比
-    get_used(2);
+    //get_used(2);
     //能力评估
-    get_ability(2);
+    //get_ability(2);
     //消息数量
+
+    //财萃活动
+    get_activity();
+
     api.addEventListener({
         name: 'flush_study'
     }, function(ret) {
