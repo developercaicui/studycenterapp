@@ -1039,13 +1039,13 @@ input,button,textarea {
         color: #585858;
     font-size: 0.23rem;
     line-height: .3rem;
-    height: 0.5rem;
+/*     height: 0.85rem;
     overflow: hidden;
     padding-top: 0.05rem;
-    word-break: break-all;
-    white-space: nowrap;
+    word-break: break-all; */
+    /* white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; */
 }
 .courseStyTp .wod .wodTitH{
 	height: 0.9rem;
@@ -1053,16 +1053,17 @@ input,button,textarea {
 	/*white-space:nowrap;*/
 	overflow:hidden;
 	/*text-overflow:ellipsis;*/
+	
 }
 .courseStyTp .wod .wodCot{
 	color:#9b9b9b;
 	font-size:0.21rem;
 	height: .3rem;
-	word-break: break-all;
-	/* white-space: nowrap; */
-	margin-top:0.05rem;
-/* 	overflow : hidden;
-	text-overflow: ellipsis; */
+/* 	word-break: break-all; */
+	margin-top:0.2rem;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .wodPro{
 	width: 95%;

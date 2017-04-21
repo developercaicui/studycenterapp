@@ -63,11 +63,9 @@
     <div tapmode style="text-align:center" onclick="toBuy()" class="ios btn btn-block none">购买课程</div>
     <script id="tpl" type="text/x-dot-template">{{for(var p in it) { }}
     	<div class="courseTit" onclick="toggleCourse(this)" tapmode>
-		{{ if(!isEmpty(it[p].categoryName)){ }}
-          <div class="courseTit-titLef">{{=it[p].categoryName}}</div>
-         {{ }else{ }}
+		
          <div class="courseTit-titLef">{{=it[p].subjectName}}</div>
-         {{ } }}
+         
           <div class="courseTit-num ri_h">课程<span>{{=it[p].courseLists.length}}</span><i class="icon-arrow-top"></i></div>
         </div><div class="stydys">
         
@@ -182,13 +180,13 @@
 						if(categoryIdArr && categoryIdArr.length){
 							var isPush = true;
 							for(var j=0;j<categoryIdArr.length;j++){
-								if(stooges[i].categoryId == categoryIdArr[j].categoryId){
+								if(stooges[i].subjectID == categoryIdArr[j].subjectID){
 									isPush = false;
 								}
 							}
 							if(isPush){
 								categoryIdArr.push({
-									categoryId :　stooges[i].categoryId,
+									subjectID :　stooges[i].subjectID,
 									categoryName : stooges[i].categoryName,
 									subjectName : stooges[i].subjectName,
 									courseLists : []
@@ -196,7 +194,7 @@
 							}
 						}else{
 							categoryIdArr.push({
-								categoryId :　stooges[i].categoryId,
+								subjectID :　stooges[i].subjectID,
 								categoryName : stooges[i].categoryName,
 								subjectName : stooges[i].subjectName,
 								courseLists : []
@@ -208,7 +206,7 @@
 					var courseLists = [];
 					for(var i=0;i<categoryIdArr.length;i++){
 						for(var j=0;j<stooges.length;j++){
-							if(categoryIdArr[i].categoryId == stooges[j].categoryId){
+							if(categoryIdArr[i].subjectID == stooges[j].subjectID){
 								categoryIdArr[i].courseLists.push(stooges[j]);
 							}
 						}

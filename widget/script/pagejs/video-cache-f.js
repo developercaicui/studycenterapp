@@ -254,7 +254,7 @@ function initDomDownStatus(){
 	            var domprogress = videoDownInfo[strs[j]].progress;
 	            var domstatus = videoDownInfo[strs[j]].status;
 	            var domtasknum = videoDownInfo[strs[j]].tasknum;
-	            // alert(domid+"==="+domprogress+"==="+domstatus)
+//	             alert(domid+"==="+domprogress+"==="+domstatus)
 	            // ------------------设置界面对应id节点dom下载状态，并设置为可见--------------------------
 	            
             	$("#course"+domid).find(".progress-bar2").css("width",domprogress.toFixed(2)+"%");

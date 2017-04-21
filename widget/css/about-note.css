@@ -52,7 +52,7 @@
 }
 .section-note-message span {
   display: inline;
-  vertical-align: middle;
+  /* vertical-align: middle; */
 }
 .section-note-message span:nth-child(2) {
   position: absolute;
@@ -85,7 +85,7 @@
   font-size: 0.22rem;
 }
 .section-note-message b:nth-child(2) {
-  margin-left: 1.5%;
+  margin-left: -4%;
 }
 .section-note-message b:nth-child(3) {
   margin-left: 2%;
@@ -452,8 +452,14 @@
   right: 0;
 }
 .talk-right .t-img-message {
-  height: 0.2rem;
-  width: 0.4rem;
+      height: 0.33rem;
+    width: 0.33rem;
+  vertical-align: middle;
+  margin-right: 0.06rem;
+}
+.talk-right2 .t-img-message {
+      height: 0.33rem;
+    width: 0.33rem;
   vertical-align: middle;
   margin-right: 0.06rem;
 }
@@ -556,9 +562,10 @@
 /*讨论详情*/
 .my-talk-detail .my-talk-list {
   margin-bottom: 0;
+ 
 }
 .talk-detail-reply {
-  background-color: #f8f8f8;
+  /* background-color: #f8f8f8; */
 }
 .talk-detail-reply .talk-user .takl-user-photo img {
   height: 0.6rem;
@@ -598,7 +605,7 @@
 }
 .my-talk-out {
   padding-bottom: 0.25rem;
-  border-top: 1px solid #e6e6e6;
+  /* border-top: 1px solid #e6e6e6; */
 }
 #messageTips .message-center {
   height: 100%;

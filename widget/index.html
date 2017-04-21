@@ -21,10 +21,10 @@
         .header.homeheader > * {
             position: absolute;
             width: 100%;
-            top:0;
+            bottom:0;
         }
         .header.homeheader .header-nav{
-            top:1rem;
+          	/*bottom:0.1rem;*/
         }
         .header-home .message-bells {
           position: absolute;
@@ -173,10 +173,13 @@
     function openTabMe(i) { //个人中心切换
         $('.header > *').removeClass('active').eq(i).addClass('active');
         $('.header.homeheader').css({"height":"0.96rem","border-bottom":"1px solid #898989"});
+        $('.header.homeheader .header-home').css({"bottom":"0"});
         if(  i== 1 ){
-            $('.header.homeheader').css({"height":"1.86rem","border-bottom":"none"});
+            $('.header.homeheader').css({"height":"1.9rem","border-bottom":"none"});
+            $('.header.homeheader .header-home').css({"bottom":"0.93rem"});
             $('.header > *').eq(0).addClass('active');
         }
+        	
         $('.footer-nav li').removeClass('active').eq(i).addClass('active');
         var color;
         switch (i) {
@@ -184,7 +187,7 @@
                 api.setStatusBarStyle({
                     style: 'light'
                 });
-                color = '#00a085';
+                color = '#21292b';
                 break;
             case 1:
                 api.setStatusBarStyle({
@@ -320,6 +323,8 @@
             scrollEnabled: false,
             index: 1,
             preload: 1,
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false,
             frames: [{ //中心
                 name: 'user-index',
                 url: './html/user-index.html',

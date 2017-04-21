@@ -65,13 +65,13 @@ function getData(page) {
 				if(categoryIdArr && categoryIdArr.length){
 					var isPush = true;
 					for(var j=0;j<categoryIdArr.length;j++){
-						if(stooges[i].categoryId == categoryIdArr[j].categoryId){
+						if(stooges[i].subjectID == categoryIdArr[j].subjectID){
 							isPush = false;
 						}
 					}
 					if(isPush){
 						categoryIdArr.push({
-							categoryId :　stooges[i].categoryId,
+							subjectID :　stooges[i].subjectID,
 							categoryName : stooges[i].categoryName,
 							subjectName : stooges[i].subjectName,
 							courseLists : []
@@ -79,7 +79,7 @@ function getData(page) {
 					}
 				}else{
 					categoryIdArr.push({
-						categoryId :　stooges[i].categoryId,
+						subjectID :　stooges[i].subjectID,
 						categoryName : stooges[i].categoryName,
 						subjectName : stooges[i].subjectName,
 						courseLists : []
@@ -91,7 +91,7 @@ function getData(page) {
 			var courseLists = [];
 			for(var i=0;i<categoryIdArr.length;i++){
 				for(var j=0;j<stooges.length;j++){
-					if(categoryIdArr[i].categoryId == stooges[j].categoryId){
+					if(categoryIdArr[i].subjectID == stooges[j].subjectID){
 						categoryIdArr[i].courseLists.push(stooges[j]);
 					}
 				}

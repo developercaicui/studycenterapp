@@ -96,8 +96,8 @@ function get_count() {
 			var questionNum = ret.data.questionNum;
 			var discuss = ret.data.discuss;
 			$('.nodeNum').html(nodeNum);
-			$('.questionNum').html(questionNum);
-			$('.discuss').html(discuss);
+			$('.questionNum').html(discuss);
+			$('.discuss').html(questionNum);
 		} else {
 			//			api.toast({
 			//				msg : ret.msg,

@@ -49,7 +49,7 @@ function getdownrecord(){
     }
     cache_model.getTaskData(param,function(ret,err){
         //------------------结束获取--------------------------
-//    alert(JSON.stringify(ret))
+     
         var saverecordObj = JSON.parse(ret.data);
 
         ///设置下一次读取下载的某个时间之后变化的所有记录
@@ -60,6 +60,7 @@ function getdownrecord(){
             if(saverecordObj.data[i].state == "1"){
               downloadIng++;
             }
+            saverecordObj.data[i].progress = Number(saverecordObj.data[i].progress)
             procRecord(saverecordObj.data[i]);
         }
         if(downloadIng){

@@ -68,11 +68,9 @@
     <div id="content"></div>
     <script id="tpl" type="text/x-dot-template">{{for(var p in it.data){ }}
     	<div class="courseTit" onclick="toggleCourse(this)" tapmode>
-		{{ if(!isEmpty(it.data[p].categoryName)){ }}
-          <div class="courseTit-titLef">{{=it.data[p].categoryName}}</div>
-         {{ }else{ }}
+		
          <div class="courseTit-titLef">{{=it.data[p].subjectName}}</div>
-         {{ } }}
+        
           <div class="courseTit-num ri_h">课程<span>{{=it.data[p].courseLists.length}}</span><i class="icon-arrow-top"></i></div>
         </div><div class="stydys">
         

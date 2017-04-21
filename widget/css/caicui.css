@@ -559,7 +559,7 @@ ul.footer-nav .msg-mark {
   display: inline-block;
   font-size: 0.22rem;
   border: 1px solid #8cc152;
-  color: #8cc152 !important;
+/*   color: #8cc152 !important; */
   border-radius: 0.2rem;
   line-height: 0.3rem;
   padding: 0 0.1rem;
@@ -1992,11 +1992,11 @@ ul.download .down-progress {
 .qscmsg {
   position: relative;
   margin-top: 0.12rem;
-  height: 0.4rem;
+  /* height: 0.4rem; */
 }
 .qscmsg span {
   vertical-align: middle;
-  margin-right: 0.2rem;
+/*   margin-right: -0.2rem; */
   font-size: 0.22rem;
   color: #9f9f9f;
 }

@@ -555,11 +555,12 @@ function formatSec(value) {
 
 //任务类型
 function formatType(type, value) {
-    if (isEmpty(value) || value == 0) {
+//  if (isEmpty(value) || value == 0) {
+    if (value == "-1") {
         return '';
     } else {
-        switch (type) {
-            case 'video':
+//      switch (type) {
+//          case 'video':
                 var theTime = parseInt(value);
                 // 秒
                 var theTime1 = 0;
@@ -596,14 +597,14 @@ function formatType(type, value) {
                     return i + ':' + s;
                 }
                 //return h + ':' + i + ':' + s;
-                break;
-            case 'exam':
-                return ' 第' + value + '题';
-                break;
-            default:
-                return ' 第' + value + '页';
-                break;
-        }
+//              break;
+//          case 'exam':
+//              return ' 第' + value + '题';
+//              break;
+//          default:
+//              return ' 第' + value + '页';
+//              break;
+//      }
     }
 }
 
@@ -729,6 +730,12 @@ function video_cache(method, title, ccid, UserId, apiKey, callback) {
 					
                     if (api.systemType == "ios" && parseInt(ret.status) == 2) {
                         return false;
+                    }
+                    if(ret.status == 0){
+                    	api.toast({
+			                msg : '下载失败！',
+			                location : 'middle'
+			            });
                     }
 //                  if(ret.finish == "YES"){
 //                  	alert(param.isEncryption +"===="+JSON.stringify(ret));
@@ -1868,6 +1875,7 @@ function getdownrecord(){
         lastgettime = saverecordObj.readTime;
         //循环处理每一条返回的下载记录，并统计分析最后变化值
         for(i=0;i< saverecordObj.data.length;i++){
+        	saverecordObj.data[i].progress = Number(saverecordObj.data[i].progress)
             procRecord(saverecordObj.data[i]);
         }
     })

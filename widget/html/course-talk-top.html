@@ -12,19 +12,46 @@
     <link rel="stylesheet" type="text/css" href="../css/caicui.css">
     <script type="text/javascript" src="../script/api.js"></script>
     <script type="text/javascript" src="../script/zepto.js"></script>
+    <style>
+    	#header{background: #fff;color:#000;}
+        .header{color:#000;border-bottom: 1px solid #d4d4d4;}
+        .header .left:after{display: none;}
+        .icon-arrow-left{color:#00a186;font-weight: bold;}
+        .header .left-next {
+            font-size: 0.36rem;
+            padding-left: 1rem;
+            max-width:80%; 
+            overflow: hidden;
+            word-wrap: normal;
+            text-overflow: ellipsis;
+            float: none;
+            white-space: pre;
+            text-align:center;
+        }
+        .top-nav .right {
+		    float: right;
+		    color: #00a085;
+		    border: 2px solid #00a085;
+		    width: 1.6rem;
+		    height: 0.5rem;
+		    line-height: 0.45rem;
+		    text-align: center;
+		    margin-top: 0.15rem;
+		}
+    </style>
   </head>
   <body>
-    <div id="header" class="header">
-      <div tapmode onclick="api.closeWin()" class="left back"><i class="icon-back"></i></div>
-      <div class="left-next">课程讨论</div>
+  	<div id="header" class="header">
+      <div tapmode onclick="api.closeWin()" class="left back"><i class="icon-arrow-left"></i></div>
+      <div class="left-next">交流</div>
       <ul class="right">
-        <li onclick="open_search('search')" tapmode><i class="icon-search"></i></li>
         <li onclick="newTalk()" tapmode><i class="icon-file-plus"></i></li>
+        <li onclick="open_search('search')" tapmode><i class="icon-search"></i></li>
       </ul>
     </div>
     <nav class="top-nav">
       <div onclick="courseMenu()" tapmode class="left"><i class="icon-arrow-down"></i><span class="new_back">最新回复</span></div>
-      <div onclick="go_to('my-talk');" tapmode class="right my_talk"><i class="icon-comments"></i>我的讨论</div>
+      <div onclick="go_to('my-talk');" tapmode class="right my_talk">我的交流</div>
     </nav>
     <script type="text/javascript" src="../script/comm.js"></script>
     <script type="text/javascript" src="../script/doT.min.js"></script>

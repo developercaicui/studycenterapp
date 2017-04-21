@@ -50,7 +50,7 @@ var is_debug = false;
             $(".task"+domid).attr("type",domstatus);
             $(".task"+domid).find(".val").html(domprogress);
             $(".task"+domid).parent().prev().find(".v-progress").find("span").css("width",domprogress+"%");
-            $(".task"+domid).parent().prev().find(".v-name").find("span").eq(1).text(domprogress+"%");
+            $(".task"+domid).parent().prev().find(".v-name").find("span").eq(1).text(Math.round(domprogress)+"%");
         } 
     }
     

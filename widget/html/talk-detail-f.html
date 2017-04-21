@@ -13,6 +13,52 @@
     <script type="text/javascript" src="../script/api.js"></script>
     <script type="text/javascript" src="../script/zepto.js"></script>
     <link rel="stylesheet" href="../css/about-note.css">
+    <style>
+    	.talk-right2{
+    		position: absolute;
+    		right: 0.8rem;
+    		font-size: 0.28rem;
+    	}
+    	.talk-right2 b{
+    		background: #ff9dab;
+		    padding: 0 0.04rem 0 0.04rem;
+		    font-size: 0.28rem;
+		    vertical-align: middle;
+		    color: #fff;
+    	}
+    	.talk-right b{
+    		background: #42b1ab;
+		    padding: 0 0.04rem 0 0.04rem;
+		    font-size: 0.28rem;
+		    vertical-align: middle;
+		    color: #fff;
+    	}
+    	.my-talk-wrap .btn-play-time{
+    		background: #8cc052;
+		    color: #fff;
+		    padding: 0.05rem 0.1rem 0.05rem 0.5rem;
+		    border-radius: 0.3rem;
+		    position: relative;
+    	}
+    	.my-talk-wrap .btn-play-time:before{
+    		content: "";
+		    width: 0;
+		    height: 0;
+		    border-top: 0.1rem solid transparent;
+		    border-left: 0.2rem solid #fff;
+		    border-bottom: 0.1rem solid transparent;
+		    position: absolute;
+		    left: 0.2rem;
+		    top: 0.1rem;
+    	}
+    	.qscbtn{bottom:0.5rem;}
+    	.talk-content {
+		   border-bottom: 1px solid #12a78e;
+		}
+		.my-talk-wrap .current-talk:before{
+			z-index:0;
+		}
+    </style>
   </head>
   <body>
     <div class="my-talk my-talk-detail">
@@ -25,7 +71,7 @@
               <div class="talk-user clear-fix">{{if(!isEmpty(it.headImg)) { }}
                 <div class="takl-user-photo"><img src="{{=static_url+it.headImg}}" alt=""></div>{{ } }}
                 <div class="talk-user-message clear-fix">
-                  <p class="line-1"><span>{{=it.nikeName}}</span>{{if(!isEmpty(it.levelimg)) { }}<img src="{{=static_url+it.levelimg}}" alt="">{{ } }}<span class="talk-right"><img src="../image/note-message-o.png" alt="" class="t-img-message"><b class="font-20">{{=!isEmpty(it.replyCount)? it.replyCount :0}}</b></span></p>
+                  <p class="line-1"><span>{{=it.nikeName}}</span>{{if(!isEmpty(it.levelimg)) { }}<img src="{{=static_url+it.levelimg}}" alt="">{{ } }}<span class="talk-right2"><img src="../image/like.png" alt="" class="t-img-message"><b>{{=!isEmpty(it.replyCount)?it.replyCount:0}}</b></span><span class="talk-right"><img src="../image/mess.png" alt="" class="t-img-message"><b>{{=!isEmpty(it.replyCount)?it.replyCount:0}}</b></span></p>
                   <p class="line-22"><span>{{ if(!isEmpty(it.updateTime)) { }}{{=formatDate(it.updateTime,'Y')+'-'+formatDate(it.updateTime,'M')+'-'+formatDate(it.updateTime,'D')}} {{ } }}</span><span>{{ if(!isEmpty(it.updateTime)) { }} {{=formatDate(it.updateTime,'h')+':'+formatDate(it.updateTime,'m')}}{{ } }}</span></p>
                 </div>
               </div>
@@ -45,8 +91,16 @@
                   {{ if(imgPath.length>=3) { }}<b>共{{=it.imgPath.split(',').length}}张</b>{{ } }}
                 </ul>{{ } }}
               </div>
+              <div class="qscmsg clearfix">{{if(it.taskprogress && parseInt(it.taskprogress) && it.taskprogress != '-1'){ }}
+              <span onclick="jump_task('{{=it.taskprogress}}','{{=it.courseId}}','{{=it.taskId}}')" class="btn-play-time">
+              {{=formatType(it.taskType,it.taskprogress)}}</span>{{ } }}
+              <span>{{ if(!isEmpty(it.updateTime)) { }}{{=formatDate(it.updateTime,'Y')+'-'+formatDate(it.updateTime,'M')+'-'+formatDate(it.updateTime,'D')}} {{ } }}</span>
+              <span>{{ if(!isEmpty(it.updateTime)) { }}{{=formatDate(it.updateTime,'h')+':'+formatDate(it.updateTime,'m')}}{{ } }}</span>
+             </div>{{ var memberId = get_loc_val('mine','memberId'); }}
+              {{if(memberId==it.memberId){ }}
+              <div lx="0" tapmode onclick="addAnswer(this)" class="qscbtn">问题补充</div>
+              {{ } }}              
             </div>
-          </div>
     </script>
     <script id="tpl_content" type="text/x-dot-template">
       {{for(var p in it.res1){ }}

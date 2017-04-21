@@ -12,16 +12,32 @@
     <link rel="stylesheet" type="text/css" href="../css/caicui.css">
     <script type="text/javascript" src="../script/api.js"></script>
     <script type="text/javascript" src="../script/zepto.js"></script>
+    <style>
+ 
+    	#header{background: #fff;color:#000;}
+        .header{color:#000;border-bottom: 1px solid #d4d4d4;}
+        .header .left:after{display: none;}
+        .icon-arrow-left{color:#00a186;font-weight: bold;}
+        .header .left-next {
+            font-size: 0.36rem;
+            padding-left: 1rem;
+            max-width:80%; 
+            overflow: hidden;
+            word-wrap: normal;
+            text-overflow: ellipsis;
+            float: none;
+            white-space: pre;
+            text-align:center;
+            
+        }
+    </style>
   </head>
-  <body>
+  <body style="position:relative;width: 100%;height: 100%;overflow: hidden;">
     <div id="header" class="header">
-      <div tapmode onclick="my_close()" class="left back"><i class="icon-back"></i></div>
-      <div class="left-next">我的讨论</div>
+      <div tapmode onclick="my_close()" class="left back"><i class="icon-arrow-left"></i></div>
+      <div class="left-next">我的交流</div>
     </div>
-    <ul id="nav" class="header-nav">
-      <li tapmode="active" onclick="set_tab(0)" class="active">我发表的</li>
-      <li tapmode="active" onclick="set_tab(1)">我回复的</li>
-    </ul>
+    
     <script type="text/javascript" src="../script/comm.js"></script>
     <script type="text/javascript" src="../script/doT.min.js"></script>
     <script type="text/javascript" src="../script/caicui.js"></script>
@@ -37,21 +53,20 @@
       apiready = function () {
           var header = $api.dom('#header');
           $api.fixIos7Bar(header);
-          var headerPos = $api.offset(header);
-          y = headerPos.h + $api.offset($api.dom('#nav')).h;
-          h = api.winHeight - headerPos.h - $api.offset($api.dom('#nav')).h;
+//        var headerPos = $api.offset(header);
+//        y = headerPos.h + $api.offset($api.dom('#nav')).h;
+//        h = api.winHeight - headerPos.h - $api.offset($api.dom('#nav')).h;
+		  var headerPos = $api.offset(header);
+          var width = api.winWidth;
+          var height = api.winHeight - headerPos.h;
           api.openFrameGroup({
               name: 'talk_tab',
               background: '#fff',
               rect: {
-                  x: 0,             //左上角x坐标
-                  y: y,             //左上角y坐标
-                  w: api.winWidth,           //宽度，若传'auto'，页面从x位置开始自动充满父页面宽度
-                  h: h,          //高度，若传'auto'，页面从y位置开始自动充满父页面高度
-                 /* marginLeft: 0,    //相对父window左外边距的距离
-                  marginTop: 0,    //相对父window上外边距的距离
-                  marginBottom: 0,    //相对父window下外边距的距离
-                  marginRight: 0    //相对父window右外边距的距离*/
+                  x: 0,
+                  y: headerPos.h,
+                  w: width,
+                  h: height
               },
               scrollEnabled: true,
               index: 0,
@@ -72,7 +87,7 @@
                   hScrollBarEnabled: false
               }]
           }, function (ret, err) {
-              $("#nav li").removeClass('active').eq(ret.index).addClass('active');
+//            $("#nav li").removeClass('active').eq(ret.index).addClass('active');
           });
           api.addEventListener({
               name: 'keyback'
