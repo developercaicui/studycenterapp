@@ -28,8 +28,30 @@
             float: none;
             white-space: pre;
             text-align:center;
-            
+               
         }
+        .header-nav{
+             z-index: 100;
+           background:#f9f9f9;
+           position: fixed;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        }
+        .header-nav li{
+        border-top: 1px solid #bfbfbf;
+      }
+      .header-nav li:nth-child(1){
+        border-right: 1px solid #bfbfbf;
+      }
+      .header-nav li.active{
+        border-bottom:none;
+      }
+      .header-nav li img {
+          height: 0.32rem;
+          vertical-align: middle;
+          margin-right: 0.1rem;
+      }
     </style>
   </head>
   <body style="position:relative;width: 100%;height: 100%;overflow: hidden;">
@@ -37,13 +59,16 @@
       <div tapmode onclick="my_close()" class="left back"><i class="icon-arrow-left"></i></div>
       <div class="left-next">我的交流</div>
     </div>
-    
+    <ul id="nav" class="header-nav">
+      <li tapmode="active" onclick="set_tab(0)" class="active"><img src="../image/z_icon1.png">我发表的</li>
+      <li tapmode="active" onclick="set_tab(1)"><img src="../image/c_icon2.png">我回复的</li>
+    </ul>
     <script type="text/javascript" src="../script/comm.js"></script>
     <script type="text/javascript" src="../script/doT.min.js"></script>
     <script type="text/javascript" src="../script/caicui.js"></script>
     <script type="text/javascript" src="../script/db.js"></script>
     <script type="text/javascript" src="../script/saveTasksProgress.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript"> 
       function set_tab(i) {
           api.setFrameGroupIndex({
               name: 'talk_tab',
@@ -51,32 +76,36 @@
           });
       }
       apiready = function () {
-          var header = $api.dom('#header');
-          $api.fixIos7Bar(header);
+          // var header = $api.dom('#header');
+          // $api.fixIos7Bar(header);
 //        var headerPos = $api.offset(header);
 //        y = headerPos.h + $api.offset($api.dom('#nav')).h;
 //        h = api.winHeight - headerPos.h - $api.offset($api.dom('#nav')).h;
-		  var headerPos = $api.offset(header);
-          var width = api.winWidth;
-          var height = api.winHeight - headerPos.h;
+		    var header = $api.dom('.header');
+        var footer = $api.dom('.header-nav');
+        $api.fixIos7Bar(header);
+        var footerPos = $api.offset(footer);
+        var headerPos = $api.offset(header);
+        y = headerPos.h;
+        h = api.winHeight - headerPos.h - footerPos.h;
           api.openFrameGroup({
               name: 'talk_tab',
               background: '#fff',
               rect: {
                   x: 0,
-                  y: headerPos.h,
-                  w: width,
-                  h: height
+                  y: y,
+                  w: api.winWidth,
+                  h: h
               },
               scrollEnabled: true,
               index: 0,
-              preload: 0,
+              preload: 1,
               frames: [{//消息
                   name: 'my-talk-f',
                   url: 'my-talk-f.html',
                   bounces: true,
                   bgColor: '#fff',
-                  vScrollBarEnabled: true,
+                  vScrollBarEnabled: false,
                   hScrollBarEnabled: false
               }, {//公告
                   name: 'my-replay-f',
@@ -87,7 +116,7 @@
                   hScrollBarEnabled: false
               }]
           }, function (ret, err) {
-//            $("#nav li").removeClass('active').eq(ret.index).addClass('active');
+           $("#nav li").removeClass('active').eq(ret.index).addClass('active');
           });
           api.addEventListener({
               name: 'keyback'
@@ -102,6 +131,14 @@
           });
           api.closeWin();
       }
+      $("#nav li").click(function () {
+          var flag = $(this).index();
+          $('#nav li').each(function (p) {
+              $('#nav li img').eq(p).attr('src', '../image/c_icon' + (p + 1) + '.png');
+          });
+          $('#nav li img').eq(flag).attr('src', '../image/z_icon' + (flag + 1) + '.png');
+        
+      });
     </script>
   </body>
 </html>

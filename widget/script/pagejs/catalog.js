@@ -178,8 +178,17 @@ function initDom(){
         //     msg : '网络已断开，请检查网络状态',
         //     location : 'middle'
         // });
-        cache_model.getCourseTaskWithCourseId({"userId":getstor('memberId'),"courseId":api.pageParam.course_id},function(ret,err){
-                var ret_data = JSON.parse(ret.data.courseJson);
+        			
+        cache_model.getCourseJsonWithCourseId({"userId":getstor('memberId'),"courseId":api.pageParam.course_id},function(ret,err){
+//      		if(JSON.parse(ret.data).length<1){
+//	                $('#content').html('');
+//	                $('body').addClass('null');
+//	                return false;
+//	           }
+
+        		var ret_data = JSON.parse(JSON.parse(ret.data)[0].courseJson);
+     
+//              var ret_data = JSON.parse(ret.data.courseJson);
                 course_detail = ret_data[0];
                 if (isEmpty(ret_data)) {
                     $('body').addClass('null');

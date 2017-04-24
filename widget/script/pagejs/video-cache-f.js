@@ -174,36 +174,9 @@ function get_data() {
     set_data(0);
     // var len = Object.keys(data).length; //  2
     function set_data(num) {
-        cache_model = api.require('lbbVideo');
-        var param = {"userId":memberId};
-        if(api.pageParam.courseId){
-            param.courseId = api.pageParam.courseId
-        }
         
-        function initDom() {
-           cache_model.getCourseJsonWithCourseId(param,function(ret,err){
-		
-           if(JSON.parse(ret.data).length<1){
-           		$('#content').html('');
-        		$('body').addClass('null');
-        		return false;
-           }
-                $.each(JSON.parse(ret.data),function(k,v){
-                    var ret_data = JSON.parse(v.courseJson);
-                    var res = {
-                        data: ret_data[0]
-                    };
-                    mydata.push(res); 
-                    
-                })
-                
-                init_data();
-                initDomDownStatus();
-                //处理圈圈
-	    		isSolidcircle('circle', '', '');
-	    		showCacheList();
-           })
-        }
+        
+        
 
 //1:获取所有下载记录并解析
 getdownrecord();
@@ -235,7 +208,35 @@ getStatusTime = setInterval(function(){
         // }
     }
 }
-
+function initDom() {
+    cache_model = api.require('lbbVideo');
+        var param = {"userId":memberId};
+        if(api.pageParam.courseId){
+            param.courseId = api.pageParam.courseId
+        }
+           cache_model.getCourseJsonWithCourseId(param,function(ret,err){
+        
+           if(JSON.parse(ret.data).length<1){
+                $('#content').html('');
+                $('body').addClass('null');
+                return false;
+           }
+                $.each(JSON.parse(ret.data),function(k,v){
+                    var ret_data = JSON.parse(v.courseJson);
+                    var res = {
+                        data: ret_data[0]
+                    };
+                    mydata.push(res); 
+                    
+                })
+                
+                init_data();
+                initDomDownStatus();
+                //处理圈圈
+                isSolidcircle('circle', '', '');
+                showCacheList();
+           })
+        }
 
 function initDomDownStatus(){
 	    if(isEmpty($api.getStorage("videochangelist"))){
@@ -868,6 +869,81 @@ apiready = function() {
 	   
         
     });
+
+    api.addEventListener({
+          name: 'opena'
+      }, function(ret) {
+          if (ret.value.sethomepage == 1) { //删除
+              $('body').addClass('checking');
+              var ccids = [];
+
+              $.each($(".tasksBoxs"),function(k,v){
+                var checkFath = $(v).prev("li").find(".icon-check");
+                if(checkFath.hasClass("active")){
+                    
+                    var videoArr = $(v).find(".taskList");
+                    $.each(videoArr,function(key,val){
+                        var taskID = JSON.parse($(val).find(".down_data").html()).videoCcid;
+                        ccids.push(taskID);        
+                     })
+                }
+                
+             })
+
+ 
+            if(ccids.length<1){ return false; };
+//          var jsfun = 'down_stop(function(){});';
+//          api.execScript({
+//              name: 'root',
+//              script: jsfun
+//          });
+             api.showProgress({
+                 title: '删除中',
+                 modal: true
+             });
+             
+             var jsfun = "rmVideo('" + JSON.stringify(ccids) + "');";
+             api.execScript({
+                name: 'root',
+                script: jsfun
+             });
+             //获取新内容
+             setTimeout(function() {
+                $.each($(".down-progress"),function(k,v){
+                    if($(v).prev(".icon-check").hasClass("active")){
+                        $(v).closest("li").hide();
+                    }
+                 })
+                api.hideProgress();
+                 api.sendEvent({
+                    name: "cancle_del"
+                 });
+                  $('body').removeClass('checking');
+                  $('.icon-check').removeClass('active');           
+                // var len = 0;
+                // $.each($(".list"),function(k,v){
+                //      if($(v).css("display") != "none"){
+                //         len++;
+                //      }
+                // })
+                // if(len<1){
+                //    $('#content').html('');
+                //    $('body').addClass('null');
+                //    return false;
+                // }
+
+             },1000)
+          } else if (ret.value.sethomepage == 2) { //取消
+              $('body').removeClass('checking');
+              $('.icon-check').removeClass('active');
+          } else if (ret.value.sethomepage == 3) { //全选
+              $('.icon-check').addClass('active');
+          }
+      });
+
+
+
+
 //  api.addEventListener({
 //      name: 'opena'
 //  }, function(ret) {

@@ -74,6 +74,7 @@ function getData(page) {
 							subjectID :　stooges[i].subjectID,
 							categoryName : stooges[i].categoryName,
 							subjectName : stooges[i].subjectName,
+							subjectIndex : stooges[i].subjectIndex,
 							courseLists : []
 						})
 					}
@@ -82,6 +83,7 @@ function getData(page) {
 						subjectID :　stooges[i].subjectID,
 						categoryName : stooges[i].categoryName,
 						subjectName : stooges[i].subjectName,
+						subjectIndex : stooges[i].subjectIndex,
 						courseLists : []
 					})
 				}
@@ -96,7 +98,11 @@ function getData(page) {
 					}
 				}
 			}
-			
+			function down(x, y) {
+	            return (x.subjectIndex > y.subjectIndex) ? 1 : -1
+	 
+	        }
+	        categoryIdArr.sort(down)
 			total = ret.data.total;
 			if (page == 1) {
 				if (isEmpty(ret.data.courselist)) {

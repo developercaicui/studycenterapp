@@ -468,6 +468,7 @@ function getChapterTask() {
                 arr.push(task_arr[i]['taskInfo']);
             }
         }
+        
         var arr = api.pageParam.course_detail;
         
         var task_tpl = $('#task_tpl').html();
@@ -1045,7 +1046,8 @@ function lookExtend(id, url, title) {
     }
 }
 //点击本章任务
-function task_event(obj, num, task_id) {
+function task_event(obj, num, task_id,chapter_id) {
+    $api.setStorage("setchapterId",chapter_id);
     task_info = task_arr[task_id].taskInfo; //任务信息
     // 如果要打开新的窗口，则关闭旧窗口
     if ((from_page == 'course-test' && task_info.taskType == 'video') || (from_page == 'video' && task_info.taskType != 'video')) {

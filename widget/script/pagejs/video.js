@@ -290,7 +290,7 @@ function play_video() {
 //          param.isFinish = !isEmpty($api.getStorage(param.videoId)) && $api.getStorage(param.videoId) == 'YES' ? true : false;
 			param.isFinish = isFinish;
             param.definition = isEmpty($api.getStorage('Video_quilty')) || $api.getStorage('Video_quilty') == 1 ? 1 : 2;
-
+			param.userId = getstor('memberId');
             if (!is_check) {
                 //检查网络
                 check_net(videoid);
@@ -807,6 +807,8 @@ function exeNewTask() {
     newProgress = true;//重置视频播放进度
     isLoading = false;
     //如果任务类型为视频，则直接播放
+   
+    $api.setStorage("setchapterId",task_info_detail.chapterId);
     if (task_info.taskType == 'video') {
         videoid = task_info.videoCcid;
         videoTimes = task_info.videoTime;

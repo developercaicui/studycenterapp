@@ -56,10 +56,10 @@
   <body>
     <div id="content" class="talk-content my-talk-content">
     </div>
-    <ul id="nav" class="header-nav">
+    <!-- <ul id="nav" class="header-nav">
       <li tapmode="active" onclick="set_tab(0)" class="active">我发表的</li>
       <li tapmode="active" onclick="set_tab(1)">我回复的</li>
-    </ul>
+    </ul> -->
     <script id="tpl" type="text/x-dot-template">{{for(var p in it){ }}
             <div class="my-talk-list">
               <!-- 用户信息-->
@@ -228,50 +228,7 @@
               getData(1);
               currentPage = 1;
           });
-          var header = $api.dom('#header');
-          $api.fixIos7Bar(header);
-//        var headerPos = $api.offset(header);
-//        y = headerPos.h + $api.offset($api.dom('#nav')).h;
-//        h = api.winHeight - headerPos.h - $api.offset($api.dom('#nav')).h;
-		  var headerPos = $api.offset(header);
-          var width = api.winWidth;
-          var height = api.winHeight - headerPos.h;
-          api.openFrameGroup({
-              name: 'talk_tab',
-              background: '#fff',
-              rect: {
-                  x: 0,
-                  y: headerPos.h,
-                  w: width,
-                  h: height
-              },
-              scrollEnabled: true,
-              index: 0,
-              preload: 0,
-              frames: [{//消息
-                  name: 'my-talk-f',
-                  url: 'my-talk-f.html',
-                  bounces: true,
-                  bgColor: '#fff',
-                  vScrollBarEnabled: true,
-                  hScrollBarEnabled: false
-              }, {//公告
-                  name: 'my-replay-f',
-                  url: 'my-reply-f.html',
-                  bounces: true,
-                  bgColor: '#fff',
-                  vScrollBarEnabled: true,
-                  hScrollBarEnabled: false
-              }]
-          }, function (ret, err) {
-//            $("#nav li").removeClass('active').eq(ret.index).addClass('active');
-          });
-          api.addEventListener({
-              name: 'keyback'
-          }, function (ret, err) {
-              my_close();
-      
-          });
+
           //滚动到底部
           api.addEventListener({
               name: 'scrolltobottom'
