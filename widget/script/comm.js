@@ -731,17 +731,11 @@ function video_cache(method, title, ccid, UserId, apiKey, callback) {
                     if (api.systemType == "ios" && parseInt(ret.status) == 2) {
                         return false;
                     }
-                    if(ret.status == 0){
-                    	api.toast({
-			                msg : '下载失败！',
-			                location : 'middle'
-			            });
-                    }
-//                  if(ret.finish == "YES"){
-//                  	alert(param.isEncryption +"===="+JSON.stringify(ret));
-//                  	
-//                  	
+                    
+//                  if(ret.status == 0){
+//                  	api.alert({ msg: '下载失败！' });	
 //                  }
+                    
 //                  alert(JSON.stringify(ret))
 //                  callback(ret, err);
                 });

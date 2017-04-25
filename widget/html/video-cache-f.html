@@ -79,12 +79,12 @@
                 <dd><i dataid="{{=val2.chapterId}}" class="icon-check chapterb"></i></dd>
               </dl>{{~val2.children:val3:key3}}
               {{ var is_show=is_loadC(val3.chapterId);}}
-              <li class="list mycaptC {{=is_show}}">
+              <li class="list mycaptC {{=is_show}}" tapmode="tapcolor" onclick="tasksCache(this,'{{=val3.chapterId}}')">
                 <dl class="haschild">
                   {{var state=3;}}
                   {{var progress=get_dowm('{{=val.chapterId}}','{{=val2.chapterId}}','{{=val3.chapterId}}');}}
       
-                  <dt tapmode="tapcolor" onclick="tasksCache(this,'{{=val3.chapterId}}')">
+                  <dt>
                   <i type="1" data-chapId="{{=val3.chapterId}}" class="dot-status"></i>
                     <p>{{=val3.chapterTitle}}</p>
                   </dt>
@@ -121,10 +121,10 @@
             <ul class="list mycaptB {{=is_show}}">
               {{var state=3;}}
               {{var progress=get_dowm('{{=val.chapterId}}','{{=val2.chapterId}}','');}}
-              <li class="list mycaptC">
+              <li class="list mycaptC" tapmode="tapcolor" onclick="tasksCache(this,'{{=val2.chapterId}}')">
               <dl>
             
-                <dt tapmode="tapcolor" onclick="tasksCache(this,'{{=val2.chapterId}}')">
+                <dt>
                 <i type="1" data-chapId="{{=val2.chapterId}}" class="dot-status"></i>
                   <p>{{=val2.chapterTitle}}</p>
                 </dt>
@@ -164,10 +164,10 @@
           {{var state=3;}}
           {{var progress=get_dowm('{{=val.chapterId}}','','');}}
           {{var is_show=is_loadA(val.chapterId);}}
-          <li class="list mycaptA {{=is_show}}">
+          <li class="list mycaptA {{=is_show}}" tapmode="tapcolor" onclick="tasksCache(this,'{{=val.chapterId}}')">
             <dl>
        
-              <dt tapmode="tapcolor" onclick="tasksCache(this,'{{=val.chapterId}}')">
+              <dt>
               <i type="1" data-chapId="{{=val.chapterId}}" class="dot-status"></i>
                 <p> {{=val.chapterTitle}}</p>
               </dt>

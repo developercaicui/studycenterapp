@@ -44,39 +44,65 @@ function go_next(name) {
 }
 
 function get_ranking() {
-	var able = $api.getStorage('capabilityAssessment');
-	able = '';
-	if (!isEmpty(able)) {
-		var ranking = able.ranking;
-		$('.ranking').html(ranking).parents('p').removeClass('none');
-		return false;
-	}
-	ajaxRequest('api/v2/capabilityAssessment', 'get', {//008.017  能力评估
-		token : $api.getStorage('token'),
-		id : get_loc_val('mine', 'memberId')
-	}, function(ret, err) {
-		if (err) {
-			api.toast({
-				msg : err.msg,
-				location : 'middle'
-			});
-			return false;
-		}
-		if (ret.state == 'success') {
-			$api.setStorage('capabilityAssessment', ret.data[0]);
-			if (!isEmpty(ret.data[0]) && !isEmpty(ret.data[0].ranking)) {
-				var ranking = ret.data[0].ranking;
-				$('.ranking').html(ranking).parents('p').removeClass('none');
-			}
-
-		} else {
-			//api.toast({
-			//	msg : ret.msg,
-			//	location : 'middle'
-			//});
-			//return false;
-		}
-	});
+	var memberId = getstor('memberId');
+	var able = $api.getStorage(memberId+'myMessgePhone');
+	//联系方式
+	 if(able){
+	 	$(".ranking").text(able);
+	 	return false;
+	 }
+	  ajaxRequest('api/v2/member/get',"get", {"token":$api.getStorage('token')}, function (ret, error) {
+	    if(error){
+	        api.toast({
+	            msg:error.msg,
+	            location:'middle'
+	        });
+	        return false;
+	    }
+	    if(ret){
+	      if(ret.data.mobile){
+	          $(".ranking").text(ret.data.mobile);
+	          $api.setStorage(memberId+'myMessgePhone',ret.data.mobile);
+	      }else{
+	          $(".ranking").text(ret.data.email);
+	          $api.setStorage(memberId+'myMessgePhone',ret.data.email);
+	      } 
+	    }
+	                   
+	  })
+//	var able = $api.getStorage('capabilityAssessment');
+//	able = '';
+//	if (!isEmpty(able)) {
+//		var ranking = able.ranking;
+//		$('.ranking').html(ranking).parents('p').removeClass('none');
+//		return false;
+//	}
+//	ajaxRequest('api/v2/capabilityAssessment', 'get', {//008.017  能力评估
+//		token : $api.getStorage('token'),
+//		id : get_loc_val('mine', 'memberId')
+//	}, function(ret, err) {
+//		if (err) {
+//			api.toast({
+//				msg : err.msg,
+//				location : 'middle'
+//			});
+//			return false;
+//		}
+//		if (ret.state == 'success') {
+//			$api.setStorage('capabilityAssessment', ret.data[0]);
+//			if (!isEmpty(ret.data[0]) && !isEmpty(ret.data[0].ranking)) {
+//				var ranking = ret.data[0].ranking;
+//				$('.ranking').html(ranking).parents('p').removeClass('none');
+//			}
+//
+//		} else {
+//			//api.toast({
+//			//	msg : ret.msg,
+//			//	location : 'middle'
+//			//});
+//			//return false;
+//		}
+//	});
 }
 
 function get_count() {
@@ -229,5 +255,8 @@ apiready = function() {
 	}, function(ret) {
 		get_count();
 	});
+	
+	
+	
 };
 

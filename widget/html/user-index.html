@@ -28,17 +28,18 @@
   font-size: 0.18rem;
   vertical-align: top;
   position: relative;
+  
+}
+.stybox ul.das-top li:nth-child(1) {
   background: #00a085;
 }
 .stybox ul.das-top li:nth-child(2) {
-  background: #d9544f;
-}
-.stybox ul.das-top li:nth-child(3) {
   background: #418bca;
 }
-.stybox ul.das-top li:nth-child(4) {
-  background: #3f4e62;
+.stybox ul.das-top li:nth-child(3) {
+  background:  #3f4e62;
 }
+
 .stybox ul.das-top li h1,
 .stybox ul.das-top li h2,
 .stybox ul.das-top li p {
@@ -177,8 +178,8 @@
             </div>
             <div class="user-index-class clearfix">
        
-                {{var data=it.courselist.slice(0,3);}}
-      {{ for(var p in data) { }}
+            {{var data=it.courselist;}}
+      		{{ for(var p in data) { }}
             <li tapmode onclick="CourseDetail('{{=data[p].courseId}}','{{=data[p].chapterId}}','{{=data[p].subjectID}}','{{=data[p].categoryId}}','{{=data[p].courseName}}','{{=data[p].chapterName}}','{{=data[p].subjectName}}','{{=data[p].categoryName}}')">
 
               <h2>{{=data[p].courseName}}</h2>{{ if(!isEmpty(data[p].expirationTime)){ }}
@@ -194,35 +195,12 @@
                 <div class="circle-progress">
                   <div class="val">0</div>
                 </div>
-                <div class="num"><span>0/</span><b>{{=data[p].taskTotal?data[p].taskTotal:0}}</b></div>{{ } }}
-              </div>
+                <div class="num"><span>0/</span><b>{{=data[p].taskTotal?data[p].taskTotal:0}}</b></div>
+              </div>{{ } }}
             </li>
             {{ } }}
 
             </div>
-            <!-- <div tapmode data-chaptername="{{=data.chapterName}}" data-coursename="{{=data.courseName}}" onclick="course_det(this,'course-studying-top','{{=data.courseId}}','{{=data.chapterId}}','{{=data.categoryId}}','{{=data.subjectID}}','{{=data.subjectName}}','{{=data.categoryName}}')" class="user-index-class clearfix"><img src="{{=static_url+data.courseBkImage}}" class="userClass-pic">
-              <ul class="userClass-wod">
-                <li data-id="{{=data.courseId}}" class="userClass-wodTit">{{=data.courseName}}</li>{{ if(!isEmpty(data.expirationTime)){ }}
-                <li style="margin-top: 0.4rem;" class="hasTime">有效期至:{{=formatDate(data.expirationTime,'Y')+'-'+formatDate(data.expirationTime,'M')+'-'+formatDate(data.expirationTime,'D')}}</li>{{ } }}
-                {{ if(!isEmpty(data.showProgress) && !isEmpty(data.taskTotal)) { }}
-                <li class="userClass-wodprogress progress">
-                  <div class="progress-box2">
-                    <div class="progress2">
-                      <div role="progressbar" min="{{=data.showProgress}}" max="{{=data.taskTotal}}" data class="progress-bar2"></div>
-                    </div>
-                    <div class="progress-val2"></div>
-                  </div>
-                </li>{{ }else { }}
-                <li class="userClass-wodprogress progress">
-                  <div class="progress-box2">
-                    <div class="progress2">
-                      <div role="progressbar" min="0" max="100" data class="progress-bar2"></div>
-                    </div>
-                    <div class="progress-val2"></div>
-                  </div>
-                </li>{{ } }}
-              </ul>
-            </div> -->
       </script>
     </div>
   </div>
@@ -232,8 +210,8 @@
             </div>
             <div class="clearfix">
       {{ for(var p in it.data) { }}
-            <li tapmode">
-              <div style="background-image:url({{=static_url+it.data[p].imagePath}});height: 100%;background-size: 100% 100%;background-repeat: no-repeat;" class="cpl-head">
+            <li tapmode onclick="openApp('{{=it.data[p].url}}')">
+              <div style="background-image:url({{=static_url+it.data[p].imagePath}});height: 100%;background-size: 100% 100%;background-repeat: no-repeat;" class="cpl-head"></div>
             </li>
             {{ } }}
 

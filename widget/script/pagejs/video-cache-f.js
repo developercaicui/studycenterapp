@@ -6,7 +6,7 @@ var lastgettime = 1388509261;//记录每次获取数据库的时间点，下次�
 
 
 function tasksCache(obj,chapterId){
-    var tasks = $(obj).next().find(".down_data").html();
+    var tasks = $(obj).find(".down_data").html();
     api.openWin({
         name : "tasks-cache",
         url : 'tasks-cache.html',

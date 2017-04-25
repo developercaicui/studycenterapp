@@ -66,10 +66,11 @@ var is_debug = false;
 	     }, 100);
 	     $('body').removeClass('checking');
 	     var len = 0; 
-	     
-	      course_detail = JSON.parse(api.pageParam.data.replace(/\n|\r|\t|\\|<[^<]*>/g,''));
+	   
+	      course_detail = JSON.parse(api.pageParam.data.replace(/\n|\r|\t|<[^<]*>/g,''));
 	      
 	      var task_tpl = $('#task_tpl').html();
+	      
 	      var content = doT.template(task_tpl);
 
 	      $('#chaTask').html(content(course_detail)).show();

@@ -395,6 +395,7 @@ function initDomDownStatus(){
     	}
     	
     })
+    $(".task"+api.pageParam.videoId).parents("li").css({"background":"#013f57"});
    //处理圈圈
     isSolidcircle('circle', '', '');
 }

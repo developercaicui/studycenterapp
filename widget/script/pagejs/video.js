@@ -419,7 +419,8 @@ function play_video() {
                                     times: tmp_progress, //观看时间进度
                                     //study_progress : study_progress,//任务学习的进度
                                     task_info: task_info, //章节信息
-                                    from_page: 'video'
+                                    from_page: 'video',
+                                    videoId : videoid
                                 },
                                 bgColor: 'rgba(0,0,0,0)'
                             });
@@ -892,7 +893,7 @@ function closeThisWin(playtime) {
         });
     } else {
         api.setStatusBarStyle({
-            style: 'light'
+            style: 'dark'
         });
     }
     $api.rmStorage('ios_style');

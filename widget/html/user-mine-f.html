@@ -13,6 +13,11 @@
     <script type="text/javascript" src="../script/api.js"></script>
     <script type="text/javascript" src="../script/zepto.js"></script>
     <link rel="stylesheet" href="../css/user-center.css">
+    <style>
+    	.user-center-content .user-info .user-name p span{
+    		padding:0;
+    	}
+    </style>
   </head>
   <body>
     <div style="height:100%;" class="user-center-wrap">
@@ -20,7 +25,7 @@
         <div class="user-info none"><img src="../image/test-photo.png" alt="" tapmode onclick="go_next('modify')" class="headimg">
           <div class="user-name">
             <h5 class="nickName">张萌萌</h5>
-            <p>财迷排名<span class="ranking">977</span> 位</p>
+            <p><span class="ranking"></span></p>
           </div>
           <div tapmode onclick="go_next('message-center')" class="message-bells"><i class="icon-message"></i>
             <div class="msg-mark msg-num ri_h"></div>

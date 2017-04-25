@@ -199,6 +199,20 @@
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                 </dd>
               </dl>
+            </div>{{ }else if(val4.taskType=='knowledgePointExercise'){ }}
+            <div class="taskList {{=is_show}}">
+              <dl style="padding-left: .8rem;">
+                <dt onclick="next(3,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val3.chapterId}}')"><i type="1" data-chapId="{{=val3.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
+                  <p style="padding-left: .9rem;">{{=val4.title}}</p>
+                  <!--p  {{=progress+'='+val2.chapterId}}-->
+                </dt>
+                <dd>
+                  <div id="" class="" style="text-align: center;">
+                    <!--<span>{{=val4.totalCount}}题</span>-->
+                  </div>
+                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                </dd>
+              </dl>
             </div>
             {{ } }}
             {{~}}</div>
@@ -259,6 +273,20 @@
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                 </dd>
               </dl>
+            </div>{{ }else if(val4.taskType=='knowledgePointExercise'){ }}
+            <div class="taskList {{=is_show}}">
+              <dl>
+                <dt onclick="next(2,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val2.chapterId}}')"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
+                  <p style="padding-left: .9rem;">{{=val4.title}}</p>
+                  <!--p  {{=progress+'='+val2.chapterId}}-->
+                </dt>
+                <dd>
+                  <div id="" class="" style="text-align: center;">
+                    <!--<span>{{=val4.totalCount}}题</span>-->
+                  </div>
+                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                </dd>
+              </dl>
             </div>
             {{ } }}
             {{~}}</div>
@@ -312,6 +340,19 @@
                 <dd>
                   <div id="" class="" style="text-align: center;">
                     <span>{{=val4.totalCount}}题</span>
+                  </div>
+                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                </dd>
+              </dl>
+            </div>{{ }else if(val4.taskType=='knowledgePointExercise'){ }}
+            <div class="taskList {{=is_show}}">
+              <dl>
+                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
+                  <p style="padding-left: .9rem;">{{=val4.title}}</p>
+                </dt>
+                <dd>
+                  <div id="" class="" style="text-align: center;">
+                    <!--<span>{{=val4.totalCount}}题</span>-->
                   </div>
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                 </dd>
@@ -430,7 +471,7 @@
               var tmp_tasks = tmp_chapters[i];
               if (tmp_tasks.taskType == 'video') {
                   tmp_num.video++;
-              } else if (tmp_tasks.taskType == 'exam') {
+              } else if (tmp_tasks.taskType == 'exam' || tmp_tasks.taskType == 'knowledgePointExercise') {
                   tmp_num.exam++;
               } else if (tmp_tasks.taskType == 'pdfread') {
                   tmp_num.doc++;
@@ -517,7 +558,7 @@
               //视频类型
               var new_win_name = 'video';
               var new_win_url = 'video.html';
-          } else if (task_info.taskType == 'entry' || task_info.taskType == 'pdfread' || task_info.taskType == 'exam') {
+          } else if (task_info.taskType == 'entry' || task_info.taskType == 'pdfread' || task_info.taskType == 'exam' || task_info.taskType == 'knowledgePointExercise') {
               //entry（外链类型）、pdfread（pdf类型）、exam（测试题类型）
               var new_win_name = 'course-test';
               var new_win_url = 'course-test.html';
