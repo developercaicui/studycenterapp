@@ -343,7 +343,12 @@ function toggleTasks(e) {
 	
 	$(".list").removeClass("activeTask");
 	$(e).closest(".list").next(".fath").toggleClass('hide-child');
-	$(e).closest(".list").addClass("activeTask");
+	if($(e).closest(".list").next(".fath").hasClass("hide-child")){
+		$(e).closest(".list").addClass("activeTask");
+	}else{
+		$(e).closest(".list").removeClass("activeTask");
+	}
+	
 }
 //课程折叠
 function toggleCourse(e) {

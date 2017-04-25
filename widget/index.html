@@ -41,7 +41,9 @@
           right: 0.22rem;
           top: 0.16rem;
         }
-        
+        .header.homeheader .header-my{
+        	color: #000;
+        }
     </style>
 </head>
 
@@ -172,22 +174,14 @@
 
     function openTabMe(i) { //个人中心切换
         $('.header > *').removeClass('active').eq(i).addClass('active');
-        $('.header.homeheader').css({"height":"0.96rem","border-bottom":"1px solid #898989"});
-        $('.header.homeheader .header-home').css({"bottom":"0"});
-        if(  i== 1 ){
-            $('.header.homeheader').css({"height":"1.9rem","border-bottom":"none"});
-            $('.header.homeheader .header-home').css({"bottom":"0.93rem"});
-            $('.header > *').eq(0).addClass('active');
-        }
-        	
         $('.footer-nav li').removeClass('active').eq(i).addClass('active');
         var color;
         switch (i) {
             case 0:
                 api.setStatusBarStyle({
-                    style: 'light'
+                    style: 'dark'
                 });
-                color = '#21292b';
+                color = '#fff';
                 break;
             case 1:
                 api.setStatusBarStyle({
@@ -197,9 +191,9 @@
                 break;
             case 2:
                 api.setStatusBarStyle({
-                    style: 'light'
+                    style: 'dark'
                 });
-                color = '#21292b';
+                color = '#fff';
                 break;
         }
         $('.header').css('background', color);
@@ -214,13 +208,6 @@
                 name: 'ucenter_tab',
                 hidden: true
             });
-            var header = $api.dom('.header');
-            var footer = $api.dom('.footer-nav');
-            $api.fixIos7Bar(header);
-            var footerPos = $api.offset(footer);
-            var headerPos = $api.offset(header);
-            y = headerPos.h;
-            h = api.winHeight - headerPos.h - footerPos.h;
             api.openFrameGroup({
                 name: 'course_tab',
                 background: '#fff',

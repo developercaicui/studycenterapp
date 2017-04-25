@@ -52,6 +52,10 @@
         font-size: .4rem;
         line-height: .9rem;
       }
+      .cache-list .list {
+		    background:#fff;
+		    color: #787878;
+	  }
       .list.activeTask{
       	background: #00a185;
       	color:#fff;
@@ -414,6 +418,7 @@
           } else {
               var tmp_chapters = course_detail.chapters[num1].children[num2].children[num3].tasks;
           }
+          
           //得到子章节的任务信息
           var tmp_num = {
               'video': 0,

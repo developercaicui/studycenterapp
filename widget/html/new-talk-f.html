@@ -13,6 +13,85 @@
     <script type="text/javascript" src="../script/api.js"></script>
     <script type="text/javascript" src="../script/zepto.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/about-note.css">
+    <style>
+ 
+.ac-editor-top {
+  
+    width: 100%;
+    height: 1rem;
+    padding: 0.1rem 0.1rem 0.1rem 0.8rem;
+    background: #efefef;
+}
+.ac-editor-top-left {
+    position: absolute;
+    padding:0.1rem;
+    left: 0.1rem;
+    right: 0;
+    width: 1.8rem;
+    height: 0.8rem;
+    background: #fff;
+    border: 1px solid #EEE;
+}
+.ac-editor-top-left:nth-child(2) {
+    top:0.88rem;
+    
+}
+.ac-editor-top-left:nth-child(2) .ac-editor-select-text{
+    color:#636363;
+    
+}
+.ac-editor-select {
+        padding: 0.05rem 0 0 0.25rem;
+}
+.ac-editor-select-text {
+       padding-right: 0.2rem;
+    color: #249885;
+}
+.ac-editor-select .icon-arrow-down{
+	color:#6c6c6c;
+	    vertical-align: middle;
+}
+.ac-editor-top-right {
+    position: relative;
+    left: 1.2rem;
+    width: 81%;
+    height: 0.8rem;
+	border: 1px solid #EEE;
+    background: #fff;
+    padding-left: .1rem;
+}
+.ac-editor-input {
+    outline: 0;
+    border: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.option-ul {
+    margin-top: 0.1rem;
+     line-height: initial;
+    overflow: hidden;
+    border: 1px solid #EEE;
+}
+.option-ul .option-li {
+   
+    width: 100%;
+    height: 100%;
+    
+}
+.option-ul .option-a {
+	    padding-left: 0.1rem;
+    float: left;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    line-height: .64rem;
+    font-size: 0.3rem;
+    color: #445870;
+    background-color: #fff;
+    overflow: hidden;
+}
+    </style>
   </head>
   <body>
     <div class="new">
@@ -20,7 +99,24 @@
         <p>capter 4 function of main departments in  the business organisation</p><span></span>
       </div>
       <div class="newentry">
-        <input type="text" maxlength="100" autofocus="autofocus" placeholder="讨论标题" onchange="upperCase()" oninput="upperCase()" onblur="upperCase()" class="lx_title">
+      	<div class="ac-editor-top">
+				<div class="ac-editor-top-left" data-type="1">
+					<a class="ac-editor-select selone" href="javascript:;">
+						<span class="ac-editor-select-text ac-select-text">问答</span>
+						<i class="icon-arrow-down"></i>
+					</a>
+				</div>
+				<div class="ac-editor-top-left seltwo" data-type="0" style="display: none">
+					<a class="ac-editor-select" href="javascript:;">
+						<span class="ac-editor-select-text ac-select-text">讨论</span>
+					</a>
+				</div>
+				
+				<div class="ac-editor-top-right">
+					<input class="ac-editor-input newAc-title lx_title" type="text" placeholder="标题">
+				</div>
+			</div>
+
         <textarea placeholder="讨论内容" onblur="upperCase()" onchange="upperCase()" oninput="upperCase()" class="lx_content"></textarea>
         <!--.newtyau-->
         <!--    .voice-player(tapmode, url="{{=it[p].soundPath}}", onclick="playAudio(this)", bg, time="{{=it[p].soundlen}}")-->
@@ -42,6 +138,25 @@
               $api.setStorage('content', content);
           }
       }
+      $(".selone").on("click",function(){
+          if($(this).hasClass("active")){
+              $(".seltwo").hide();
+              $(this).removeClass("active");
+              $api.setStorage('selType', 1);
+          }else{
+              $(".seltwo").show();
+              $(this).addClass("active");
+          }
+      })
+      $(".seltwo").on("click",function(){
+          var text1 = $(".selone").find(".ac-select-text").text();
+          var text2 = $(this).find(".ac-select-text").text();
+          $(".selone").find(".ac-select-text").text(text2);
+          $(this).find(".ac-select-text").text(text1);
+          $(this).hide();
+          $(".selone").removeClass("active");
+          $api.setStorage('selType', 0);
+      })
     </script>
   </body>
 </html>

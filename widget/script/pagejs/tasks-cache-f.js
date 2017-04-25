@@ -36,9 +36,9 @@ var is_debug = false;
     // alert(strs+"====="+JSON.stringify(videoDownInfo))
     for (j=1; j<pathlen;j++ ){
         var domInfo = videoDownInfo[strs[j]];
-        var domid = strs[j];
-		
+		var domid = strs[j];
         if(!isEmpty(domInfo)){
+	        
             var domprogress = videoDownInfo[strs[j]].progress;
             var domstatus = videoDownInfo[strs[j]].status;
             var domtasknum = videoDownInfo[strs[j]].tasknum;
@@ -46,11 +46,13 @@ var is_debug = false;
 			//          alert(domid+"==="+api.pageParam.chapterId);
             if($(".task"+domid).attr("id") == api.pageParam.chapterId){
                 $(".task"+domid).parents("li").show();
+                $(".task"+domid).attr("type",domstatus);
+	            $(".task"+domid).find(".val").html(domprogress);
+	            $(".task"+domid).parent().prev().find(".v-progress").find("span").css("width",domprogress+"%");
+	            $(".task"+domid).parent().prev().find(".v-name").find("span").eq(1).text(Math.round(domprogress)+"%");
             }
-            $(".task"+domid).attr("type",domstatus);
-            $(".task"+domid).find(".val").html(domprogress);
-            $(".task"+domid).parent().prev().find(".v-progress").find("span").css("width",domprogress+"%");
-            $(".task"+domid).parent().prev().find(".v-name").find("span").eq(1).text(Math.round(domprogress)+"%");
+            
+            
         } 
     }
     

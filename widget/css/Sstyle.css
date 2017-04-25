@@ -968,7 +968,7 @@ input,button,textarea {
 	box-shadow:0 0 5px rgba(0, 0, 0, .1); */
 	background:#fff;
     overflow: hidden;
-    border-bottom: 1px solid #e1e1e1;
+    border-bottom: 1px solid #e0e0e0;
 }
 .courseStyTp{
 	height:2rem;

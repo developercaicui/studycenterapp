@@ -71,7 +71,7 @@
               <div class="talk-user clear-fix">{{if(!isEmpty(it.headImg)) { }}
                 <div class="takl-user-photo"><img src="{{=static_url+it.headImg}}" alt=""></div>{{ } }}
                 <div class="talk-user-message clear-fix">
-                  <p class="line-1"><span>{{=it.nikeName}}</span>{{if(!isEmpty(it.levelimg)) { }}<img src="{{=static_url+it.levelimg}}" alt="">{{ } }}<span class="talk-right2"><img src="../image/like.png" alt="" class="t-img-message"><b>{{=!isEmpty(it.replyCount)?it.replyCount:0}}</b></span><span class="talk-right"><img src="../image/mess.png" alt="" class="t-img-message"><b>{{=!isEmpty(it.replyCount)?it.replyCount:0}}</b></span></p>
+                  <p class="line-1"><span>{{=it.nikeName}}</span>{{if(!isEmpty(it.levelimg)) { }}<img src="{{=static_url+it.levelimg}}" alt="">{{ } }}<span class="talk-right2"><img src="../image/like.png" alt="" class="t-img-message"><b>{{=!isEmpty(it.praiseCount)?it.praiseCount:0}}</b></span><span class="talk-right"><img src="../image/mess.png" alt="" class="t-img-message"><b>{{=!isEmpty(it.replyCount)?it.replyCount:0}}</b></span></p>
                   <p class="line-22"><span>{{ if(!isEmpty(it.updateTime)) { }}{{=formatDate(it.updateTime,'Y')+'-'+formatDate(it.updateTime,'M')+'-'+formatDate(it.updateTime,'D')}} {{ } }}</span><span>{{ if(!isEmpty(it.updateTime)) { }} {{=formatDate(it.updateTime,'h')+':'+formatDate(it.updateTime,'m')}}{{ } }}</span></p>
                 </div>
               </div>

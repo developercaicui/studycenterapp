@@ -12,15 +12,36 @@
     <link rel="stylesheet" type="text/css" href="../css/caicui.css">
     <script type="text/javascript" src="../script/api.js"></script>
     <script type="text/javascript" src="../script/zepto.js"></script>
+    <style>
+    	#header{background: #fff;color:#000;}
+        .header{color:#000;border-bottom: 1px solid #d4d4d4;}
+        .header .left:after{display: none;}
+        .icon-arrow-left{color:#00a186;font-weight: bold;}
+        .header .left-next {
+            font-size: 0.36rem;
+            padding-left: 1rem;
+            max-width:80%; 
+            overflow: hidden;
+            word-wrap: normal;
+            text-overflow: ellipsis;
+            float: none;
+            white-space: pre;
+            text-align:center;
+        }
+
+    </style>
   </head>
   <body>
-    <div id="header" class="header">
-      <div tapmode onclick="api.closeWin()" class="left back"><i class="icon-back"></i></div>
-      <div class="left-next">发起讨论</div>
+  	<div id="header" class="header">
+      <div tapmode onclick="api.closeWin()" class="left back"><i class="icon-arrow-left"></i></div>
+      <div class="left-next">发布新帖</div>
       <div tapmode onclick="newQuestion()" class="right"><i class="icon-check"></i></div>
     </div>
+    
     <div id="editor" style="opacity:.001" class="editor-bar">
-      <div class="editor-tool"><i class="icon-recording-o needaideo"></i><i class="icon-picture needimg"></i>
+      <div class="editor-tool">
+      <i class="icon-recording-o needaideo"></i>
+      <i class="icon-picture needimg"></i>
         <div class="textarea"></div>
         <div class="btn btn-success">发布</div>
       </div>
@@ -107,12 +128,16 @@
               param.taskId = '';
               param.taskProgress = 0;
               param.taskType = '';
+
+              var type = $api.getStorage('selType') ? $api.getStorage('selType') : 1;
+alert($api.getStorage('selType'))
+              param.type = type;
               api.showProgress({
                   title: '处理中',
                   modal: true
               });
               is_define = false;
-              ajaxRequest('api/studytools/discusssave/v2.1', 'post', param, function (ret, err) {//003.303.1  发布讨论
+              ajaxRequest('api/studytools/bbssave/v1.0', 'post', param, function (ret, err) {//003.303.1  发布讨论
                   api.hideProgress();
                   if (err) {
                       is_define = true;

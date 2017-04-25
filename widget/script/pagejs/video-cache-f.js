@@ -162,10 +162,10 @@ function init_data() {
 }
 
 function get_data() {
-    setTimeout(function() {
-        api.hideProgress();
-        api.refreshHeaderLoadDone();
-    }, 100);
+//  setTimeout(function() {
+//      api.hideProgress();
+//      api.refreshHeaderLoadDone();
+//  }, 100);
 
     $('body').removeClass('checking');
     /*后台代码*/
@@ -216,11 +216,11 @@ function initDom() {
         }
            cache_model.getCourseJsonWithCourseId(param,function(ret,err){
         
-           if(JSON.parse(ret.data).length<1){
-                $('#content').html('');
-                $('body').addClass('null');
-                return false;
-           }
+	           if(JSON.parse(ret.data).length<1){
+	                $('#content').html('');
+	                $('body').addClass('null');
+	                return false;
+	           }
                 $.each(JSON.parse(ret.data),function(k,v){
                     var ret_data = JSON.parse(v.courseJson);
                     var res = {
@@ -941,232 +941,6 @@ apiready = function() {
           }
       });
 
-
-
-
-//  api.addEventListener({
-//      name: 'opena'
-//  }, function(ret) {
-//      if (ret.value.sethomepage == 1) { //删除
-//          $('body').addClass('checking');
-//          var courseid = get_input('courseid');
-//          var chaptera = get_input('chaptera');
-//          var chapterb = get_input('chapterb');
-//          var chapterc = get_input('chapterc');
-//          var downed = isEmpty($api.getStorage(memberId + 'downed')) ? '' : $api.getStorage(memberId + 'downed');
-//          if ((isEmpty(courseid) && isEmpty(chaptera) && isEmpty(chapterb) && isEmpty(chapterc)) || isEmpty(mydata)) {
-//              return false;
-//          }
-//          api.showProgress({
-//              title: '删除中',
-//              modal: true
-//          });
-            // var Queue;
-            // read_file(memberId + 'Queue.db', function(res, err) {
-            //     if (res.status && res.data) {
-            //         Queue = JSON.parse(res.data);
-            //         for (var p in mydata) {
-            //             if (!isEmpty(mydata[p]['data'][0]['courseId']) && in_array(mydata[p]['data'][0]['courseId'], courseid)) { //删除整个课程对应的记录
-            //                 var obj_data = $api.getStorage(memberId + 'video-buffer');
-            //                 for (var x in obj_data) {
-            //                     if (obj_data[x] == mydata[p]['data'][0]['courseId']) {
-            //                         obj_data.splice(x, 1);
-            //                         break;
-            //                     }
-            //                 }
-            //                 if (downed) {
-            //                     if (!isEmpty(api.pageParam.courseId) && api.pageParam.courseId == mydata[p]['data'][0]['courseId']) { //单课程进入
-            //                         is_del_downed = true;
-            //                         var jsfun = 'down_stop(function(){});';
-            //                         api.execScript({
-            //                             name: 'root',
-            //                             script: jsfun
-            //                         });
-            //                     }
-            //                     if (in_array(downed['courseId'], courseid)) { //全部课程删除某一课程
-            //                         is_del_downed = true;
-            //                         var jsfun = 'down_stop(function(){});';
-            //                         api.execScript({
-            //                             name: 'root',
-            //                             script: jsfun
-            //                         });
-            //                     }
-            //                 }
-            //                 $api.setStorage(memberId + 'video-buffer', obj_data);
-            //             }
-            //             if (!isEmpty(mydata[p]['data'][0]['chapters'])) {
-            //                 for (var n in mydata[p]['data'][0]['chapters']) {
-            //                     if (!isEmpty(mydata[p]['data'][0]['chapters'][n]['chapterId']) && in_array(mydata[p]['data'][0]['chapters'][n]['chapterId'], chaptera)) { //删除一级章节对应记录
-            //                         for (var v in Queue) {
-            //                             if ((!isEmpty(Queue[v]['chapterIdA']) && Queue[v]['chapterIdA'] == mydata[p]['data'][0]['chapters'][n]['chapterId']) || (!isEmpty(Queue[v]['chapterida']) && Queue[v]['chapterida'] == mydata[p]['data'][0]['chapters'][n]['chapterId'])) {
-            //                                 Queue.splice(v, 1);
-            //                                 break;
-            //                             }
-            //                         }
-            //                         if (downed) {
-            //                             var chapterA = downed['chapterIdA'];
-            //                             if ((!isEmpty(mydata[p]['data'][0]['chapters'][n]) && !isEmpty(mydata[p]['data'][0]['chapters'][n]['chapterId']) && mydata[p]['data'][0]['chapters'][n]['chapterId'] == chapterA)) {
-            //                                 is_del_downed = true;
-            //                                 var jsfun = 'down_stop(function(){});';
-            //                                 api.execScript({
-            //                                     name: 'root',
-            //                                     script: jsfun
-            //                                 });
-            //                             }
-            //                         }
-            //                         $api.rmStorage(memberId + mydata[p]['data'][0]['chapters'][n]['chapterId'] + 'progress'); //一级章节删除
-            //                     }
-            //                     //二级章节存在
-            //                     if (!isEmpty(mydata[p]['data'][0]['chapters'][n]['children'])) {
-            //                         for (var q in mydata[p]['data'][0]['chapters'][n]['children']) {
-            //                             if (!isEmpty(mydata[p]['data'][0]['chapters'][n]['children'][q]['chapterId']) && in_array(mydata[p]['data'][0]['chapters'][n]['children'][q]['chapterId'], chapterb)) { //删除二级章节下载记录
-            //                                 for (var s in Queue) {
-            //                                     if ((!isEmpty(Queue[s]['chapterIdB']) && Queue[s]['chapterIdB'] == mydata[p]['data'][0]['chapters'][n]['children'][q]['chapterId']) || (!isEmpty(Queue[s]['chapteridb']) && Queue[s]['chapteridb'] == mydata[p]['data'][0]['chapters'][n]['children'][q]['chapterId'])) {
-            //                                         Queue.splice(s, 1);
-            //                                         break;
-            //                                     }
-            //                                 }
-            //                                 if (downed) {
-            //                                     var chapterB = downed['chapterIdB'];
-            //                                     if (!isEmpty(mydata[p]['data'][0]['chapters'][n]['children'][q]['chapterId']) && mydata[p]['data'][0]['chapters'][n]['children'][q]['chapterId'] == chapterB) {
-            //                                         is_del_downed = true;
-            //                                         var jsfun = 'down_stop(function(){});';
-            //                                         api.execScript({
-            //                                             name: 'root',
-            //                                             script: jsfun
-            //                                         });
-            //                                     }
-            //                                 }
-            //                                 $api.rmStorage(memberId + mydata[p]['data'][0]['chapters'][n]['children'][q]['chapterId'] + 'progress'); //B
-            //                             }
-            //                             //三级章节存在
-            //                             if (!isEmpty(mydata[p]['data'][0]['chapters'][n]['children'][q]['children'])) {
-            //                                 for (var u in mydata[p]['data'][0]['chapters'][n]['children'][q]['children']) {
-            //                                     if (!isEmpty(mydata[p]['data'][0]['chapters'][n]['children'][q]['children'][u]['chapterId']) && in_array(mydata[p]['data'][0]['chapters'][n]['children'][q]['children'][u]['chapterId'], chapterc)) {
-            //                                         for (var y in Queue) {
-            //                                             if ((!isEmpty(Queue[y]['chapterIdC']) && Queue[y]['chapterIdC'] == mydata[p]['data'][0]['chapters'][n]['children'][q]['children'][u]['chapterId']) || (!isEmpty(Queue[y]['chapteridc']) && Queue[y]['chapteridc'] == mydata[p]['data'][0]['chapters'][n]['children'][q]['children'][u]['chapterId'])) {
-            //                                                 Queue.splice(y, 1);
-            //                                                 break;
-            //                                             }
-            //                                         }
-            //                                         if (downed) {
-            //                                             var chapterC = downed['chapterIdC'];
-            //                                             if (!isEmpty(mydata[p]['data'][0]['chapters'][n]['children'][q]['children'][u]['chapterId']) && mydata[p]['data'][0]['chapters'][n]['children'][q]['children'][u]['chapterId'] == chapterC) {
-            //                                                 is_del_downed = true;
-            //                                                 var jsfun = 'down_stop(function(){});';
-            //                                                 api.execScript({
-            //                                                     name: 'root',
-            //                                                     script: jsfun
-            //                                                 });
-            //                                             }
-            //                                         }
-            //                                         $api.rmStorage(memberId + mydata[p]['data'][0]['chapters'][n]['children'][q]['children'][u]['chapterId'] + 'progress'); //C
-            //                                     }
-            //                                 }
-            //                             }
-            //                         }
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     }
-            //     write_file(memberId + 'Queue.db', JSON.stringify(Queue), function(ret, err) {
-            //         //队列内容删除完毕删除下载视频内容
-            //         var ccids = [];
-            //         $.each($('.down_data'), function(k, v) {
-            //             if ($(v).siblings('.icon-check').hasClass('active')) {
-            //                 var down_data = JSON.parse($.trim($(v).html()));
-            //                 var course_obj = $(v).siblings('.down-progress');
-            //                 var CourseId = course_obj.attr('courseid');
-            //                 var chapterIdA = course_obj.attr('chapterida');
-            //                 var chapterIdB = course_obj.attr('chapteridb');
-            //                 var chapterIdC = course_obj.attr('chapteridc');
-            //                 var data = isEmpty($api.getStorage('cahce_data' + memberId + CourseId)) ? '' : $api.getStorage('cahce_data' + memberId + CourseId);
-
-
-            //                 for (var p in down_data) {
-
-            //                     if (down_data[p]['taskType'] == 'video') {
-
-            //                         if (data && typeof data[chapterIdA] != "undefined" &&
-            //                             typeof data[chapterIdA][down_data[p]['videoCcid']] != "undefined") {
-            //                             delete data[chapterIdA][down_data[p]['videoCcid']];
-            //                         }
-
-            //                         if (data && typeof data[chapterIdA] != "undefined" &&
-            //                             typeof data[chapterIdA][chapterIdB] != "undefined" &&
-            //                             typeof data[chapterIdA][chapterIdB][down_data[p]['videoCcid']] != "undefined") {
-            //                             delete data[chapterIdA][chapterIdB][down_data[p]['videoCcid']];
-            //                         }
-
-
-
-            //                         if (data && typeof data[chapterIdA] != "undefined" &&
-            //                             typeof data[chapterIdA][chapterIdB] != "undefined" &&
-            //                             typeof data[chapterIdA][chapterIdB][chapterIdC] != "undefined" &&
-            //                             typeof data[chapterIdA][chapterIdB][chapterIdC][down_data[p]['videoCcid']] != "undefined"
-            //                         ) {
-            //                             delete data[chapterIdA][chapterIdB][chapterIdC][down_data[p]['videoCcid']];
-            //                         }
-
-
-
-            //                         $api.setStorage('cahce_data' + memberId + CourseId, data);
-            //                         ccids.push(down_data[p]['videoCcid']);
-
-            //                     }
-            //                 }
-            //             }
-            //         });
-            //         var jsfun = "rmVideo('" + JSON.stringify(ccids) + "');";
-            //         api.execScript({
-            //             name: 'root',
-            //             script: jsfun
-            //         });
-            //         setTimeout(function() {
-            //             var mydowned = isEmpty($api.getStorage(memberId + 'downed')) ? '' : $api.getStorage(memberId + 'downed');
-            //             if (is_del_downed && mydowned) {
-            //                 var chapterIdA = isEmpty(mydowned['chapterIdA']) ? '' : mydowned['chapterIdA'];
-            //                 var chapterIdB = isEmpty(mydowned['chapterIdB']) ? '' : mydowned['chapterIdB'];
-            //                 var chapterIdC = isEmpty(mydowned['chapterIdC']) ? '' : mydowned['chapterIdC'];
-            //                 if (cache_model == null) {
-            //                     cache_model = api.require('lbbVideo');
-            //                 }
-            //                 cache_model.downloadStop(function(ret, err) {
-            //                     //一级章节下载记录
-            //                     if (!isEmpty(chapterIdA) && isEmpty(chapterIdB) && isEmpty(chapterIdC)) {
-            //                         $api.rmStorage(memberId + chapterIdA + 'progress');
-            //                     }
-            //                     //二级章节下载记录
-            //                     if (!isEmpty(chapterIdA) && !isEmpty(chapterIdB) && isEmpty(chapterIdC)) {
-            //                         $api.rmStorage(memberId + chapterIdB + 'progress');
-            //                     }
-            //                     //三级章节下载记录
-            //                     if (!isEmpty(chapterIdC) && !isEmpty(chapterIdA) && !isEmpty(chapterIdB)) {
-            //                         api.rmStorage(memberId + chapterIdC + 'progress');
-            //                     }
-            //                     $api.rmStorage(memberId + 'downed')
-            //                 });
-            //             }
-            //             api.sendEvent({
-            //                 name: "flush_catalog"
-            //             });
-            //             api.sendEvent({
-            //                 name: "cancle_del"
-            //             });
-            //             //获取新内容
-            //             mydata = [];
-            //             get_data();
-            //         }, 1000);
-            //     });
-            // });
-//      } else if (ret.value.sethomepage == 2) { //取消
-//          $('body').removeClass('checking');
-//          $('.icon-check').removeClass('active');
-//      } else if (ret.value.sethomepage == 3) { //全选
-//          $('.icon-check').addClass('active');
-//      }
-//  });
 };
 var course_detail;
 

@@ -599,27 +599,29 @@ function new_talk(){
     param.title = $.trim($api.getStorage('title'));
     param.content = $.trim($api.getStorage('content'));
     param.imgPath = isEmpty(aa) ? '' : aa;
-    param.soundPath = isEmpty(soundPath) ? '' : soundPath;
+    // param.soundPath = isEmpty(soundPath) ? '' : soundPath;
     param.subjectId = api.pageParam.subjectId;//(yes)
     param.clientType = appType;
     param.courseId = api.pageParam.course_id; //(yes)
-    param.id = '';
-    param.categoryId = api.pageParam.categoryId; //(yes)
-    param.soundLen = isEmpty(lx_duration) ? '' : lx_duration;
-    param.chapterId = api.pageParam.chapterId; //(yes)
-    param.taskId = '';
-    param.taskProgress = 0;
-    param.taskType = '';
-    param.chapterName=api.pageParam.chapterName;
-    param.courseName=api.pageParam.courseName;
-    param.subjectName=api.pageParam.subjectName;
-    param.categoryName=api.pageParam.categoryName;
+    // param.id = '';
+    // param.categoryId = api.pageParam.categoryId; //(yes)
+    // param.soundLen = isEmpty(lx_duration) ? '' : lx_duration;
+    // param.chapterId = api.pageParam.chapterId; //(yes)
+    // param.taskId = '';
+    param.taskProgress = -1;
+    // param.taskType = '';
+    // param.chapterName=api.pageParam.chapterName;
+    // param.courseName=api.pageParam.courseName;
+    // param.subjectName=api.pageParam.subjectName;
+    // param.categoryName=api.pageParam.categoryName;
+    var type = $api.getStorage('selType') ? $api.getStorage('selType') : 1;
+    param.type = type;
     api.showProgress({
         title : '处理中',
         modal : true
     });
     is_define = false;
-    ajaxRequest('api/studytools/discusssave/v2.1', 'post', param, function (ret, err) {//003.303.1  发布讨论
+    ajaxRequest('api/studytools/bbssave/v1.0', 'post', param, function (ret, err) {//003.303.1  发布讨论
         api.hideProgress();
         if (err) {
             is_define = true;
@@ -647,10 +649,10 @@ function new_talk(){
             },800);
         }else{
             is_define = true;
-            /* api.toast({
-             msg: '接口异常',
-             location: 'middle'
-             });*/
+             // api.toast({
+             // msg: '接口异常',
+             // location: 'middle'
+             // });
         }
     });
 }
