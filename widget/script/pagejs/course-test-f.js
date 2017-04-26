@@ -50,8 +50,8 @@ apiready = function() {
 			return false;
 		}
 		if (ret && ret.state == 'success') {
-
-			exam_info = ret.data;
+            
+			exam_info = ret.data;alert(JSON.stringify(exam_info))
 			var exam_tpl = $('#exam_tpl').html();
 			var content = doT.template(exam_tpl);
 			$('#exam_content').html(content(exam_info));

@@ -961,6 +961,7 @@
         }
         var token = isEmpty($api.getStorage('token')) ? '' : $api.getStorage('token');
         if (!isEmpty(token)) {
+                    
             ajaxRequest('api/v2/member/get', 'get', { //007.009  用户信息
                 token: token
             }, function(ret, err) {
@@ -1146,7 +1147,6 @@
         // 	alert('nosend:::'+JSON.stringify(data));
         // })
 
-		$('.header.homeheader').css({"height":"0.96rem","border-bottom":"1px solid #898989"});
         is_resume = false;
         api.setKeepScreenOn({
             keepOn: true

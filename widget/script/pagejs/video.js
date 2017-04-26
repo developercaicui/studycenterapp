@@ -289,6 +289,7 @@ function play_video() {
             };
 //          param.isFinish = !isEmpty($api.getStorage(param.videoId)) && $api.getStorage(param.videoId) == 'YES' ? true : false;
 			param.isFinish = isFinish;
+			
             param.definition = isEmpty($api.getStorage('Video_quilty')) || $api.getStorage('Video_quilty') == 1 ? 1 : 2;
 			param.userId = getstor('memberId');
             if (!is_check) {
@@ -310,7 +311,7 @@ function play_video() {
                 });
                 return false;
             }
-
+//			alert(JSON.stringify(param))
             demo.open(param, function(ret, err) {
                 //4G下是否播放视频
 //              if ((isEmpty($api.getStorage(videoid)) || $api.getStorage(videoid) != 'YES')) {
@@ -331,7 +332,8 @@ function play_video() {
                         });
                     }
                 }
-
+				
+				
                 //$api.rmStorage('saveTaskProgress');
                 newProgress = false;
 
@@ -389,7 +391,9 @@ function play_video() {
                     closeThisWin(tmp_progress);
 
                 } else if (ret.btnType == 2) { //对应列表按钮
+           
                     //点击右上角按钮,保存进度,并打开横屏的章节页面
+                    $api.setStorage("currentPlayVideoId",videoid);
                     demo.stop(function(res) {
                         if (res.ctime == 'nan' || res.ctime == 0) {
                             api.toast({
@@ -419,8 +423,7 @@ function play_video() {
                                     times: tmp_progress, //观看时间进度
                                     //study_progress : study_progress,//任务学习的进度
                                     task_info: task_info, //章节信息
-                                    from_page: 'video',
-                                    videoId : videoid
+                                    from_page: 'video'
                                 },
                                 bgColor: 'rgba(0,0,0,0)'
                             });
@@ -706,7 +709,6 @@ function play_video() {
                             });
                         }
                        
-
                     }, 1000 * 10)
 
                     is_check = false;
@@ -739,7 +741,6 @@ function play_video() {
                     }
                     saveTaskProgress(tmp_progress, total, state);
                 }
-
 
             });
         }

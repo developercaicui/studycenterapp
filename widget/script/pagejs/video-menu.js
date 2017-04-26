@@ -355,7 +355,8 @@ apiready = function() {
 
 };
 function initDomDownStatus(){
-
+	
+    $(".task"+$api.getStorage("currentPlayVideoId")).parents("li").css({"background":"#013f57"});
     if(isEmpty($api.getStorage("videochangelist"))){
         $.each($(".down-progress"),function(k,v){
 	    	if($(v).attr("id") == $api.getStorage("setchapterId")){
@@ -395,7 +396,7 @@ function initDomDownStatus(){
     	}
     	
     })
-    $(".task"+api.pageParam.videoId).parents("li").css({"background":"#013f57"});
+    
    //处理圈圈
     isSolidcircle('circle', '', '');
 }
@@ -471,7 +472,6 @@ function getChapterTask() {
         }
         
         var arr = api.pageParam.course_detail;
-        
         var task_tpl = $('#task_tpl').html();
         var content = doT.template(task_tpl);
      	

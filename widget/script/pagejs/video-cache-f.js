@@ -186,6 +186,7 @@ clearInterval(getStatusTime);
 getStatusTime = setInterval(function(){
     getdownrecord();
 },2000)
+
 //            var dat = {"data":[{"orderId_item_id":"8a22ecb5527d428e0152e40b7401013d","expirationTime":1472636819,"isU":"false","buyTime":1455524902,"activeTime":1457084819,"courseId":"ff808081473905e7014762700dfa0081","activeState":"acitve","lockStatus":0},{"orderId_item_id":"8a22ecb553ca891a0153cb8c5a64037c","expirationTime":1475045015,"isU":"false","buyTime":1459408886,"activeTime":1459493015,"courseId":"ff808081473905e7014762700dfa0081","activeState":"acitve","lockStatus":0},{"orderId_item_id":"ff8080814c7e427e014ca1d4720e0c33","expirationTime":1444196286,"isU":"false","buyTime":1428644271,"activeTime":1428644286,"courseId":"ff808081473905e7014762700dfa0081","activeState":"acitve","lockStatus":0}],"state":"success","msg":""}
 //             mydata.push(dat);
 //             init_data();
@@ -214,11 +215,11 @@ function initDom() {
         if(api.pageParam.courseId){
             param.courseId = api.pageParam.courseId
         }
-           cache_model.getCourseJsonWithCourseId(param,function(ret,err){
-        
+           cache_model.getCourseJsonWithCourseId(param,function(ret,err){      
 	           if(JSON.parse(ret.data).length<1){
 	                $('#content').html('');
 	                $('body').addClass('null');
+                    api.hideProgress();
 	                return false;
 	           }
                 $.each(JSON.parse(ret.data),function(k,v){
@@ -436,12 +437,22 @@ function noCache(){
 	$.each($(".cache-course"),function(kk,vv){
 		if($(this).css("display") != "none"){
     		courseNum++;
-    	}
+    	}else{
+            cache_model = api.require('lbbVideo');
+
+            cache_model.deleteCourseJson({
+                "userId" : getstor('memberId'),
+                "courseId" : $(this).find(".courseid").attr("dataid")
+            },function(){
+
+            }) 
+        }
 	});
 	
 	if(courseNum<1){
 		$('#content').html('');
 		$('body').addClass('null');
+        
 		return false;
 	}
 }
@@ -804,13 +815,15 @@ apiready = function() {
     api.addEventListener({
         name: 'flush_cache'
     }, function(ret, err) {
-//      mydata = [];
+        $('body').removeClass('checking');
+        $('.icon-check').removeClass('active');
+     // mydata = [];
 //      lastgettime = 1388509261;
 //      videochangelist = "";
 //      couselist = "";
 //      videoDownInfo =new Object();
 //      getdownrecord();
-//      get_data();
+     // get_data();
 //      initDomDownStatus();
     });
     

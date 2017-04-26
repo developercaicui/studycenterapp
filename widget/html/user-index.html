@@ -206,10 +206,10 @@
   </div>
   <script id="tpl_activity" type="text/x-dot-template">
             <div class="user-index-tit userIndexOnline">
-              <div class="userIndex-titLef">财萃活动</div><img src="../image/center-arrow.png" class="oli-rigIcon">
+              <div class="userIndex-titLef">财萃活动</div>
             </div>
             <div class="clearfix">
-      {{ for(var p in it.data) { }}
+            {{ for(var p in it.data) { }}
             <li tapmode onclick="openApp('{{=it.data[p].url}}')">
               <div style="background-image:url({{=static_url+it.data[p].imagePath}});height: 100%;background-size: 100% 100%;background-repeat: no-repeat;" class="cpl-head"></div>
             </li>
