@@ -896,13 +896,14 @@ apiready = function() {
     });
 
     api.addEventListener({
-          name: 'opena'
+          name: 'openachapt'
       }, function(ret) {
           if (ret.value.sethomepage == 1) { //删除
               $('body').addClass('checking');
               var ccids = [];
 
               $.each($(".tasksBoxs"),function(k,v){
+              	
                 var checkFath = $(v).prev("li").find(".icon-check");
                 if(checkFath.hasClass("active")){
                     

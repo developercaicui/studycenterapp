@@ -155,12 +155,14 @@ var is_debug = false;
              			$(v).hide();
              		}
 	             })
-	             api.sendEvent({
-                    name: "cancle_del"
-                 });
+	            
 	             api.hideProgress();
 	              $('body').removeClass('checking');
-                  $('.icon-check').removeClass('active');              	
+                  $('.icon-check').removeClass('active');    
+                api.sendEvent({
+                    name: "cancle_del"
+                 });
+                clearInterval(getStatusTime);        	
               	var len = 0;
 				$.each($(".video-catego"),function(k,v){
 		         	 if($(v).css("display") != "none"){
