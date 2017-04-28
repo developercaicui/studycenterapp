@@ -85,7 +85,8 @@
   font-size: 0.22rem;
 }
 .section-note-message b:nth-child(2) {
-  margin-left: -4%;
+  /*margin-left: -4%;*/
+  margin-left: 2%;
 }
 .section-note-message b:nth-child(3) {
   margin-left: 2%;
@@ -446,6 +447,7 @@
   max-height: 0.33rem;
   vertical-align: middle;
   margin-left: 0.14rem;
+  margin-top: -0.1rem;
 }
 .talk-right {
   position: absolute;
@@ -453,13 +455,13 @@
 }
 .talk-right .t-img-message {
       height: 0.33rem;
-    width: 0.33rem;
+    width: 0.35rem;
   vertical-align: middle;
   margin-right: 0.06rem;
 }
 .talk-right2 .t-img-message {
       height: 0.33rem;
-    width: 0.33rem;
+    width: 0.35rem;
   vertical-align: middle;
   margin-right: 0.06rem;
 }
@@ -740,7 +742,7 @@
 }
 /**通用图片组**/
 .pic-group {
-  margin: 0.3rem 0;
+  margin: 0.3rem 0 0.1rem 0;
   font-size: 0;
   white-space: nowrap;
   position: relative;

@@ -687,6 +687,69 @@ body.homepage .nologin .lands i.icon-weibo {
   z-index: 2;
 }
 /**圆环进度条**/
+/**圆环进度条**/
+.progress-canvas{
+  position: absolute;
+  bottom: 0.27rem;
+  right: 0.8rem;
+  text-align: center;
+}
+.progress-round {
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 1rem;
+  height: 1rem;
+  line-height: 44px;
+  text-align: center;
+}
+.progress-round .progress-round-border {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+.progress-round .progress-round-num {
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 1;
+  font-size: 0.26rem;
+  line-height: 0.96rem;
+}
+/*.progress-round .progress-round-num .progress-round-unit {
+  display: inline-block;
+  position: absolute;
+  top: 8px;
+  bottom: 0;
+  left: initial;
+  right: -10px;
+  width: 12px;
+  height: 15px;
+  line-height: initial;
+  font-size: 0.25rem;
+  opacity: .2;
+}*/
+.progress-round .progress-round-canvas {
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 circle {
   -webkit-transition: stroke-dasharray 0.5s 0.8s;
   transition: stroke-dasharray 0.5s 0.8s;
@@ -1665,7 +1728,7 @@ ul.download .down-progress {
   line-height: 0.3rem;
 }
 .progress-box2 .progress2 {
-  width: 72%;
+  width: 80%;
   height: 0.06rem;
   background: #ccc;
   border-radius: 0.1rem;
@@ -1681,7 +1744,8 @@ ul.download .down-progress {
 .progress-box2 .progress-val2 {
   font-size: 0.24rem;
   color: #009574;
-  margin-left: 0.2rem;
+  margin-left: 0;
+  font-weight: bold;
 }
 .checking .cache-list .icon-check {
   display: inline-block;
@@ -1799,7 +1863,7 @@ ul.download .down-progress {
 .cache-list dl dt p {
   font-size: inherit;
   position: absolute;
-  top: 0.3rem;
+  top: 0.36rem;
   left: 0.3rem;
   right: 0.3rem;
   white-space: nowrap;
@@ -1990,9 +2054,12 @@ ul.download .down-progress {
   background-size: 100% 100%;
 }
 .qscmsg {
-  position: relative;
-  margin-top: 0.12rem;
-  /* height: 0.4rem; */
+      position: relative;
+    /* margin-top: 0.12rem; */
+    /* height: 0.4rem; */
+    height: 0.8rem;
+    margin-top: -0.2rem;
+    line-height: 1rem;
 }
 .qscmsg span {
   vertical-align: middle;

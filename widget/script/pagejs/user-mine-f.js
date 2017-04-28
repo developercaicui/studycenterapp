@@ -45,31 +45,16 @@ function go_next(name) {
 
 function get_ranking() {
 	var memberId = getstor('memberId');
-	var able = $api.getStorage(memberId+'myMessgePhone');
-	//联系方式
-	 if(able){
-	 	$(".ranking").text(able);
-	 	return false;
-	 }
-	  ajaxRequest('api/v2/member/get',"get", {"token":$api.getStorage('token')}, function (ret, error) {
-	    if(error){
-	        api.toast({
-	            msg:error.msg,
-	            location:'middle'
-	        });
-	        return false;
-	    }
-	    if(ret){
-	      if(ret.data.mobile){
-	          $(".ranking").text(ret.data.mobile);
-	          $api.setStorage(memberId+'myMessgePhone',ret.data.mobile);
-	      }else{
-	          $(".ranking").text(ret.data.email);
-	          $api.setStorage(memberId+'myMessgePhone',ret.data.email);
-	      } 
-	    }
-	                   
-	  })
+	//上次登录时间
+	ajaxRequest('api/v3/user/loginloglist',"get", {"memberid":memberId,"pageNo":1,"pageSize":1}, function (ret, error) {
+		if(ret && ret.state == "success"){
+			var login_time = ret.data[0].login_time/1000;
+			$(".ranking").text("上次登录："+formatDate(login_time,'Y')+'-'+formatDate(login_time,'M')+'-'+formatDate(login_time,'D')+"           "+formatDate(login_time,'h')+':'+formatDate(login_time,'m'));
+		}
+		
+	
+	})
+	  
 //	var able = $api.getStorage('capabilityAssessment');
 //	able = '';
 //	if (!isEmpty(able)) {

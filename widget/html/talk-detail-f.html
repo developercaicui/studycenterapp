@@ -58,6 +58,13 @@
 		.my-talk-wrap .current-talk:before{
 			z-index:0;
 		}
+		.talk-user-message p:nth-child(1) {
+		        line-height: 0.7rem;
+		}
+		.talk-detail-reply .talk-user-message p:nth-child(1) span {
+		    padding-right:0.3rem;
+		    color:#9f9f9f;
+		}
     </style>
   </head>
   <body>
@@ -72,7 +79,7 @@
                 <div class="takl-user-photo"><img src="{{=static_url+it.headImg}}" alt=""></div>{{ } }}
                 <div class="talk-user-message clear-fix">
                   <p class="line-1"><span>{{=it.nikeName}}</span>{{if(!isEmpty(it.levelimg)) { }}<img src="{{=static_url+it.levelimg}}" alt="">{{ } }}<span class="talk-right2"><img src="../image/like.png" alt="" class="t-img-message"><b>{{=!isEmpty(it.praiseCount)?it.praiseCount:0}}</b></span><span class="talk-right"><img src="../image/mess.png" alt="" class="t-img-message"><b>{{=!isEmpty(it.replyCount)?it.replyCount:0}}</b></span></p>
-                  <p class="line-22"><span>{{ if(!isEmpty(it.updateTime)) { }}{{=formatDate(it.updateTime,'Y')+'-'+formatDate(it.updateTime,'M')+'-'+formatDate(it.updateTime,'D')}} {{ } }}</span><span>{{ if(!isEmpty(it.updateTime)) { }} {{=formatDate(it.updateTime,'h')+':'+formatDate(it.updateTime,'m')}}{{ } }}</span></p>
+                  
                 </div>
               </div>
               <div class="talk-content-describe">
@@ -111,9 +118,9 @@
                 <div class="takl-user-photo"><img src="{{=static_url+it.res1[p].headImg}}" alt=""></div>{{ } }}
                 <div class="talk-user-message clear-fix">
                   <p class="line-1">{{if(!isEmpty(it.res1[p].nikeName)) { }}<span>{{=it.res1[p].nikeName}}</span>{{ } }}
-                    {{if(!isEmpty(it.res1[p].levelimg)) { }}<img src="{{=static_url+it.res1[p].levelimg}}" alt="">{{ } }}<span class="talk-right"><b class="font-20">{{=it.res2++}}楼</b></span>
+                    <span class="talk-right"><!-- <b class="font-20">{{=it.res2++}}楼</b> --></span><span>{{ if(!isEmpty(it.res1[p].updateTime)) { }} {{=formatDate(it.res1[p].updateTime,'Y')+'-'+formatDate(it.res1[p].updateTime,'M')+'-'+formatDate(it.res1[p].updateTime,'D')}} {{ } }}</span><span> {{ if(!isEmpty(it.res1[p].updateTime)) { }}{{=formatDate(it.res1[p].updateTime,'h')+':'+formatDate(it.res1[p].updateTime,'m')}} {{ } }}</span>
                   </p>
-                  <p><span>{{ if(!isEmpty(it.res1[p].updateTime)) { }} {{=formatDate(it.res1[p].updateTime,'Y')+'-'+formatDate(it.res1[p].updateTime,'M')+'-'+formatDate(it.res1[p].updateTime,'D')}} {{ } }}</span><span> {{ if(!isEmpty(it.res1[p].updateTime)) { }}{{=formatDate(it.res1[p].updateTime,'h')+':'+formatDate(it.res1[p].updateTime,'m')}} {{ } }}</span></p>
+                  <p></p>
                 </div>
               </div>
               <div class="talk-reply-content">

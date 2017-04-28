@@ -47,18 +47,26 @@ function getdownrecord(){
         "userId" : getstor('memberId'),
         "readTime" : lastgettime
     }
+// cache_model.getCurrentDownloadVideoSize({"userId" : getstor('memberId')},function(ret,err){
+// 	alert(JSON.stringify(ret))
+// })
+    
     cache_model.getTaskData(param,function(ret,err){
         //------------------结束获取--------------------------
-     
+     	var usedTime,speedDown;
         var saverecordObj = JSON.parse(ret.data);
-
         ///设置下一次读取下载的某个时间之后变化的所有记录
         lastgettime = saverecordObj.readTime;
         //循环处理每一条返回的下载记录，并统计分析最后变化值
         var downloadIng = 0;
         for(i=0;i< saverecordObj.data.length;i++){
-            if(saverecordObj.data[i].state == "1"){
+            if(saverecordObj.data[i].state == 1){
               downloadIng++;
+              
+              usedTime = (lastgettime-saverecordObj.data[i].creatTime)/1000;
+              if(usedTime ==0){usedTime = 1;}
+              speedDown = (saverecordObj.data[i].progress/usedTime)/1024;
+//            alert(speedDown)
             }
             saverecordObj.data[i].progress = Number(saverecordObj.data[i].progress)
             procRecord(saverecordObj.data[i]);
@@ -83,7 +91,7 @@ function procRecord(videorecord){
     if(couselist.indexOf(strs[0]) < 0){
         couselist = couselist + "," + strs[0];
     }
-
+	
     //判断是否新任务
     if(videoDownInfo[strs[pathlen-1]]){
         //判断任务状态是否有变化
@@ -134,6 +142,8 @@ function procRecord(videorecord){
             }
         }
     }
+    
+    
     $api.setStorage("videochangelist",videochangelist);
     initDomDownStatus();
 }

@@ -524,10 +524,14 @@ function get_study(flag) {
   var tpl = $('#tpl_course').html();
         var content = doT.template(tpl);
         $('#course_content').html(content(data));
-        circleProgress();
+        $('.progress-round').each(function(index){
+                canvasRound('progress-round-' + index);
+              })
+        // circleProgress();
         return false;
     }
-    circleProgress();
+    // circleProgress();
+
     var tpl = $('#tpl_course').html();
     var content = doT.template(tpl);
     var data = isEmpty($api.getStorage(memberId + 'learningcourse')) ? '' : $api.getStorage(memberId + 'learningcourse');
@@ -567,6 +571,9 @@ function get_study(flag) {
         					});
         					return false;
         			}
+              var newLastProgress = {
+                  RecentCourse : []
+                };
         			for(var i=0;i<learningcourse.length;i++){
         				for(var j=0;j<ret.data.length;j++){
         					if(learningcourse[i].courseId == ret.data[j].courseId){
@@ -578,17 +585,19 @@ function get_study(flag) {
                     learningcourse[i].progress = ret.data[j].progress;
                     learningcourse[i].taskId = ret.data[j].taskId;
                     learningcourse[i].taskName = ret.data[j].taskName;
-
+                    newLastProgress.RecentCourse.push(learningcourse[i])
         					}
         				}
         			}
               
-              var filterLastProgress = learningcourse;
+              // var filterLastProgress = learningcourse;
+              var filterLastProgress = newLastProgress.RecentCourse;
               var i = 0,
                   len = filterLastProgress.length,
                   j, d;
               for (; i < len; i++) {
                   for (j = 0; j < len; j++) {
+                  
                       if (parseInt(filterLastProgress[i].createDate) > parseInt(filterLastProgress[j].createDate)) {
                           d = filterLastProgress[j];
                           filterLastProgress[j] = filterLastProgress[i];
@@ -605,7 +614,10 @@ function get_study(flag) {
               }
       
               $('#course_content').html(content(ret.data));
-              circleProgress();
+//               circleProgress();
+              $('.progress-round').each(function(index){
+                canvasRound('progress-round-' + index);
+              })
               for (var p in ret.data.courselist[0]) {
                   if (p == 'courseBkImage') {
                       var img = ret.data.courselist[0][p];

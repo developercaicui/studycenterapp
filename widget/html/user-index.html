@@ -31,13 +31,13 @@
   
 }
 .stybox ul.das-top li:nth-child(1) {
-  background: #00a085;
+  background: #4a90e2;
 }
 .stybox ul.das-top li:nth-child(2) {
-  background: #418bca;
+  background: #3e4e63;
 }
 .stybox ul.das-top li:nth-child(3) {
-  background:  #3f4e62;
+  background:  #328a86;
 }
 
 .stybox ul.das-top li h1,
@@ -57,6 +57,7 @@
   font-size: 0.28rem;
   /*margin-top: 0.3rem;*/
   padding-top: 0.3rem;
+  height: 1rem;
 }
 .stybox ul.das-top li h2,
 .stybox ul.das-top li p {
@@ -86,7 +87,10 @@
   color:#fff;
 }
 .stybox ul.das-top li .circle .num b{
-  opacity: 1;
+  /*opacity: 1;*/
+}
+.stybox ul.das-top li .circle .num span{
+ 	opacity: 0.7;
 }
 .stybox ul.das-top li .circle .circle-progress circle {
   stroke-width: 2;
@@ -186,14 +190,24 @@
                 <span style="" class="hasTime">有效期至:{{=formatDate(data[p].expirationTime,'Y')+'-'+formatDate(data[p].expirationTime,'M')+'-'+formatDate(data[p].expirationTime,'D')}}</span>{{ } }}
               {{ if(!isEmpty(data[p].showProgress) && !isEmpty(data[p].taskTotal)) { }}
               <div class="circle">
-                <div class="circle-progress">
+                <!-- <div class="circle-progress">
                   <div class="val">{{=parseInt((data[p].showProgress/data[p].taskTotal).toFixed(4)*100)>90 ?  100 :parseInt((data[p].showProgress/data[p].taskTotal).toFixed(4)*100) }}</div>
+                </div> -->
+                <div class="progress-round">
+                  <span class="progress-round-border"></span>
+                  <span class="progress-round-num">{{=parseInt((data[p].showProgress/data[p].taskTotal).toFixed(4)*100)>90 ?  100 :parseInt((data[p].showProgress/data[p].taskTotal).toFixed(4)*100) }}<span class="progress-round-unit">%</span></span>
+                  <canvas id="progress-round-{{= p }}" class="progress-round-canvas" width="44" height="44" data-progress={{=parseInt((data[p].showProgress/data[p].taskTotal).toFixed(4)*100)>90 ?  100 :parseInt((data[p].showProgress/data[p].taskTotal).toFixed(4)*100) }}></canvas>
                 </div>
                 <div class="num"><span>{{=data[p].showProgress}}/</span><b>{{=data[p].taskTotal}}</b></div>
               </div>{{ }else{ }}
-              <div class="circle">
-                <div class="circle-progress">
+              <div class="circle progress-canvas">
+                <!-- <div class="circle-progress">
                   <div class="val">0</div>
+                </div> -->
+                <div class="progress-round">
+                  <span class="progress-round-border"></span>
+                  <span class="progress-round-num">0<span class="progress-round-unit">%</span></span>
+                  <canvas id="progress-round-{{= p }}" class="progress-round-canvas" width="44" height="44" data-progress="0"></canvas>
                 </div>
                 <div class="num"><span>0/</span><b>{{=data[p].taskTotal?data[p].taskTotal:0}}</b></div>
               </div>{{ } }}

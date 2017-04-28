@@ -5,14 +5,10 @@ var couselist = ""; //记录缓存包括的课程id
 var lastgettime = 1388509261;//记录每次获取数据库的时间点，下次获取就只获取该时间点之后变化的记录(第一次获取可以获取2014年1月1日1时1分1秒//)
 
 
-function tasksCache(obj,chapterId){
-    var tasks = $(obj).find(".down_data").html();
-    api.openWin({
-        name : "tasks-cache",
-        url : 'tasks-cache.html',
-        delay : 200,
-        pageParam: {data:tasks,chapterId:chapterId}
-    });
+function tasksCache(obj,chapterId,event){
+    
+    
+    
 }
 function init_check() {
     $('.cache-list .icon-check').click(function() {
@@ -81,6 +77,22 @@ function init_check() {
             }
         }
     });
+
+    $(".tasksCache").on("click",function(e){
+        if(e.target && e.target.nodeName == "I"){
+            return false;
+        }
+        
+        var tasks = $(this).find(".down_data").html();
+        var chapterId = $(this).attr("data-chapId");
+        api.openWin({
+            name : "tasks-cache",
+            url : 'tasks-cache.html',
+            delay : 200,
+            pageParam: {data:tasks,chapterId:chapterId}
+        });
+        
+    })
 }
 
 function get_percent() {

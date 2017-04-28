@@ -609,6 +609,7 @@
       function play() {
           var courseId = api.pageParam.courseId;
           var chapterId = api.pageParam.chapterId;
+          $api.setStorage("setchapterId",chapterId);
           /*if (isEmpty(courseId)) {
            api.toast({
            msg: '获取课程失败',
@@ -680,6 +681,7 @@
               });
               return false;
           }
+          
           //需要传递的参数
           var pageParams = {
               from: 'course-studying',

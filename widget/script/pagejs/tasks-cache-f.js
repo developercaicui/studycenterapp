@@ -158,7 +158,9 @@ var is_debug = false;
 	             api.sendEvent({
                     name: "cancle_del"
                  });
-	             api.hideProgress();            	
+	             api.hideProgress();
+	              $('body').removeClass('checking');
+                  $('.icon-check').removeClass('active');              	
               	var len = 0;
 				$.each($(".video-catego"),function(k,v){
 		         	 if($(v).css("display") != "none"){

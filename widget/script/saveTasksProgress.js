@@ -187,13 +187,14 @@
             	    progress: parseInt(taskProgressData.progress), //必须，当前进度值，视频为秒，试卷为题数量，文档为页码   5
             	    total: parseInt(taskProgressData.total), //必须，任务总长度   48
             	    state: parseInt(taskProgressData.state), //必须，进度状态默认init，完成：complate    complate
-            	    // createDate : taskProgressData.createDate,
-            	    // isSupply : 1
+              	     createDate : taskProgressData.createDate,
+              	     isSupply : 1
             	};
             	param.record.push(post_param)
             }
             if(param.record &&param.record.length){
               ajaxRequest({ 'origin': 'http://action.caicui.com/', 'pathname': 'api/userAction/course/taskProgressPackets/v1.0/' }, 'post', {'token':getstor('token'),'messages':JSON.stringify(param)}, function(ret, err) {
+              
                if (err) {
                       return false;
                   } else {

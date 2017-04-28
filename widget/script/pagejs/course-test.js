@@ -222,6 +222,8 @@ function my_close() {
 
 //打开横屏的章节页面
 function openCharpterMenu() {
+	$api.setStorage("currentPlayVideoId",task_info.taskId);
+	
     api.openFrame({
 		name : 'video-menu',
 		url : 'video-menu.html',

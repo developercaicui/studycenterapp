@@ -101,6 +101,7 @@
 		    height: 0.35rem;
 		    margin-left: .5rem;
 		    margin-top: .05rem;
+        vertical-align: middle;
 		}
 		.taskExam{
       display: inline-block;
@@ -110,6 +111,7 @@
         height: 0.35rem;
         margin-left: .5rem;
         margin-top: .05rem;
+        vertical-align: middle;
     }
       @font-face {
           font-family: 'icomoon';
@@ -136,8 +138,8 @@
       <ul class="cache-list">
         <li class="list">
           <dl>
-            <dt onclick="toggleChild(this)"><i class="icon-arrow-down"></i>
-              <p>{{=val.chapterTitle}}</p>
+            <dt onclick="toggleChild(this)">
+              <p style="font-weight:bold;top:0.3rem;padding-left:0;">{{=val.chapterTitle}}</p>
               <ul class="count"></ul>
             </dt>
           </dl>{{~val.children:val2:key2}}
@@ -154,7 +156,7 @@
               <dl class="haschild">
                 {{var state=3;}}
                 {{var progress=get_dowm('{{=val.chapterId}}','{{=val2.chapterId}}','{{=val3.chapterId}}');}}
-                <dt onclick="toggleTasks(this)"><i type="1" data-chapId="{{=val3.chapterId}}" class="dot-status"></i>
+                <dt onclick="toggleTasks(this)"><i type="1" data-chapId="{{=val3.chapterId}}" data-taskslength="{{=val3.tasks.length}}" class="dot-status"></i>
                   <p>{{=val3.chapterTitle}}</p>
                   <!--p  {{=progress}}-->
                   <ul class="count">{{=countTaskType(key,key2,key3)}}</ul>
@@ -199,20 +201,6 @@
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                 </dd>
               </dl>
-            </div>{{ }else if(val4.taskType=='knowledgePointExercise'){ }}
-            <div class="taskList {{=is_show}}">
-              <dl style="padding-left: .8rem;">
-                <dt onclick="next(3,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val3.chapterId}}')"><i type="1" data-chapId="{{=val3.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
-                  <p style="padding-left: .9rem;">{{=val4.title}}</p>
-                  <!--p  {{=progress+'='+val2.chapterId}}-->
-                </dt>
-                <dd>
-                  <div id="" class="" style="text-align: center;">
-                    <!--<span>{{=val4.totalCount}}题</span>-->
-                  </div>
-                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
-                </dd>
-              </dl>
             </div>
             {{ } }}
             {{~}}</div>
@@ -225,8 +213,8 @@
             {{var is_show=isNowChapter(1, '{{=key}}', '{{=key2}}', -1,'{{=val2.chapterId}}');}}
             <li class="list {{=is_show}}">
               <dl>
-                <dt  onclick="toggleTasks(this)"><i type="1" data-chapId="{{=val2.chapterId}}" class="dot-status"></i>
-                  <p>{{=val2.chapterTitle}}</p>
+                <dt  onclick="toggleTasks(this)"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskslength="{{=val2.tasks.length}}" class="dot-status" style="left:0.3rem;"></i>
+                  <p style="padding-left: 0.4rem;">{{=val2.chapterTitle}}</p>
                   <ul class="count">{{=countTaskType(key,key2,-1)}}</ul>
                   <!--p  {{=progress+'='+val2.chapterId}}-->
                 </dt>
@@ -243,7 +231,7 @@
             {{~val2.tasks:val4:key4}}
             {{ if(val4.taskType=='video'){ }}
             <div class="taskList {{=is_show}}">
-              <dl>
+              <dl style="padding-left:0.7rem">
           
                 <dt onclick="next(2,'{{=key}}','{{=key2}}',-1,this,'{{=val2.chapterId}}')"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskVideo"></span>
                   <p style="padding-left: .9rem;">{{=val4.title}}</p>
@@ -261,7 +249,7 @@
               </dl>
             </div>{{ }else if(val4.taskType=='exam'){ }}
             <div class="taskList {{=is_show}}">
-              <dl>
+              <dl style="padding-left:0.7rem">
                 <dt onclick="next(2,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val2.chapterId}}')"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
                   <p style="padding-left: .9rem;">{{=val4.title}}</p>
                   <!--p  {{=progress+'='+val2.chapterId}}-->
@@ -269,20 +257,6 @@
                 <dd>
                   <div id="" class="" style="text-align: center;">
                     <span>{{=val4.totalCount}}题</span>
-                  </div>
-                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
-                </dd>
-              </dl>
-            </div>{{ }else if(val4.taskType=='knowledgePointExercise'){ }}
-            <div class="taskList {{=is_show}}">
-              <dl>
-                <dt onclick="next(2,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val2.chapterId}}')"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
-                  <p style="padding-left: .9rem;">{{=val4.title}}</p>
-                  <!--p  {{=progress+'='+val2.chapterId}}-->
-                </dt>
-                <dd>
-                  <div id="" class="" style="text-align: center;">
-                    <!--<span>{{=val4.totalCount}}题</span>-->
                   </div>
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                 </dd>
@@ -300,8 +274,8 @@
         {{var is_show=isNowChapter(0, '{{=key}}', -1, -1,'{{=val.chapterId}}');}}
         <li class="list {{=is_show}}">
           <dl>
-            <dt onclick="toggleTasks(this)"><i type="1" data-chapId="{{=val.chapterId}}" class="dot-status"></i>
-              <p> {{=val.chapterTitle}}</p>
+            <dt onclick="toggleTasks(this)"><i type="1" data-chapId="{{=val.chapterId}}" data-taskslength="{{=val.tasks.length}}" class="dot-status" style="left: 0.3rem;"></i>
+              <p style="left: 0.6rem;top: 0.3rem;"> {{=val.chapterTitle}}</p>
               <!--p  {{=progress}}-->
               <ul class="count">{{=countTaskType(key,-1,-1)}}</ul>
             </dt>
@@ -319,8 +293,8 @@
             <div class="taskList {{=is_show}}">
       
               <dl>
-                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskVideo"></span>
-                  <p style="padding-left: .9rem;">{{=val4.title}}</p>
+                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" style="left: 0.3rem;" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskVideo" style="margin-left: .8rem;"></span>
+                  <p style="padding-left: 1.2rem;top: 0.3rem;color:#787878">{{=val4.title}}</p>
           
                 </dt>
                 <dd>
@@ -334,25 +308,12 @@
             </div>{{ }else if(val4.taskType=='exam'){ }}
             <div class="taskList {{=is_show}}">
               <dl>
-                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
-                  <p style="padding-left: .9rem;">{{=val4.title}}</p>
+                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" style="left: 0.3rem;" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam" style="margin-left: .8rem;"></span>
+                  <p style="padding-left: 1.2rem;top: 0.3rem;">{{=val4.title}}</p>
                 </dt>
                 <dd>
                   <div id="" class="" style="text-align: center;">
                     <span>{{=val4.totalCount}}题</span>
-                  </div>
-                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
-                </dd>
-              </dl>
-            </div>{{ }else if(val4.taskType=='knowledgePointExercise'){ }}
-            <div class="taskList {{=is_show}}">
-              <dl>
-                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
-                  <p style="padding-left: .9rem;">{{=val4.title}}</p>
-                </dt>
-                <dd>
-                  <div id="" class="" style="text-align: center;">
-                    <!--<span>{{=val4.totalCount}}题</span>-->
                   </div>
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                 </dd>
@@ -471,7 +432,7 @@
               var tmp_tasks = tmp_chapters[i];
               if (tmp_tasks.taskType == 'video') {
                   tmp_num.video++;
-              } else if (tmp_tasks.taskType == 'exam' || tmp_tasks.taskType == 'knowledgePointExercise') {
+              } else if (tmp_tasks.taskType == 'exam') {
                   tmp_num.exam++;
               } else if (tmp_tasks.taskType == 'pdfread') {
                   tmp_num.doc++;
@@ -962,38 +923,68 @@
                                   }
                               });
                           } else {
-                              $('#content').find('.dot-status').each(function () {
-                                  var tmp_chapID = $(this).attr('data-chapId');
-                                  if (!isEmpty(tmp_chapID) && !isEmpty(arr[tmp_chapID])) {
-                                      var num = 0;
-                                      var len = 0;
-                                      for (var i in arr[tmp_chapID]) {
-                                          num += parseInt(arr[tmp_chapID][i].isok);
-                                          ++len;
-                                      }
-      
-                                      if (num > 0) {
-                                          if (num == len * 3) {
-                                            chaptersNum++;
-                                              $(this).attr('type', '3');
-                                              //实心圈
-                                          } else {
-                                              //半圈
-                                              $(this).attr('type', '2');
-                                          }
-                                      } else {
-                                          $(this).attr('type', '1');
-                                          //空圈
-                                      }
-      
-                                  }
-                              });
-                              $('.fath').each(function (k,v) {
+  $('#content').find('.dot-status').each(function (index) {
+        var tmp_chapID = $(this).attr('data-chapId');
+        
+        var tmp_chapProgress,tit;
+        if (!isEmpty(tmp_chapID) && !isEmpty(arr[tmp_chapID])) {
+            var num = 0;
+            var len = 0;
+            for (var i in arr[tmp_chapID]) {
+                num += parseInt(arr[tmp_chapID][i].isok);
+                ++len;
+            }
+        var chapterProArr = [];
+        for (var j=0;j<ret.data.length;j++) {
+            if(ret.data[j].chapterId == tmp_chapID){
+              chapterProArr.push(ret.data[j])
+              // tmp_chapProgress = ret.data[j].progress;
+              // tit=ret.data[j].chapterName
+            }
+          }
+        var chapterState = 'no';
+        var chapterDoneNum = 0;
+        var chapterNoNum = 0;
+        var chapterTasksLength = $(this).attr('data-taskslength');
+        for(var i=0;i<chapterProArr.length;i++){
+          if(chapterProArr[i].state == "1"){
+            chapterDoneNum++;
+          }else if(chapterProArr[i].state == "0"){
+            chapterNoNum++;
+          }
+        }
+        if(chapterDoneNum == chapterTasksLength){
+          chapterState = 'end';
+        }else if(chapterNoNum || chapterDoneNum){
+          chapterState = 'ing';
+        }
+        switch (chapterState){
+            case 'no':
+              $(this).attr('type', '1');
+              break;
+            case 'ing':
+              $(this).attr('type', '2');
+              break;
+            case 'end':
+              $(this).attr('type', '3');
+              break;
+          }
+        }
+    });
+
+ 							$('.fath').each(function (k,v) {
 	                              $(v).find('.dot-status').each(function (key,val) {
 		                              var tmp_chapID = $(val).attr('data-chapId');
 		                              var tmp_taskID = $(val).attr('data-taskid');
 //		                              alert(tmp_chapID +"===="+ tmp_taskID)
 		                              if (!isEmpty(tmp_chapID) && !isEmpty(tmp_taskID)) {
+//		                              for (var j=0;j<ret.data.length;j++) {
+//							            if(ret.data[j].chapterId == tmp_chapID){
+//							              chapterProArr.push(ret.data[j])
+//							              // tmp_chapProgress = ret.data[j].progress;
+//							              // tit=ret.data[j].chapterName
+//							            }
+//							          }
 		                                  var tmp_task_progress = arr[tmp_chapID][tmp_taskID];
 		                                  
 		                                  if (isEmpty(tmp_task_progress) || isEmpty(tmp_task_progress.isok)) {

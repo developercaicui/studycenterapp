@@ -806,17 +806,18 @@ nav span {
 }
 .space{
 	float: right;
-	font-size: 0.24rem;
+	font-size: 0.26rem;
 	color: #999999;
 }
 .space span{
 	float: right;
-	margin-left: 0.25rem;
-	width: 0.20rem;
-	height: 1.07rem;
-	line-height: 1.07rem;
-	background: url(../image/center-arrow.png) center no-repeat;
-	background-size: 100%;
+    margin-left: 0.08rem;
+    width: 0.19rem;
+    height: 0.28rem;
+    line-height: 2.07rem;
+    background: url(../image/center-arrow.png) center no-repeat;
+    background-size: 100%;
+    margin-top: 0.35rem;
 }
 
 

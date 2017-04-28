@@ -98,7 +98,68 @@ if (window.localStorage.systemType) {
  });
  }*/
 // 圆环进度条
+function canvasRound(dom,str){
+	var canvas = document.getElementById(dom);
+	if(canvas && canvas.getContext){
+		var width = canvas.width;
+		var height = canvas.height;
+		var progress = canvas.getAttribute('data-progress');
+		if(progress==0){
+			progress = 0.01;
+		}
+		var cxt=canvas.getContext("2d");
+    var canvasTimerTotal = 20;
+    var canvasNum = 1;
 
+		var canvasTimer = setInterval(function(){
+			if(canvasNum>canvasTimerTotal){
+				clearInterval(canvasTimer);
+			}else{
+        cxt.clearRect(0, 0, width, height)
+        if(str && str.bg){
+          cxt.beginPath();
+          cxt.arc(width/2,height/2,(width/2)-1,1.5*Math.PI,100,false);
+          if(str && str.bgBorderWidth){
+            cxt.lineWidth=str.bgBorderWidth;
+          }else{
+            cxt.lineWidth=1;
+          }
+          if(str && str.bgBorderColor){
+              cxt.strokeStyle=str.bgBorderColor;
+          }else{
+              cxt.strokeStyle='#fff';
+          }
+          cxt.stroke();
+        }
+        if(progress){
+
+
+				var endRad = Math.PI*(( ( (progress/canvasTimerTotal)*canvasNum ) /100)*2-0.5);
+        //if(endRad && endRad>0){
+          cxt.beginPath();
+          cxt.arc(width/2,height/2,(width/2)-1,1.5*Math.PI,endRad,false);
+          if(str && str.borderWidth){
+            cxt.lineWidth=str.borderWidth;
+          }else{
+            cxt.lineWidth=2;
+          }
+
+          if(str && str.borderColor){
+              cxt.strokeStyle=str.borderColor;
+          }else{
+              cxt.strokeStyle='#fff';
+          }
+          cxt.stroke();
+        }
+				
+				cxt.closePath();
+			//}
+      }
+			canvasNum++;
+		},40);
+		
+	}
+}
 function circleProgress() {
 		var cirDonW = $('#svgDown').width();
 		$('.circle-progress,.audio-progress').each(function() {
@@ -874,42 +935,6 @@ function DosaveDataBase() {
 				}
 
 		});
-//		var CcPlayTime = $api.getStorage('CcPlayTime'+task_info.videoCcid);
-//		if(isEmpty(CcPlayTime)){
-//			$api.setStorage('CcPlayTime'+task_info.videoCcid,now_progress);
-//		}else{
-//			if(CcPlayTime < now_progress){
-//				$api.setStorage('CcPlayTime'+task_info.videoCcid,now_progress);
-//			}			
-//		}
-//		if (cache_model == null) {
-//	        cache_model = api.require('lbbVideo');
-//	    }
-//	    cache_model.updatePlayTime({
-//	    	"userId":getstor('memberId'),
-//	    	"videoId":task_info.videoCcid,
-//	    	"playTime":$api.getStorage('CcPlayTime'+task_info.videoCcid)
-//	    	},function(){
-//	    
-//	    })
 
-		//验证本次保存时间和上次保存时间的差值，必须为正数，否则提示用户本地时间异常????
-		//   DB.getTaskProgress(post_param.taskId,function(data){
-		//    alert(data);
-		//   })
-		//  var prevSaveDate;
-		//  if(post_param.modifyDate - ret.data.modifyDate <0){
-		//     api.alert({
-		//            title : '温馨提示',
-		//            msg : '您手机时间异常，请调整当前时间！',
-		//            buttons : ['返回']
-		//        }, function(ret, err) {
-		//            if (ret.buttonIndex == 1) {
-		//                closeThisWin(0);
-		//            }
-		//        });
-		//        return false;
-		//     
-		//  }
 
 }

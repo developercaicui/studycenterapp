@@ -391,9 +391,9 @@ function play_video() {
                     closeThisWin(tmp_progress);
 
                 } else if (ret.btnType == 2) { //对应列表按钮
-           
+           			$api.setStorage("currentPlayVideoId",videoid);
                     //点击右上角按钮,保存进度,并打开横屏的章节页面
-                    $api.setStorage("currentPlayVideoId",videoid);
+                    
                     demo.stop(function(res) {
                         if (res.ctime == 'nan' || res.ctime == 0) {
                             api.toast({
