@@ -1039,6 +1039,7 @@ input,button,textarea {
         color: #585858;
     font-size: 0.23rem;
     line-height: .3rem;
+    height: 0.7rem;
 /*     height: 0.85rem;
     overflow: hidden;
     padding-top: 0.05rem;

@@ -169,7 +169,7 @@
    
     <!--本章任务-->
     <script id="task_tpl" type="text/x-dot-template">
-    {{~it.chapters:val:key}}<ul>
+    <ul>{{~it.chapters:val:key}}
       {{ if(val.isLeaf=='false'){ }}
           {{~val.children:val2:key2}}
           {{ if(val2.isLeaf=='false'){ }}
@@ -180,7 +180,7 @@
 	            <div>
 	              <dl class="taskList" style="display: table;">
 	                <dt onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}','{{=val3.chapterId}}')" tapmode >
-	                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 80%;">{{=val4.title}}</p>
+	                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:5.5rem;">{{=val4.title}}</p>
 	                  <p class="v-name"><span class="span11"></span><span>0%</span></p>
 	                  <p class="v-progress"><span style="font-size: 0;" data-taskid="{{=val.taskId}}" class="taskProgress"></span></p>
 	                </dt>
@@ -198,7 +198,7 @@
 	          <div>
 	            <dl class="taskList task{{=val4.taskId}}" style="display: table;">
 	                <dt onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}','{{=val3.chapterId}}')" tapmode >
-	                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 80%;line-height: 0.7rem;">{{=val4.title}}</p>
+	                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:5.5rem;line-height: 0.7rem;">{{=val4.title}}</p>
 	                  <!--<p class="v-name"><span class="span11"></span><span>0%</span></p>-->
 	                  <!--<p class="v-progress"><span style="font-size: 0;" data-taskid="{{=val.taskId}}" class="taskProgress"></span></p>-->
 	                </dt>
@@ -223,7 +223,7 @@
 	            <div>
 	              <dl class="taskList" style="display: table;">
 	                <dt onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}','{{=val2.chapterId}}')" tapmode >
-	                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 80%;">{{=val4.title}}</p>
+	                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:5.5rem;">{{=val4.title}}</p>
 	                  <p class="v-name"><span class="span11"></span><span>0%</span></p>
 	                  <p class="v-progress"><span style="font-size: 0;" data-taskid="{{=val.taskId}}" class="taskProgress"></span></p>
 	                </dt>
@@ -241,7 +241,7 @@
 	          <div>
 	            <dl class="taskList task{{=val4.taskId}}" style="display: table;">
 	                <dt onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}','{{=val2.chapterId}}')" tapmode >
-	                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 80%;line-height: 0.7rem;">{{=val4.title}}</p>
+	                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:5.5rem;line-height: 0.7rem;">{{=val4.title}}</p>
 	                  <!--<p class="v-name"><span class="span11"></span><span>0%</span></p>-->
 	                  <!--<p class="v-progress"><span style="font-size: 0;" data-taskid="{{=val.taskId}}" class="taskProgress"></span></p>-->
 	                </dt>
@@ -267,7 +267,7 @@
             <div>
                   <dl class="taskList">
                     <dt tapmode  onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}','{{=val.chapterId}}')">
-                      <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 80%;">{{=val4.title}}</p>
+                      <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:5.5rem;">{{=val4.title}}</p>
                       <p class="v-name"><span class="span11"></span><span>0%</span></p>
                       <p class="v-progress"><span style="font-size: 0;" data-taskid="{{=val.taskId}}" class="taskProgress"></span></p>
                     </dt>
@@ -285,7 +285,7 @@
 	          <div>
 	            <dl class="taskList task{{=val4.taskId}}" style="display: table;">
 	                <dt onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}','{{=val.chapterId}}')" tapmode >
-	                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 80%;line-height: 0.7rem;">{{=val4.title}}</p>
+	                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:5.5rem;line-height: 0.7rem;">{{=val4.title}}</p>
 	                  <!--<p class="v-name"><span class="span11"></span><span>0%</span></p>-->
 	                  <!--<p class="v-progress"><span style="font-size: 0;" data-taskid="{{=val.taskId}}" class="taskProgress"></span></p>-->
 	                </dt>
@@ -302,7 +302,7 @@
             {{ } }}
             {{~}}
       {{ } }}
-      {{~}}
+      {{~}}</ul>
     
     
     

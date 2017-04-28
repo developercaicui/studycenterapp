@@ -192,7 +192,7 @@
             	};
             	param.record.push(post_param)
             }
-            if(param.record &&param.record.length){
+            if(param.record && param.record.length){
               ajaxRequest({ 'origin': 'http://action.caicui.com/', 'pathname': 'api/userAction/course/taskProgressPackets/v1.0/' }, 'post', {'token':getstor('token'),'messages':JSON.stringify(param)}, function(ret, err) {
               
                if (err) {
