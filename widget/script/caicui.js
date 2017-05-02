@@ -188,10 +188,22 @@ function circleProgress() {
 				var dt = new Date();
 				var cirI = dt.getTime();
 				var cirO = _ts.hasClass('svg-existing');
+//				if (!cirO) {
+//						_ts.addClass('svg-existing');
+//						_ts.prepend('<svg  width="' + cirDonW + '" height="' + cirDonW + '" viewbox="0 0 ' + cirDonW + ' ' + cirDonW + '"><circle cx="' + cirDonW / 2 + '" cy="' + cirDonW / 2 + '" r="' + cirDonW * 0.45 + '"></circle><circle  id="circle' + cirI + '" cx="' + cirDonW / 2 + '" cy="' + cirDonW / 2 + '" r="' + cirDonW * 0.45 + '" ></circle></svg>');
+//				}
 				if (!cirO) {
-						_ts.addClass('svg-existing');
-						_ts.prepend('<svg  width="' + cirDonW + '" height="' + cirDonW + '" viewbox="0 0 ' + cirDonW + ' ' + cirDonW + '"><circle cx="' + cirDonW / 2 + '" cy="' + cirDonW / 2 + '" r="' + cirDonW * 0.45 + '"></circle><circle  id="circle' + cirI + '" cx="' + cirDonW / 2 + '" cy="' + cirDonW / 2 + '" r="' + cirDonW * 0.45 + '" ></circle></svg>');
+					var rotate = 0;
+					if(api.systemType == "android"){
+						rotate = -90;
+					}
+					_ts.css("position","relative");
+					//_ts.css("background-color","red");
+					_ts.addClass('svg-existing');
+					_ts.prepend('<svg style="position:absolute;right:0" width="' + cirDonW + '" height="' + cirDonW + '" viewbox="0 0 ' + cirDonW + ' ' + cirDonW + '"><circle  cx="' + cirDonW / 2 + '" cy="' + cirDonW / 2 + '" r="' + cirDonW * 0.45 + '"></circle></svg>');
+					_ts.prepend('<svg style="position:absolute;right:0" width="' + cirDonW + '" height="' + cirDonW + '" viewbox="0 0 ' + cirDonW + ' ' + cirDonW + '"><circle style="stroke-dasharray:1000 0;stroke:rgba(0,0,0,0.3);" id="circle' + cirI + '" cx="' + cirDonW / 2 + '" cy="' + cirDonW / 2 + '" r="' + cirDonW * 0.45 + '" ></circle></svg>');
 				}
+
 		});
 }
 

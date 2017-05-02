@@ -8,7 +8,6 @@ var videoDownInfo =new Object(); //缓存每个节点的下载状态，一个节
 var videochangelist = $api.getStorage("videochangelist") ? $api.getStorage("videochangelist") : ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
 var couselist = ""; //记录缓存包括的课程id
 var lastgettime = 1388509261;//记录每次获取数据库的时间点，下次获取就只获取该时间点之后变化的记录(第一次获取可以获取2014年1月1日1时1分1秒//)
-
 function getData() {
     /*
 如果有删除操作需要重新刷新页面
@@ -47,10 +46,7 @@ function getdownrecord(){
         "userId" : getstor('memberId'),
         "readTime" : lastgettime
     }
-// cache_model.getCurrentDownloadVideoSize({"userId" : getstor('memberId')},function(ret,err){
-// 	alert(JSON.stringify(ret))
-// })
-    
+   
     cache_model.getTaskData(param,function(ret,err){
         //------------------结束获取--------------------------
      	var usedTime,speedDown;
@@ -174,6 +170,7 @@ function initDomDownStatus(){
         }    
     }
     //处理圈圈
+    
     isSolidcircle('circle', '', '');
     init_process();
     //------------------设置结束--------------------------
@@ -317,10 +314,34 @@ getStatusTime = setInterval(function(){
 }
 
 function setSpace(){
-    api.getFreeDiskSpace(function(ret, err) {
-         var size = (ret.size / 1000 / 1000).toFixed(2);
-         $(".space").html("可用空间" + size + "MB<span></span>");
-     });
+	
+	//设置下载速度
+	cache_model.getCurrentDownloadVideoSize({"userId" : getstor('memberId')},function(ret,err){
+    	
+    	var videoId = ret.currentVideoId;
+    	if(ret.data == -1){
+       		$('.down_speed').addClass("none");
+       		return false;
+       	}
+       	api.getFreeDiskSpace(function(ret, err) {
+	         var size = (ret.size / 1000 / 1000).toFixed(2);
+	         $(".space").html("可用空间" + size + "MB<span></span>");
+	    });
+   		var speedT = $api.getStorage("speedT"+videoId);
+   		$api.setStorage("speedT"+videoId,ret.data);
+   		
+   		speedTime = ret.data - speedT;	
+   		if(speedTime<0){
+   			speedTime = 0;
+   		}		 
+		var down_speed = getFormatSize(speedTime);
+		$('.down_speed').addClass("none");
+       	$('.down-progress[type="1"]').siblings('.down_speed').html(down_speed).removeClass('none');
+	
+   })
+
+
+ 
 }
 
 function setTask(){

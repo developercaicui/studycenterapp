@@ -836,7 +836,7 @@ circle {
   right: 0.9rem;
 }
 .down_speed:after {
-  content: "kb/s";
+  content: "";
 }
 #chaList .down_speed {
   position: absolute;
@@ -845,7 +845,7 @@ circle {
   right: 1rem;
 }
 #chaList .down_speed:after {
-  content: "kb/s";
+  content: "";
 }
 ul.download li {
   padding-right: 1.3rem;

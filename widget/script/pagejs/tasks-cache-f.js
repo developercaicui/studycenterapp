@@ -49,12 +49,14 @@ var is_debug = false;
                 $(".task"+domid).attr("type",domstatus);
 	            $(".task"+domid).find(".val").html(domprogress);
 	            $(".task"+domid).parent().prev().find(".v-progress").find("span").css("width",domprogress+"%");
-	            $(".task"+domid).parent().prev().find(".v-name").find("span").eq(1).text(Math.round(domprogress)+"%");
+//	            $(".task"+domid).parent().prev().find(".v-name").find("span").eq(1).text(Math.round(domprogress)+"%");
             }
             
             
         } 
     }
+    
+    
     
 }
 
@@ -89,7 +91,31 @@ var is_debug = false;
 //		   return false;
 //	     }
     }
-
+	function setSpeed(){
+		cache_model.getCurrentDownloadVideoSize({"userId" : getstor('memberId')},function(ret,err){
+    	
+	    	var videoId = ret.currentVideoId;
+	   		var speedT = $api.getStorage("speedT"+videoId);
+	   		$api.setStorage("speedT"+videoId,ret.data);
+	   		
+	   		speedTime = ret.data - speedT;	
+	   		if(speedTime<0){
+	   			speedTime = 0;
+	   		}		 
+			var down_speed = getFormatSize(speedTime);
+	       	$('.down-progress[type="1"]').parent().prev().find(".v-name").find("span").eq(1).text(down_speed);
+	       	$.each($('.down-progress[type="2"]'),function(){
+	       		$(this).parent().prev().find(".v-name").find("span").eq(1).text("等待中");
+	       	})
+	       	$.each($('.down-progress[type="5"]'),function(){
+	       		$(this).parent().prev().find(".v-name").find("span").eq(1).text("等待中");
+	       	})
+	       	$.each($('.down-progress[type="4"]'),function(){
+	       		$(this).parent().prev().find(".v-name").find("span").eq(1).text("完成");
+	       	})
+		
+	   })
+	}
     apiready = function(){
       
       
@@ -100,6 +126,7 @@ var is_debug = false;
       clearInterval(getStatusTime);
       getStatusTime = setInterval(function(){
           getdownrecord();
+          setSpeed();
       },1000)
       init_check();
       

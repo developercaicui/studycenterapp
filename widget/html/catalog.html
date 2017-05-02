@@ -139,7 +139,7 @@
         <li class="list">
           <dl>
             <dt onclick="toggleChild(this)">
-              <p style="font-weight:bold;top:0.3rem;padding-left:0;">{{=val.chapterTitle}}</p>
+              <p style="font-weight:bold;top:0.3rem;padding-left:0;color:#5a5a5a;">{{=val.chapterTitle}}</p>
               <ul class="count"></ul>
             </dt>
           </dl>{{~val.children:val2:key2}}
@@ -181,6 +181,7 @@
                 </dt>
                 <dd>
                  <!--  {{ if(progress==0 ){state=3;}else if(progress>=100){state=4}else if(progress>0 &&  progress<100){state=2}}} -->
+                 <span class="down_speed none"></span>
                   <div id="{{=val3.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="{{=val3.chapterId}}" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="{{=val3.chapterTitle}}" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-download3"></i>
                     <div class="val"></div>
                   </div>
@@ -239,6 +240,7 @@
 
                 </dt>
                 <dd>
+                	<span class="down_speed none"></span>
                   <!-- {{ if(progress==0 ){state=3;}else if(progress>=100){state=4}else if(progress>0 &&  progress<100){state=2}}} -->
                   <div id="{{=val2.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}"  type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-download3"></i>
                     <div class="val"></div>
@@ -298,6 +300,7 @@
           
                 </dt>
                 <dd>
+                	<span class="down_speed none"></span>
                   <!-- {{ if(progress==0 ){state=3;}else if(progress>=100){state=4}else if(progress>0 &&  progress<100){state=2}}} -->
                   <div id="{{=val.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}"  type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-download3"></i>
                     <div class="val"></div>

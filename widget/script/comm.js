@@ -419,7 +419,9 @@ function out() {
     api.sendEvent({
         name: 'to_login'
     });
-    api.closeWin();
+    if(api.winName != 'root'){
+    	api.closeWin();
+    }
 }
 
 function getstor(key) {
@@ -739,6 +741,7 @@ function video_cache(method, title, ccid, UserId, apiKey, callback) {
 //                  alert(JSON.stringify(ret))
 //                  callback(ret, err);
                 });
+                
             }
         });
     } else if (method == 'downloadStop') {
@@ -1736,31 +1739,31 @@ var down_timer;
 var down_setTimeout;
 
 function count_speed() {
-    if (!is_count) {
-        clearInterval(down_timer);
-        clearTimeout(down_setTimeout);
-        down_timer = setInterval(function() {
-            api.getFreeDiskSpace(function(ret, err) {
-                var size1 = ret.size;
-                down_setTimeout = setTimeout(function() {
-                    api.getFreeDiskSpace(function(retd, err) {
-                        var size2 = retd.size;
-                        if (size1 >= size2) {
-                            var speed = (((size1 - size2) / 1000 / 1000) * 1024).toFixed(0);
-                            api.sendEvent({
-                                name: 'down_speed',
-                                // name: 'DOWN',
-                                extra: {
-                                    speed: speed
-                                }
-                            });
-                        }
-                    })
-                }, 1500);
-            });
-        }, 1500);
-        is_count = true;
-    }
+    // if (!is_count) {
+    //     clearInterval(down_timer);
+    //     clearTimeout(down_setTimeout);
+    //     down_timer = setInterval(function() {
+    //         api.getFreeDiskSpace(function(ret, err) {
+    //             var size1 = ret.size;
+    //             down_setTimeout = setTimeout(function() {
+    //                 api.getFreeDiskSpace(function(retd, err) {
+    //                     var size2 = retd.size;
+    //                     if (size1 >= size2) {
+    //                         var speed = (((size1 - size2) / 1000 / 1000) * 1024).toFixed(0);
+    //                         api.sendEvent({
+    //                             name: 'down_speed',
+    //                             // name: 'DOWN',
+    //                             extra: {
+    //                                 speed: speed
+    //                             }
+    //                         });
+    //                     }
+    //                 })
+    //             }, 1500);
+    //         });
+    //     }, 1500);
+    //     is_count = true;
+    // }
 }
 //苹果appstore
 window.allow_down = true;
@@ -2414,4 +2417,28 @@ function init_process(){
     //         type : 2
     //     });
     // }
+}
+
+
+function getFormatSize(size){
+    
+	var kiloByte = size/1024; 
+      if(kiloByte < 1) {  
+          return size + "B/s";  
+     }   
+     var megaByte = kiloByte/1024;  
+     if(megaByte < 1) { 
+      	return kiloByte.toFixed(0)+ "KB/s"; 
+     }  
+     
+     var gigaByte = megaByte/1024;  
+     if(gigaByte < 1) {  
+     	return megaByte.toFixed(0)+ "MB/s";  
+     }  
+       
+    var teraBytes = gigaByte/1024;  
+     if(teraBytes < 1) {  
+     	return gigaByte.toFixed(0)+ "GB/s";   
+     }  
+
 }
