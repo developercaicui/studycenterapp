@@ -316,7 +316,7 @@ function play_video() {
             demo.open(param, function(ret, err) {
                 //4G下是否播放视频
 //              if ((isEmpty($api.getStorage(videoid)) || $api.getStorage(videoid) != 'YES')) {
-//              if (!isFinish) {
+             if (!isFinish) {
                     if(api.connectionType == '4g' || api.connectionType == '4G' && (ret.btnType != 1 && ret.btnType !=2 && ret.btnType!=3&& ret.btnType != 4 && ret.btnType !=5 && ret.btnType!=6&& ret.btnType != 7 && ret.btnType !=8 && ret.btnType!=9 && ret.btnType!=-1 && ret.btnType!='-1' && ret.btnType!='play')){
                         demo.stop();
                         api.confirm({
@@ -332,7 +332,7 @@ function play_video() {
                             }
                         });
                     }
-//              }
+             }
 				
 				
                 //$api.rmStorage('saveTaskProgress');

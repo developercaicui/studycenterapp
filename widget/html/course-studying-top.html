@@ -630,7 +630,6 @@
               //api/v2.1/course/courseDetail，接口编号：004-006
               ajaxRequest('api/v2.1/course/courseDetail', 'get', {courseId: courseId}, function (ret, err) {//004.006获取课程的详细信息
                   if (err) {
-                      api.hideProgress();
                       api.toast({
                           msg: err.msg,
                           location: 'middle'
@@ -694,7 +693,7 @@
               task_info: task_info,//当前要学习的任务信息
               type: 'task'
           };
-          api.hideProgress();
+          
           //设置屏幕向右翻转
           api.setScreenOrientation({
               orientation: 'landscape_right'
@@ -735,7 +734,7 @@
         ajaxRequest({ 'origin': 'http://action.caicui.com/', 'pathname': 'api/userAction/course/getTasksProgress/v1.0/' }, 'get', param, function(ret, err) {
           
             if (err) {
-                api.hideProgress();
+                
                 api.toast({
                     msg: err.msg,
                     location: 'middle'

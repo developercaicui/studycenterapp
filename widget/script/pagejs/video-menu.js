@@ -423,8 +423,7 @@ function initDomDownStatus(){
     	
     })
     
-   //处理圈圈
-    isSolidcircle('circle', '', '');
+   
 }
 
     // tasksCache();

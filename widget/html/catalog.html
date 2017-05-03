@@ -176,7 +176,7 @@
               <dl style="padding-left: .8rem;">
           
                 <dt onclick="next(3,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val3.chapterId}}')"><i type="1" data-chapId="{{=val3.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskVideo"></span>
-                  <p style="padding-left: .9rem;">{{=val4.title}}</p>
+                  <p style="padding-left: .9rem;width: 82%;">{{=val4.title}}</p>
                   <!--p  {{=progress+'='+val2.chapterId}}-->
                 </dt>
                 <dd>
@@ -192,7 +192,7 @@
             <div class="taskList {{=is_show}}">
               <dl style="padding-left: .8rem;">
                 <dt onclick="next(3,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val3.chapterId}}')"><i type="1" data-chapId="{{=val3.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
-                  <p style="padding-left: .9rem;">{{=val4.title}}</p>
+                  <p style="padding-left: .9rem;width: 82%;">{{=val4.title}}</p>
                   <!--p  {{=progress+'='+val2.chapterId}}-->
                 </dt>
                 <dd>
@@ -235,7 +235,7 @@
               <dl style="padding-left:0.7rem">
           
                 <dt onclick="next(2,'{{=key}}','{{=key2}}',-1,this,'{{=val2.chapterId}}')"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskVideo"></span>
-                  <p style="padding-left: .9rem;">{{=val4.title}}</p>
+                  <p style="padding-left: .9rem;width: 82%;">{{=val4.title}}</p>
                   <!--p  {{=progress+'='+val2.chapterId}}-->
 
                 </dt>
@@ -253,7 +253,7 @@
             <div class="taskList {{=is_show}}">
               <dl style="padding-left:0.7rem">
                 <dt onclick="next(2,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val2.chapterId}}')"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
-                  <p style="padding-left: .9rem;">{{=val4.title}}</p>
+                  <p style="padding-left: .9rem;width: 82%;">{{=val4.title}}</p>
                   <!--p  {{=progress+'='+val2.chapterId}}-->
                 </dt>
                 <dd>
@@ -296,7 +296,7 @@
       
               <dl>
                 <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" style="left: 0.3rem;" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskVideo" style="margin-left: .8rem;"></span>
-                  <p style="padding-left: 1.2rem;top: 0.3rem;color:#787878">{{=val4.title}}</p>
+                  <p style="padding-left: 1.2rem;top: 0.3rem;color:#787878;width: 82%;">{{=val4.title}}</p>
           
                 </dt>
                 <dd>
@@ -312,7 +312,7 @@
             <div class="taskList {{=is_show}}">
               <dl>
                 <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" style="left: 0.3rem;" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam" style="margin-left: .8rem;"></span>
-                  <p style="padding-left: 1.2rem;top: 0.3rem;">{{=val4.title}}</p>
+                  <p style="padding-left: 1.2rem;top: 0.3rem;width: 82%;">{{=val4.title}}</p>
                 </dt>
                 <dd>
                   <div id="" class="" style="text-align: center;">
@@ -330,6 +330,7 @@
     <script type="text/javascript" src="../script/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8">
       function next(leave, num1, num2, num3, obj, cid) {
+      	  clearInterval(getStatusTime);
       	  $api.setStorage("setchapterId",cid);
       	  var downState = $(obj).next().find(".down-progress").attr("type");
           if (pageName == 'catalog') {

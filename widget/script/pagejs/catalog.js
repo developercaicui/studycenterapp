@@ -170,8 +170,7 @@ function initDomDownStatus(){
         }    
     }
     //处理圈圈
-    
-    isSolidcircle('circle', '', '');
+    circleProgress();
     init_process();
     //------------------设置结束--------------------------
     // console.log(strs[j]);
@@ -180,12 +179,16 @@ function initDomDownStatus(){
 
 //初始化下载界面，但是所有节点hidden
 function initDom(){
+	
     if(api.connectionType == 'none' || api.connectionType == 'unknown'){
         // api.toast({
         //     msg : '网络已断开，请检查网络状态',
         //     location : 'middle'
         // });
-        			
+       api.showProgress({
+	       title: '加载中',
+	       modal: false
+	  	});		
         cache_model.getCourseJsonWithCourseId({"userId":getstor('memberId'),"courseId":api.pageParam.course_id},function(ret,err){
 //      		if(JSON.parse(ret.data).length<1){
 //	                $('#content').html('');
@@ -216,10 +219,15 @@ function initDom(){
                     //处理圈圈
                     isSolidcircle('circle', '', '');
                     init_process();
+                    api.hideProgress();
                 });
                 
             })
     }else{
+    	api.showProgress({
+	       title: '加载中',
+	       modal: false
+	  	});
      var param = {};
      param.courseId = api.pageParam.course_id;
      ajaxRequest('api/v2.1/course/courseDetail', 'get', param, function(ret, err) {
@@ -253,8 +261,10 @@ function initDom(){
                  //处理圈圈
                  isSolidcircle('circle', '', '');
                  init_process();
+//               api.hideProgress();
              });
          } else {
+//       	api.hideProgress();
              api.toast({
                  msg : ret.msg,
                  location : 'middle'
@@ -262,23 +272,7 @@ function initDom(){
          }
      });
     }
-    
-
-    // var strs=couselist.split(","); //字符分割
-    // var pathlen = strs.length;
-    // //从1开始，因为拼接videochangelist的时候用,开始的
-    // for (j=1; j<pathlen;j++ ){
-    //     var courseId = strs[j];
-    //     //------------------根据课程id获取对应缓存课程的章节详情，如果在线，从服务器获取，否则本地数据库获取--------------------------
-    //     var cid = api.pageParam.course_id;
-
-    //     //
-    //     //------------------设置结束--------------------------
-    //     console.log(courseId);
-    //     //------------------获取完毕后拼接html并置入界面，拼接时需要设置每个id对于dom元素都不可见--------------------------
-    //     //
-    //     //------------------设置结束--------------------------
-    // } 
+     
 }
 
 clearInterval(getStatusTime);
@@ -362,41 +356,7 @@ function init_process(){
             $(v).find('circle').eq(1).css('stroke-dasharray', parseInt(perimeter * percent) + " " + parseInt(perimeter * (1 - percent)));
         }
     });
-    //初始化下载状态
-    // var downed = $api.getStorage(memberId+'downed');
-    // if (downed) {
-    //     var chapterIdA = get_loc_val(memberId + 'downed', 'chapterIdA'),
-    //         chapterIdB = get_loc_val(memberId + 'downed', 'chapterIdB'),
-    //         chapterIdC = get_loc_val(memberId + 'downed', 'chapterIdC'), 
-    //         progress = get_loc_val(memberId + 'downed', 'progress');
-    //     var id='';
-    //     //一级章节下载记录
-    //     if(!isEmpty(chapterIdA) && isEmpty(chapterIdB) && isEmpty(chapterIdC)){
-    //         id=chapterIdA;
-    //     }
-    //     //二级章节下载记录
-    //     if(!isEmpty(chapterIdA) && !isEmpty(chapterIdB) && isEmpty(chapterIdC)){
-    //         id=chapterIdB;
-    //     }
-    //     //三级章节下载记录
-    //     if(!isEmpty(chapterIdC) && !isEmpty(chapterIdA) && !isEmpty(chapterIdB)){
-    //         id=chapterIdC;
-    //     }
 
-    //     if (progress == 100) {
-    //         $("#" + id).attr({
-    //             'type' : 4
-    //         });
-    //     } else {
-    //         $("#" + id).attr({
-    //             'type' : 1
-    //         });
-    //     }
-    // }else{
-    //     $('.down-progress[type="1"]').attr({
-    //         type : 2
-    //     });
-    // }
 }
 
 function to_cache(name) {
@@ -715,37 +675,37 @@ apiready = function() {
 //      location.reload();
 //  });
 
-    api.addEventListener({
-        name : 'down_speed'
-    }, function(ret) {
-        if(ret){
-            var speed=ret.value.speed;
-            //初始化下载状态
-            var downed = $api.getStorage(memberId+'downed');
-
-            // api.toast({
-            //     msg:downed
-            // })
-            //api.alert({msg:downed});
-            var chapterIdA = get_loc_val(memberId + 'downed', 'chapterIdA'),
-                chapterIdB = get_loc_val(memberId + 'downed', 'chapterIdB'),
-                chapterIdC = get_loc_val(memberId + 'downed', 'chapterIdC'), 
-                progress = get_loc_val(memberId + 'downed', 'progress');
-            var id='';
-            //一级章节下载记录
-            if(!isEmpty(chapterIdA) && isEmpty(chapterIdB) && isEmpty(chapterIdC)){
-                id=chapterIdA;
-            }
-            //二级章节下载记录
-            if(!isEmpty(chapterIdA) && !isEmpty(chapterIdB) && isEmpty(chapterIdC)){
-                id=chapterIdB;
-            }
-            //三级章节下载记录
-            if(!isEmpty(chapterIdC) && !isEmpty(chapterIdA) && !isEmpty(chapterIdB)){
-                id=chapterIdC;
-            }
-            //$('.down-progress').siblings('.down_speed').html('').addClass('none');
-            $('#'+id).siblings('.down_speed').html(speed).removeClass('none');
-        }
-    });
+//  api.addEventListener({
+//      name : 'down_speed'
+//  }, function(ret) {
+//      if(ret){
+//          var speed=ret.value.speed;
+//          //初始化下载状态
+//          var downed = $api.getStorage(memberId+'downed');
+//
+//          // api.toast({
+//          //     msg:downed
+//          // })
+//          //api.alert({msg:downed});
+//          var chapterIdA = get_loc_val(memberId + 'downed', 'chapterIdA'),
+//              chapterIdB = get_loc_val(memberId + 'downed', 'chapterIdB'),
+//              chapterIdC = get_loc_val(memberId + 'downed', 'chapterIdC'), 
+//              progress = get_loc_val(memberId + 'downed', 'progress');
+//          var id='';
+//          //一级章节下载记录
+//          if(!isEmpty(chapterIdA) && isEmpty(chapterIdB) && isEmpty(chapterIdC)){
+//              id=chapterIdA;
+//          }
+//          //二级章节下载记录
+//          if(!isEmpty(chapterIdA) && !isEmpty(chapterIdB) && isEmpty(chapterIdC)){
+//              id=chapterIdB;
+//          }
+//          //三级章节下载记录
+//          if(!isEmpty(chapterIdC) && !isEmpty(chapterIdA) && !isEmpty(chapterIdB)){
+//              id=chapterIdC;
+//          }
+//          //$('.down-progress').siblings('.down_speed').html('').addClass('none');
+//          $('#'+id).siblings('.down_speed').html(speed).removeClass('none');
+//      }
+//  });
 };
