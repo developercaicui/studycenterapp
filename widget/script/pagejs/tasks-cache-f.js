@@ -142,7 +142,14 @@ var is_debug = false;
 //      initDom();
 //    });
       	
-      
+      api.addEventListener({
+          name: 'flush_catalog'
+      }, function(ret) {
+      		getStatusTime = setInterval(function(){
+	          getdownrecord();
+	          setSpeed();
+	      },1000)
+      })
       api.addEventListener({
           name: 'opena'
       }, function(ret) {
@@ -604,7 +611,7 @@ function set_down_status(str){
 
 //点击本章任务
 function task_event(obj, num, task_id,chapter_id) {
-
+	clearInterval(getStatusTime);
 	$api.setStorage("setchapterId",chapter_id);
     task_info = task_arr[task_id].taskInfo; //任务信息
     // 如果要打开新的窗口，则关闭旧窗口

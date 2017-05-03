@@ -9,6 +9,7 @@ var videochangelist = $api.getStorage("videochangelist") ? $api.getStorage("vide
 var couselist = ""; //记录缓存包括的课程id
 var lastgettime = 1388509261;//记录每次获取数据库的时间点，下次获取就只获取该时间点之后变化的记录(第一次获取可以获取2014年1月1日1时1分1秒//)
 function getData() {
+	$api.setStorage("closeSetTimeOut",false);
     /*
 如果有删除操作需要重新刷新页面
 如果界面有开始下载，下载暂停操作，可直接临时改变界面dom节点状态，是否成功由定时器后续统一更新界面
@@ -27,7 +28,10 @@ videoDownInfo["c4"].progress =40;
 videoDownInfo["c4"].tasknum =1; 
 */
 
-
+	api.showProgress({
+       title: '加载中',
+       modal: false
+  	});
 function getdownrecord(){
     //读取数据库下载记录，注意读取时间,返回的记录按照时间进行正排序,进度和state为数字，path用／分隔
     //state:0:停止  1:等待  2:下载中  3: 下载完成
@@ -217,9 +221,9 @@ function initDom(){
                     initDomDownStatus();
                     // setTask();
                     //处理圈圈
-                    isSolidcircle('circle', '', '');
+                    // isSolidcircle('circle', '', '');
                     init_process();
-                    api.hideProgress();
+                    // api.hideProgress();
                 });
                 
             })
@@ -259,12 +263,12 @@ function initDom(){
                  $('#content').html(htm);
                  initDomDownStatus();
                  //处理圈圈
-                 isSolidcircle('circle', '', '');
+                 // isSolidcircle('circle', '', '');
                  init_process();
-//               api.hideProgress();
+              // api.hideProgress();
              });
          } else {
-//       	api.hideProgress();
+      	// api.hideProgress();
              api.toast({
                  msg : ret.msg,
                  location : 'middle'
@@ -284,6 +288,10 @@ initDom();
 getStatusTime = setInterval(function(){
     getdownrecord();
     setSpace();
+    
+    if($api.getStorage("closeSetTimeOut") == "true"){
+    	clearInterval(getStatusTime);
+    }
 },1000)
 //3:定时器调用获取变化的数据，并调整界面下载状态
 // getdownrecord();
@@ -321,7 +329,9 @@ function setSpace(){
 	         var size = (ret.size / 1000 / 1000).toFixed(2);
 	         $(".space").html("可用空间" + size + "MB<span></span>");
 	    });
+	   
    		var speedT = $api.getStorage("speedT"+videoId);
+   		
    		$api.setStorage("speedT"+videoId,ret.data);
    		
    		speedTime = ret.data - speedT;	
@@ -334,8 +344,6 @@ function setSpace(){
 	
    })
 
-
- 
 }
 
 function setTask(){
@@ -360,6 +368,7 @@ function init_process(){
 }
 
 function to_cache(name) {
+	clearInterval(getStatusTime);
 	name = 'video-buffer';
 	api.openWin({
 		name : name,

@@ -487,6 +487,7 @@
       
       //消息
     function go_next(name) {
+    	
         var reload = true;
         if (name == 'video-buffer') {
             reload = true;
@@ -610,6 +611,7 @@
           var courseId = api.pageParam.courseId;
           var chapterId = api.pageParam.chapterId;
           $api.setStorage("setchapterId",chapterId);
+          $api.setStorage("closeSetTimeOut",true)
           /*if (isEmpty(courseId)) {
            api.toast({
            msg: '获取课程失败',

@@ -82,7 +82,7 @@ function init_check() {
         if(e.target && e.target.nodeName == "I"){
             return false;
         }
-        
+        clearInterval(getStatusTime);
         var tasks = $(this).find(".down_data").html();
         var chapterId = $(this).attr("data-chapId");
         api.openWin({
@@ -185,7 +185,9 @@ function get_data() {
     mydata = [];
     set_data(0);
     // var len = Object.keys(data).length; //  2
-    function set_data(num) {
+    
+}
+function set_data(num) {
         
         
         
@@ -220,7 +222,6 @@ getStatusTime = setInterval(function(){
         //     });
         // }
     }
-}
 function initDom() {
     cache_model = api.require('lbbVideo');
         var param = {"userId":memberId};
@@ -829,7 +830,9 @@ apiready = function() {
     }, function(ret, err) {
         $('body').removeClass('checking');
         $('.icon-check').removeClass('active');
-     // mydata = [];
+        mydata = [];
+        set_data(0);
+     // ;
 //      lastgettime = 1388509261;
 //      videochangelist = "";
 //      couselist = "";

@@ -4977,7 +4977,7 @@ function lookExtend(id, url, title) {
 function task_event(obj, num, task_id,chapter_id) {
     $api.setStorage("setchapterId",chapter_id);
     task_info = task_arr[task_id].taskInfo; //任务信息
-    
+    clearInterval(getStatusTime);
     // 如果要打开新的窗口，则关闭旧窗口
     if ((from_page == 'course-test' && task_info.taskType == 'video') || (from_page == 'video' && task_info.taskType != 'video')) {
         //传递的页面参数
