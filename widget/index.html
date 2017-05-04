@@ -1174,32 +1174,34 @@
             api.sendEvent({
                 name: "lbbpause"
             });
+            
             is_resume = true;
             var memberId = getstor('memberId');
             if (memberId && api.systemType == 'ios') {
-                var downed = isEmpty($api.getStorage(memberId + 'downed')) ? '' : $api.getStorage(memberId + 'downed');
-                if (downed) {
-                    $api.setStorage(memberId + 'backendDowned', downed);
-                    $api.rmStorage(memberId + 'downed');
-                    var chapterIdA = downed['chapterIdA'];
-                    var chapterIdB = downed['chapterIdB'];
-                    var chapterIdC = downed['chapterIdC'];
-                    if (cache_model == null) {
-                        cache_model = api.require('lbbVideo');
-                    }
-                    cache_model.downloadStop({"userId":memberId},function(ret, err) {
-
-                        set_down({
-                            type: 1,
-                            chapterida: chapterIdA,
-                            chapteridb: chapterIdB,
-                            chapteridc: chapterIdC
-                        });
-                        api.sendEvent({
-                            name: 'flush_cache'
-                        });
-                    });
-                }
+//              var downed = isEmpty($api.getStorage(memberId + 'downed')) ? '' : $api.getStorage(memberId + 'downed');
+//              if (downed) {
+//                  $api.setStorage(memberId + 'backendDowned', downed);
+//                  $api.rmStorage(memberId + 'downed');
+//                  var chapterIdA = downed['chapterIdA'];
+//                  var chapterIdB = downed['chapterIdB'];
+//                  var chapterIdC = downed['chapterIdC'];
+//                  if (cache_model == null) {
+//                      cache_model = api.require('lbbVideo');
+//                  }
+              
+//                  cache_model.downloadStop({"userId":memberId},function(ret, err) {
+//
+//                      set_down({
+//                          type: 1,
+//                          chapterida: chapterIdA,
+//                          chapteridb: chapterIdB,
+//                          chapteridc: chapterIdC
+//                      });
+//                      api.sendEvent({
+//                          name: 'flush_cache'
+//                      });
+//                  });
+//              }
             }
         });
         //应用从后台回到前台事件
@@ -1218,17 +1220,17 @@
                 });
             }
             if (api.systemType == 'ios') {
-                cachemodel = api.require('lbbVideo');
-                cachemodel.init();
-                var memberId = getstor('memberId');
-                if (memberId && api.systemType == 'ios') {
-                    var downed = isEmpty($api.getStorage(memberId + 'backendDowned')) ? '' : $api.getStorage(memberId + 'backendDowned');
-                    if (downed) {
-                        $api.rmStorage(memberId + 'backendDowned');
-                        downed['type'] = 2;
-                        mydown(downed);
-                    }
-                }
+//              cachemodel = api.require('lbbVideo');
+//              cachemodel.init();
+//              var memberId = getstor('memberId');
+//              if (memberId && api.systemType == 'ios') {
+//                  var downed = isEmpty($api.getStorage(memberId + 'backendDowned')) ? '' : $api.getStorage(memberId + 'backendDowned');
+//                  if (downed) {
+//                      $api.rmStorage(memberId + 'backendDowned');
+//                      downed['type'] = 2;
+//                      mydown(downed);
+//                  }
+//              }
             }
         });
         var memberId = getstor('memberId');

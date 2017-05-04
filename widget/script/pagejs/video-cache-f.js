@@ -830,8 +830,12 @@ apiready = function() {
     }, function(ret, err) {
         $('body').removeClass('checking');
         $('.icon-check').removeClass('active');
-        mydata = [];
-        set_data(0);
+        clearInterval(getStatusTime);
+		getStatusTime = setInterval(function(){
+		    getdownrecord();
+		},2000)
+//      mydata = [];
+//      set_data(0);
      // ;
 //      lastgettime = 1388509261;
 //      videochangelist = "";

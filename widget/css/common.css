@@ -399,3 +399,18 @@ common.css
   font-size: 28px;
   text-align: center;
 }
+#header{background: #fff;color:#000;}
+.header{color:#000;border-bottom: 1px solid #d4d4d4;}
+.header .left:after{display: none;}
+.icon-arrow-left{color:#00a186;font-weight: bold;}
+.header .left-next {
+    font-size: 0.36rem;
+    padding-left: 0;
+    max-width:90%; 
+    overflow: hidden;
+    word-wrap: normal;
+    text-overflow: ellipsis;
+    float: none;
+    white-space: pre;
+    text-align: center;
+}

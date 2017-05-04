@@ -26,9 +26,16 @@ apiready = function() {
     api.addEventListener({
         name: 'pause'
     }, function(ret, err) {
+    	   
         //判断在线还是离线
-       
-		demo.stop();
+       last_progress = getVideoProgress(videoid);
+        last_progress = DB.getTaskProgressSync(task_info.taskId).progress;
+		if($api.getStorage(videoid) != 'YES'){
+			demo.stop();
+			demo.close();
+			play_video();
+		}
+		
         //在线 保存进度-服务器/数据库
 
         //离线 保存进度-数据库
@@ -55,7 +62,13 @@ apiready = function() {
         name: 'offline'
     }, function(ret, err) {
         //保存进度-数据库
-
+		if (api.connectionType == 'unknown' || api.connectionType == 'none') {
+//          is_check = true;
+            api.alert({
+                msg: '网络已断开，请检查网络状态'
+            });
+//			closeThisWin(last_progress)
+        }
     });
     //离线变为在线
     api.addEventListener({
@@ -189,9 +202,6 @@ apiready = function() {
         name: 'keyback'
     }, function(ret, err) {
     	
-//    	demo.closePlayer(function(ret){
-//			console.log(JSON.stringify(ret))
-//		});
         last_progress = getVideoProgress(videoid);
         last_progress = DB.getTaskProgressSync(task_info.taskId).progress;
 		
@@ -248,10 +258,11 @@ function check_net(videoid) {
     //if(isEmpty($api.getStorage('cache'+videoid)) && (isEmpty($api.getStorage(videoid)) || $api.getStorage(videoid)!='YES')){
     if ((isEmpty($api.getStorage(videoid)) || $api.getStorage(videoid) != 'YES')) {
         if (api.connectionType == 'unknown' || api.connectionType == 'none') {
-            is_check = true;
+//          is_check = true;
             api.alert({
                 msg: '网络已断开，请检查网络状态'
             });
+//			closeThisWin(last_progress)
         } else if (api.connectionType == '2g' || api.connectionType == '3g' || api.connectionType == '4g' || api.connectionType == '2G' || api.connectionType == '3G' || api.connectionType == '4G') {
             is_check = true;
             // api.alert({
@@ -723,7 +734,7 @@ function play_video() {
                             });
                         }
                        
-                    }, 1000 * 10)
+                    }, 1000 * 10);
 
                     is_check = false;
                     if(last_progress>0){
@@ -866,10 +877,6 @@ function exeNewTask() {
 
 //关闭当前页面，返回课程页面
 function closeThisWin(playtime) {
-	
-//	demo.closePlayer(function(ret){
-//		console.log(JSON.stringify(ret))
-//	});
 	
     api.sendEvent({
         name: 'flush_catalog',

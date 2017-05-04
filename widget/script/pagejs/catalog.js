@@ -221,9 +221,9 @@ function initDom(){
                     initDomDownStatus();
                     // setTask();
                     //处理圈圈
-                       isSolidcircle('circle', '', '');
+                    isSolidcircle('circle', '', '');
                     init_process();
-                    // api.hideProgress();
+                    api.hideProgress();
                 });
                 
             })
