@@ -733,7 +733,10 @@ function video_cache(method, title, ccid, UserId, apiKey, callback) {
                     if (api.systemType == "ios" && parseInt(ret.status) == 2) {
                         return false;
                     }
-                    
+//                  alert(JSON.stringify(ret))
+                    if(ret.finish == "YES"){
+                    	$api.setStorage("status"+ret.videoId,"YES");
+                    }
 //                  if(ret.status == 0){
 //                  	api.alert({ msg: '下载失败！' });	
 //                  }

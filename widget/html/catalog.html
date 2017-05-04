@@ -277,7 +277,7 @@
         <li class="list {{=is_show}}">
           <dl>
             <dt onclick="toggleTasks(this)"><i type="1" data-chapId="{{=val.chapterId}}" data-taskslength="{{=val.tasks.length}}" class="dot-status" style="left: 0.3rem;"></i>
-              <p style="left: 0.6rem;top: 0.3rem;"> {{=val.chapterTitle}}</p>
+              <p style="left: 0.4rem;top: 0.3rem;"> {{=val.chapterTitle}}</p>
               <!--p  {{=progress}}-->
               <ul class="count">{{=countTaskType(key,-1,-1)}}</ul>
             </dt>
@@ -295,8 +295,8 @@
             <div class="taskList {{=is_show}}">
       
               <dl>
-                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" style="left: 0.3rem;" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskVideo" style="margin-left: .8rem;"></span>
-                  <p style="padding-left: 1.2rem;top: 0.3rem;color:#787878;width: 82%;">{{=val4.title}}</p>
+                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" style="left: 0.3rem;" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskVideo" style="margin-left: .6rem;"></span>
+                  <p style="padding-left: 1rem;top: 0.3rem;color:#787878;width: 82%;">{{=val4.title}}</p>
           
                 </dt>
                 <dd>
@@ -311,8 +311,8 @@
             </div>{{ }else if(val4.taskType=='exam'){ }}
             <div class="taskList {{=is_show}}">
               <dl>
-                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" style="left: 0.3rem;" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam" style="margin-left: .8rem;"></span>
-                  <p style="padding-left: 1.2rem;top: 0.3rem;width: 82%;">{{=val4.title}}</p>
+                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}')"><i type="1" style="left: 0.3rem;" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam" style="margin-left: .6rem;"></span>
+                  <p style="padding-left: 1rem;top: 0.3rem;width: 82%;">{{=val4.title}}</p>
                 </dt>
                 <dd>
                   <div id="" class="" style="text-align: center;">

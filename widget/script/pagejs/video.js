@@ -27,7 +27,8 @@ apiready = function() {
         name: 'pause'
     }, function(ret, err) {
         //判断在线还是离线
-
+       
+		demo.stop();
         //在线 保存进度-服务器/数据库
 
         //离线 保存进度-数据库
@@ -37,7 +38,13 @@ apiready = function() {
         name: 'resume'
     }, function(ret, err) {
         //判断在线还是离线
-
+//      if(api.connectionType == 'unknown' || api.connectionType == 'none'){
+//      	demo.close();
+//      }else{
+//      	demo.start();
+//      }
+		demo.start();
+		
         //在线 保存进度-服务器/数据库
 
         //离线 保存进度-数据库
@@ -63,11 +70,11 @@ apiready = function() {
         orientation: 'auto_landscape'
     });
     //关闭视频
-    api.addEventListener({
-        name: 'closeVideo'
-    }, function(ret) {
-        closeVideo();
-    });
+//  api.addEventListener({
+//      name: 'closeVideo'
+//  }, function(ret) {
+//      closeVideo();
+//  });
 
 
     is_check = false;
@@ -181,10 +188,13 @@ apiready = function() {
     api.addEventListener({
         name: 'keyback'
     }, function(ret, err) {
-        
-                //last_progress = getVideoProgress(videoid);
-            last_progress = DB.getTaskProgressSync(task_info.taskId).progress;
-
+    	
+//    	demo.closePlayer(function(ret){
+//			console.log(JSON.stringify(ret))
+//		});
+        last_progress = getVideoProgress(videoid);
+        last_progress = DB.getTaskProgressSync(task_info.taskId).progress;
+		
         closeThisWin(last_progress);
         //关闭页面
     });
@@ -313,10 +323,12 @@ function play_video() {
                 return false;
             }
 //			alert(JSON.stringify(param))
+	
             demo.open(param, function(ret, err) {
                 //4G下是否播放视频
-//              if ((isEmpty($api.getStorage(videoid)) || $api.getStorage(videoid) != 'YES')) {
-             if (!isFinish) {
+                
+                if ((isEmpty($api.getStorage("status"+videoid)) || $api.getStorage("status"+videoid) != 'YES')) {
+//           if (!isFinish) {
                     if(api.connectionType == '4g' || api.connectionType == '4G' && (ret.btnType != 1 && ret.btnType !=2 && ret.btnType!=3&& ret.btnType != 4 && ret.btnType !=5 && ret.btnType!=6&& ret.btnType != 7 && ret.btnType !=8 && ret.btnType!=9 && ret.btnType!=-1 && ret.btnType!='-1' && ret.btnType!='play')){
                         demo.stop();
                         api.confirm({
@@ -360,6 +372,7 @@ function play_video() {
                         var key = memberId + sel + 'progress';
                         $api.setStorage(key, 1);
                         $api.setStorage(videoid, 'NO');
+                        $api.setStorage("status"+videoid, 'NO');
                         //改变下载状态
                         var data = {
                             type: 'filedel',
@@ -372,11 +385,11 @@ function play_video() {
                     }
                     return false;
                 }
-                if (ret.btnType == 1) { //对应返回按钮
+                if (ret.btnType == 99) { //对应返回按钮
                     //demo.close();
                     //关闭页面
                     //api.closeWin();
-
+					
                     if (ret.ctime == 'nan') {
                       isLoading = true;
                         //视频未加载完毕,视频进度为0
@@ -388,7 +401,7 @@ function play_video() {
                             var tmp_progress = parseInt(ret.ctime);
                         }
                     }
-                    //关闭页面
+//                  //关闭页面
                     closeThisWin(tmp_progress);
 
                 } else if (ret.btnType == 2) { //对应列表按钮
@@ -853,6 +866,11 @@ function exeNewTask() {
 
 //关闭当前页面，返回课程页面
 function closeThisWin(playtime) {
+	
+//	demo.closePlayer(function(ret){
+//		console.log(JSON.stringify(ret))
+//	});
+	
     api.sendEvent({
         name: 'flush_catalog',
         extra: {
