@@ -436,7 +436,13 @@ function toggleCourse(e) {
  */
 function save_tasks(courseDetail) {
 		var arr = {};
-		var data_arr = courseDetail.chapters;
+		var data_arr;
+		if(courseDetail.chapters){
+			data_arr = courseDetail.chapters;
+		}else{
+		
+		}
+		
 		var courseName = courseDetail.courseName;
 		var courseId = courseDetail.courseId;
 		for (var i in data_arr) {

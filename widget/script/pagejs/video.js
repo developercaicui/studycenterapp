@@ -63,11 +63,9 @@ apiready = function() {
     }, function(ret, err) {
         //保存进度-数据库
 		if (api.connectionType == 'unknown' || api.connectionType == 'none') {
-//          is_check = true;
             api.alert({
                 msg: '网络已断开，请检查网络状态'
             });
-//			closeThisWin(last_progress)
         }
     });
     //离线变为在线
@@ -258,7 +256,7 @@ function check_net(videoid) {
     //if(isEmpty($api.getStorage('cache'+videoid)) && (isEmpty($api.getStorage(videoid)) || $api.getStorage(videoid)!='YES')){
     if ((isEmpty($api.getStorage(videoid)) || $api.getStorage(videoid) != 'YES')) {
         if (api.connectionType == 'unknown' || api.connectionType == 'none') {
-//          is_check = true;
+            is_check = true;
             api.alert({
                 msg: '网络已断开，请检查网络状态'
             });
@@ -318,7 +316,6 @@ function play_video() {
                 //检查网络
                 check_net(videoid);
             }
-
 
 
             if (!CourseIsexpire(courseId)) {
@@ -734,7 +731,7 @@ function play_video() {
                             });
                         }
                        
-                    }, 1000 * 10);
+                    }, 1000 * 60 * 2);
 
                     is_check = false;
                     if(last_progress>0){

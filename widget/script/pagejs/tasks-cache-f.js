@@ -69,14 +69,22 @@ var is_debug = false;
 	     $('body').removeClass('checking');
 	     var len = 0; 
 	   
-	      course_detail = JSON.parse(api.pageParam.data.replace(/\n|\r|\t|<[^<]*>/g,''));
-	      
-	      var task_tpl = $('#task_tpl').html();
-	      
+	   courseId = api.pageParam.courseId;
+	   cache_model.getCourseJsonWithCourseId({"userId":getstor('memberId'),"courseId":courseId},function(ret,err){
+	   		var ret_data = JSON.parse(JSON.parse(ret.data)[0].courseJson);
+	   		var task_tpl = $('#task_tpl').html();
+	   		
+	      course_detail = ret_data[0];
 	      var content = doT.template(task_tpl);
 
 	      $('#chaTask').html(content(course_detail)).show();
 	      initDomDownStatus();
+	      task_arr = save_tasks(course_detail);
+      	  courseId = course_detail.courseId; //课程id
+	   })
+//	      
+	      
+	      
 	      
 //		 var len = 0;
 //		 $.each($(".video-catego"),function(k,v){
@@ -218,8 +226,7 @@ var is_debug = false;
           }
       });
 
-      task_arr = save_tasks(course_detail);
-      courseId = course_detail.courseId; //课程id
+      
     }
       
 function init_check() {

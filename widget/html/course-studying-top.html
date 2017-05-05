@@ -283,6 +283,7 @@
            }, false);*/
       });
       apiready = function () {
+      		
           get_tasks();
           api.addEventListener({
             name : 'flush_catalog'
@@ -611,7 +612,7 @@
           var courseId = api.pageParam.courseId;
           var chapterId = api.pageParam.chapterId;
           $api.setStorage("setchapterId",chapterId);
-          $api.setStorage("closeSetTimeOut",true)
+          $api.setStorage("closeSetTimeOut",true);
           /*if (isEmpty(courseId)) {
            api.toast({
            msg: '获取课程失败',

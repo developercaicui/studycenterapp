@@ -1146,7 +1146,6 @@ var total = 0;
 	
 	
 
-	
 var is_loding=false;
 function getData(page) {
 	
@@ -1301,6 +1300,7 @@ function getData(page) {
     				}
     				$('#content').append(content(categoryIdArr));
     			}
+    
     			saveExpire(ret.data.courselist);
 
     			progressBar();
