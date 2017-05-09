@@ -843,6 +843,8 @@ function exeNewTask() {
 
         play_video();
 
+    }else if(task_info.taskType == 'knowledgePointExercise'){
+    	nextVideo()
     } else {
     
         //要传递到下个页面的参数
@@ -854,6 +856,7 @@ function exeNewTask() {
             task_info: task_info, //任务信息
             type: 'task'
         };
+        
         api.openWin({
             name: 'course-test',
             url: 'course-test.html',
