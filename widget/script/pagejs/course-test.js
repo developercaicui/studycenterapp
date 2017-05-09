@@ -26,7 +26,7 @@ apiready = function() {
     }
 	//设置ios状态栏背景色
 	api.setStatusBarStyle({
-		style : 'light'
+		style : 'dark'
 	});
 	//监听返回键
 	api.addEventListener({
@@ -122,12 +122,13 @@ function frameContent() {
     var frame_name;
     var frame_url;
     var params;
+    
 	if (exe_task == true) {
 		if (task_info.taskType == 'exam') {
 			//如果为测试题，打开测试题页面
 			 frame_name = 'course-test-f';
 			 frame_url = 'course-test-f.html';
-		} else if (task_info.taskType == 'entry') {
+		} else if (task_info.taskTyvvpe == 'entry') {
 			//词汇(vocabulary)类型,据说entry是指词汇类型，词汇是外链
 			if (!isEmpty(task_info.entryUrl)) {
 				 frame_name = 'course-entry';
@@ -191,11 +192,13 @@ function my_close() {
         });
     }
 	api.setStatusBarStyle({
-		style : 'light'
+		style : 'dark'
 	});
+	
 	api.closeWin({
 		name : 'video'
 	});
+	
 	if (exe_task == true) {
 		api.setScreenOrientation({
 			orientation : 'portrait_up'

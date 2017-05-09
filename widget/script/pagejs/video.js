@@ -844,6 +844,7 @@ function exeNewTask() {
         play_video();
 
     } else {
+    
         //要传递到下个页面的参数
         var page_param = {
             courseId: courseId, //课程id

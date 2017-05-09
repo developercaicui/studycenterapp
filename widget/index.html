@@ -465,15 +465,10 @@
                             to_ucenter(true);
                         }
                     } else if (ret.state == 'error') {
-                        var msg = '';
-                        if (err_conf_007[ret.msg]) {
-                            msg = err_conf_007[ret.msg];
-                            api.toast({
-                                msg: msg,
-                                location: 'middle'
-                            });
-                        }
-
+                    	api.toast({
+                            msg: ret.msg,
+                            location: 'middle'
+                        });                      
                     }
                 });
             } else {
