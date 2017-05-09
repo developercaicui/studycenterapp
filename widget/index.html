@@ -431,7 +431,8 @@
                 param.account = name;
                 param.password = password;
                 param.token = res.data.token;
-                ajaxRequest('api/v2.1/login', 'post', param, function(ret, err) { //007.005 会员登录
+                ajaxRequest('api/zbids/member/login/v1.0', 'post', param, function(ret, err) { //007.005 会员登录
+                	
                     api.hideProgress();
                     if (err) {
                         api.toast({
@@ -1062,7 +1063,8 @@
                 param.account = account;
                 param.password = password;
                 param.token = res.data.token;
-                myajaxRequest('api/v2.1/login', 'post', param, function(ret1, err1) { //007.005 会员登录
+                myajaxRequest('api/zbids/member/login/v1.0', 'post', param, function(ret1, err1) { //007.005 会员登录
+                   
                     if (ret1 && ret1.state == 'success') {
                         $api.setStorage('account', account);
 
@@ -1277,11 +1279,11 @@
 
                 if (cache_model == null) {
                     cache_model = api.require('lbbVideo');
-                }
+                } 
+                
                 if (api.connectionType == 'unknown' || api.connectionType == 'none') {
 
                     cache_model.downloadStop({"userId":memberId},function(ret, err) {
-
                         set_down({
                             type: 'shut_network',
                             chapterida: chapterIdA,
@@ -1294,6 +1296,7 @@
                     });
                 } else if (api.connectionType == '2g' || api.connectionType == '3g' || api.connectionType == '4g' || api.connectionType == '2G' || api.connectionType == '3G' || api.connectionType == '4G') {
                     window.shut_network = false;
+
                     cache_model.downloadStop({"userId":memberId},function(ret, err) {
 
                         set_down({
@@ -1436,7 +1439,7 @@
                                 param.account = account;
                                 param.password = password;
                                 param.token = res.data.token;
-                                ajaxRequest('api/v2.1/login', 'post', param, function(ret, err) { //007.005 会员登录
+                                ajaxRequest('api/zbids/member/login/v1.0', 'post', param, function(ret, err) { //007.005 会员登录
                                     if (ret && ret.state == 'success') {
 
                                         $api.setStorage('account', account);
@@ -1497,7 +1500,7 @@
         }, function(res, err) {
             if (res.value.out == true) {
 
-                ajaxRequest('api/v2.1/logout', 'get', {
+                ajaxRequest('api/zbids/member/loginout/v1.0', 'get', {
                     token: $api.getStorage('token')
                 }, function(ret, err) { //007.010 会员退出
                 });

@@ -30,8 +30,8 @@ videoDownInfo["c4"].tasknum =1;
 
 	api.showProgress({
        title: '加载中',
-       modal: false
-  	});
+       modal: true
+	});
 function getdownrecord(){
     //读取数据库下载记录，注意读取时间,返回的记录按照时间进行正排序,进度和state为数字，path用／分隔
     //state:0:停止  1:等待  2:下载中  3: 下载完成
@@ -55,6 +55,7 @@ function getdownrecord(){
         //------------------结束获取--------------------------
      	var usedTime,speedDown;
         var saverecordObj = JSON.parse(ret.data);
+        
         ///设置下一次读取下载的某个时间之后变化的所有记录
         lastgettime = saverecordObj.readTime;
         //循环处理每一条返回的下载记录，并统计分析最后变化值
@@ -191,7 +192,7 @@ function initDom(){
         // });
        api.showProgress({
 	       title: '加载中',
-	       modal: false
+	       modal: true
 	  	});		
         cache_model.getCourseJsonWithCourseId({"userId":getstor('memberId'),"courseId":api.pageParam.course_id},function(ret,err){
 //      		if(JSON.parse(ret.data).length<1){
@@ -230,7 +231,7 @@ function initDom(){
     }else{
     	api.showProgress({
 	       title: '加载中',
-	       modal: false
+	       modal: true
 	  	});
      var param = {};
      param.courseId = api.pageParam.course_id;
@@ -398,7 +399,7 @@ function set_down_status(str){
     if(!isEmpty(chapterIdC) && !isEmpty(chapterIdA) && !isEmpty(chapterIdB)) id=chapterIdC;
     // var obj = $('#' + id);
     var obj = $('.task' + item);
-   
+
     switch (type) {
         case 'error':
             $('.down-progress[type="1"]').attr({
@@ -497,6 +498,7 @@ function set_down_status(str){
                 msg : '网络已断开，请检查网络状态',
                 location : 'middle'
             });
+           
             break;
         case 'wait':
             clearInterval(down_timer);
@@ -673,7 +675,7 @@ apiready = function() {
   		lastgettime = 1388509261;
         videochangelist = "";
         couselist = "";
-        videoDownInfo =new Object();
+        videoDownInfo = new Object();
         getdownrecord();
 
   		getData();

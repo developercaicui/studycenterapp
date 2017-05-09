@@ -374,15 +374,15 @@ function set_token(callback) {
     var systype = api.systemType;
     var param = {};
     if (systype == 'ios') {
-        param.appType = 'iphone';
+        param.appType = 'iPhone';
         param.appId = 'iPhoneCourse';
         param.appKey = '8f81bf2e06c0f32df06ba7a04cf4bbb7';
     } else if (systype == 'android') {
-        param.appType = 'aphone';
-        param.appId = 'aPhoneCourse';
-        param.appKey = '4b6454d8cf903498116e26b26dd5791a';
+        param.appType = 'aPad';
+        param.appId = 'aPadCourse';
+        param.appKey = 'f7e4ebaa872f38db7b548b870c13e79e';
     }
-    myajaxRequest('api/v2.1/getToken', 'get', param, function(ret, err) {
+    myajaxRequest('api/zbids/app/gettoken/v1.0', 'POST', param, function(ret, err) {
         if (ret.state == 'success') {
             $api.setStorage('token', ret.data.token);
         }
@@ -737,6 +737,7 @@ function video_cache(method, title, ccid, UserId, apiKey, callback) {
                     if(ret.finish == "YES"){
                     	$api.setStorage("status"+ret.videoId,"YES");
                     }
+                   
 //                  if(ret.status == 0){
 //                  	api.alert({ msg: '下载失败！' });	
 //                  }
@@ -1012,10 +1013,8 @@ function mydown(result) {
         },function(ret,err){
 //			alert(JSON.stringify(ret))
         })
-        
-        
+      
     }
-//  alert(type)
     switch (type) {
         case '1':
         case 1:
@@ -1703,6 +1702,7 @@ function my_to_down() {
     }
 
     if (api.connectionType == 'none' || api.connectionType == 'unknown') {
+
         data.type = 'shut_network';
 
         set_down(data);

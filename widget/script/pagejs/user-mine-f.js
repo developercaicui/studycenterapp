@@ -46,15 +46,15 @@ function go_next(name) {
 function get_ranking() {
 	var memberId = getstor('memberId');
 	//上次登录时间
-	$(".ranking").text("登陆成功")
-//	ajaxRequest('api/v3/user/loginloglist',"get", {"memberid":memberId,"pageNo":1,"pageSize":1}, function (ret, error) {
-////		console.log(JSON.stringify(ret))
-//		if(ret && ret.state == "success"){
-//			var login_time = ret.data[0].login_time/1000;
-//			$(".ranking").text("上次登录："+formatDate(login_time,'Y')+'-'+formatDate(login_time,'M')+'-'+formatDate(login_time,'D')+"           "+formatDate(login_time,'h')+':'+formatDate(login_time,'m'));
-//		}
-//
-//	})
+	$(".ranking").text("登陆成功");
+	ajaxRequest('api/zbids/member/getLoginLog',"get", {"memberid":memberId,"pageSize":1,"pageNo":1}, function (ret, error) {
+		
+		if(ret && ret.state == "success"){
+			var loginTime = ret.data[0].loginTime/1000;
+			$(".ranking").text("上次登录："+formatDate(loginTime,'Y')+'-'+formatDate(loginTime,'M')+'-'+formatDate(loginTime,'D')+"           "+formatDate(loginTime,'h')+':'+formatDate(loginTime,'m'));
+		}
+
+	})
 	  
 //	var able = $api.getStorage('capabilityAssessment');
 //	able = '';

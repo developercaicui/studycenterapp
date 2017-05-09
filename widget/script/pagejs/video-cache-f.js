@@ -83,14 +83,14 @@ function init_check() {
             return false;
         }
         clearInterval(getStatusTime);
-        var tasks = $(this).find(".down_data").html();
+       
         var chapterId = $(this).attr("data-chapId");
         var courseId = $(this).find(".down-progress").attr("courseid");
         api.openWin({
             name : "tasks-cache",
             url : 'tasks-cache.html',
             delay : 200,
-            pageParam: {data:tasks,chapterId:chapterId,courseId:courseId}
+            pageParam: {chapterId:chapterId,courseId:courseId}
         });
         
     })

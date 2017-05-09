@@ -104,7 +104,7 @@
                   {{ if(imgPath.length>=3) { }}<b>共{{=it.imgPath.split(',').length}}张</b>{{ } }}
                 </ul>{{ } }}
               </div>
-              <div class="qscmsg clearfix">{{if(it.taskprogress && parseInt(it.taskprogress) && it.taskprogress != '-1'){ }}
+              <div class="qscmsg clearfix">{{if(it.askprogress != '-1' && it.courseId && it.courseId != ' ' && it.chapterId && it.chapterId != ' ' && it.taskId && it.taskId != ' '){ }}
               <span onclick="jump_task('{{=it.taskprogress}}','{{=it.courseId}}','{{=it.taskId}}')" class="btn-play-time">
               {{=formatType(it.taskType,it.taskprogress)}}</span>{{ } }}
               <span>{{ if(!isEmpty(it.updateTime)) { }}{{=formatDate(it.updateTime,'Y')+'-'+formatDate(it.updateTime,'M')+'-'+formatDate(it.updateTime,'D')}} {{ } }}</span>
