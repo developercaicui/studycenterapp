@@ -731,7 +731,7 @@ function play_video() {
                             });
                         }
                        
-                    }, 1000 * 60 * 2);
+                    }, 1000 * 30);
 
                     is_check = false;
                     if(last_progress>0){

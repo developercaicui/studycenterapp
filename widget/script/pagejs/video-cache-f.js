@@ -229,7 +229,8 @@ function initDom() {
         if(api.pageParam.courseId){
             param.courseId = api.pageParam.courseId
         }
-           cache_model.getCourseJsonWithCourseId(param,function(ret,err){      
+           cache_model.getCourseJsonWithCourseId(param,function(ret,err){ 
+           		     
 	           if(JSON.parse(ret.data).length<1){
 	                $('#content').html('');
 	                $('body').addClass('null');

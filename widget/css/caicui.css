@@ -832,7 +832,7 @@ circle {
 .down_speed {
   position: absolute;
   color: #999;
-  top: 0.4rem;
+  top: 0.35rem;
   right: 0.9rem;
 }
 .down_speed:after {

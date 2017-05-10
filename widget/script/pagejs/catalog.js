@@ -384,7 +384,7 @@ function to_cache(name) {
 var memberId;
 function set_down_status(str){
     //var data=JSON.parse(str);
-    var data=str;
+    var data = str;
     var type = data.type, 
         chapterIdA = isEmpty(data.chapterIdA) ? '' : data.chapterIdA,
         chapterIdB = isEmpty(data.chapterIdB) ? '' : data.chapterIdB,

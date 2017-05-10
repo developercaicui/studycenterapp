@@ -1279,6 +1279,7 @@
                 if (api.connectionType == 'unknown' || api.connectionType == 'none') {
 
                     cache_model.downloadStop({"userId":memberId},function(ret, err) {
+                    
                         set_down({
                             type: 'shut_network',
                             chapterida: chapterIdA,

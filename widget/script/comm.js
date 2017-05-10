@@ -1006,15 +1006,27 @@ function mydown(result) {
         })
         
         // 保存课程信息库
-        cache_model.inserCourseDetailJson({
-            "userId" : memberId,
-            "courseId" : param.courseId,
-            "courseJson" : JSON.stringify(param.courseJson)
-        },function(ret,err){
-//			alert(JSON.stringify(ret))
-        })
+        if(api.systemType == "ios"){
+	        cache_model.inserCourseDetailJson({
+	            "userId" : memberId,
+	            "courseId" : param.courseId,
+	            "courseJson" : JSON.stringify(param.courseJson)
+	        },function(ret,err){
+	//			alert(JSON.stringify(ret))
+	        })
+        }else{
+        	cache_model.inserCourseDetailJson({
+	            "userId" : memberId,
+	            "courseId" : param.courseId,
+	            "courseJson" :param.courseJson
+	        },function(ret,err){
+	//			alert(JSON.stringify(ret))
+	        })
+        }
+        
       
     }
+  
     switch (type) {
         case '1':
         case 1:
@@ -1658,6 +1670,7 @@ function stop_down(callback) { //暂停下载
         cache_model = api.require('lbbVideo');
     }
     cache_model.downloadStop({"userId":memberId},function(ret, err) {
+        
         $api.rmStorage(memberId + 'downed');
         callback(ret);
     });
