@@ -719,34 +719,81 @@
                                           }
                                       });
                                   } else {
-                                      $('#content').find('.dot-status').each(function () {
-                                          var tmp_chapID = $(this).attr('data-chapId');
-                                          if (!isEmpty(tmp_chapID) && !isEmpty(arr[tmp_chapID])) {
-                                              var num = 0;
-                                              var len = 0;
-                                              for (var i in arr[tmp_chapID]) {
-                                                  num += parseInt(arr[tmp_chapID][i].isok);
-                                                  ++len;
-                                              }
-      
-      
-                                              if (num > 0) {
-                                                  if (num == len * 3) {
-                                                    chaptersNum++;
-                                                      $(this).attr('type', '3');
-                                                      //实心圈
-                                                  } else {
-                                                      //半圈
-                                                      $(this).attr('type', '2');
-                                                  }
-                                              } else {
-                                                  $(this).attr('type', '1');
-                                                  //空圈
-                                              }
-      
-                                          }
-                                      });
-                                      
+//                                    $('#content').find('.dot-status').each(function () {
+//                                        var tmp_chapID = $(this).attr('data-chapId');
+//                                        if (!isEmpty(tmp_chapID) && !isEmpty(arr[tmp_chapID])) {
+//                                            var num = 0;
+//                                            var len = 0;
+//                                            for (var i in arr[tmp_chapID]) {
+//                                                num += parseInt(arr[tmp_chapID][i].isok);
+//                                                ++len;
+//                                            }
+//    
+//    
+//                                            if (num > 0) {
+//                                                if (num == len * 3) {
+//                                                  chaptersNum++;
+//                                                    $(this).attr('type', '3');
+//                                                    //实心圈
+//                                                } else {
+//                                                    //半圈
+//                                                    $(this).attr('type', '2');
+//                                                }
+//                                            } else {
+//                                                $(this).attr('type', '1');
+//                                                //空圈
+//                                            }
+//    
+//                                        }
+//                                    });
+$('#content').find('.dot-status').each(function (index) {
+        var tmp_chapID = $(this).attr('data-chapId');
+        
+        var tmp_chapProgress,tit;
+        if (!isEmpty(tmp_chapID) && !isEmpty(arr[tmp_chapID])) {
+            var num = 0;
+            var len = 0;
+            for (var i in arr[tmp_chapID]) {
+                num += parseInt(arr[tmp_chapID][i].isok);
+                ++len;
+            }
+        var chapterProArr = [];
+        for (var j=0;j<ret.data.length;j++) {
+            if(ret.data[j].chapterId == tmp_chapID){
+              chapterProArr.push(ret.data[j])
+              // tmp_chapProgress = ret.data[j].progress;
+              // tit=ret.data[j].chapterName
+            }
+          }
+        var chapterState = 'no';
+        var chapterDoneNum = 0;
+        var chapterNoNum = 0;
+        var chapterTasksLength = $(this).attr('data-taskslength');
+        for(var i=0;i<chapterProArr.length;i++){
+          if(chapterProArr[i].state == "1"){
+            chapterDoneNum++;
+          }else if(chapterProArr[i].state == "0"){
+            chapterNoNum++;
+          }
+        }
+        if(chapterDoneNum == chapterTasksLength){
+          chapterState = 'end';
+        }else if(chapterNoNum || chapterDoneNum){
+          chapterState = 'ing';
+        }
+        switch (chapterState){
+            case 'no':
+              $(this).attr('type', '1');
+              break;
+            case 'ing':
+              $(this).attr('type', '2');
+              break;
+            case 'end':
+              $(this).attr('type', '3');
+              break;
+          }
+        }
+    });                                      
                                       $('.fath').each(function (k,v) {
 			                              $(v).find('.dot-status').each(function (key,val) {
 				                              var tmp_chapID = $(val).attr('data-chapId');

@@ -1009,7 +1009,7 @@ function mydown(result) {
         if(api.systemType == "ios"){
 	        cache_model.inserCourseDetailJson({
 	            "userId" : memberId,
-	            "courseId" : param.courseId,
+	            "courseId" : param.  courseId,
 	            "courseJson" : JSON.stringify(param.courseJson)
 	        },function(ret,err){
 	//			alert(JSON.stringify(ret))

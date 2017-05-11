@@ -190,25 +190,16 @@ function initDom(){
         //     msg : '网络已断开，请检查网络状态',
         //     location : 'middle'
         // });
-       api.showProgress({
-	       title: '加载中',
-	       modal: true
-	  	});		
+//     api.showProgress({
+//	       title: '加载中',
+//	       modal: true
+//	  	});		
         cache_model.getCourseJsonWithCourseId({"userId":getstor('memberId'),"courseId":api.pageParam.course_id},function(ret,err){
-//      		if(JSON.parse(ret.data).length<1){
-//	                $('#content').html('');
-//	                $('body').addClass('null');
-//	                return false;
-//	           }
-
+				if(isEmpty(ret)){
+					return false;
+				}
         		var ret_data = JSON.parse(JSON.parse(ret.data)[0].courseJson);
-     
-//              var ret_data = JSON.parse(ret.data.courseJson);
                 course_detail = ret_data[0];
-                if (isEmpty(ret_data)) {
-                    $('body').addClass('null');
-                    return false;
-                }
                 var tpl = $('#tpl').html();
                 var content = doT.template(tpl);
                 //课程状态
@@ -229,10 +220,10 @@ function initDom(){
                 
             })
     }else{
-    	api.showProgress({
-	       title: '加载中',
-	       modal: true
-	  	});
+//  	api.showProgress({
+//	       title: '加载中',
+//	       modal: true
+//	  	});
      var param = {};
      param.courseId = api.pageParam.course_id;
      ajaxRequest('api/v2.1/course/courseDetail', 'get', param, function(ret, err) {

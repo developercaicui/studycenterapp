@@ -30,11 +30,14 @@ apiready = function() {
         //判断在线还是离线
        last_progress = getVideoProgress(videoid);
         last_progress = DB.getTaskProgressSync(task_info.taskId).progress;
-		if($api.getStorage(videoid) != 'YES'){
-			demo.stop();
-			demo.close();
-			play_video();
-		}
+        if(api.systemType == "android"){
+	        if($api.getStorage(videoid) != 'YES'){
+				demo.stop();
+				demo.close();
+				play_video();
+			}
+        }
+		
 		
         //在线 保存进度-服务器/数据库
 
@@ -691,25 +694,20 @@ function play_video() {
                             jumptime = last_progress;
                         }
                         if(api.systemType == 'android'){
-                            
-                           // demo.seekTo({ 
-                           //      totime: jumptime
-                           //  }, function(res) {
-                           //      var ctime = res.ctime;
-                           //      // alert(ctime);
-                           //      if (api.systemType == 'android') {
-                           //          var tmp_progress = parseInt(ctime / 1000);
-                           //      } else {
-                           //          var tmp_progress = parseInt(ctime);
-                           //      }
-                           //      var total = videoTimes;
-                           //      if (total * 0.9 <= tmp_progress) {
-                           //          var state = 'complate';
-                           //      } else {
-                           //           var state = 'init';
-                           //      }
-                           //      saveTaskProgress(tmp_progress, total, state);
-                           //  }); 
+                          	demo.getStudyProgress({
+                                totime: jumptime
+                            }, function(res) {
+                                var ctime = res.cTime;
+                                var tmp_progress = parseInt(ctime / 1000);                          
+                                var total = videoTimes;
+                                if (total * 0.9 <= tmp_progress) {
+                                    var state = 'complate';
+                                } else {
+                                    var state = 'init';
+                                }
+                                saveTaskProgress(tmp_progress, total, state);
+                            });
+                    
                         }else{
                              demo.iosGetStudyProgress({
                                 totime: jumptime

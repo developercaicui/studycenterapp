@@ -549,6 +549,7 @@ function get_study(flag) {
         pageNo: 0,
         pageSize: 1000
     }, function(ret, err) {
+    
         if (err) {
             api.toast({
                 msg: err.msg,
@@ -564,6 +565,7 @@ function get_study(flag) {
 						courseArr.push(learningcourse[i].courseId);
 					}
         	ajaxRequest({ 'origin': 'http://action.caicui.com/', 'pathname': 'api/userAction/course/getCourseProgress/v1.0/' }, 'get', {'token':getstor('token'),'memberId':getstor('memberId'),'courseId':courseArr.toString()}, function(ret, err) {
+        	
         			if (err) {
         					api.toast({
         							msg: err.msg,
