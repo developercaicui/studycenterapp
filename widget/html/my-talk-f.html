@@ -91,12 +91,19 @@
                     <p>{{=!isEmpty(it[p].contentSummary)?it[p].contentSummary:''}}</p>
                   </div>{{ if(!isEmpty(it[p].imgPath)) { }}
                   <ul class="pic-group">
-                    {{ var imgPath=it[p].imgPath.split(','); }}
+                    {{ var imgPath=it[p].imgPath.split(','),imgPathArr=[];}}
                     {{ for(var i in imgPath) { }}
-                    {{if(i<=2) { }}
-                    <li style="background-image:url({{=static_url + imgPath[i]}})" tapmode onclick="openImageBrower('{{=it[p].imgPath}}','{{=i}}')"></li>{{ } }}
+                      {{ if(!isEmpty(imgPath[i])) { }}
+                        {{ imgPathArr.push(imgPath[i]);}}
+                      {{ } }}
                     {{ } }}
-                    {{ if(imgPath.length>=3) { }}<b>共{{=it[p].imgPath.split(',').length}}张</b>{{ } }}
+                    {{ for(var i in imgPathArr) { }}                    
+                    {{var imgPathList=getImgPath('{{=imgPathArr[i]}}');}}
+                    {{imgPathArr.length-1;}}
+                    {{if(i<=2) { }}
+                    <li style="background-image:url({{=imgPathList}})" tapmode onclick="openImageBrower('{{=it[p].imgPath}}','{{=i}}')"></li>{{ } }}
+                    {{ } }}                   
+                    {{if(imgPathArr.length>=3) { }}<b>共{{=imgPathArr.length}}张</b>{{ } }}
                   </ul>{{ } }}
                 </div>
               </div>{{ if(!isEmpty(it[p].courseId) && !isEmpty(it[p].coursename)){ }}

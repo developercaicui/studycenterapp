@@ -734,6 +734,7 @@ var is_loaded = false;
 var memberId;
 apiready = function() {
     memberId = getstor('memberId');
+     api.hideProgress();
     //监听下拉刷新
     api.setRefreshHeaderInfo({
         visible: true,

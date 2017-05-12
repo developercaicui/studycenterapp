@@ -51,6 +51,7 @@
     <script type="text/javascript">
       function init() {
           var data = JSON.parse(api.pageParam.data);
+          
           var tpl = $('#tpl').html();
           var content = doT.template(tpl);
           $('#conter').prepend(content(data));

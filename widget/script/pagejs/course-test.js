@@ -113,10 +113,8 @@ function getChapterInfo(){
 //根据不同的任务类型，打开相应的frame，//类别（视频、测试题、文档、词汇）
 function frameContent() {
 	var header = $api.byId('header');
-	//var footer = $api.byId('footerTest');
-	$api.fixIos7Bar(header);
+//	$api.fixIos7Bar(header);
 	var headerPos = $api.offset(header);
-	//var footerPos = $api.offset(footer);
 	var width = api.winWidth;
 	var height = winW - headerPos.h;
     var frame_name;

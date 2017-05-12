@@ -2596,8 +2596,7 @@ ul.download .down-progress {
 .header .left:after{display: none;}
 .icon-arrow-left{color:#00a186;font-weight: bold;}
 .header .left-next {
-    font-size: 0.36rem;
-    padding-left: 0;
+    font-size: 0.3rem;
     max-width:90%; 
     overflow: hidden;
     word-wrap: normal;

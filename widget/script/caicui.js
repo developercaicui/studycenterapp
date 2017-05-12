@@ -347,11 +347,23 @@ function editorFrame(p, t) {
 }
 
 function openImageBrower(arr, i) { //图片浏览器
-		var str = arr.split(',');
-		var data = [];
-		for (var p in str) {
-				data.push(static_url + str[p]);
+		var str = arr.split(','),
+			strArr = [];
+		for(var j=0;j<str.length;j++){
+			if(!isEmpty(str[j])){
+				strArr.push(str[j])
+			}
 		}
+
+		var data = [];
+		for (var p in strArr) {
+			if(strArr[p].substr(0,4)!="http"){
+				data.push(static_url + strArr[p]);
+			}else{
+				data.push(strArr[p]);
+			}
+		}
+
 		//图片浏览器打开
 		var obj = api.require('imageBrowser');
 		obj.openImages({

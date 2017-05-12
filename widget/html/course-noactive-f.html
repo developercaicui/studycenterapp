@@ -629,8 +629,8 @@
               modal: false
           });
           var param = {};
-          param.token = $api.getStorage('token');
-          param.userId = getstor('memberId');
+          param.token = "iPhone";
+          param.memberId = getstor('memberId');
           param.pageNo = 1;
           param.pageSize = 20;
           ajaxRequest('api/v2.1/mobile/allList', 'post', param, function (ret, err) {//008.001.1 未激活课程

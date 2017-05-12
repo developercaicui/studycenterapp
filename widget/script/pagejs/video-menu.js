@@ -359,7 +359,7 @@ function setSpeed(){
 	cache_model.getCurrentDownloadVideoSize({"userId" : getstor('memberId')},function(ret,err){
 	
     	var videoId = ret.currentVideoId;
-   		var speedT = $api.getStorage("speedT"+videoId);
+   		var speedT = $api.getStorage("speedT"+videoId) ? $api.getStorage("speedT"+videoId) : 0;
    		$api.setStorage("speedT"+videoId,ret.data);
    		
    		speedTime = ret.data - speedT;	

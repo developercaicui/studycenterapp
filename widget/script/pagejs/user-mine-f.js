@@ -122,6 +122,7 @@ function get_count() {
 
 var is_show_time = true;
 apiready = function() {
+	 api.hideProgress();
 	api.addEventListener({
 		name : 'modify'
 	}, function(ret, err) {

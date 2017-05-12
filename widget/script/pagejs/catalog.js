@@ -10,42 +10,13 @@ var couselist = ""; //记录缓存包括的课程id
 var lastgettime = 1388509261;//记录每次获取数据库的时间点，下次获取就只获取该时间点之后变化的记录(第一次获取可以获取2014年1月1日1时1分1秒//)
 function getData() {
 	$api.setStorage("closeSetTimeOut",false);
-    /*
-如果有删除操作需要重新刷新页面
-如果界面有开始下载，下载暂停操作，可直接临时改变界面dom节点状态，是否成功由定时器后续统一更新界面
-*/
-
-
-/*
-videoDownInfo["a1"] = {};
-videoDownInfo["a1"].progress =12;
-videoDownInfo["a1"].tasknum =2; 
-videoDownInfo["b3"] = {};
-videoDownInfo["b3"].progress =12;
-videoDownInfo["b3"].tasknum =2; 
-videoDownInfo["c4"] = {};
-videoDownInfo["c4"].progress =40;
-videoDownInfo["c4"].tasknum =1; 
-*/
-
 	api.showProgress({
        title: '加载中',
        modal: true
 	});
+	cache_model = api.require('lbbVideo');
 function getdownrecord(){
-    //读取数据库下载记录，注意读取时间,返回的记录按照时间进行正排序,进度和state为数字，path用／分隔
-    //state:0:停止  1:等待  2:下载中  3: 下载完成
-    //------------------获取lastgettime-2时间点之后变化的记录 sqllite时间戳转时间: datetime(1377168853, 'unixepoch', 'localtime');--------------------------
-    // var saverecord ="{\"readTime\":1483203661,\"data\":[";
-    // saverecord += "{\"state\":2,\"progress\":10,\"path\":\"a/b/c/d/ed/f\"}";
-    // saverecord += ",{\"state\":1,\"progress\":20,\"path\":\"a/b/c1\"}";
-    // saverecord += ",{\"state\":2,\"progress\":50,\"path\":\"a3/b1/c2\"}";
-    // saverecord += ",{\"state\":1,\"progress\":30,\"path\":\"a/b2/c3\"}";
-    // saverecord += ",{\"state\":3,\"progress\":100,\"path\":\"a1/b3/c4\"}";
-    // saverecord += ",{\"state\":3,\"progress\":100,\"path\":\"a/b2/c3\"}";
-    // saverecord += "]}";
     
-    cache_model = api.require('lbbVideo');
     var param = {
         "userId" : getstor('memberId'),
         "readTime" : lastgettime
@@ -296,7 +267,6 @@ getStatusTime = setInterval(function(){
 //             var tpl = $('#tpl').html();
 //     var content = doT.template(tpl);
 //     $('#content').html(content(data));
-//     setTask();
 //     isSolidcircle('circle', '', '');
 //     init_process();
     
@@ -322,7 +292,7 @@ function setSpace(){
 	         $(".space").html("可用空间" + size + "MB<span></span>");
 	    });
 	   
-   		var speedT = $api.getStorage("speedT"+videoId);
+   		var speedT = $api.getStorage("speedT"+videoId) ? $api.getStorage("speedT"+videoId) : 0;
    		
    		$api.setStorage("speedT"+videoId,ret.data);
    		

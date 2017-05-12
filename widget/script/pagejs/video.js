@@ -829,7 +829,7 @@ function exeNewTask() {
     newProgress = true;//重置视频播放进度
     isLoading = false;
     //如果任务类型为视频，则直接播放
-   
+   	demo.close();
     $api.setStorage("setchapterId",task_info_detail.chapterId);
     if (task_info.taskType == 'video') {
         videoid = task_info.videoCcid;
@@ -844,7 +844,7 @@ function exeNewTask() {
     }else if(task_info.taskType == 'knowledgePointExercise'){
     	nextVideo()
     } else {
-    
+    	
         //要传递到下个页面的参数
         var page_param = {
             courseId: courseId, //课程id
