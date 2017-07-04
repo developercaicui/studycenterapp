@@ -35,7 +35,7 @@
 		    position: absolute;
 		    bottom: 0;
 		    padding: 0 0.3rem;
-		    right: 0.3rem;
+		    right: 0.16rem;
         }
         .header .message-bells i {
           font-size: 0.36rem;
@@ -46,8 +46,72 @@
         }
         .header .msg-mark {
 	
-		    top: 0.45rem;
-		}
+    		    top: 0.45rem;
+    		}
+        .styProul{
+            width:100%;
+            height: 2.3rem;
+            padding:0.25rem 0;
+        }
+        .styProul li{
+          width: 100%;
+          padding: 0 0.35rem;
+        }
+        .styProul li p{
+            float: left;
+            font-size: 0.26rem;
+            font-weight: bold;
+            color:#fff;
+        }
+        .styProul .styprogress{
+            height: 0.5rem;
+        }
+        .styProul .styprogress p:nth-child(2){
+            float: right;
+            font-weight: normal;
+        }
+        .styProul li .v-progress {
+          height: 0.1rem;
+          width: 100%;
+          border-radius: 0.08rem;
+          background-color: #a9e1e1;
+        
+        }
+        .styProul li .v-progress span {
+          height: 0.1rem;
+          background-color: #fff;
+          display: block;
+          width: 0%;
+          border-radius: 0.08rem;
+          transition: width 1s;
+          -moz-transition: width 1s; /* Firefox */
+          -webkit-transition: width 1s;  /* Safari 和 Chrome */
+          -o-transition: width 1s; /* Opera */
+        }
+        .styProul .styLine{
+            height: 0.26rem;
+        }
+        .styProul .styInfo{
+            padding:none;
+            height: 0.7rem;
+            border-bottom: 1px solid #fff;
+        }
+        .styProul .styInfo .version{
+            float:right;
+            width: 1.54rem;
+            height: 0.4rem;
+            text-align:center;
+            line-height: 0.4rem;
+            color:#00a185;
+            background: #fff;
+            border-radius:5px;
+            -moz-box-shadow: 3px 3px 5px #888888; /* 老的 Firefox */    
+            -webkit-box-shadow: 3px 3px 5px #888888; 
+            box-shadow: 3px 3px 5px #888888;}
+        }
+        .courseMessage{
+          
+        }
     </style>
   </head>
   <body>
@@ -58,28 +122,30 @@
 	      <div tapmode onclick="go_next('message-center')" class="message-bells"><i class="icon-message"></i>
             <div class="msg-mark msg-num ri_h"></div>
           </div>
-	    </div>
-   
-      <div class="styPro clearfix">
-        <ul class="styProsection left">
-          <li class="styProTit">章节</li>
-          <li sytle="width:;" class="styProBot chapters"></li>
-        </ul>
-        <div class="styPriMid">
-          <div class="circle-progress">
-            <div class="text">我的进度</div>
-            <div id="progressVal" class="val">0</div>
-          </div>
-        </div>
-        <ul class="styProsection right">
-          <li class="styProTit">任务</li>
-          <li sytle="width:;" class="styProBot tasks"></li>
+	    </div>   
+      <div class="styPro clearfix" style="height: 2.56rem;">
+        <ul class="styProul">
+          <li class="styprogress">
+              <p>学习进度&nbsp;&nbsp;&nbsp;<span class="styNum">0%</span></p>
+              <p class="expirationTime"></p>
+          </li>
+          <li class="styLine">
+              <p class="v-progress"><span style="font-size: 0;" class=""></span></p>
+          </li>
+          <li class="styInfo">
+            <p>章节&nbsp;&nbsp;<span class="chapters"></span></p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;任务&nbsp;&nbsp;<span class="tasks"></span></p>
+            <p class="version" tapmode onclick="myFrame()">课程版本</p>              
+          </li>
+          <li class="startSty">
+              <p onclick="play()" tapmode style="overflow:hidden;text-overflow:ellipsis;text-align: initial;background: none;font-weight:normal;line-height: 0.96rem;" class="styContinue"><span style="overflow:hidden;text-overflow:ellipsis;width:95%;margin-left: 0;"></span></p>
+          </li>
         </ul>
       </div>
-      <p onclick="play()" tapmode style="overflow:hidden;text-overflow:ellipsis;" class="styContinue"><span style="overflow:hidden;text-overflow:ellipsis;width:95%;"></span></p>
+      <div tapmode onclick="openMessage(this)" class="courseMessage" style="width: 100%;height: 0.6rem;font-size:0.24rem;color:#999999;line-height: 0.6rem;padding-left: 0.4rem;background: #fff;"><img src="../image/voice.png" style="width: 0.3rem;height: 0.28rem;margin:0.16rem 0.1rem 0 0"><span style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 88%;display: inline-block;">暂无课程通知</span></div>
       <ul class="catanav">
         <li tapmode><img src="../image/z_icon1.png">目录</li>
- 		<li tapmode><img src="../image/c_icon2.png">交流</li>
+ 		    <li tapmode><img src="../image/c_icon2.png">交流</li>
         <li tapmode><img src="../image/c_icon3.png">笔记</li>
         <!--<li tapmode><img src="../image/c_icon4.png">讨论</li>-->
       </ul>
@@ -91,6 +157,53 @@
     <script type="text/javascript" src="../script/saveTasksProgress.js"></script>
     <script src="../script/fx.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+      var versionInfo; 
+      var availability;
+            // 打开自定义Frame(打开,尺寸,弹动,点击的当前对象,来自)
+      function myFrame(){
+          var param={};
+          param.versionInfo = versionInfo;
+          param.versionId = api.pageParam.versionId;
+          param.courseId = api.pageParam.courseId;
+          var reload=false;
+          var mx, my, mh;
+              mx = 0;
+              my = 0;
+              mh = "auto";
+          bgCor = 'rgba(0,0,0,0)';    
+          api.openFrame({
+              name: "version-info",
+              url: 'version-info.html',
+              bgColor : bgCor,
+              rect: {
+                  x: mx,
+                  y: my,
+                  w: api.winWidth  - mx,
+                  h: mh
+              },
+              pageParam:param,
+              bounces: false,
+              delay:200,
+              reload:true
+          });
+      }
+      function openMessage(obj){
+          if($(obj).hasClass("active")){
+              var pageParams = {};
+              pageParams.sender = "课程通知";
+              pageParams.title = ""
+              pageParams.content = availability;
+
+              api.openWin({
+                  name: "announce-detail",
+                  url: "announce-detail.html",
+                  delay: 200,
+                  slidBackEnabled: false,//iOS7.0及以上系统中，禁止通过左右滑动返回上一个页面
+                  pageParam: pageParams
+              });
+          }
+          
+      }
       function my_close() {
           api.sendEvent({
               name: 'flush_study'
@@ -122,9 +235,9 @@
       function get_tasks() {
           var param = {};
           param.courseId = api.pageParam.courseId;
-          param.token = $api.getStorage('token');
-          param.memberId = $api.getStorage('memberId');
-          ajaxRequest({ 'origin': 'http://action.caicui.com/', 'pathname': 'api/userAction/course/getCourseProgress/v1.0/' }, 'get', {'token':getstor('token'),'memberId':getstor('memberId'),'courseId':api.pageParam.courseId}, function(ret, err) {
+          param.token = getstor('token');
+          param.memberId = getstor('memberId');
+          ajaxRequest({ 'origin': 'http://action.caicui.com/', 'pathname': 'api/userAction/course/getCourseProgress/v1.0/' }, 'get', param, function(ret, err) {
           //ajaxRequest('api/v2.1/study/getFinish', 'get', param, function (ret, err) {//008.021.1
               if (err) {
                   api.toast({ 
@@ -142,11 +255,11 @@
                       var res1 = ret.data[0];
                       var res2 = data['data'][0];
                       top_task(res1, res2);
-                      circleProgress();
+                      //circleProgress();
                   } else {
                       var param = {};
                       param.courseId = api.pageParam.courseId;
-                      ajaxRequest('api/v2.1/course/courseDetail', 'get', param, function (rets, errs) {
+                      ajaxRequest('api/teachsource/course/courseDetail', 'get', param, function (rets, errs) {
                           if (errs) {
                              /*api.toast({
                                   msg: errs.msg,
@@ -160,7 +273,7 @@
                               top_task(res1, res2);
                               var time_now = Date.now();
                               var data = {'time': time_now, 'data': rets.data};
-                              circleProgress();
+                              //circleProgress();
                               $api.setStorage(cid + '-' + uid, data);
                           }
                           /*else {
@@ -185,7 +298,11 @@
           if (isEmpty(res1)) {
               m1 = 0;
               m2 = 0;
-              $('#progressVal').html(0);
+              $('.styNum').html("0%");
+              $(".v-progress").find("span").css({"width":"0%"});
+
+              $('.styContinue span').html('开始学习此课程');
+
           } else {
               var data1 = res1;
               //                m1=data1.charperSum;
@@ -194,15 +311,29 @@
               //m2 = data1.progressSum;
               m2 = data1.courseProgress;
               progress = data1.progress;
+
+              $('.styContinue span').html('继续学习   ' + res1.chapterName);
           }
           if (isEmpty(res2)) {
               n1 = 0;
               n2 = 0;
-              $('#progressVal').html(0);
+              $('.styNum').html("0%");
+              $(".v-progress").find("span").css({"width":"0%"});
+
+              $(".courseMessage").find("span").html("暂无课程通知");
+              $(".courseMessage").removeClass("active");
           } else {
               var data2 = res2;
               n1 = data2.chapterNum;
               n2 = data2.taskNum;
+              availability = data2.availability.replace(/\n|\r|\t|<[^<]*>/g,'');
+              if($api.trimAll(availability) == ""){
+                $(".courseMessage").find("span").html("暂无课程通知");
+                $(".courseMessage").removeClass("active");
+              }else{
+                $(".courseMessage").find("span").html(availability);
+                $(".courseMessage").addClass("active");
+              }
           }
           var htm1 = m1 + '/' + n1;
           var htm2 = m2 + '/' + n2;
@@ -211,18 +342,26 @@
           $('.tasks').html(htm2);
           //$('.pro').html((m2 / n2) * 100);
           if (!isEmpty(res1) && !isEmpty(res2)) {
-              //- $('#progressVal').html(parseInt(m2 / n2 * 100));
+              //- $('.styNum').html(parseInt(m2 / n2 * 100));
               if(m2 && n2){
-                $('#progressVal').html(parseInt(m2 / n2 * 100));
+                $('.styNum').html(parseInt(m2 / n2 * 100)+"%");
+                $(".v-progress").find("span").css({"width":parseInt(m2 / n2 * 100)+"%"});
+
               }else if(progress){
-                $('#progressVal').html(1);
+                $('.styNum').html("1%");
+                $(".v-progress").find("span").css({"width":"1%"});
+
               }
           }
+          
       }
       var h, y;
       function init(name) {
           //设置课程名称
           $('.left-next').html(api.pageParam.courseName);
+          var expirationTime = api.pageParam.expirationTime;
+          var expirationDate = formatDate(expirationTime,'Y')+'/'+formatDate(expirationTime,'M')+'/'+formatDate(expirationTime,'D')
+          $('.expirationTime').html(expirationDate+"到期");
           setTimeout(function () {
               api.setStatusBarStyle({
                   style: 'dark'
@@ -238,6 +377,23 @@
           } else {
               $('.styContinue span').html('开始学习此课程');
           }
+
+          var versionId = api.pageParam.versionId;
+          //课程状态
+          getVersionId({"versionId":versionId});
+
+          //获取全部课程版本
+          ajaxRequest('api/teachsource/course/coursesversionlist',"get", {"versionId":versionId}, function (ret, error) {
+            if(ret && ret.state=="success"){
+              versionInfo = ret.data;
+            }else{
+                // api.toast({
+                //   msg : ret.msg,
+                //   location : 'middle'
+                // });
+            }
+                           
+          })
       }
       $(function () {
           //-----------------tab样式
@@ -288,7 +444,13 @@
           api.addEventListener({
             name : 'flush_catalog'
           }, function(ret) {
-            init(ret.value.chapterName);
+            // init();
+            api.pageParam.courseId = ret.value.courseId;
+            //设置课程名称
+            if(ret.value.courseName){
+              $('.left-next').html(ret.value.courseName);
+            }            
+            get_tasks();
           });
           api.addEventListener({
               name: 'keyback'
@@ -601,8 +763,7 @@
       //点击页面上的在学课程，跳转学习课程页面
       function play() {
           var courseId = api.pageParam.courseId;
-          var chapterId = api.pageParam.chapterId;
-          $api.setStorage("setchapterId",chapterId);
+          
           $api.setStorage("closeSetTimeOut",true);
           /*if (isEmpty(courseId)) {
            api.toast({
@@ -621,8 +782,8 @@
           var tmp_course_detail = $api.getStorage(courseId);
           if (isEmpty(tmp_course_detail)) {
               //获取课程的详细信息
-              //api/v2.1/course/courseDetail，接口编号：004-006
-              ajaxRequest('api/v2.1/course/courseDetail', 'get', {courseId: courseId}, function (ret, err) {//004.006获取课程的详细信息
+              //api/teachsource/course/courseDetail，接口编号：004-006
+              ajaxRequest('api/teachsource/course/courseDetail', 'get', {courseId: courseId}, function (ret, err) {//004.006获取课程的详细信息
                   if (err) {
                       api.toast({
                           msg: err.msg,
@@ -658,6 +819,10 @@
               });
               return false;
           }
+
+          var chapterId = res_process.task_info.chapterId;
+          $api.setStorage("setchapterId",chapterId);
+          
           //判断当前任务类型
           if (task_info.taskType == 'video') {
               //视频类型

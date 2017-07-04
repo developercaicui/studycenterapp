@@ -171,7 +171,7 @@
                 </dt>
                 <dd>                 
                  <span class="down_speed none"></span>
-                  <div id="{{=val3.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="{{=val3.chapterId}}" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="{{=val3.chapterTitle}}" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-download3"></i>
+                  <div id="{{=val3.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="{{=val3.chapterId}}" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="{{=val3.chapterTitle}}" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}" taskid="{{=val4.taskId}}" apikey="{{=val4.apiKey}}" videositeid="{{=val4.videoSiteId}}"><i class="icon-download3"></i>
                     <div class="val"></div>
                   </div>
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
@@ -186,6 +186,20 @@
                 <dd>
                   <div id="" class="" style="text-align: center;">
                     <span>{{=val4.totalCount}}题</span>
+                  </div>
+                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                </dd>
+              </dl>
+            </div>{{ }else if(val4.taskType=='knowledgePointExercise'){ }}
+            <div class="taskList {{=is_show}}">
+              <dl style="padding-left: .8rem;">
+                <dt onclick="next(3,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val3.chapterId}}','{{=val3.knowledgePointId}}')"><i type="1" data-chapId="{{=val3.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
+                  <p style="padding-left: 0.9rem;top: 0.35rem;color:#787878;width: 82%;">{{=val4.title}}</p>
+                  <!--p  {{=progress+'='+val2.chapterId}}-->
+                </dt>
+                <dd>
+                  <div id="" class="" style="text-align: center;">
+                    <span></span>
                   </div>
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                 </dd>
@@ -216,7 +230,7 @@
                 </dt>
                 <dd>
                 	<span class="down_speed none"></span>                 
-                  <div id="{{=val2.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}"  type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-download3"></i>
+                  <div id="{{=val2.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}"  type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}" taskid="{{=val4.taskId}}" apikey="{{=val4.apiKey}}" videositeid="{{=val4.videoSiteId}}"><i class="icon-download3"></i>
                     <div class="val"></div>
                   </div>                  
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
@@ -231,6 +245,20 @@
                 <dd>
                   <div id="" class="" style="text-align: center;">
                     <span>{{=val4.totalCount}}题</span>
+                  </div>
+                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                </dd>
+              </dl>
+            </div>{{ }else if(val4.taskType=='knowledgePointExercise'){ }}
+            <div class="taskList {{=is_show}}">
+              <dl style="padding-left:0.7rem">
+                <dt onclick="next(2,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val2.chapterId}}','{{=val2.knowledgePointId}}')"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
+                  <p style="padding-left: 0.9rem;top: 0.35rem;color:#787878;width: 82%;">{{=val4.title}}</p>
+                  <!--p  {{=progress+'='+val2.chapterId}}-->
+                </dt>
+                <dd>
+                  <div id="" class="" style="text-align: center;">
+                    <span></span>
                   </div>
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                 </dd>
@@ -263,7 +291,7 @@
                 </dt>
                 <dd>
                 	<span class="down_speed none" style="top:0.35rem;font-size: 0.26rem;"></span>                  
-                  <div id="{{=val.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}"  type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-download3"></i>
+                  <div id="{{=val.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}"  type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}" taskid="{{=val4.taskId}}" apikey="{{=val4.apiKey}}" videositeid="{{=val4.videoSiteId}}"><i class="icon-download3"></i>
                     <div class="val"></div>
                   </div>
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
@@ -282,6 +310,19 @@
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                 </dd>
               </dl>
+            </div>{{ }else if(val4.taskType=='knowledgePointExercise'){ }}
+            <div class="taskList {{=is_show}}">
+              <dl>
+                <dt onclick="next(1,'{{=key}}',-1,-1,this,'{{=val.chapterId}}','{{=val.knowledgePointId}}')"><i type="1" style="left: 0.3rem;" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam" style="margin-left: .6rem;"></span>
+                  <p style="padding-left: 1rem;top: 0.3rem;color:#787878;width: 82%;">{{=val4.title}}</p>
+                </dt>
+                <dd>
+                  <div id="" class="" style="text-align: center;">
+                    <span></span>
+                  </div>
+                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                </dd>
+              </dl>
             </div>
             {{ } }}
             {{~}}</div>
@@ -290,7 +331,7 @@
     </script>
     <script type="text/javascript" src="../script/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-      function next(leave, num1, num2, num3, obj, cid) {
+      function next(leave, num1, num2, num3, obj, cid,knowledgePointId) {
       	  clearInterval(getStatusTime);
       	  $api.setStorage("setchapterId",cid);
       	  var downState = $(obj).next().find(".down-progress").attr("type");
@@ -301,7 +342,8 @@
               if (isEmpty(tmp_course_detail)) {
                   //获取课程的详细信息
                   //api/v2.1/course/courseDetail，接口编号：004-006
-                  ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+                  // ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+                  ajaxRequest('api/teachsource/course/courseDetail', 'get', {
                       courseId: courseId
                   }, function (ret, err) {//004.006获取课程的详细信息
                       if (err) {
@@ -342,7 +384,7 @@
                               });
                               return false;
                           }
-                          judge_task(JSON.parse(tasks), 0 ,downState);
+                          judge_task(JSON.parse(tasks), 0 ,downState,knowledgePointId);
                       }
                   });
               } else {
@@ -364,7 +406,7 @@
                       });
                       return false;
                   }
-                  judge_task(JSON.parse(tasks), 0 ,downState);
+                  judge_task(JSON.parse(tasks), 0 ,downState,knowledgePointId);
               }
           } else {
               //changeCharpter(obj, num1, num2, num3);
@@ -390,6 +432,7 @@
           var tmp_num = {
               'video': 0,
               'exam': 0,
+              'knowledgePointExercise':0,
               'doc': 0,
               'entry': 0
           };
@@ -399,6 +442,8 @@
                   tmp_num.video++;
               } else if (tmp_tasks.taskType == 'exam') {
                   tmp_num.exam++;
+              } else if (tmp_tasks.taskType == 'knowledgePointExercise') {
+                  tmp_num.knowledgePointExercise++;
               } else if (tmp_tasks.taskType == 'pdfread') {
                   tmp_num.doc++;
               } else if (tmp_tasks.taskType == 'entry') {
@@ -411,6 +456,9 @@
           }
           if (tmp_num.exam > 0) {
               tmp_html += '<li class="exam"><span class="multiples" style="font-size:.3rem;">' + tmp_num.exam + '</span></li>';
+          }
+          if (tmp_num.knowledgePointExercise > 0) {
+              tmp_html += '<li class="exam"><span class="multiples" style="font-size:.3rem;">' + tmp_num.knowledgePointExercise + '</span></li>';
           }
           if (tmp_num.doc > 0) {
               tmp_html += '<li><span class="multiples">' + tmp_num.doc + '</span></li>';
@@ -463,7 +511,7 @@
       
       //判断任务类型，跳转相应的页面
       //function judge_task(res_process) {
-      function judge_task(task_info, lastProgress,downState) {
+      function judge_task(task_info, lastProgress,downState,knowledgePointId) {
       
           if (isEmpty(course_detail) || isEmpty(course_detail.chapters) || isEmpty(task_info)) {
               api.toast({
@@ -488,6 +536,7 @@
               //entry（外链类型）、pdfread（pdf类型）、exam（测试题类型）
               var new_win_name = 'course-test';
               var new_win_url = 'course-test.html';
+
           } else {
               api.toast({
                   msg: '暂无任务，请稍后再试或联系客服',
@@ -506,10 +555,10 @@
               task_info: task_info,//当前要学习的任务信息
               type: 'task'
           };
-      	  if(downState == 4){
-          	  pageParams.isFinish = true;
+          if(downState == 4){
+              pageParams.isFinish = true;
           }else{
-          	  pageParams.isFinish = false;
+              pageParams.isFinish = false;
           }
       
           api.hideProgress();
@@ -517,6 +566,35 @@
           api.setScreenOrientation({
               orientation: 'landscape_right'
           });
+
+          if(task_info.taskType == 'knowledgePointExercise'){
+              ajaxRequest('api/extendapi/examen/get_exercise_point_count_cache', 'post',{knowledge_points:knowledgePointId,type:4}, function (ret, err) {//008.005
+                  if (err) {
+                      api.toast({
+                          msg: err.msg,
+                          location: 'middle'
+                      });
+                  }
+                  if (ret && ret.state == 'success') {
+                      pageParams.knowledgePointExercise = ret.data[0];
+                      //跳转到知识点练习页面
+                      api.openWin({
+                          name: new_win_name,
+                          url: new_win_url,
+                          delay: 200,
+                          slidBackEnabled: false,//iOS7.0及以上系统中，禁止通过左右滑动返回上一个页面
+                          pageParam: pageParams
+                      });
+                      
+                  } else {
+                      /*api.toast({
+                          msg: ret.msg,
+                          location: 'middle'
+                      });*/
+                  }
+              });
+              return false;
+          }
           //跳转到播放页面
           api.openWin({
               name: new_win_name,
@@ -539,7 +617,8 @@
           if (isEmpty(tmp_course_detail)) {
               //获取课程的详细信息
               //api/v2.1/course/courseDetail，接口编号：004-006
-              ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+              // ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+              ajaxRequest('api/teachsource/course/courseDetail', 'get', {
                   courseId: courseId
               }, function (ret, err) {//004.006获取课程的详细信息
                   if (err) {

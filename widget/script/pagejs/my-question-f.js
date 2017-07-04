@@ -33,7 +33,7 @@ function lx(obj) {
 		if (isEmpty(tmp_course_detail)) {
 			//获取课程的详细信息
 			//api/v2.1/course/courseDetail，接口编号：004-006
-			ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+			ajaxRequest('api/teachsource/course/courseDetail', 'get', {
 				courseId : courseId
 			}, function(ret, err) {//004.006获取课程的详细信息
 				if (err) {
@@ -71,6 +71,7 @@ var is_loding=false;
 function getData(page) {
 	var param = {};
 	param.self = 1;
+	param.type = 3;
 	param.ordertype = 1;
 	param.pageNo = page;
 	param.pageSize = pageNum;
@@ -81,7 +82,9 @@ function getData(page) {
 	        modal : false
 	    });
 	}
-	ajaxRequest('api/studytools/questionlist/v2.1', 'get', param, function(ret, err) {//003.206 问题列表
+	// ajaxRequest('api/studytools/questionlist/v2.1', 'get', param, function(ret, err) {//003.206 问题列表
+	ajaxRequest('api/studytools/bbslist/v1.0', 'get', param, function(ret, err) {//003.206 问题列表
+        
         is_loding=true;
 		if(show_pro){
             api.hideProgress();

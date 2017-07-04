@@ -82,7 +82,8 @@
                   param.courseName = course_detail.courseName;//必须，课程名称
                   param.chapterName = task_info_detail.chapterName;//必须，章节名称
                   param.task = task_info.title;//必须，任务名称
-      
+                  param.type = 1;
+                  
                   if (param.content.length < 10) {
                       is_click = true;
                       api.toast({msg: '内容不能少于10个字'});
@@ -92,7 +93,9 @@
                       title: '发布中',
                       modal: true
                   });
-                  ajaxRequest('api/studytools/questionsave/v2.1', 'post', param, function (ret, err) {//003.116.1  发布或修改笔记
+                  // ajaxRequest('api/studytools/questionsave/v2.1', 'post', param, function (ret, err) {//003.116.1  发布或修改笔记
+                  ajaxRequest('api/studytools/bbssave/v1.0', 'post', param, function (ret, err) {//003.116.1  发布或修改笔
+                  
                       is_click = false;
                       api.hideProgress();
                       if (err) {

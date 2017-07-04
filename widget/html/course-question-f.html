@@ -66,6 +66,7 @@
           param.pageNo = page;
           param.pageSize = pageSize;
           param.self = 0;
+          param.type = 3;
           param.token = $api.getStorage('token');
           if (page == 1 && show_pro && !is_loding) {
               api.showProgress({
@@ -73,7 +74,9 @@
                   modal: false
               });
           }
-          ajaxRequest('api/studytools/questionlist/v2.1', 'get', param, function (ret, err) {//003.206
+          // ajaxRequest('api/studytools/questionlist/v2.1', 'get', param, function (ret, err) {//003.206
+          ajaxRequest('api/studytools/bbslist/v1.0', 'get', param, function (ret, err) {//003.206
+
               is_loding = true;
               if (show_pro) {
                   api.hideProgress();

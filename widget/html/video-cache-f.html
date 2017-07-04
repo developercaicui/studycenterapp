@@ -79,7 +79,7 @@
                 <dd><i dataid="{{=val2.chapterId}}" class="icon-check chapterb"></i></dd>
               </dl>{{~val2.children:val3:key3}}
               {{ var is_show=is_loadC(val3.chapterId);}}
-              <li class="list mycaptC {{=is_show}} tasksCache" data-chapId="{{=val3.chapterId}}" tapmode="tapcolor">
+              <li class="list mycaptC {{=is_show}} tasksCache" data-chapId="{{=val3.chapterId}}" tapmode>
                 <dl class="haschild">
                   {{var state=3;}}
                   {{var progress=get_dowm('{{=val.chapterId}}','{{=val2.chapterId}}','{{=val3.chapterId}}');}}
@@ -121,7 +121,7 @@
             <ul class="list mycaptB {{=is_show}}">
               {{var state=3;}}
               {{var progress=get_dowm('{{=val.chapterId}}','{{=val2.chapterId}}','');}}
-              <li class="list mycaptC tasksCache" data-chapId="{{=val2.chapterId}}" tapmode="tapcolor">
+              <li class="list mycaptC tasksCache" data-chapId="{{=val2.chapterId}}" tapmode>
               <dl>
             
                 <dt>
@@ -164,7 +164,7 @@
           {{var state=3;}}
           {{var progress=get_dowm('{{=val.chapterId}}','','');}}
           {{var is_show=is_loadA(val.chapterId);}}
-          <li class="list mycaptA {{=is_show}} tasksCache"  data-chapId="{{=val.chapterId}}" tapmode="tapcolor">
+          <li class="list mycaptA {{=is_show}} tasksCache"  data-chapId="{{=val.chapterId}}" tapmode>
             <dl>
        
               <dt>
@@ -220,7 +220,7 @@
           if (isEmpty(tmp_course_detail)) {
               //获取课程的详细信息
               //api/v2.1/course/courseDetail，接口编号：004-006
-              ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+              ajaxRequest('api/teachsource/course/courseDetail', 'get', {
                   courseId: courseId
               }, function (ret, err) {//004.006获取课程的详细信息
                   if (err) {

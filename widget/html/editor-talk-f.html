@@ -644,7 +644,7 @@
           param.pageNo = 1;
           param.pageSize = 10;
           param.token = $api.getStorage('token');
-          ajaxRequest('api/studytools/discussdetail/v2.1', 'get', param, function (ret, err) {//003.301.1  讨论详情(修改讨论详情显示内容)
+          ajaxRequest('api/studytools/bbsdetail/v1.0', 'get', param, function (ret, err) {//003.301.1  讨论详情(修改讨论详情显示内容)
               if (err) {
                   api.toast({
                       msg: err.msg,

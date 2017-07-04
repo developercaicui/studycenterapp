@@ -69,6 +69,7 @@
           param.subjectId = api.pageParam.subjectId;
           param.courseid = api.pageParam.course_id;
           param.self = 0;
+          param.type = 3;
           param.ordertype = 1;
           param.pageSize = pageSize;
           param.pageNo = page;
@@ -79,7 +80,9 @@
                   modal: false
               });
           }
-          ajaxRequest('api/studytools/questionlist/v2.1', 'get', param, function (ret, err) {//003.206
+          // ajaxRequest('api/studytools/questionlist/v2.1', 'get', param, function (ret, err) {//003.206
+          ajaxRequest('api/studytools/bbslist/v1.0', 'get', param, function (ret, err) {//003.206
+          
               is_loding = true;
               api.refreshHeaderLoadDone();
               if (show_pro) {

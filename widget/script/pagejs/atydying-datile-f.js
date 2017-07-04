@@ -10,7 +10,7 @@ function getData() {
 	var param = {};
 	param.token = $api.getStorage('token');
 	param.courseId = api.pageParam.courseId;
-	ajaxRequest('api/v2.1/course/courseDetail', 'get', param, function(ret, err) {//004.006  章节目录和资料列表
+	ajaxRequest('api/teachsource/course/courseDetail', 'get', param, function(ret, err) {//004.006  章节目录和资料列表
 		if (err) {
 			api.toast({
 				msg : err.msg,
@@ -33,8 +33,8 @@ function next(chapter1, chapter2) {
 	var tmp_course_detail = $api.getStorage(courseId);
 	if (isEmpty(tmp_course_detail)) {
 		//获取课程的详细信息
-		//api/v2.1/course/courseDetail，接口编号：004-006
-		ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+		//api/teachsource/course/courseDetail，接口编号：004-006
+		ajaxRequest('api/teachsource/course/courseDetail', 'get', {
 			courseId : courseId
 		}, function(ret, err) {//004.006获取课程的详细信息
 			if (err) {

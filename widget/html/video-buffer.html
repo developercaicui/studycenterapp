@@ -49,7 +49,10 @@
     <script type="text/javascript">
       function my_close() {
           api.sendEvent({
-              name: 'flush_catalog'
+              name: 'flush_catalog',
+              extra: {
+                  courseId:api.pageParam.course_id
+              }
           });
           
           api.sendEvent({

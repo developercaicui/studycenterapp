@@ -682,7 +682,9 @@
                   modal: false
               });
           }
-          ajaxRequest('api/v2.1/learning/noActivecourse', 'get', param, function (ret, err) {//008.001.1 未激活课程
+          // ajaxRequest('api/v2.1/learning/noActivecourse', 'get', param, function (ret, err) {//008.001.1 未激活课程
+          ajaxRequest('api/business/learning/noActivecourse/v1.0', 'get', param, function (ret, err) {//008.001.1 未激活课程
+          
               is_loding = true;
               api.refreshHeaderLoadDone();
               if (show_pro) {

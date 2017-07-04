@@ -135,7 +135,7 @@ var is_debug = false;
       getStatusTime = setInterval(function(){
           getdownrecord();
           setSpeed();
-      },1000)
+      },2000)
       init_check();
       
 //    api.setRefreshHeaderInfo({
@@ -156,7 +156,7 @@ var is_debug = false;
       		getStatusTime = setInterval(function(){
 	          getdownrecord();
 	          setSpeed();
-	      },1000)
+	      },2000)
       })
       api.addEventListener({
           name: 'opena'
@@ -246,7 +246,7 @@ function next(obj, num1 , courseId) {
       if (isEmpty(tmp_course_detail)) {
           //获取课程的详细信息
           //api/v2.1/course/courseDetail，接口编号：004-006
-          ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+          ajaxRequest('api/teachsource/course/courseDetail', 'get', {
               courseId: courseId
           }, function (ret, err) {//004.006获取课程的详细信息
               if (err) {

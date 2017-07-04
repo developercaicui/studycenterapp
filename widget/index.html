@@ -342,7 +342,7 @@
             userName: username,
             userId: api.deviceId
         }, function(ret, err) {});
-    }
+    } 
 
     //去绑定
     function to_bind() {
@@ -473,6 +473,7 @@
                     }
                 });
             } else {
+
                 api.hideProgress();
                 var err = '';
                 if (!isEmpty(err_conf_007[res.msg])) {

@@ -125,6 +125,7 @@ function init_data() {
     var tpl = $('#tpl').html();
     var content = doT.template(tpl)(mydata);
     $('#content').html(content);
+    api.parseTapmode();
     init_check();
     get_percent();
     circleProgress();
@@ -200,7 +201,7 @@ initDom();
 clearInterval(getStatusTime);
 getStatusTime = setInterval(function(){
     getdownrecord();
-},2000)
+},3000)
 
 //            var dat = {"data":[{"orderId_item_id":"8a22ecb5527d428e0152e40b7401013d","expirationTime":1472636819,"isU":"false","buyTime":1455524902,"activeTime":1457084819,"courseId":"ff808081473905e7014762700dfa0081","activeState":"acitve","lockStatus":0},{"orderId_item_id":"8a22ecb553ca891a0153cb8c5a64037c","expirationTime":1475045015,"isU":"false","buyTime":1459408886,"activeTime":1459493015,"courseId":"ff808081473905e7014762700dfa0081","activeState":"acitve","lockStatus":0},{"orderId_item_id":"ff8080814c7e427e014ca1d4720e0c33","expirationTime":1444196286,"isU":"false","buyTime":1428644271,"activeTime":1428644286,"courseId":"ff808081473905e7014762700dfa0081","activeState":"acitve","lockStatus":0}],"state":"success","msg":""}
 //             mydata.push(dat);
@@ -835,7 +836,7 @@ apiready = function() {
         clearInterval(getStatusTime);
 		getStatusTime = setInterval(function(){
 		    getdownrecord();
-		},2000)
+		},3000)
 //      mydata = [];
 //      set_data(0);
      // ;
@@ -985,7 +986,7 @@ function next(leave, num1, num2, num3, courseId, obj) {
     if (isEmpty(tmp_course_detail)) {
         //获取课程的详细信息
         //api/v2.1/course/courseDetail，接口编号：004-006
-        ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+        ajaxRequest('api/teachsource/course/courseDetail', 'get', {
             courseId: courseId
         }, function(ret, err) { //004.006获取课程的详细信息
             if (err) {

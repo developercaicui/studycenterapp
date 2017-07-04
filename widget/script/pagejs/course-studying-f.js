@@ -1173,7 +1173,7 @@ function getData(page) {
 	        modal : false
 	    });
 	}
-	ajaxRequest('api/v2.1/learning/learningcourse', 'get', param, function(ret, err) {//008.003.2 在学的课程列表（new）编号  :
+	ajaxRequest('api/business/learning/learningcourse/v1.0', 'get', param, function(ret, err) {//008.003.2 在学的课程列表（new）编号  :
         api.refreshHeaderLoadDone();
         is_loding=true;
 		if(show_pro){
@@ -1285,7 +1285,6 @@ function getData(page) {
 	        }
 	        categoryIdArr.sort(down)
 	        
-			console.log(categoryIdArr);
 
     			total = ret.data.total;
     			if (page == 1) {
@@ -1300,7 +1299,7 @@ function getData(page) {
     				}
     				$('#content').append(content(categoryIdArr));
     			}
-    
+
     			saveExpire(ret.data.courselist);
 
     			progressBar();
@@ -1361,7 +1360,7 @@ apiready = function() {
 	});
 };
 //历史课程详情
-function course_det(_this,xyc, a, b,  e, f) {
+function course_det(_this,xyc, a, b,  e, f,g,h) {
 
 	var c = $(_this).data('chaptername');
 	var d = $(_this).data('coursename');
@@ -1383,7 +1382,9 @@ function course_det(_this,xyc, a, b,  e, f) {
 			chapterName : c,
 			courseName : d,
 			categoryId : e,
-			subjectId : f
+			subjectId : f,
+			expirationTime : g,
+			versionId : h
 		},
 		vScrollBarEnabled : false,
 		slidBackEnabled : false
@@ -1533,7 +1534,7 @@ function play(courseId) {
 	if (isEmpty(tmp_course_detail)) {
 		//获取课程的详细信息
 		//api/v2.1/course/courseDetail，接口编号：004-006
-		ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+		ajaxRequest('api/teachsource/course/courseDetail', 'get', {
 			courseId : courseId
 		}, function(ret, err) {//004.006获取课程的详细信息
 			if (err) {

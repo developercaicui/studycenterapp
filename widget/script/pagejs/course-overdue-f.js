@@ -1182,7 +1182,8 @@ function getData(page) {
 	        modal : false
 	    });
 	}
-	ajaxRequest('api/v2.1/learning/expirationcourse', 'get', param, function(ret, err) {//008.004.1 已过期课程
+	// ajaxRequest('api/v2.1/learning/expirationcourse', 'get', param, function(ret, err) {//008.004.1 已过期课程
+	ajaxRequest('api/business/learning/expirationcourse/v1.0', 'get', param, function(ret, err) {//008.004.1 已过期课程
         api.refreshHeaderLoadDone();
         is_loding=true;
 		if(show_pro){

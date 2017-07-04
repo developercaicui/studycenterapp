@@ -57,6 +57,25 @@
 		    left: 0.2rem;
 		    top: 0.1rem;
     	}
+      .my-talk-wrap .btn-play-time.btn-exam-page{
+        background: #8cc052;
+        color: #fff;
+        padding: 0.05rem 0.1rem 0.05rem 0.5rem;
+        border-radius: 0.3rem;
+        position: relative;
+
+      }
+      .my-talk-wrap .btn-play-time.btn-exam-page:before{
+        content: "";
+        width: 0.26rem;
+        height: 0.26rem;
+        background: url(../image/exam.png) no-repeat;
+        background-size:100% 100%;
+        position: absolute;
+        left: 0.2rem;
+        top: 0.08rem;
+        border:none;
+      }
     	.qscbtn{bottom:0.2rem;}
     	.talk-content {
 		   border-bottom: 1px solid #12a78e;
@@ -104,8 +123,9 @@
                   {{ if(imgPath.length>=3) { }}<b>共{{=it.imgPath.split(',').length}}张</b>{{ } }}
                 </ul>{{ } }}
               </div>
-              <div class="qscmsg clearfix">{{if(it.askprogress != '-1' && it.courseId && it.courseId != ' ' && it.chapterId && it.chapterId != ' ' && it.taskId && it.taskId != ' '){ }}
-              <span onclick="jump_task('{{=it.taskprogress}}','{{=it.courseId}}','{{=it.taskId}}')" class="btn-play-time">
+              <div class="qscmsg clearfix">{{if(it.taskprogress != '-1' && it.taskType != ' ' && it.courseId && it.courseId != ' ' && it.chapterId && it.chapterId != ' ' && it.taskId && it.taskId != ' '){ }}
+              {{ var taskTypecurrse=gettaskType(it.taskType); }}
+              <span onclick="jump_task('{{=it.taskprogress}}','{{=it.courseId}}','{{=it.taskId}}')" class="btn-play-time {{=taskTypecurrse}}">
               {{=formatType(it.taskType,it.taskprogress)}}</span>{{ } }}
               <span>{{ if(!isEmpty(it.updateTime)) { }}{{=formatDate(it.updateTime,'Y')+'-'+formatDate(it.updateTime,'M')+'-'+formatDate(it.updateTime,'D')}} {{ } }}</span>
               <span>{{ if(!isEmpty(it.updateTime)) { }}{{=formatDate(it.updateTime,'h')+':'+formatDate(it.updateTime,'m')}}{{ } }}</span>

@@ -15,6 +15,7 @@ function getData() {
        modal: true
 	});
 	cache_model = api.require('lbbVideo');
+    
 function getdownrecord(){
     
     var param = {
@@ -156,48 +157,9 @@ function initDomDownStatus(){
 //初始化下载界面，但是所有节点hidden
 function initDom(){
 	
-    if(api.connectionType == 'none' || api.connectionType == 'unknown'){
-        // api.toast({
-        //     msg : '网络已断开，请检查网络状态',
-        //     location : 'middle'
-        // });
-//     api.showProgress({
-//	       title: '加载中',
-//	       modal: true
-//	  	});		
-        cache_model.getCourseJsonWithCourseId({"userId":getstor('memberId'),"courseId":api.pageParam.course_id},function(ret,err){
-				if(isEmpty(ret)){
-					return false;
-				}
-        		var ret_data = JSON.parse(JSON.parse(ret.data)[0].courseJson);
-                course_detail = ret_data[0];
-                var tpl = $('#tpl').html();
-                var content = doT.template(tpl);
-                //课程状态
-                getVersionId(ret_data[0])
-
-                api.getFreeDiskSpace(function(ret, err) {
-                    var size = (ret.size / 1000 / 1000).toFixed(2);
-                    var htm = "<div class='avaiace'  onclick='to_cache()'><span class='manage'>课程缓存管理</span><p class='space'>可用空间" + size + "MB<span></span></p></div>";
-                    htm = htm + content(ret_data[0]);
-                    $('#content').html(htm);
-                    initDomDownStatus();
-                    // setTask();
-                    //处理圈圈
-                    isSolidcircle('circle', '', '');
-                    init_process();
-                    api.hideProgress();
-                });
-                
-            })
-    }else{
-//  	api.showProgress({
-//	       title: '加载中',
-//	       modal: true
-//	  	});
      var param = {};
      param.courseId = api.pageParam.course_id;
-     ajaxRequest('api/v2.1/course/courseDetail', 'get', param, function(ret, err) {
+     ajaxRequest('api/teachsource/course/courseDetail', 'get', param, function(ret, err) {
          api.parseTapmode();
          if (err) {
              /*api.toast({
@@ -216,8 +178,13 @@ function initDom(){
              var ret_data = ret.data;
              course_detail = ret_data[0];
 
-             //课程状态
-             getVersionId(ret_data[0]);
+             
+
+             //设置知识点练习习题个数
+             // if(!isEmpty(course_detail.knowledgePointId)){
+             //    setknowledgeNum(course_detail.knowledgePointId);
+             // }
+             
 
              api.getFreeDiskSpace(function(ret, err) {
                  var size = (ret.size / 1000 / 1000).toFixed(2);
@@ -228,7 +195,7 @@ function initDom(){
                  //处理圈圈
                  isSolidcircle('circle', '', '');
                  init_process();
-              // api.hideProgress();
+                
              });
          } else {
       	// api.hideProgress();
@@ -238,7 +205,7 @@ function initDom(){
              });
          }
      });
-    }
+
      
 }
 
@@ -255,7 +222,7 @@ getStatusTime = setInterval(function(){
     if($api.getStorage("closeSetTimeOut") == "true"){
     	clearInterval(getStatusTime);
     }
-},1000)
+},2000)
 //3:定时器调用获取变化的数据，并调整界面下载状态
 // getdownrecord();
 //
@@ -276,6 +243,27 @@ getStatusTime = setInterval(function(){
 		height : '0px'
 	});
 }
+
+//设置知识点练习习题个数
+// function setknowledgeNum(knowledgePointId){
+//     ajaxRequest('api/extendapi/examen/get_exercise_point_count_cache', 'post',{knowledge_points:knowledgePointId,type:6}, function (ret, err) {//008.005
+//           if (err) {
+//               api.toast({
+//                   msg: err.msg,
+//                   location: 'middle'
+//               });
+//           }
+//           if (ret && ret.state == 'success') {
+//               alert(JSON.stringify(ret))
+              
+//           } else {
+//               /*api.toast({
+//                   msg: ret.msg,
+//                   location: 'middle'
+//               });*/
+//           }
+//       });
+// }
 
 function setSpace(){
 	
@@ -586,27 +574,7 @@ function set_down_status(str){
     }
 }
 
-function getVersionId(data){
-    var versionId = data.versionId;
-    var coursestatus ={};
-    ajaxRequest('api/v2.1/study/coursestatus', 'get',{"token":$api.getStorage('token'),"versionId":versionId}, function(ret, err) {
-        if(ret.state == "success"){
-            var lockStatusNum = 0;
-            for(var i=0;i<ret.data.length;i++){
-                if(ret.data[i].lockStatus == 0){
-                    lockStatusNum = i;
-                }   
-            }
-            coursestatus.islock = ret.data[lockStatusNum].lockStatus;
-            coursestatus.activestate = ret.data[lockStatusNum].activeState;
-            coursestatus.expirationTime = ret.data[lockStatusNum].expirationTime;
-            if(ret.data[lockStatusNum].activeState == "acitve"){
-                coursestatus.isbuy = 1;
-            }                   
-            $api.setStorage("coursestatus"+versionId,coursestatus)
-        }
-    })
-} 
+ 
 
 //getData();
 apiready = function() {
@@ -637,47 +605,26 @@ apiready = function() {
         videochangelist = "";
         couselist = "";
         videoDownInfo = new Object();
-        getdownrecord();
-
+        if(!isEmpty(ret.value)){
+            api.pageParam.course_id = ret.value.courseId;
+        }
   		getData();
   	});
+    api.setRefreshHeaderInfo({
+        visible: true,
+        loadingImg: 'widget://image/arrow-down-o.png',
+        bgColor: '#f3f3f3',
+        textColor: '#787b7c',
+        textDown: '下拉更多',
+        textUp: '松开刷新',
+        showTime: false
+    }, function (ret, err) {
+        getData();
+    });
 //	api.addEventListener({
 //      name: 'reloadPage'
 //  }, function(ret, err) {
 //      location.reload();
 //  });
 
-//  api.addEventListener({
-//      name : 'down_speed'
-//  }, function(ret) {
-//      if(ret){
-//          var speed=ret.value.speed;
-//          //初始化下载状态
-//          var downed = $api.getStorage(memberId+'downed');
-//
-//          // api.toast({
-//          //     msg:downed
-//          // })
-//          //api.alert({msg:downed});
-//          var chapterIdA = get_loc_val(memberId + 'downed', 'chapterIdA'),
-//              chapterIdB = get_loc_val(memberId + 'downed', 'chapterIdB'),
-//              chapterIdC = get_loc_val(memberId + 'downed', 'chapterIdC'), 
-//              progress = get_loc_val(memberId + 'downed', 'progress');
-//          var id='';
-//          //一级章节下载记录
-//          if(!isEmpty(chapterIdA) && isEmpty(chapterIdB) && isEmpty(chapterIdC)){
-//              id=chapterIdA;
-//          }
-//          //二级章节下载记录
-//          if(!isEmpty(chapterIdA) && !isEmpty(chapterIdB) && isEmpty(chapterIdC)){
-//              id=chapterIdB;
-//          }
-//          //三级章节下载记录
-//          if(!isEmpty(chapterIdC) && !isEmpty(chapterIdA) && !isEmpty(chapterIdB)){
-//              id=chapterIdC;
-//          }
-//          //$('.down-progress').siblings('.down_speed').html('').addClass('none');
-//          $('#'+id).siblings('.down_speed').html(speed).removeClass('none');
-//      }
-//  });
 };

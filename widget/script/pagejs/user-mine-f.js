@@ -45,13 +45,16 @@ function go_next(name) {
 
 function get_ranking() {
 	var memberId = getstor('memberId');
+	// if(memberId == false){
+ //        $(".ranking").text("上次登录：1分钟前");
+ //        return false;
+ //    }
 	//上次登录时间
-	$(".ranking").text("登陆成功");
 	ajaxRequest('api/zbids/member/getLoginLog',"get", {"memberid":memberId,"pageSize":1,"pageNo":1}, function (ret, error) {
 		
 		if(ret && ret.state == "success"){
 			var loginTime = ret.data[0].loginTime/1000;
-			$(".ranking").text("上次登录："+formatDate(loginTime,'Y')+'-'+formatDate(loginTime,'M')+'-'+formatDate(loginTime,'D')+"           "+formatDate(loginTime,'h')+':'+formatDate(loginTime,'m'));
+			$(".ranking").text("上次登录："+stringData(loginTime));
 		}
 
 	})
@@ -91,6 +94,31 @@ function get_ranking() {
 //	});
 }
 
+function stringData($_data){
+    $_data = parseInt($_data);
+    var $_return_string = '1分钟前';
+    var $_timestamp=parseInt(new Date().getTime()/1000);
+    var $_reste = $_timestamp - $_data;
+    if($_reste<=0){
+        $_reste = 1;
+    }
+    // if($_reste<60){
+    //     $_return_string = $_reste+'秒前';
+    // }else 
+    // if($_reste>=60 && $_reste <3600){
+    if($_reste <3600){
+        $_return_string = Math.ceil($_reste/60)+'分钟前';
+    }else if($_reste>=3600 && $_reste <(3600*24)){
+        $_return_string = Math.ceil($_reste/3600)+'小时前';
+    }else if($_reste>=(3600*24) && $_reste <(3600*24*30)){
+        $_return_string = Math.ceil($_reste/(3600*24))+'天前';
+    }else if($_reste>=(3600*24*30) && $_reste <(3600*24*30*12)){
+        $_return_string = Math.ceil($_reste/(3600*24*30))+'月前';
+    }else{
+        $_return_string = Math.ceil($_reste/3600)+'年前';
+    }
+    return $_return_string;
+}
 function get_count() {
 	ajaxRequest('api/studytools/mycount/v2.1', 'get', {//003.304   学员信息统计
 		token : $api.getStorage('token'),

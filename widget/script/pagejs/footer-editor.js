@@ -1079,7 +1079,8 @@ function new_question(param) {
             taskId : '',//(no)
             taskProgress : 0,//(no)
             taskType : '', //(no)
-            soundPath: soundPath
+            soundPath: soundPath,
+            type : 1
         };
 
         api.showProgress({
@@ -1087,7 +1088,9 @@ function new_question(param) {
             modal : true
         });
         is_define = false;
-        ajaxRequest('api/studytools/questionsave/v2.1', 'post', param, function (ret, err) {//003.209.1 发布或修改问题（new）
+        // ajaxRequest('api/studytools/questionsave/v2.1', 'post', param, function (ret, err) {//003.209.1 发布或修改问题（new）
+        ajaxRequest('api/studytools/bbssave/v1.0', 'post', param, function (ret, err) {//003.209.1 发布或修改问题（new）
+            
             api.hideProgress();
             if (err) {
                 is_define = true;

@@ -12,6 +12,7 @@ var last_progress = 0;
 var task_type;//任务类别
 var link_title;//外链标题
 var link_url;//外链地址
+var knowledgePointExercise;
 
 var exe_task = true;
 //用于执行章节任务还是外链
@@ -39,7 +40,7 @@ apiready = function() {
     course_detail = api.pageParam.course_detail;//课程详情
     courseName = course_detail.courseName;//课程名字
     //study_progress = api.pageParam.study_progress;//当前的进度
-
+    knowledgePointExercise = api.pageParam.knowledgePointExercise;
     task_info = api.pageParam.task_info;//任务信息
 
     if(!isEmpty(api.pageParam.last_progress)){
@@ -140,10 +141,16 @@ function frameContent() {
 				});
 				return false;
 			}
+		} else if (task_info.taskType == 'knowledgePointExercise') {
+			//知识点联系类型
+			
+			 frame_name = 'course-knowledgePointExercise';
+			 frame_url = 'course-knowledgePointExercise.html';
 		} else if (task_info.taskType == 'pdfread') {
 			//文档类型,使用图片查看pdf
 			 frame_name = 'course-test-pdf';
 			 frame_url = 'course-test-pdf.html';
+
 		} else {
 			api.toast({
 				msg : '课程任务类型完善中...',
@@ -151,6 +158,7 @@ function frameContent() {
 			});
 			return false;
 		}
+
 		 params = {
 			courseId : courseId,
 			course_detail : course_detail,
@@ -165,6 +173,10 @@ function frameContent() {
 		 frame_url = link_url;
 		 params = {};
 	}
+	if(task_info.taskType == 'knowledgePointExercise'){
+		params.knowledgePointExercise = knowledgePointExercise;
+	}
+	// alert(JSON.stringify(params.knowledgePointExercise))
 	api.openFrame({
 		name : frame_name,
 		url : frame_url,

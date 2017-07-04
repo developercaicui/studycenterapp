@@ -194,7 +194,7 @@
 	                </dt>
 	                <dd>
         
-                      <div id="{{=val3.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="{{=val3.chapterId}}" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="{{=val3.chapterTitle}}" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-down1"></i>
+                      <div id="{{=val3.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="{{=val3.chapterId}}" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="{{=val3.chapterTitle}}" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}" taskid="{{=val4.taskId}}" apikey="{{=val4.apiKey}}" videositeid="{{=val4.videoSiteId}}"><i class="icon-down1"></i>
 	                    <div class="val"></div>
 	                  </div>
                   	  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
@@ -219,7 +219,22 @@
                     </dd>
 	              </dl>
 	          </div>
-	        </li>
+	        </li>{{ }else if(val4.taskType=='knowledgePointExercise'){ }}
+            <li class="note-catego" style="display: none;" id="{{=val4.taskId}}"><span class="taskExam"></span>
+            <div>
+              <dl class="taskList task{{=val4.taskId}}" style="display: table;">
+                <dt onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}','{{=val3.chapterId}}','{{=val3.knowledgePointId}}')" tapmode>
+                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:5.5rem;line-height: 0.7rem;">{{=val4.title}}</p>
+                </dt>
+                <dd>
+                  <div id="{{=val3.chapterId}}" class="down-progress task{{=val4.videoCcid}}">
+                    <span></span>
+                  </div>
+                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                </dd>
+              </dl>
+            </div>
+            </li>
             {{ } }}
             {{~}}
             {{~}}
@@ -237,7 +252,7 @@
 	                </dt>
 	                <dd>
     
-                      <div id="{{=val2.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-down1"></i>
+                      <div id="{{=val2.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="{{=val2.chapterId}}" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="{{=val2.chapterTitle}}" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}" taskid="{{=val4.taskId}}" apikey="{{=val4.apiKey}}" videositeid="{{=val4.videoSiteId}}"><i class="icon-down1"></i>
 	                    <div class="val"></div>
 	                  </div>
                   	  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
@@ -262,7 +277,22 @@
                     </dd>
 	              </dl>
 	          </div>
-	        </li>
+	        </li>{{ }else if(val4.taskType=='knowledgePointExercise'){ }}
+            <li class="note-catego" style="display: none;" id="{{=val4.taskId}}"><span class="taskExam"></span>
+            <div>
+              <dl class="taskList task{{=val4.taskId}}" style="display: table;">
+                <dt onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}','{{=val2.chapterId}}','{{=val2.knowledgePointId}}')" tapmode>
+                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:5.5rem;line-height: 0.7rem;">{{=val4.title}}</p>
+                </dt>
+                <dd>
+                  <div id="{{=val2.chapterId}}" class="down-progress task{{=val4.videoCcid}}">
+                    <span></span>
+                  </div>
+                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                </dd>
+              </dl>
+            </div>
+            </li>
             {{ } }}
             {{~}}
           {{ } }}
@@ -281,7 +311,7 @@
                     </dt>
                     <dd>
                       
-                      <div id="{{=val.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}"><i class="icon-down1"></i>
+                      <div id="{{=val.chapterId}}" courseid="{{=it.courseId}}" chapterida="{{=val.chapterId}}" chapteridb="" chapteridc="" chapterNamea="{{=val.chapterTitle}}" chapterNameb="" chapterNamec="" courseName="{{=it.courseName}}" versionid="{{=it.versionId}}" type="3" onclick="down(this)" class="down-progress task{{=val4.videoCcid}}" taskid="{{=val4.taskId}}" apikey="{{=val4.apiKey}}" videositeid="{{=val4.videoSiteId}}"><i class="icon-down1"></i>
                     <div class="val"></div>
                   </div>
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
@@ -306,7 +336,22 @@
                     </dd>
 	              </dl>
 	          </div>
-	        </li>
+	        </li>{{ }else if(val4.taskType=='knowledgePointExercise'){ }}
+            <li class="note-catego" style="display: none;" id="{{=val4.taskId}}"><span class="taskExam"></span>
+            <div>
+              <dl class="taskList task{{=val4.taskId}}" style="display: table;">
+                <dt onclick="task_event(this,'{{=key4}}','{{=val4.taskId}}','{{=val.chapterId}}','{{=val.knowledgePointId}}')" tapmode>
+                  <p style="color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:5.5rem;line-height: 0.7rem;">{{=val4.title}}</p>
+                </dt>
+                <dd>
+                  <div id="{{=val.chapterId}}" class="down-progress task{{=val4.videoCcid}}">
+                    <span></span>
+                  </div>
+                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                </dd>
+              </dl>
+            </div>
+            </li>
             {{ } }}
             {{~}}
       {{ } }}
@@ -323,7 +368,7 @@
               if (isEmpty(tmp_course_detail)) {
                   //获取课程的详细信息
                   //api/v2.1/course/courseDetail，接口编号：004-006
-                  ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+                  ajaxRequest('api/teachsource/course/courseDetail', 'get', {
                       courseId: courseId
                   }, function (ret, err) {//004.006获取课程的详细信息
                       if (err) {
@@ -549,7 +594,7 @@
           if (isEmpty(tmp_course_detail)) {
               //获取课程的详细信息
               //api/v2.1/course/courseDetail，接口编号：004-006
-              ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+              ajaxRequest('api/teachsource/course/courseDetail', 'get', {
                   courseId: courseId
               }, function (ret, err) {//004.006获取课程的详细信息
                   if (err) {

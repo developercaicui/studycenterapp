@@ -22,9 +22,9 @@
               <div class="courseStyTp clearfix">
                 <!--img.pic(src='../image/s11.jpg')--><img src="{{=static_url+it.courseBkImage}}" class="pic">
                 <ul class="wod">
-                  <li class="wodTit wodTitH">{{=it.courseName}}</li>
-                  <li class="buyTime">购买时间：{{=(formatDate(it.buyTime,'Y')+'-'+formatDate(it.buyTime,'M')+'-'+formatDate(it.buyTime,'D'))}}</li>
-                  <li class="buyTime youx">有效时间：<b>{{=it.effectiveDay}}</b> 天</li>
+                  <li class="wodTit wodTitH" style="height: 0.7rem;">{{=it.courseName}}</li>
+                  <li class="buyTime">证书名称：{{=it.subjectName}}</li>
+                  <li class="buyTime youx">有效时间：<b>{{=it.expirationDate}}</b> 天</li>
                 </ul>
               </div>
               <div class="courseStyBm clearfix">

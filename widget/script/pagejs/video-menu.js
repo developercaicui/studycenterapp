@@ -4426,7 +4426,7 @@ function getChapterTask() {
           if (isEmpty(tmp_course_detail)) {
               //获取课程的详细信息
               //api/v2.1/course/courseDetail，接口编号：004-006
-              ajaxRequest('api/v2.1/course/courseDetail', 'get', {
+              ajaxRequest('api/teachsource/course/courseDetail', 'get', {
                   courseId: courseId
               }, function (ret, err) {//004.006获取课程的详细信息
                   if (err) {
@@ -4974,10 +4974,11 @@ function lookExtend(id, url, title) {
     }
 }
 //点击本章任务
-function task_event(obj, num, task_id,chapter_id) {
+function task_event(obj, num, task_id,chapter_id,knowledgePointId) {
     $api.setStorage("setchapterId",chapter_id);
     task_info = task_arr[task_id].taskInfo; //任务信息
     clearInterval(getStatusTime);
+
     // 如果要打开新的窗口，则关闭旧窗口
     if ((from_page == 'course-test' && task_info.taskType == 'video') || (from_page == 'video' && task_info.taskType != 'video')) {
         //传递的页面参数
@@ -4994,7 +4995,7 @@ function task_event(obj, num, task_id,chapter_id) {
         }else{
       	   page_param.isFinish = false;
         }
-        
+       
         //判断当前任务类型
         if (task_info.taskType == 'video') {
             var winName = 'video';
@@ -5006,6 +5007,41 @@ function task_event(obj, num, task_id,chapter_id) {
                 name: 'close_video_demo'
             });
         }
+        if(task_info.taskType == 'knowledgePointExercise'){
+              ajaxRequest('api/extendapi/examen/get_exercise_point_count_cache', 'post',{knowledge_points:knowledgePointId,type:4}, function (ret, err) {//008.005
+                  
+                  if (err) {
+                      api.toast({
+                          msg: err.msg,
+                          location: 'middle'
+                      });
+                  }
+                  if (ret && ret.state == 'success') {
+                      page_param.knowledgePointExercise = ret.data[0];
+                      //跳转到知识点练习页面
+                      api.openWin({
+                          name: winName,
+                          url: winUrl,
+                          delay: 200,
+                          slidBackEnabled: false,//iOS7.0及以上系统中，禁止通过左右滑动返回上一个页面
+                          pageParam: page_param
+                      });
+                      api.closeWin({
+                            animation: {
+                                type: 'flip',
+                                subType: 'from_left',
+                                duration: 500
+                            }
+                        });
+                  } else {
+                      /*api.toast({
+                          msg: ret.msg,
+                          location: 'middle'
+                      });*/
+                  }
+              });
+              return false;
+          }
         api.openWin({
             name: winName,
             url: winUrl,

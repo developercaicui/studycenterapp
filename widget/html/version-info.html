@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="transparent set-info">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="../css/api.css">
+    <link rel="stylesheet" type="text/css" href="../css/font-icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/caicui.css">
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/zepto.js"></script>
+    <title>课程版本</title>
+    <style type="text/css">
+
+      body[show='index'] {
+          overflow-x: hidden;
+      }
+          
+      .modal {
+          width: 6.56rem;
+          font-size: 0.3rem;
+          position: absolute;
+          top: 40%;
+          left: 50%;
+          opacity: 0;
+          /*-webkit-transform: translate(50%, -50%);*/
+          z-index: 3;
+          border-radius: 7px;
+          background: #f3f3f3;
+          overflow: hidden;
+          background: #fff;
+      }
+      body[show='index'] #mask0 {
+          opacity: 1;
+          -webkit-transform: translate(-50%, -50%);
+      }
+      .modal .set_tit {
+          height: 0.9rem;
+          line-height: 0.9rem;
+          font-size: 0.34rem;
+          color: #00a185;
+          text-align: center;
+          border-radius: 7px 7px 0 0;
+          background: #fff;
+          border-bottom: 1px solid #a8a8a8;
+          position: relative;
+      }
+      .modal .course li{
+        width: 100%;
+        height: 1.2rem;
+        padding:0.2rem 0.4rem;
+        border-bottom:1px solid #a8a8a8;
+      }
+      .modal .course li:last-child{
+        border-bottom:none;
+      }
+      .modal .course li .courseTit{
+          font-size: 0.28rem;
+          font-weight: bold;
+          color:#666666;
+      }
+      .modal .course li .courseTime{
+          padding-top: 0.05rem;
+      }
+      .modal .course li .courseTime span{
+          font-size: 0.2rem;
+          color:#a8a8a8;
+          padding-right: 0.2rem;
+      }
+
+      .modal .course li .courseTime b{
+          font-size: 0.3rem;
+          color:#00a185;
+      }
+      .modal .course li .courseTime b.active{
+          color:#666666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="backdrop" tapmode onclick="api.closeFrame()"></div>
+    <div class="set-info-modal">
+      <div id="mask0" class="modal">
+          <div class="set_tit">课程版本</div>
+          <ul class="course" id="course">
+           <!--  <li>
+              <div class="courseTit">ACCA F1 Accountant in Business</div>
+              <div class="courseTime"><span>2017/7/23   16:56:56</span><b>切换</b></div>
+            </li>
+            <li>
+              <div class="courseTit">ACCA F1 Accountant in Business</div>
+              <div class="courseTime"><span>2017/7/23   16:56:56</span><b class="active">当前</b></div>
+            </li> -->
+          </ul>
+      </div>
+    </div>
+    
+    <script id="tpl" type="text/x-dot-template">
+    {{~it.versionInfo:value:key}}
+        {{var showCourseVersion=isShowCourseVersion(value);}}
+        {{ if(showCourseVersion){ }}
+        <li tapmode onclick="changeVersion(this,'{{=value.id}}','{{=value.title}}')">
+          <div class="courseTit">{{=value.title}}</div>
+          <div class="courseTime"><span>{{=formatDate(value.createDate/1000,'Y')+'/'+formatDate(value.createDate/1000,'M')+'/'+formatDate(value.createDate/1000,'D')}}&nbsp;&nbsp;&nbsp;&nbsp;{{=formatDate(value.createDate/1000,'h')+':'+formatDate(value.createDate/1000,'m')+':'+formatDate(value.createDate/1000,'s')}}</span>
+          {{ if(it.courseId == value.id){ }}
+          <b class="active">当前</b>
+          {{ } else { }}
+          <b>切换</b>
+          {{ } }}
+          </div>
+        </li>
+        {{ } }}
+    {{~}}
+    </script>
+
+    <script type="text/javascript" src="../script/comm.js"></script>
+    <script type="text/javascript" src="../script/doT.min.js"></script>
+    <script type="text/javascript" src="../script/caicui.js"></script>
+    <script type="text/javascript" src="../script/db.js"></script>
+    <script type="text/javascript" src="../script/saveTasksProgress.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      var versionId;
+      var coursestatus;
+      var courseActiveTime;
+      var expirationTime;
+      var courseId;
+      $(function () {
+          $('body').attr('show', 'index');
+   
+      });
+
+      //判断版本课程是否到期
+      function isShowCourseVersion(data){
+          if(data.courseType && data.courseType != '1' && data.createDate>=courseActiveTime){
+              return true;
+          }
+          return false;
+      }
+
+      //切换课程版本
+      function changeVersion(obj,courseId,courseName){
+          if(!$(obj).find("b").hasClass("active")){
+              api.sendEvent({
+                  name: 'flush_catalog',
+                  extra: {
+                      courseId:courseId,
+                      courseName:courseName
+                  }
+              });
+              saveExpire([{
+                "courseId":courseId,
+                "expirationTime":expirationTime
+              }]);
+          }
+          api.closeFrame();
+      }
+
+      apiready = function () {
+          versionId = api.pageParam.versionId;
+          coursestatus = $api.getStorage("coursestatus"+versionId);
+          courseActiveTime = coursestatus.activeTime;
+          expirationTime = coursestatus.expirationTime;
+          courseId = api.pageParam.courseId;
+
+          var versionInfo = api.pageParam.versionInfo;
+          var tpl = $('#tpl').html();
+          var content = doT.template(tpl);
+          $('#course').html(content({versionInfo:versionInfo,courseId:courseId}));
+          // api.parseTapmode();
+
+      };
+      //autoTextarea(text);// 调用
+    </script>
+  </body>
+</html>

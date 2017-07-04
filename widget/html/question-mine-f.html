@@ -88,7 +88,7 @@
                   modal: false
               });
           }
-          ajaxRequest('api/v2.1/learning/learningcourse', 'get', param, function (ret, err) {
+          ajaxRequest('api/business/learning/learningcourse/v1.0', 'get', param, function (ret, err) {
               is_loding = true;
               if (err) {
                   api.toast({

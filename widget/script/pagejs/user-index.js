@@ -1,5 +1,5 @@
 var is_debug = false;
-function CourseDetail(co, ch, su, ca, cn,chapterName,subjectName,categoryName) {
+function CourseDetail(co, ch, su, ca, cn,chapterName,subjectName,categoryName,expirationTime,versionId) {
     var course_detail = {};
     course_detail.chapterId = ch;
     course_detail.courseId = co;
@@ -9,6 +9,8 @@ function CourseDetail(co, ch, su, ca, cn,chapterName,subjectName,categoryName) {
     course_detail.chapterName = chapterName;
     course_detail.subjectName = subjectName;
     course_detail.categoryName = categoryName;
+    course_detail.expirationTime = expirationTime;
+    course_detail.versionId = versionId;
     $api.setStorage('Course_info', course_detail);
     //var detail = {};
     //detail.course_id = co;
@@ -544,7 +546,7 @@ function get_study(flag) {
     //     return false;
     // }
     get_static();
-    ajaxRequest('api/v2.1/learning/learningcourse', 'get', { // 008.003.2 在学的课程列表（new）
+    ajaxRequest('api/business/learning/learningcourse/v1.0', 'get', { // 008.003.2 在学的课程列表（new）
         token: $api.getStorage('token'),
         pageNo: 0,
         pageSize: 1000
