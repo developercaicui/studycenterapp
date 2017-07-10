@@ -5,10 +5,11 @@ var total = 0;
 
 var getStatusTime = null;
 var videoDownInfo =new Object(); //缓存每个节点的下载状态，一个节点一个id
-var videochangelist = $api.getStorage("videochangelist") ? $api.getStorage("videochangelist") : ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
+var videochangelist = ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
 var couselist = ""; //记录缓存包括的课程id
 var lastgettime = 1388509261;//记录每次获取数据库的时间点，下次获取就只获取该时间点之后变化的记录(第一次获取可以获取2014年1月1日1时1分1秒//)
 function getData() {
+    lastgettime = 1388509261;
 	$api.setStorage("closeSetTimeOut",false);
 	api.showProgress({
        title: '加载中',
@@ -17,7 +18,8 @@ function getData() {
 	cache_model = api.require('lbbVideo');
     
 function getdownrecord(){
-    
+    videoDownInfo =new Object(); //缓存每个节点的下载状态，一个节点一个id
+    videochangelist = ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
     var param = {
         "userId" : getstor('memberId'),
         "readTime" : lastgettime
@@ -27,7 +29,7 @@ function getdownrecord(){
         //------------------结束获取--------------------------
      	var usedTime,speedDown;
         var saverecordObj = JSON.parse(ret.data);
-        
+        // console.log(JSON.stringify(saverecordObj))
         ///设置下一次读取下载的某个时间之后变化的所有记录
         lastgettime = saverecordObj.readTime;
         //循环处理每一条返回的下载记录，并统计分析最后变化值
@@ -51,7 +53,7 @@ function getdownrecord(){
           $api.setStorage('downloadIng',0);
 
         }
-
+        // console.log(JSON.stringify(videoDownInfo))
     })
     
 }
@@ -117,17 +119,18 @@ function procRecord(videorecord){
     }
     
     
-    $api.setStorage("videochangelist",videochangelist);
+    // $api.setStorage("videochangelist",videochangelist);
     initDomDownStatus();
 }
 
 //更新界面下载状态有变化的下载节点
 function initDomDownStatus(){
-    if(isEmpty($api.getStorage("videochangelist"))){
+    if(isEmpty(videochangelist)){
         return false;
     }
 
-    var strs = $api.getStorage("videochangelist").split(","); //字符分割
+    var strs = videochangelist.split(","); //字符分割
+
     var pathlen = strs.length;
     //从1开始，因为拼接videochangelist的时候用,开始的
     // alert(strs+"====="+JSON.stringify(videoDownInfo))
@@ -188,14 +191,26 @@ function initDom(){
 
              api.getFreeDiskSpace(function(ret, err) {
                  var size = (ret.size / 1000 / 1000).toFixed(2);
-                 var htm = "<div class='avaiace'  onclick='to_cache()'><span class='manage'>课程缓存管理</span><p class='space'>可用空间" + size + "MB<span></span></p></div>";
+                 var htm = "<div class='avaiace' tapmode onclick='to_cache()'><span class='manage'>课程缓存管理</span><p class='space'>可用空间" + size + "MB<span></span></p></div>";
                  htm = htm + content(ret_data[0]);
                  $('#content').html(htm);
+
+                 api.parseTapmode();
+
                  initDomDownStatus();
                  //处理圈圈
                  isSolidcircle('circle', '', '');
                  init_process();
-                
+
+                clearInterval(getStatusTime);
+                getStatusTime = setInterval(function(){
+                    getdownrecord();
+                    // getCurrentDownloadTaskState();
+                    setSpace();
+                    if($api.getStorage("closeSetTimeOut") == "true"){
+                        clearInterval(getStatusTime);
+                    }
+                },2000)
              });
          } else {
       	// api.hideProgress();
@@ -209,20 +224,12 @@ function initDom(){
      
 }
 
-clearInterval(getStatusTime);
+
 //1:获取所有下载记录并解析
 getdownrecord();
 //2:根据couselist获取所有缓存课程的章节详情，如果在线，从服务器获取，否则本地数据库获取
 initDom();
 
-getStatusTime = setInterval(function(){
-    getdownrecord();
-    setSpace();
-    
-    if($api.getStorage("closeSetTimeOut") == "true"){
-    	clearInterval(getStatusTime);
-    }
-},2000)
 //3:定时器调用获取变化的数据，并调整界面下载状态
 // getdownrecord();
 //
@@ -264,6 +271,7 @@ getStatusTime = setInterval(function(){
 //           }
 //       });
 // }
+
 
 function setSpace(){
 	
@@ -317,9 +325,10 @@ function init_process(){
 
 }
 
-function to_cache(name) {
+function to_cache() {
 	clearInterval(getStatusTime);
-	name = 'video-buffer';
+	var name = 'video-buffer';
+
 	api.openWin({
 		name : name,
 		url : name + '.html',
@@ -601,26 +610,43 @@ apiready = function() {
   	api.addEventListener({
   		name : 'flush_catalog'
   	}, function(ret) {
-  		lastgettime = 1388509261;
-        videochangelist = "";
-        couselist = "";
-        videoDownInfo = new Object();
+  		
         if(!isEmpty(ret.value)){
+            api.showProgress({
+                title: '加载中',
+                modal: true
+            });
             api.pageParam.course_id = ret.value.courseId;
+            setTimeout(function(){
+                getData();
+            },50)
+            // 
         }
-  		getData();
+        clearInterval(getStatusTime);
+  		getStatusTime = setInterval(function(){
+
+            getdownrecord();
+            
+            // getCurrentDownloadTaskState();
+
+            setSpace();
+            
+            if($api.getStorage("closeSetTimeOut") == "true"){
+                clearInterval(getStatusTime);
+            }
+        },2000)
   	});
-    api.setRefreshHeaderInfo({
-        visible: true,
-        loadingImg: 'widget://image/arrow-down-o.png',
-        bgColor: '#f3f3f3',
-        textColor: '#787b7c',
-        textDown: '下拉更多',
-        textUp: '松开刷新',
-        showTime: false
-    }, function (ret, err) {
-        getData();
-    });
+    // api.setRefreshHeaderInfo({
+    //     visible: true,
+    //     loadingImg: 'widget://image/arrow-down-o.png',
+    //     bgColor: '#f3f3f3',
+    //     textColor: '#787b7c',
+    //     textDown: '下拉更多',
+    //     textUp: '松开刷新',
+    //     showTime: false
+    // }, function (ret, err) {
+    //     getData();
+    // });
 //	api.addEventListener({
 //      name: 'reloadPage'
 //  }, function(ret, err) {

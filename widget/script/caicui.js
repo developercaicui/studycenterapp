@@ -474,6 +474,7 @@ function save_tasks(courseDetail) {
 																		courseName: courseName,
 																		chapterId: cId,
 																		chapterName: cName,
+																		knowledgePointId: child2[k].knowledgePointId,
 																		taskInfo: child2[k].tasks[x]
 																};
 
@@ -491,6 +492,7 @@ function save_tasks(courseDetail) {
 														courseName: courseName,
 														chapterId: cId,
 														chapterName: cName,
+														knowledgePointId: child[j].knowledgePointId,
 														taskInfo: child[j].tasks[k]
 												};
 												arr[taskid] = obj_data;
@@ -507,6 +509,7 @@ function save_tasks(courseDetail) {
 										courseName: courseName,
 										chapterId: cId,
 										chapterName: cName,
+										knowledgePointId: data_arr[i].knowledgePointId,
 										taskInfo: data_arr[i].tasks[k]
 								};
 								arr[taskid] = obj_data;
@@ -584,6 +587,13 @@ function jump_task(taskprogress, courseId, taskid) {
 								//entry（外链类型）、pdfread（pdf类型）、exam（测试题类型）
 								var new_win_name = 'course-test';
 								var new_win_url = 'course-test.html';
+								// if(task_info.taskType == 'knowledgePointExercise'){
+								// 	api.toast({
+								// 		msg: '知识点练习，暂不能跳转查看，请谅解！',
+								// 		location: 'middle'
+								// 	});
+								// 	return false;
+								// }
 						} else {
 								api.toast({
 										msg: '暂无任务，请稍后再试或联系客服',

@@ -99,19 +99,15 @@
         .styProul .styInfo .version{
             float:right;
             width: 1.54rem;
-            height: 0.4rem;
+            height: 0.44rem;
             text-align:center;
             line-height: 0.4rem;
             color:#00a185;
             background: #fff;
             border-radius:5px;
-            -moz-box-shadow: 3px 3px 5px #888888; /* 老的 Firefox */    
-            -webkit-box-shadow: 3px 3px 5px #888888; 
-            box-shadow: 3px 3px 5px #888888;}
+            border: 2px solid #49a2ac;
         }
-        .courseMessage{
-          
-        }
+        
     </style>
   </head>
   <body>
@@ -411,15 +407,50 @@
           });
           $(".catanav li").click(function () {
               var flag = $(this).index();
-              $('.catanav li').each(function (p) {
-                  $('.catanav li img').eq(p).attr('src', '../image/c_icon' + (p + 1) + '.png');
-              });
-              $('.catanav li img').eq(flag).attr('src', '../image/z_icon' + (flag + 1) + '.png');
-              $(".catanav li").removeClass('course_tab').eq(flag).addClass('course_tab');
-              api.setFrameGroupIndex({
-                  name: 'study_tab',
-                  index: flag
-              });
+              var param = {};
+                  param.tag = 1;
+                  param.course_id = api.pageParam.course_id;
+                  param.chapterId = api.pageParam.chapterId;
+                  param.chapterName = api.pageParam.chapterName;
+                  param.courseName = api.pageParam.courseName;
+                  param.categoryId = api.pageParam.categoryId;
+                  param.subjectId = api.pageParam.subjectId;
+                  param.subjectName = api.pageParam.subjectName;
+                  param.categoryName = api.pageParam.categoryName;
+              if(flag == 1){
+                  
+                  api.openWin({
+                      name: "course-talk-top",
+                      url: 'course-talk-top.html',
+                      bgColor: '#fff',
+                      opaque: true,
+                      reload: true,
+                      softInputMode: 'resize',
+                      pageParam: param,
+                      vScrollBarEnabled: false
+                  });
+
+              }else if(flag == 2){                
+                  api.openWin({
+                      name: "class-notes",
+                      url: 'class-notes.html',
+                      bgColor: '#000',
+                      opaque: true,
+                      reload: true,
+                      softInputMode: 'resize',
+                      pageParam: api.pageParam,
+                      vScrollBarEnabled: false
+                  });
+              }
+              // $('.catanav li').each(function (p) {
+              //     $('.catanav li img').eq(p).attr('src', '../image/c_icon' + (p + 1) + '.png');
+              // });
+              // $('.catanav li img').eq(flag).attr('src', '../image/z_icon' + (flag + 1) + '.png');
+              // $(".catanav li").removeClass('course_tab').eq(flag).addClass('course_tab');
+              // api.setFrameGroupIndex({
+              //     name: 'study_tab',
+              //     index: flag
+              // });
           });
           //$('.catanav li').first().css({color:'#00a185'});
           //        $('.catanav li').on('tap',function () {
@@ -444,6 +475,7 @@
           api.addEventListener({
             name : 'flush_catalog'
           }, function(ret) {
+
             // init();
             api.pageParam.courseId = ret.value.courseId;
             //设置课程名称
@@ -491,7 +523,7 @@
               },
               scrollEnabled: true,
               index: 0,
-              preload: 3,
+              preload: 0,
               frames: [{//目录
                   name: 'catalog',
                   url: 'catalog.html',
@@ -501,59 +533,60 @@
                   vScrollBarEnabled: true,
                   hScrollBarEnabled: false,
                   pageParam: {course_id: api.pageParam.courseId, categoryId: api.pageParam.categoryId}
-              }, {//讨论
-                      name: 'course-talk-f',
-                      url: 'course-talk-f.html',
-                      bounces: false,
-                      reload: true,
-                      bgColor: '#fff',
-                      vScrollBarEnabled: true,
-                      hScrollBarEnabled: false,
-                      pageParam: {
-                          course_id: api.pageParam.courseId,
-                          chapterId: api.pageParam.chapterId,
-                          chapterName: api.pageParam.chapterName,
-                          courseName: api.pageParam.courseName,
-                          categoryId: api.pageParam.categoryId,
-                          subjectId: api.pageParam.subjectId,
-                          subjectName: api.pageParam.subjectName,
-                          categoryName: api.pageParam.categoryName
-                      }
-              }, {//笔记
-                  name: 'course-notes-f',
-                  url: 'course-notes-f.html',
-                  bounces: false,
-                  reload: true,
-                  bgColor: '#fff',
-                  vScrollBarEnabled: true,
-                  hScrollBarEnabled: false,
-                  //pageParam:{course_id:api.pageParam.courseId,categoryId:api.pageParam.categoryId,chapterId:api.pageParam.chapterId,subjectId:api.pageParam.subjectId}
-                  pageParam: {
-                      course_id: api.pageParam.courseId,
-                      chapterId: api.pageParam.chapterId,
-                      chapterName: api.pageParam.chapterName,
-                      courseName: api.pageParam.courseName,
-                      categoryId: api.pageParam.categoryId,
-                      subjectId: api.pageParam.subjectId,
-                      subjectName: api.pageParam.subjectName,
-                      categoryName: api.pageParam.categoryName
-                  }
-              },
-                  {//问答
-                  name: 'course-question-f',
-                  url: 'course-question-f.html',
-                  bounces: false,
-                  reload: true,
-                  bgColor: '#fff',
-                  vScrollBarEnabled: true,
-                  hScrollBarEnabled: false,
-                  pageParam: {
-                      course_id: api.pageParam.courseId,
-                      categoryId: api.pageParam.categoryId,
-                      chapterId: api.pageParam.chapterId,
-                      subjectId: api.pageParam.subjectId
-                  }
-                  }]
+              // }, {//讨论
+              //         name: 'course-talk-f',
+              //         url: 'course-talk-f.html',
+              //         bounces: false,
+              //         reload: true,
+              //         bgColor: '#fff',
+              //         vScrollBarEnabled: true,
+              //         hScrollBarEnabled: false,
+              //         pageParam: {
+              //             course_id: api.pageParam.courseId,
+              //             chapterId: api.pageParam.chapterId,
+              //             chapterName: api.pageParam.chapterName,
+              //             courseName: api.pageParam.courseName,
+              //             categoryId: api.pageParam.categoryId,
+              //             subjectId: api.pageParam.subjectId,
+              //             subjectName: api.pageParam.subjectName,
+              //             categoryName: api.pageParam.categoryName
+              //         }
+              // }, {//笔记
+              //     name: 'course-notes-f',
+              //     url: 'course-notes-f.html',
+              //     bounces: false,
+              //     reload: true,
+              //     bgColor: '#fff',
+              //     vScrollBarEnabled: true,
+              //     hScrollBarEnabled: false,
+              //     //pageParam:{course_id:api.pageParam.courseId,categoryId:api.pageParam.categoryId,chapterId:api.pageParam.chapterId,subjectId:api.pageParam.subjectId}
+              //     pageParam: {
+              //         course_id: api.pageParam.courseId,
+              //         chapterId: api.pageParam.chapterId,
+              //         chapterName: api.pageParam.chapterName,
+              //         courseName: api.pageParam.courseName,
+              //         categoryId: api.pageParam.categoryId,
+              //         subjectId: api.pageParam.subjectId,
+              //         subjectName: api.pageParam.subjectName,
+              //         categoryName: api.pageParam.categoryName
+              //     }
+              // },
+              //     {//问答
+              //     name: 'course-question-f',
+              //     url: 'course-question-f.html',
+              //     bounces: false,
+              //     reload: true,
+              //     bgColor: '#fff',
+              //     vScrollBarEnabled: true,
+              //     hScrollBarEnabled: false,
+              //     pageParam: {
+              //         course_id: api.pageParam.courseId,
+              //         categoryId: api.pageParam.categoryId,
+              //         chapterId: api.pageParam.chapterId,
+              //         subjectId: api.pageParam.subjectId
+              //     }
+              //     
+              }]
           }, function (ret, err) {
               $('.catanav li img').each(function (p) {
                   $('.catanav li img').eq(p).attr('src', '../image/c_icon' + (p + 1) + '.png');

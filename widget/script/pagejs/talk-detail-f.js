@@ -86,7 +86,7 @@ function getData(page) {
 			//        extra: {key1: ret.data.imgPath,soundPath:ret.data.soundPath,soundlen:ret.data.soundlen,content:ret.data.content}
 			//    });
 			//}
-			console.log(JSON.stringify(ret))
+			// console.log(JSON.stringify(ret))
 			var tpl_main = $('#tpl_main').html();
 			var content_main = doT.template(tpl_main);
 			var tpl_content = $('#tpl_content').html();

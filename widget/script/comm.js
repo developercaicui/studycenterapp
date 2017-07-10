@@ -805,7 +805,7 @@ function formatType(type, value) {
                     return i + ':' + s;
                 }
                 //return h + ':' + i + ':' + s;
-            }else if(type == 'exam'){
+            }else if(type == 'exam' || type == 'knowledgePointExercise'){
                 return ' 第' + value + '题';
             }
 //              break;
@@ -1083,8 +1083,7 @@ function down(_this) {
         index = $(_this).attr('key'),
         tasks = $.trim($(_this).siblings('.down_data').html());
 	$api.setStorage("clickStatus",type);
-	
-	
+		
     if (isEmpty(tasks)) {
         api.toast({
             msg: '无视频任务',
@@ -2344,4 +2343,60 @@ function getVersionId(data){
             $api.setStorage("coursestatus"+versionId,coursestatus)
         }
     })
+}
+
+function getCurrentDownloadTaskState(){
+    var param = {
+        "userId" : getstor('memberId')
+    }   
+    cache_model.getCurrentDownloadTaskState(param,function(ret,err){
+        var videorecord = JSON.parse(ret.data).data[0];
+        var CurrentDownloadVideo = $api.getStorage("currentVideoId") ? $api.getStorage("currentVideoId"):""; 
+
+        if(!isEmpty(videorecord)){
+            var strs=videorecord.path.split("//"); //字符分割
+            var pathlen = strs.length;
+            var taskCurrent = strs[pathlen-1];
+            var domprogress = videorecord.progress;
+            var domstatus = videorecord.state;
+                        
+            if(!isEmpty(CurrentDownloadVideo)){
+                if(CurrentDownloadVideo != taskCurrent){
+                    cache_model.getPlayVideoState({"userId":getstor('memberId'),"videoId":CurrentDownloadVideo},function(res){
+                        if(res.currentPlayVideoState == "4"){
+                            $(".task"+CurrentDownloadVideo).find(".val").html(100);
+                            $(".task"+CurrentDownloadVideo).attr("type",4);
+                            $(".task"+CurrentDownloadVideo).parents(".fath").prev().find(".down-progress").attr("type",4);
+                            $(".task"+CurrentDownloadVideo).parents(".fath").prev().find(".down-progress").find(".val").html(100);
+                        }else{
+                            $(".task"+CurrentDownloadVideo).attr("type",res.currentPlayVideoState);
+                            $(".task"+CurrentDownloadVideo).parents(".fath").prev().find(".down-progress").attr("type",res.currentPlayVideoState);
+                        }
+                    })
+                }
+            }
+            $(".task"+taskCurrent).attr("type",domstatus);
+            $(".task"+taskCurrent).find(".val").html(domprogress);
+            $(".task"+CurrentDownloadVideo).parents(".fath").prev().find(".down-progress").attr("type",domstatus);
+            $(".task"+CurrentDownloadVideo).parents(".fath").prev().find(".down-progress").find(".val").html(domprogress);
+            $api.setStorage("currentVideoId",taskCurrent);          
+        }else{
+            if(!isEmpty(CurrentDownloadVideo)){
+                cache_model.getPlayVideoState({"userId":getstor('memberId'),"videoId":CurrentDownloadVideo},function(res){
+                    if(res.currentPlayVideoState == "4"){
+                        $(".task"+CurrentDownloadVideo).find(".val").html(100);
+                        $(".task"+CurrentDownloadVideo).attr("type",4);
+                        $(".task"+CurrentDownloadVideo).parents(".fath").prev().find(".down-progress").attr("type",4);
+                        $(".task"+CurrentDownloadVideo).parents(".fath").prev().find(".down-progress").find(".val").html(100);
+                    }else{
+                        $(".task"+CurrentDownloadVideo).attr("type",res.currentPlayVideoState);
+                        $(".task"+CurrentDownloadVideo).parents(".fath").prev().find(".down-progress").attr("type",res.currentPlayVideoState);
+                    }
+                })
+            }
+        }
+    })
+    //处理圈圈
+    circleProgress();
+    init_process();
 }

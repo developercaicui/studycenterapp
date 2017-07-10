@@ -96,7 +96,7 @@ apiready = function() {
 		}
 		if (ret && ret.state == 'success') {
             
-			exam_info = ret.data;console.log(JSON.stringify(exam_info))
+			exam_info = ret.data;
 			var exam_tpl = $('#exam_tpl').html();
 			var content = doT.template(exam_tpl);
 			$('#exam_content').html(content(exam_info));
@@ -146,16 +146,16 @@ apiready = function() {
                     $.each($('.course-test-title'), function (k, v) {
                         $(v).find('img').attr('src',static_url+$(v).find('img').attr('src'));
                     });
-					$('.swiper-pagination-bullet').eq(15).nextAll().hide();
+					$('.swiper-pagination-bullet').eq(14).nextAll().hide();
 				},
 				onSlideChangeEnd : function(swiper) {
 					var num = parseInt($('.swiper-pagination-bullet-active').text());
-					if(swiper.slides.length>15){
+					if(swiper.slides.length>14){
 						if (num > 8) {
 							$('.swiper-pagination-bullet').show().eq(num - 7).prevAll().hide();
 							$('.swiper-pagination-bullet').eq(num + 7).nextAll().hide();
 						}else{
-							$('.swiper-pagination-bullet').show().eq(15).nextAll().hide();
+							$('.swiper-pagination-bullet').show().eq(14).nextAll().hide();
 						}
 					}
 					/*
@@ -202,6 +202,15 @@ apiready = function() {
 			saveTaskProgress(now_progress, total, state);
 		}
 	});
+
+
+
+    api.addEventListener({
+          name: 'close-correction2'
+      }, function(ret) {
+            $('.swiper-pagination-bullet').eq(14).nextAll().hide();
+      })
+    
 };
 
 //数字转成ABC，用于选择题的选项编号
@@ -791,6 +800,30 @@ function createQuestion() {
             task_info_detail : task_info_detail
 		}
 	});
+}
+
+//纠错
+function jiucuo() {
+    //横屏切换到竖屏
+    api.setScreenOrientation({
+        orientation: 'portrait_up'
+    });
+    
+    api.openFrame({
+        name: 'error-correction2',
+        url: 'error-correction2.html',
+        delay: 200,
+        pageParam: {
+            //下个页面要用到的一些参数
+            courseId: courseId, //课程id
+            course_detail: course_detail, //课程详情
+            progress: parseInt(swiper.activeIndex) + 1, //观看时间进度
+            //study_progress : study_progress,//任务学习的进度
+            task_info: task_info,
+            task_info_detail: task_info_detail
+                //chapter_info : chapter_info
+        }
+    });
 }
 
 //保存任务进度

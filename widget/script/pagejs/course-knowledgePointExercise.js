@@ -99,9 +99,10 @@ var swiper;
 // });
  
 
-var exam_tpl = $('#exam_tpl').html();
-var content = doT.template(exam_tpl);
+
 function getNidExerciseDetail(exerciseId){
+	var exam_tpl = $('#exam_tpl').html();
+	var content = doT.template(exam_tpl);
 	$('#exam_content').empty();
 	selectClick = false;
 	api.showProgress({
@@ -131,6 +132,7 @@ function getNidExerciseDetail(exerciseId){
                 exam_infoArr.push(rets.data[0]); 	                                           
             }
             $('#exam_content').html(content(exam_infoArr));
+            
             api.hideProgress(); 
     	}
     });
@@ -225,7 +227,6 @@ apiready = function() {
 		                            $('.swiper-pagination-bullet').show().eq(15).nextAll().hide();
 		                        }
 		                    }
-		                    
 		                    //切换测试题时保存学习进度
 		                    var now_progress = parseInt(swiper.activeIndex) + 1;
 		                    var total = swiper.slides.length;
@@ -263,6 +264,25 @@ apiready = function() {
 		    });
 		}
     });
+
+
+	api.addEventListener({
+	      name: 'close-correction2'
+	  }, function(ret) {
+	      for(var i in knowledgeList){
+	        	if(knowledgeList[i].status == "1"){
+	        		$('.swiper-pagination-bullet[data-exerciseid='+knowledgeList[i].exercise_id+']').addClass("success");
+	        	}else if(knowledgeList[i].status == "2"){
+	        		$('.swiper-pagination-bullet[data-exerciseid='+knowledgeList[i].exercise_id+']').addClass("danger");
+	        		errorNum++;
+	        	}                    	
+	        }                    
+	        // console.log(JSON.stringify(knowledgeList))
+	        $('.swiper-pagination-bullet').eq(15).nextAll().hide();
+	  })
+
+
+
 };
 
 //保存答题记录
@@ -393,6 +413,11 @@ function showAnalysis(obj, num) {
 	$(obj).parent().find('.showResult').html(result);
 	$(obj).toggleClass('open');
 	$(obj).next('.answer-analysis-cont').toggle();
+
+	//答案上升到可见区域
+	var h = $(document).height()-$(window).height();
+    $(document).scrollTop(h);
+	
 }
 
 //用户选择单选试题选项
@@ -898,6 +923,31 @@ function createQuestion() {
             task_info_detail : task_info_detail
 		}
 	});
+}
+//纠错
+function jiucuo() {
+    //横屏切换到竖屏
+    api.setScreenOrientation({
+        orientation: 'portrait_up'
+    });
+    
+    api.openFrame({
+        name: 'error-correction2',
+        url: 'error-correction2.html',
+        delay: 200,
+        pageParam: {
+            //下个页面要用到的一些参数
+            courseId: courseId, //课程id
+            course_detail: course_detail, //课程详情
+            progress: parseInt(swiper.activeIndex) + 1, //观看时间进度
+            //study_progress : study_progress,//任务学习的进度
+            task_info: task_info,
+            task_info_detail: task_info_detail,
+            data_exercise_id : exerciseList[swiper.activeIndex],
+            exam_info : exam_info
+                //chapter_info : chapter_info
+        }
+    });
 }
 
 //保存任务进度

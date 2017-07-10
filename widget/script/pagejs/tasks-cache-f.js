@@ -79,8 +79,19 @@ var is_debug = false;
 
 	      $('#chaTask').html(content(course_detail)).show();
 	      initDomDownStatus();
+	      api.parseTapmode();
 	      task_arr = save_tasks(course_detail);
-      	  courseId = course_detail.courseId; //课程id
+      	  courseId = course_detail.courseId; //课程id、
+
+
+      	  clearInterval(getStatusTime);
+	      getStatusTime = setInterval(function(){
+	          getdownrecord();
+	          // getCurrentDownloadTaskState();
+	          setSpeed();
+	      },2000)
+	      init_check();
+
 	   })
 //	      
 	      
@@ -130,13 +141,9 @@ var is_debug = false;
       //1:获取所有下载记录并解析
       getdownrecord();
       //2:根据couselist获取所有缓存课程的章节详情，如果在线，从服务器获取，否则本地数据库获取
+      
       initDom();
-      clearInterval(getStatusTime);
-      getStatusTime = setInterval(function(){
-          getdownrecord();
-          setSpeed();
-      },2000)
-      init_check();
+      
       
 //    api.setRefreshHeaderInfo({
 //      visible: true,
@@ -155,6 +162,7 @@ var is_debug = false;
       }, function(ret) {
       		getStatusTime = setInterval(function(){
 	          getdownrecord();
+	          // getCurrentDownloadTaskState();
 	          setSpeed();
 	      },2000)
       })
@@ -660,3 +668,52 @@ function task_event(obj, num, task_id,chapter_id) {
         });
         
 }
+
+// function getCurrentDownloadTaskState(){
+//     var param = {
+//         "userId" : getstor('memberId')
+//     }   
+//     cache_model.getCurrentDownloadTaskState(param,function(ret,err){
+//         var videorecord = JSON.parse(ret.data).data[0];
+//         var CurrentDownloadVideo = $api.getStorage("currentVideoId") ? $api.getStorage("currentVideoId"):""; 
+
+//         if(!isEmpty(videorecord)){
+//             var strs=videorecord.path.split("//"); //字符分割
+//             var pathlen = strs.length;
+//             var taskCurrent = strs[pathlen-1];
+//             var domprogress = videorecord.progress;
+//             var domstatus = videorecord.state;
+                        
+//             if(!isEmpty(CurrentDownloadVideo)){
+//                 if(CurrentDownloadVideo != taskCurrent){
+//                     cache_model.getPlayVideoState({"userId":getstor('memberId'),"videoId":CurrentDownloadVideo},function(res){
+//                         if(res.currentPlayVideoState == "4"){
+//                             $(".task"+CurrentDownloadVideo).attr("type",4);
+//                            	$(".task"+CurrentDownloadVideo).parent().prev().find(".v-progress").find("span").css("width","100%");
+//                         }else{
+//                             $(".task"+CurrentDownloadVideo).attr("type",res.currentPlayVideoState);
+//                         }
+//                     })
+//                 }
+//             }
+//             $(".task"+taskCurrent).attr("type",domstatus);
+//             $(".task"+CurrentDownloadVideo).parent().prev().find(".v-progress").find("span").css("width",domprogress+"%");
+
+//             $api.setStorage("currentVideoId",taskCurrent);          
+//         }else{
+//             if(!isEmpty(CurrentDownloadVideo)){
+//                 cache_model.getPlayVideoState({"userId":getstor('memberId'),"videoId":CurrentDownloadVideo},function(res){
+//                     if(res.currentPlayVideoState == "4"){
+//                         $(".task"+CurrentDownloadVideo).parent().prev().find(".v-progress").find("span").css("width","100%");
+//                         $(".task"+CurrentDownloadVideo).attr("type",4);
+//                     }else{
+//                         $(".task"+CurrentDownloadVideo).attr("type",res.currentPlayVideoState);
+//                     }
+//                 })
+//             }
+//         }
+//     })
+//     //处理圈圈
+//     circleProgress();
+//     init_process();
+// }

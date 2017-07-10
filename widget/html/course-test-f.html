@@ -15,6 +15,16 @@
     <link rel="stylesheet" href="../css/swiper.min.css">
     <link rel="stylesheet" href="../css/user-center.css">
     <link rel="stylesheet" href="../css/about-video.css">
+    <style>
+        .jiucuo{
+            width: 0.26rem;
+            height: 0.22rem;
+            display: inline-block;
+            background: url(../image/correction.svg) no-repeat;
+            background-size:100% 100%;
+            vertical-align: middle; 
+        }
+    </style>
   </head>
   <body>
     <!-- 题目内容56576457645-->
@@ -38,7 +48,12 @@
         <!--i.icon-arrow-left--><span class="swiper-pagination"></span>
         <!--i.icon-arrow-right-->
       </div>
-      <div class="right"><a onclick="jiaojuan()" tapmode><i class="icon-clipboard"></i>交卷</a><a onclick="createNotes()" tapmode><i class="icon-edit2"></i>笔记</a><a onclick="createQuestion()" tapmode><i class="icon-comment-new"></i>提问</a></div>
+      <div class="right">
+        <a onclick="jiucuo()" tapmode><i class="jiucuo"></i>纠错</a>
+        <a onclick="jiaojuan()" tapmode><i class="icon-clipboard"></i>交卷</a>
+        <a onclick="createNotes()" tapmode><i class="icon-edit2"></i>笔记</a>
+        <a onclick="createQuestion()" tapmode><i class="icon-comment-new"></i>提问</a>
+        </div>
     </div>
     <!--测试题-->
     <script id="exam_tpl" type="text/x-dot-template">{{~it.items:value:key}}

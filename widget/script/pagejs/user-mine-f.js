@@ -38,7 +38,7 @@ function go_next(name) {
 	api.openWin({
 		name : name,
 		url : name + '.html',
-		delay : 200,
+		delay : 100,
 		reload : reload
 	});
 }

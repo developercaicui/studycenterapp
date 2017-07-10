@@ -653,6 +653,50 @@ function play_video() {
                             }
                         })
                     }
+                } else if (ret.btnType == 11) {//纠错
+                    //暂停视频,打开纠错页面
+                    demo.stop(function(res) {
+                        if (res.ctime == 'nan' || res.ctime == 0) {
+                            api.toast({
+                                msg: '请等待视频加载完'
+                            });
+                        } else {
+                            if (api.systemType == 'android') {
+                                var tmp_progress = parseInt(res.ctime / 1000);
+                            } else {
+                                var tmp_progress = parseInt(res.ctime);
+                            }
+                            var total = videoTimes;
+                            if (total * 0.9 <= tmp_progress) {
+                                var state = 'complate';
+                            } else {
+                                var state = 'init';
+                            }
+                            saveTaskProgress(tmp_progress, total, state);
+
+                            //横屏切换到竖屏
+                            api.setScreenOrientation({
+                                orientation: 'portrait_up'
+                            });
+                            
+                            api.openFrame({
+                                name: 'error-correction',
+                                url: 'error-correction.html',
+                                delay: 200,
+                                pageParam: {
+                                    //下个页面要用到的一些参数
+                                    courseId: courseId, //课程id
+                                    course_detail: course_detail, //课程详情
+                                    progress: tmp_progress, //观看时间进度
+                                    //study_progress : study_progress,//任务学习的进度
+                                    from_page: 'video',
+                                    task_info: task_info,
+                                    task_info_detail: task_info_detail
+                                        //chapter_info : chapter_info
+                                }
+                            });
+                        }
+                    });
                 } else if (ret.btnType == 10) {
                     var ctime = ret.ctime;
                     if (api.systemType == 'android') {
@@ -847,7 +891,41 @@ function exeNewTask() {
         play_video();
 
     }else if(task_info.taskType == 'knowledgePointExercise'){
-    	nextVideo()
+        var knowledgePointId = task_info_detail.knowledgePointId;
+        ajaxRequest('api/extendapi/examen/get_exercise_point_count_cache', 'post',{knowledge_points:knowledgePointId,type:4}, function (ret, err) {//008.005
+              if (err) {
+                  api.toast({
+                      msg: err.msg,
+                      location: 'middle'
+                  });
+              }
+              if (ret && ret.state == 'success') {
+                  //跳转到知识点练习页面
+                  //要传递到下个页面的参数
+                    var page_param = {
+                        courseId: courseId, //课程id
+                        course_detail: course_detail, //课程详情
+                        //study_progress : study_progress,
+                        last_progress: 0,
+                        task_info: task_info, //任务信息
+                        type: 'task'
+                    };
+                    page_param.knowledgePointExercise = ret.data[0];
+                    api.openWin({
+                        name: 'course-test',
+                        url: 'course-test.html',
+                        reload: true,
+                        pageParam: page_param,
+                        delay: 200
+                    });
+                  
+              } else {
+                  /*api.toast({
+                      msg: ret.msg,
+                      location: 'middle'
+                  });*/
+              }
+          });
     } else {
     	
         //要传递到下个页面的参数
@@ -883,11 +961,7 @@ function exeNewTask() {
 function closeThisWin(playtime) {
 	
     api.sendEvent({
-        name: 'flush_catalog',
-        extra: {
-            chapterName: task_info_detail.chapterName,
-            courseId:courseId
-        }
+        name: 'flush_catalog'
     });
     //保存进度,关闭页面
     if (api.systemType == 'android') {

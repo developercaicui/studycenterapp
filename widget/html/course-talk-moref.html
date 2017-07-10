@@ -175,6 +175,8 @@
           ajaxRequest('api/studytools/bbslist/v1.0', 'get', param, function (ret, err) {//003.300.2
               is_loding = true;
               api.refreshHeaderLoadDone();
+              // console.log(JSON.stringify(ret))
+              
               if (show_pro) {
                   api.hideProgress();
               }
