@@ -892,6 +892,9 @@ function exeNewTask() {
         play_video();
 
     }else if(task_info.taskType == 'knowledgePointExercise'){
+        if(api.connectionType == 'unknown' || api.connectionType == 'none'){
+            nextVideo()
+        }
         var knowledgePointId = task_info_detail.knowledgePointId;
         ajaxRequest('api/extendapi/examen/get_exercise_point_count_cache', 'post',{knowledge_points:knowledgePointId,type:4}, function (ret, err) {//008.005
               if (err) {
@@ -928,7 +931,7 @@ function exeNewTask() {
               }
           });
     } else {
-    	
+
         //要传递到下个页面的参数
         var page_param = {
             courseId: courseId, //课程id
