@@ -281,6 +281,7 @@ function play_video() {
 
     getCCconfig(function(CCconfig) {
         if (CCconfig) {
+            demo.init(); 
             var UserId = task_info.videoSiteId;
             if (api.systemType == 'android') {
                 //设置是否全屏

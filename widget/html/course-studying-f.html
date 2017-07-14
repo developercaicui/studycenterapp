@@ -63,13 +63,15 @@
     <div id=""></div>
     <ul id="content"></ul>
     <script id="tpl" type="text/x-dot-template">{{for(var p in it){ }}
-    	
+    	{{ if(!isEmpty(it[p].courseLists)){ }}
 		<div class="courseTit" onclick="toggleCourse(this)" tapmode>
 		
          <div class="courseTit-titLef">{{=it[p].subjectName}}</div>
         
           <div class="courseTit-num ri_h">课程<span>{{=it[p].courseLists.length}}</span><i class="icon-arrow-top"></i></div>
-        </div><div class="stydys">
+        </div>
+        {{ } }}
+        <div class="stydys">
         
         {{~it[p].courseLists:val:key}}
           <div class="course-stydy">

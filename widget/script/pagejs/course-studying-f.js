@@ -1274,19 +1274,39 @@ function getData(page) {
 			var courseLists = [];
 			for(var i=0;i<categoryIdArr.length;i++){
 				for(var j=0;j<stooges.length;j++){
-					if(categoryIdArr[i].subjectID == stooges[j].subjectID){
+					if(categoryIdArr[i].subjectID == stooges[j].subjectID ){
 						categoryIdArr[i].courseLists.push(stooges[j]);
 					}
 				}
 			}
 			function down(x, y) {
 	            return (x.subjectIndex > y.subjectIndex) ? 1 : -1
-	 
 	        }
 	        categoryIdArr.sort(down)
-	        
 
-    			total = ret.data.total;
+	        Array.prototype.unique = function() {
+		        for(var i = 0; i < this.length; i++) {
+		            var result= [];
+		            var hash= {};
+		            var res = this[i].courseLists;
+		            for(var j = 0; j<res.length; j++){
+		                if(!hash[res[j].courseId]) {
+		                    
+		                    result.push(res[j]);
+		                    hash[res[j].courseId] = 1;
+		                }
+		            }
+		            this[i].courseLists = result;
+
+		        }
+		        return this;
+		    }
+		    //过滤重复课程
+    		categoryIdArr = categoryIdArr.unique();
+
+// console.log(JSON.stringify(categoryIdArr))
+				
+				total = ret.data.total;
     			if (page == 1) {
     				if (isEmpty(ret.data.courselist)) {
     					$('body').addClass('null');
@@ -1304,6 +1324,7 @@ function getData(page) {
 
     			progressBar();
     			api.parseTapmode();
+
     	})
 
 			

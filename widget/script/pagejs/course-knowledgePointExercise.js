@@ -337,8 +337,8 @@ function saveQuestionRecord(num){
 		exerciseTitle : exam_info.title,
 		correctNum : errorNum
 	}
-	console.log(errorNum) 
-	console.log(JSON.stringify(params)) 
+	// console.log(errorNum) 
+	// console.log(JSON.stringify(params)) 
 	// var isPush = true;
 	for(var i in knowledgeList){
 		if(knowledgeList[i].exercise_id == params.exerciseId){
