@@ -563,11 +563,18 @@
       
           api.hideProgress();
           //设置屏幕向右翻转
-          api.setScreenOrientation({
-              orientation: 'landscape_right'
-          });
 
           if(task_info.taskType == 'knowledgePointExercise'){
+              if (api.connectionType == 'unknown' || api.connectionType == 'none') {
+
+                  api.alert({
+                      msg: '网络已断开，请检查网络状态'
+                  });
+                  return false;
+              }
+              api.setScreenOrientation({
+                  orientation: 'landscape_right'
+              });
               ajaxRequest('api/extendapi/examen/get_exercise_point_count_cache', 'post',{knowledge_points:knowledgePointId,type:4}, function (ret, err) {//008.005
                   if (err) {
                       api.toast({
@@ -595,6 +602,9 @@
               });
               return false;
           }
+          api.setScreenOrientation({
+              orientation: 'landscape_right'
+          });
           //跳转到播放页面
           api.openWin({
               name: new_win_name,

@@ -706,11 +706,18 @@ function task_event(obj, num, task_id,chapter_id,knowledgePointId) {
         } else {
             var winName = 'course-test';
             var winUrl = 'course-test.html';
-            api.sendEvent({
-                name: 'close_video_demo'
-            });
+            
         }
         if(task_info.taskType == 'knowledgePointExercise'){
+            if (api.connectionType == 'unknown' || api.connectionType == 'none') {
+                  api.alert({
+                      msg: '网络已断开，请检查网络状态'
+                  });
+                  return false;
+              }
+              api.sendEvent({
+                 name: 'close_video_demo'
+              });
               ajaxRequest('api/extendapi/examen/get_exercise_point_count_cache', 'post',{knowledge_points:knowledgePointId,type:4}, function (ret, err) {//008.005
                   
                   if (err) {
@@ -745,6 +752,12 @@ function task_event(obj, num, task_id,chapter_id,knowledgePointId) {
               });
               return false;
           }
+          if(task_info.taskType != "video"){
+                api.sendEvent({
+                    name: 'close_video_demo'
+                });
+          }
+      
         api.openWin({
             name: winName,
             url: winUrl,
