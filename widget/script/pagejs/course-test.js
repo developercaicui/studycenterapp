@@ -209,6 +209,10 @@ function my_close() {
 		name : 'video'
 	});
 	
+	api.sendEvent({
+       name: 'save_'
+    });
+	
 	if (exe_task == true) {
 		api.setScreenOrientation({
 			orientation : 'portrait_up'

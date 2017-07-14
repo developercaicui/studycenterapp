@@ -399,7 +399,6 @@ function set_down_status(str){
     if(!isEmpty(chapterIdC) && !isEmpty(chapterIdA) && !isEmpty(chapterIdB)) id=chapterIdC;
     // var obj = $('#' + id);
     var obj = $('.task' + item);
-   
     switch (type) {
         case 'error':
             $('.down-progress[type="1"]').attr({

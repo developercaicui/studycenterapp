@@ -2597,11 +2597,12 @@ ul.download .down-progress {
 .icon-arrow-left{color:#00a186;font-weight: bold;}
 .header .left-next {
     font-size: 0.3rem;
-    max-width:90%; 
+    max-width:100%; 
     overflow: hidden;
     word-wrap: normal;
     text-overflow: ellipsis;
     float: none;
     white-space: pre;
     text-align: center;
+    padding-left: 0;
 }

@@ -282,7 +282,6 @@ apiready = function() {
 	  })
 
 
-
 };
 
 //保存答题记录
@@ -309,7 +308,8 @@ function saveQuestionRecord(num){
 		$('.swiper-pagination-bullet').eq(num).removeClass("danger").addClass("success");
 	}else if(status == "2" || status == 2){
 		$('.swiper-pagination-bullet').eq(num).removeClass("success").addClass("danger");
-	}  
+	} 
+	
 	var params = {
 		knowledgePointId : knowledgePointExercise.knowledge_point_id,
 		exerciseId : exerciseList[num],
@@ -326,8 +326,19 @@ function saveQuestionRecord(num){
 		progress : knowledgeList.length,
 		lastExerciseNid : num,
 		errorNum : errorNum,
-		totalTime : totalTime
+		totalTime : totalTime,
+		examenNum : 0,
+		examenName : task_info.title,
+		examenTotalNum : knowledgePointExercise.exercise_count,
+		examenType : task_info.taskType,
+		isFinish : 0,
+		taskId : task_info.taskId,
+		currentProgress : swiper.previousIndex,
+		exerciseTitle : exam_info.title,
+		correctNum : errorNum
 	}
+	console.log(errorNum) 
+	console.log(JSON.stringify(params)) 
 	// var isPush = true;
 	for(var i in knowledgeList){
 		if(knowledgeList[i].exercise_id == params.exerciseId){
@@ -425,6 +436,9 @@ function select_radio(obj, num, res) {
 	$(obj).addClass('question-selected');
 	$(obj).siblings().removeClass('question-selected');
 	selectClick = true;
+	if((knowledgePointExercise.exercise_count-1) == swiper.activeIndex){
+		saveQuestionRecord(swiper.activeIndex)
+	}
 }
 
 //用户选择多选试题选项
@@ -435,6 +449,9 @@ function select_checkbox(obj, num, res) {
 		$(obj).addClass('question-selected');
 	}
 	selectClick = true;
+	if((knowledgePointExercise.exercise_count-1) == swiper.activeIndex){
+		saveQuestionRecord(swiper.activeIndex)
+	}
 }
 
 //矩阵选择题，点击小圆圈选中和取消

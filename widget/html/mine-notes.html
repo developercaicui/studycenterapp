@@ -51,6 +51,7 @@
           var headerPos = $api.offset(header);
           var width = api.winWidth;
           var height = api.winHeight - headerPos.h;
+          api.pageParam.self = 1;
           api.openFrame({
               name: 'mine-notes-f',
               url: 'mine-notes-f.html',

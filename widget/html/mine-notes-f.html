@@ -21,7 +21,13 @@
       <div class="notes">
         <div id="content" class="classnotes"></div>
         <script id="tpl" type="text/x-dot-template">{{~it.res1:value:k }}
+         {{ if(it.flag && it.res1[k].nodeNum == 0) { }}
+
+         {{ }else{ }}
           <div class="cache-course note-chapter">
+          {{ if(it.flag && it.res1[k].nodeNum == 0) { }}
+
+         {{ }else{ }}
             <div class="cache-list">
               <dl class="cache-list-title">
                 <dt>
@@ -31,36 +37,60 @@
                   <div class="msg-mark"></div>
                 </dd>
               </dl>
-            </div>{{~it.res1[k].children:val:key}}
+            </div>
+         {{ } }}
+            {{~it.res1[k].children:val:key}}
             {{var c_id=val.id;}}
             {{ if(val.isLeaf=='false'){ }}
             <ul one_id="{{=it.res2[c_id]}}" class="cache-list one_chapter">
               <li class="list">
-                <dl>
-                  <dt onclick="toggleChild(this)"><i class="icon-arrow-down"></i>
-                    <p>{{=val.title}}</p>
-                  </dt>
-                </dl>{{~val.children:val2:key2}}
-                {{ if(val2.isLeaf=='false'){ }}
-                <ul class="list">
-                  <dl class="haschild">
+                {{ if(it.flag && val.nodeNum == 0) { }}
+
+                 {{ }else{ }}
+                  <dl>
                     <dt onclick="toggleChild(this)"><i class="icon-arrow-down"></i>
-                      <p>{{=val2.title}}</p>
+                      <p>{{=val.title}}</p>
                     </dt>
-                  </dl>{{~val2.children:val3:key3}}
-                  <li class="list">
-                    <dl class="haschild">
-                      <dt onclick="to_list(this)" id="{{=val3.id}}" key="{{=it.res1[k].id}}" title="{{=val3.title}}">
-                        <p>{{=val3.title}}</p>
-                      </dt>
-                      <dd><i class="icon-edit"></i><span>{{=val3.nodeNum}}</span>{{var id3=val3.id;}}
-                        {{if(!isEmpty(it.res2[id3])&&it.res2[id3]!=0){ }}
-                        <div class="msg-mark">{{=it.res2[id3]<100?it.res2[id3]:'99+'}}</div>{{ } }}
-                      </dd>
-                    </dl>
-                  </li>{{~}}
-                </ul>{{ }else{ }}
-                <ul class="list">
+                  </dl>
+                 {{  } }}
+                {{~val.children:val2:key2}}
+                {{ if(val2.isLeaf=='false'){ }}
+                {{ if(it.flag && val2.nodeNum == 0) { }}
+
+                 {{ }else{ }}
+                    <ul class="list">
+                          <dl class="haschild">
+                            <dt onclick="toggleChild(this)">
+                              <p style="padding-left: 0;">{{=val2.title}}</p>
+                            </dt>
+                            <dd>
+                              <i class="icon-edit"></i><span>{{=val2.nodeNum}}</span>
+                            </dd>
+                          </dl>{{~val2.children:val3:key3}}
+                            {{ if(it.flag && val3.nodeNum == 0) { }}
+
+                             {{ }else{ }}
+                                <li class="list">
+                                        <dl class="haschild">
+                                          <dt onclick="to_list(this)" id="{{=val3.id}}" key="{{=it.res1[k].id}}" title="{{=val3.title}}">
+                                            <p>{{=val3.title}}</p>
+                                          </dt>
+                                          <dd><i class="icon-edit"></i><span>{{=val3.nodeNum}}</span>{{var id3=val3.id;}}
+                                            {{if(!isEmpty(it.res2[id3])&&it.res2[id3]!=0){ }}
+                                            <div class="msg-mark">{{=it.res2[id3]<100?it.res2[id3]:'99+'}}</div>{{ } }}
+                                          </dd>
+                                        </dl>
+                                      </li>
+                             {{ } }}
+                          
+                          {{~}}
+                        </ul>
+                 {{ } }}
+                {{ }else{ }}
+                {{ if(it.flag && val2.nodeNum == 0) { }}
+
+                {{ }else{ }}
+                  <ul class="list">
                   <dl>
                     <dt onclick="to_list(this)" id="{{=val2.id}}" key="{{=it.res1[k].id}}" title="{{=val2.title}}">
                       <p>{{=val2.title}}</p>
@@ -70,21 +100,31 @@
                       <div class="msg-mark">{{=it.res2[id2]<100?it.res2[id2]:'99+'}}</div>{{ } }}
                     </dd>
                   </dl>
-                </ul>{{ } }}
+                </ul>
+                {{ } }}
+                {{ } }}
                 {{~}}
               </li>
             </ul>{{ }else{ }}
-            <ul one_id="{{=it.res2[c_id]}}" class="cache-list one_chapter">
+            {{ if(it.flag && val.nodeNum == 0) { }}
+
+            {{ }else{ }}
+              <ul one_id="{{=it.res2[c_id]}}" class="cache-list one_chapter">
               <li class="list">
                 <dl>
                   <dt onclick="to_list(this)" id="{{=val.id}}" key="{{=it.res1[k].id}}" title="{{=val.title}}">
                     <p> {{=val.title}}</p>
                   </dt>
+                  <dd><i class="icon-edit"></i><span>{{=val.nodeNum}}</span></dd>
                 </dl>
               </li>
-            </ul>{{ } }}
+            </ul>
+            {{ } }}
+            {{ } }}
             {{~}}
-          </div>{{~}}
+          </div>
+         {{ } }}
+          {{~}}
         </script>
       </div>
     </div>
@@ -95,6 +135,7 @@
     <script type="text/javascript" src="../script/saveTasksProgress.js"></script>
     <script src="../script/fx.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+
       function bet(obj) {
           if ($(obj).children('span').attr("class") == 'bewritesp1') {
               $(obj).children('span').addClass('bewritesp2');
@@ -132,18 +173,28 @@
       function getData(page) {
           var data1;
           var param = {};
+          // param.pageSize = pageSize;
+          // param.categoryId = api.pageParam.categoryId;
+          // param.subjectId = api.pageParam.subjectId;
+          // param.courseid = api.pageParam.courseId;
+          // param.pageNo = page;
           param.token = $api.getStorage('token');
-          param.categoryId = api.pageParam.categoryId;
-          param.subjectId = api.pageParam.subjectId;
-          param.courseid = api.pageParam.course_id;
-          param.self = 1;
+          if(api.pageParam.self){
+            param.self = api.pageParam.self;
+          }else{
+            param.self = 0;
+          }
+          
           if (page == 1 && show_pro && !is_loding) {
               api.showProgress({
                   title: '加载中',
                   modal: false
               });
           }
+
           ajaxRequest('api/studytools/myallcoursechapternodecount/v2.1', 'post', param, function (ret, err) {//003.115.1
+          // ajaxRequest('api/studytools/coursechapternodecount/v2.1', 'post', param, function (ret, err) {//003.115.1
+              
               is_loding = true;
               api.refreshHeaderLoadDone();
               if (show_pro) {
@@ -162,70 +213,92 @@
                       $('body').addClass('null');
                       return false;
                   }
+
                   var da = ret.data;
-                  var chapter_ids = [];
-                  if (!isEmpty(da)) {
-                      for (var p in da) {
-                          if (!isEmpty(da[p].children)) {
-                              for (var p1 in da[p].children) {
-                                  chapter_ids.push(da[p].children[p1].id);
-                                  if (!isEmpty(da[p].children[p1].children)) {
-                                      for (var p2 in da[p].children[p1].children) {
-                                          chapter_ids.push(da[p].children[p1].children[p2].id);
-                                          if (!isEmpty(da[p].children[p1].children[p2].children)) {
-                                              for (var p3 in da[p].children[p1].children[p2].children) {
-                                                  chapter_ids.push(da[p].children[p1].children[p2].children[p3].id);
-                                              }
-                                          }
-                                      }
-                                  }
-                              }
-                          }
+                  var noteDa = [];
+                  if(isEmpty(api.pageParam.self)){
+                    for(var i in da){
+                      if(da[i].id == api.pageParam.courseId){
+                        noteDa.push(da[i]);
+                        break;
                       }
+                    }
+                  }else{
+                      noteDa = da;
                   }
-                  var param = {};
-                  param.token = $api.getStorage('token');
-                  param.charpterids = chapter_ids.join(",");
-                  ajaxRequest('api/studytools/nodenotread/v2.1', 'post', param, function (ret, err) {//003.119
-                      api.parseTapmode();
-                      if (err) {
-                          api.toast({
-                              msg: err.msg,
-                              location: 'middle'
-                          });
-                          return false;
-                      }
+                  
+                  // console.log(JSON.stringify(da[i]))
+                  // var chapter_ids = [];
+                  // if (!isEmpty(da)) {
+                  //     for (var p in da) {
+                  //         if (!isEmpty(da[p].children)) {
+                  //             for (var p1 in da[p].children) {
+                  //                 chapter_ids.push(da[p].children[p1].id);
+                  //                 if (!isEmpty(da[p].children[p1].children)) {
+                  //                     for (var p2 in da[p].children[p1].children) {
+                  //                         chapter_ids.push(da[p].children[p1].children[p2].id);
+                  //                         if (!isEmpty(da[p].children[p1].children[p2].children)) {
+                  //                             for (var p3 in da[p].children[p1].children[p2].children) {
+                  //                                 chapter_ids.push(da[p].children[p1].children[p2].children[p3].id);
+                  //                             }
+                  //                         }
+                  //                     }
+                  //                 }
+                  //             }
+                  //         }
+                  //     }
+                  // }
+                  // var param = {};
+                  // param.token = $api.getStorage('token');
+                  // param.charpterids = chapter_ids.join(",");
+                  // ajaxRequest('api/studytools/nodenotread/v2.1', 'post', param, function (ret, err) {//003.119
+                  //     api.parseTapmode();
+                  //     if (err) {
+                  //         api.toast({
+                  //             msg: err.msg,
+                  //             location: 'middle'
+                  //         });
+                  //         return false;
+                  //     }
+                  //     var tpl = $('#tpl').html();
+                  //     var content = doT.template(tpl);
+                  //     if (ret && ret.state == 'success') {
+                  //         if (isEmpty(ret.data)) {
+                  //             return false;
+                  //         }
+                  //         total = ret.totalCount;
+                  //         var data3 = ret.data;
+                  //         var data4 = {};
+                  //         var data5 = {};
+                  //         for (var p in data3) {
+                  //             var t = (data3[p].id).replace("", "");
+                  //             data4[t] = data3[p].count;
+                  //         }
+                  //         if (page == 1) {
+                  //             data1 = da;
+                  //             $('#content').html(content({'res1': data1, 'res2': data4}));
+                  //         }
+                  //         else {
+                  //             $('#content').append(content({'res1': data1, 'res2': data4}));
+                  //         }
+                  //         sum_num();
+                  //         num_99();
+                  //     } else {
+                  //         /*api.toast({
+                  //          msg: ret.msg,
+                  //          location: 'middle'
+                  //          });*/
+                  //     }
+                  // });
+
                       var tpl = $('#tpl').html();
                       var content = doT.template(tpl);
-                      if (ret && ret.state == 'success') {
-                          if (isEmpty(ret.data)) {
-                              return false;
-                          }
-                          total = ret.totalCount;
-                          var data3 = ret.data;
-                          var data4 = {};
-                          var data5 = {};
-                          for (var p in data3) {
-                              var t = (data3[p].id).replace("", "");
-                              data4[t] = data3[p].count;
-                          }
-                          if (page == 1) {
-                              data1 = da;
-                              $('#content').html(content({'res1': data1, 'res2': data4}));
-                          }
-                          else {
-                              $('#content').append(content({'res1': data1, 'res2': data4}));
-                          }
-                          sum_num();
-                          num_99();
-      
-                      } else {
-                          /*api.toast({
-                           msg: ret.msg,
-                           location: 'middle'
-                           });*/
+                      if(api.pageParam.self){
+                          $('#content').html(content({'res1': noteDa, 'res2': noteDa,'flag':true}));
+                      }else{
+                          $('#content').html(content({'res1': noteDa, 'res2': noteDa}));
                       }
-                  });
+                      
               } else {
                   /*api.toast({
                    msg: ret.msg,

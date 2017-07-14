@@ -29,7 +29,7 @@ function getdownrecord(){
         //------------------结束获取--------------------------
      	var usedTime,speedDown;
         var saverecordObj = JSON.parse(ret.data);
-        // console.log(JSON.stringify(saverecordObj))
+        console.log(JSON.stringify(saverecordObj))
         ///设置下一次读取下载的某个时间之后变化的所有记录
         lastgettime = saverecordObj.readTime;
         //循环处理每一条返回的下载记录，并统计分析最后变化值
@@ -472,9 +472,9 @@ function set_down_status(str){
             clearTimeout(down_setTimeout);
             is_count = false;
             //下载中->暂停
-            // $('.down-progress[type="1"]').attr({
-            //     type : 2
-            // }).siblings('.down_speed').html('').addClass('none');
+            $('.down-progress[type="1"]').attr({
+                type : 2
+            }).siblings('.down_speed').html('').addClass('none');
 
             $(obj).attr({
                 'type' : 2
@@ -483,10 +483,10 @@ function set_down_status(str){
         case '2':
         case 2:
             //暂停->下载中
-            // $('.down-progress[type="1"]').attr({
-            //     type : 2
-            // });
-            // $('.down_speed').html('').addClass('none');
+            $('.down-progress[type="1"]').attr({
+                type : 2
+            });
+            $('.down_speed').html('').addClass('none');
             $(obj).attr({
                 type : 2
             });
@@ -647,10 +647,14 @@ apiready = function() {
     // }, function (ret, err) {
     //     getData();
     // });
-//	api.addEventListener({
-//      name: 'reloadPage'
-//  }, function(ret, err) {
-//      location.reload();
-//  });
+	api.addEventListener({
+     name: 'reloadPage'
+    }, function(ret, err) {
+        lastgettime = 1388509261;
+        videochangelist = "";
+        couselist = "";
+        videoDownInfo = new Object();
+        getData();
+    });
 
 };

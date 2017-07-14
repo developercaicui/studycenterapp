@@ -467,7 +467,8 @@ if (debug) {
     //正式地址
     common_url = 'http://api.caicui.com';
     //common_url = 'https://apis.caicui.com';
-    static_url = 'http://static.caicui.com';
+    //static_url = 'http://static.caicui.com'
+    static_url = 'http://cdnimg.caicui.com';
 }
 
 function get_static() {
@@ -476,7 +477,7 @@ function get_static() {
         static_url = 'http://demo.caicui.com';
     } else {
         //正式地址
-        static_url = 'http://static.caicui.com';
+        static_url = 'http://cdnimg.caicui.com';
     }
 }
 
@@ -1438,7 +1439,7 @@ function mydown(result) {
                             return false;
                             
                         }
-                 
+                        // stop_down(function(r) {});
                         video_cache('download', title, videoCcid, videoSiteId, apiKey, autoDownCallback);
                         //下载中ui监听
                         // data.type = 'ing';

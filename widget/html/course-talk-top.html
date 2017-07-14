@@ -19,8 +19,8 @@
         .icon-arrow-left{color:#00a186;font-weight: bold;}
         .header .left-next {
             font-size: 0.36rem;
-            padding-left: 1rem;
-            max-width:80%; 
+            /*padding-left: 1rem;*/
+            /*max-width:80%; */
             overflow: hidden;
             word-wrap: normal;
             text-overflow: ellipsis;
@@ -68,6 +68,7 @@
                   var value = ret.value;
                   $('.new_back').text(value.key);
                   sort = $('.new_back').text();
+                  api.pageParam.order_by = sort;
                   api.closeFrame({
                       name: 'course-talk-moref'
                   });
@@ -81,7 +82,7 @@
                           h: h
                       },
                       reload: true,
-                      pageParam: {order_by: sort},
+                      pageParam: api.pageParam,
                       bounces: true,
                       bgColor: '#fff',
                       vScrollBarEnabled: true,

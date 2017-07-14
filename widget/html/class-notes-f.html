@@ -44,9 +44,12 @@
                 {{ if(val2.isLeaf=='false'){ }}
                 <ul class="list">
                   <dl class="haschild">
-                    <dt onclick="toggleChild(this)"><i class="icon-arrow-down"></i>
-                      <p>{{=val2.title}}</p>
+                    <dt onclick="toggleChild(this)">
+                      <p style="padding-left: 0;">{{=val2.title}}</p>
                     </dt>
+                    <dd>
+                      <i class="icon-edit"></i><span>{{=val2.nodeNum}}</span>
+                    </dd>
                   </dl>{{~val2.children:val3:key3}}
                   <li class="list">
                     <dl class="haschild">
@@ -80,6 +83,7 @@
                   <dt onclick="to_list(this)" id="{{=val.id}}" key="{{=it.res1[k].id}}" title="{{=val.title}}">
                     <p> {{=val.title}}</p>
                   </dt>
+                  <dd><i class="icon-edit"></i><span>{{=val.nodeNum}}</span></dd>
                 </dl>
               </li>
             </ul>{{ } }}
@@ -124,6 +128,13 @@
     <script type="text/javascript" src="../script/saveTasksProgress.js"></script>
     <script src="../script/fx.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+    // var da = [{"id":"8a22ecb551cf56cb0151d24140aa028a","title":"OBU 论文提高课","isTaskMode":true,"nodeNum":0,"children":[{"chapterTitle":"OBU 简介","chapterId":"8a22ecb551d6da350151e8155bc81526","isFree":"true","isLeaf":"true","nodeNum":0,"title":"OBU 简介","id":"8a22ecb551d6da350151e8155bc81526","published":true,"isTaskMode":true},{"chapterTitle":"第一部分\tIntroductions of OBU BSc in Applied Accounting （论文项目介绍）","chapterId":"8a22ecb551d2eee90151d3abcebb018f","isFree":"true","isLeaf":"true","nodeNum":0,"title":"第一部分\tIntroductions of OBU BSc in Applied Accounting （论文项目介绍）","id":"8a22ecb551d2eee90151d3abcebb018f","published":true,"isTaskMode":true},{"chapterTitle":"第二部分\tEligibility of applying OBU BSc in Applied Accounting（论文申请资格及要求）","chapterId":"8a22ecb551d2eee90151d3abf12f0190","isFree":"true","isLeaf":"true","nodeNum":0,"title":"第二部分\tEligibility of applying OBU BSc in Applied Accounting（论文申请资格及要求）","id":"8a22ecb551d2eee90151d3abf12f0190","published":true,"isTaskMode":true},{"chapterTitle":"第三部分 Basic knowledge of applying OBU BSc in Applied Accounting（论文申请基本知识）","chapterId":"8a22ecb551d2eee90151d3ac10aa0191","isFree":"true","isLeaf":"true","nodeNum":0,"title":"第三部分 Basic knowledge of applying OBU BSc in Applied Accounting（论文申请基本知识）","id":"8a22ecb551d2eee90151d3ac10aa0191","published":true,"isTaskMode":true},{"chapterTitle":"第四部分Project topic areas and titles and research question（论文的选题及开题）","chapterId":"8a22ecb551d2eee90151d3ac38160193","isFree":"false","isLeaf":"true","nodeNum":0,"title":"第四部分Project topic areas and titles and research question（论文的选题及开题）","id":"8a22ecb551d2eee90151d3ac38160193","published":true,"isTaskMode":true},{"chapterTitle":"第五部分 Structure of Research Report （Research Report 的结构、内容及要求）","chapterId":"8a22ecb551d2eee90151d3ac52920194","isFree":"false","isLeaf":"true","nodeNum":0,"title":"第五部分 Structure of Research Report （Research Report 的结构、内容及要求）","id":"8a22ecb551d2eee90151d3ac52920194","published":true,"isTaskMode":true},{"chapterTitle":"第六部分 Project mentoring （论文指导）","chapterId":"8a22ecb551d2eee90151d3ac72ec0195","isFree":"false","isLeaf":"true","nodeNum":0,"title":"第六部分 Project mentoring （论文指导）","id":"8a22ecb551d2eee90151d3ac72ec0195","published":true,"isTaskMode":true},{"chapterTitle":"第七部分 Skills and Learning Statement (SLS)（技能和学习记录）","chapterId":"8a22ecb551d2eee90151d3ac9a3e0196","isFree":"false","isLeaf":"true","nodeNum":0,"title":"第七部分 Skills and Learning Statement (SLS)（技能和学习记录）","id":"8a22ecb551d2eee90151d3ac9a3e0196","published":true,"isTaskMode":true},{"chapterTitle":"第八部分 A guide to citing and referencing （关于标记引用及参考的指导）","chapterId":"8a22ecb551d2eee90151d3acb7c50197","isFree":"false","isLeaf":"true","nodeNum":0,"title":"第八部分 A guide to citing and referencing （关于标记引用及参考的指导）","id":"8a22ecb551d2eee90151d3acb7c50197","published":true,"isTaskMode":true},{"chapterTitle":"第九部分 关于学生Fail RAP的常见问题及规避方式","chapterId":"8a22ecb551d2eee90151d3acd5ef0198","isFree":"false","isLeaf":"true","nodeNum":0,"title":"第九部分 关于学生Fail RAP的常见问题及规避方式","id":"8a22ecb551d2eee90151d3acd5ef0198","published":true,"isTaskMode":true},{"chapterTitle":"第十部分 基础Ratio 分析","chapterId":"8a22ecb551d2eee90151d3ad0a54019a","isFree":"false","isLeaf":"true","nodeNum":0,"title":"第十部分 基础Ratio 分析","id":"8a22ecb551d2eee90151d3ad0a54019a","published":true,"isTaskMode":true},{"chapterTitle":"第十一部分 基础商业分析","chapterId":"8a22ecb551d2eee90151d3ad2fe8019b","isFree":"false","isLeaf":"true","nodeNum":0,"title":"第十一部分 基础商业分析","id":"8a22ecb551d2eee90151d3ad2fe8019b","published":true,"isTaskMode":true},{"chapterTitle":"第十二部分 基础IT应用","chapterId":"8a22ecb551d2eee90151d3ad544e019c","isFree":"false","isLeaf":"true","nodeNum":0,"title":"第十二部分 基础IT应用","id":"8a22ecb551d2eee90151d3ad544e019c","published":true,"isTaskMode":true},{"chapterTitle":"第十三部分 关于OBU项目中交流与沟通技巧的解读与指导","chapterId":"8a22ecb551d2eee90151d3ad78c6019d","isFree":"false","isLeaf":"true","nodeNum":0,"title":"第十三部分 关于OBU项目中交流与沟通技巧的解读与指导","id":"8a22ecb551d2eee90151d3ad78c6019d","published":true,"isTaskMode":true},{"chapterTitle":"第十四部分 关于论文格式样例的指导讲解","chapterId":"8a22ecb551d2eee90151d3ad9531019e","isFree":"false","isLeaf":"true","nodeNum":0,"title":"第十四部分 关于论文格式样例的指导讲解","id":"8a22ecb551d2eee90151d3ad9531019e","published":true,"isTaskMode":true}]}]
+      
+    //   var tpl = $('#tpl').html();
+    //   var content = doT.template(tpl);
+    //   $('#content').html(content({'res1': da, 'res2': da}));
+
+
       function bet(obj) {
           if ($(obj).children('span').attr("class") == 'bewritesp1') {
               $(obj).children('span').addClass('bewritesp2');
@@ -163,7 +174,7 @@
           param.pageSize = pageSize;
           param.categoryId = api.pageParam.categoryId;
           param.subjectId = api.pageParam.subjectId;
-          param.courseid = api.pageParam.course_id;
+          param.courseid = api.pageParam.courseId;
           param.pageNo = page;
           param.token = $api.getStorage('token');
           param.self = 0;
@@ -173,7 +184,10 @@
                   modal: false
               });
           }
-          ajaxRequest('api/studytools/myallcoursechapternodecount/v2.1', 'post', param, function (ret, err) {//003.115.1
+
+          // ajaxRequest('api/studytools/myallcoursechapternodecount/v2.1', 'post', param, function (ret, err) {//003.115.1
+          ajaxRequest('api/studytools/coursechapternodecount/v2.1', 'post', param, function (ret, err) {//003.115.1
+              
               is_loding = true;
               api.refreshHeaderLoadDone();
               if (show_pro) {
@@ -193,68 +207,71 @@
                       return false;
                   }
                   var da = ret.data;
-                  var chapter_ids = [];
-                  if (!isEmpty(da)) {
-                      for (var p in da) {
-                          if (!isEmpty(da[p].children)) {
-                              for (var p1 in da[p].children) {
-                                  chapter_ids.push(da[p].children[p1].id);
-                                  if (!isEmpty(da[p].children[p1].children)) {
-                                      for (var p2 in da[p].children[p1].children) {
-                                          chapter_ids.push(da[p].children[p1].children[p2].id);
-                                          if (!isEmpty(da[p].children[p1].children[p2].children)) {
-                                              for (var p3 in da[p].children[p1].children[p2].children) {
-                                                  chapter_ids.push(da[p].children[p1].children[p2].children[p3].id);
-                                              }
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                      }
-                  }
-                  var param = {};
-                  param.token = $api.getStorage('token');
-                  param.charpterids = chapter_ids.join(",");
-                  ajaxRequest('api/studytools/nodenotread/v2.1', 'post', param, function (ret, err) {//003.119
-                      api.parseTapmode();
-                      if (err) {
-                          api.toast({
-                              msg: err.msg,
-                              location: 'middle'
-                          });
-                          return false;
-                      }
+                  // var chapter_ids = [];
+                  // if (!isEmpty(da)) {
+                  //     for (var p in da) {
+                  //         if (!isEmpty(da[p].children)) {
+                  //             for (var p1 in da[p].children) {
+                  //                 chapter_ids.push(da[p].children[p1].id);
+                  //                 if (!isEmpty(da[p].children[p1].children)) {
+                  //                     for (var p2 in da[p].children[p1].children) {
+                  //                         chapter_ids.push(da[p].children[p1].children[p2].id);
+                  //                         if (!isEmpty(da[p].children[p1].children[p2].children)) {
+                  //                             for (var p3 in da[p].children[p1].children[p2].children) {
+                  //                                 chapter_ids.push(da[p].children[p1].children[p2].children[p3].id);
+                  //                             }
+                  //                         }
+                  //                     }
+                  //                 }
+                  //             }
+                  //         }
+                  //     }
+                  // }
+                  // var param = {};
+                  // param.token = $api.getStorage('token');
+                  // param.charpterids = chapter_ids.join(",");
+                  // ajaxRequest('api/studytools/nodenotread/v2.1', 'post', param, function (ret, err) {//003.119
+                  //     api.parseTapmode();
+                  //     if (err) {
+                  //         api.toast({
+                  //             msg: err.msg,
+                  //             location: 'middle'
+                  //         });
+                  //         return false;
+                  //     }
+                  //     var tpl = $('#tpl').html();
+                  //     var content = doT.template(tpl);
+                  //     if (ret && ret.state == 'success') {
+                  //         if (isEmpty(ret.data)) {
+                  //             return false;
+                  //         }
+                  //         total = ret.totalCount;
+                  //         var data3 = ret.data;
+                  //         var data4 = {};
+                  //         var data5 = {};
+                  //         for (var p in data3) {
+                  //             var t = (data3[p].id).replace("", "");
+                  //             data4[t] = data3[p].count;
+                  //         }
+                  //         if (page == 1) {
+                  //             data1 = da;
+                  //             $('#content').html(content({'res1': data1, 'res2': data4}));
+                  //         }
+                  //         else {
+                  //             $('#content').append(content({'res1': data1, 'res2': data4}));
+                  //         }
+                  //         sum_num();
+                  //         num_99();
+                  //     } else {
+                  //         /*api.toast({
+                  //          msg: ret.msg,
+                  //          location: 'middle'
+                  //          });*/
+                  //     }
+                  // });
                       var tpl = $('#tpl').html();
                       var content = doT.template(tpl);
-                      if (ret && ret.state == 'success') {
-                          if (isEmpty(ret.data)) {
-                              return false;
-                          }
-                          total = ret.totalCount;
-                          var data3 = ret.data;
-                          var data4 = {};
-                          var data5 = {};
-                          for (var p in data3) {
-                              var t = (data3[p].id).replace("", "");
-                              data4[t] = data3[p].count;
-                          }
-                          if (page == 1) {
-                              data1 = da;
-                              $('#content').html(content({'res1': data1, 'res2': data4}));
-                          }
-                          else {
-                              $('#content').append(content({'res1': data1, 'res2': data4}));
-                          }
-                          sum_num();
-                          num_99();
-                      } else {
-                          /*api.toast({
-                           msg: ret.msg,
-                           location: 'middle'
-                           });*/
-                      }
-                  });
+                      $('#content').html(content({'res1': da, 'res2': da}));
               } else {
                   /*api.toast({
                    msg: ret.msg,
