@@ -706,8 +706,8 @@ function task_event(obj, num, task_id,chapter_id,knowledgePointId) {
         } else {
             var winName = 'course-test';
             var winUrl = 'course-test.html';
-            
         }
+        
         if(task_info.taskType == 'knowledgePointExercise'){
             if (api.connectionType == 'unknown' || api.connectionType == 'none') {
                   api.alert({

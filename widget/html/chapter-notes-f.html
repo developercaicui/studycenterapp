@@ -30,7 +30,7 @@
             </div>
             <div class="chapti clearfix">{{if(it[p].taskprogress && parseInt(it[p].taskprogress) && !isEmpty(it[p].taskType)){ }}
               <p class="chapdetti"><span class="icon-play-o icon-style"></span><span class="timer"> {{=formatType(it[p].taskType,it[p].taskprogress)}}</span></p>{{ } }}
-              <div class="chapinti"><span>{{=it[p].nikeName}}</span><span>{{ if(!isEmpty(it[p].updateTime)) { }} {{=formatDate(it[p].updateTime,'h')+':'+formatDate(it[p].updateTime,'m')}} {{ } }}</span><span>{{ if(!isEmpty(it[p].updateTime)) { }} {{=formatDate(it[p].updateTime,'Y')+'-'+formatDate(it[p].updateTime,'M')+'-'+formatDate(it[p].updateTime,'D')}} {{ } }}</span>
+              <div class="chapinti" style="display: inline-block;"><span>{{=it[p].nikeName}}</span><span>{{ if(!isEmpty(it[p].updateTime)) { }} {{=formatDate(it[p].updateTime,'h')+':'+formatDate(it[p].updateTime,'m')}} {{ } }}</span><span>{{ if(!isEmpty(it[p].updateTime)) { }} {{=formatDate(it[p].updateTime,'Y')+'-'+formatDate(it[p].updateTime,'M')+'-'+formatDate(it[p].updateTime,'D')}} {{ } }}</span>
                 <div class="right"><i class="icon-thumb-up"></i><b>{{=it[p].praiseCount?it[p].praiseCount:'0'}}</b></div>
               </div>
               <!--| {{var uid = getstor('memberId');}}-->
@@ -68,7 +68,7 @@
             </div>
             <div class="chapti clearfix">{{if(it[p].taskprogress && parseInt(it[p].taskprogress) && !isEmpty(it[p].taskType)){ }}
               <p class="chapdetti"><span class="icon-play-o icon-style"></span><span class="timer"> {{=formatType(it[p].taskType,it[p].taskprogress)}}</span></p>{{ } }}
-              <p class="chapinti"><span>{{=it[p].nikeName}}</span><span>{{ if(!isEmpty(it[p].updateTime)) { }}  {{=formatDate(it[p].updateTime,'h')+':'+formatDate(it[p].updateTime,'m')}} {{ } }}</span><span>{{ if(!isEmpty(it[p].updateTime)) { }}  {{=formatDate(it[p].updateTime,'Y')+'-'+formatDate(it[p].updateTime,'M')+'-'+formatDate(it[p].updateTime,'D')}} {{ } }}</span></p>{{var uid = getstor('memberId');}}
+              <p class="chapinti" style="display: inline-block;"><span>{{=it[p].nikeName}}</span><span>{{ if(!isEmpty(it[p].updateTime)) { }}  {{=formatDate(it[p].updateTime,'h')+':'+formatDate(it[p].updateTime,'m')}} {{ } }}</span><span>{{ if(!isEmpty(it[p].updateTime)) { }}  {{=formatDate(it[p].updateTime,'Y')+'-'+formatDate(it[p].updateTime,'M')+'-'+formatDate(it[p].updateTime,'D')}} {{ } }}</span></p>{{var uid = getstor('memberId');}}
               {{if(uid!=it[p].memberId){ }}
               <p class="chapicon">{{if(it[p].favoriteCount){ }}<span data-id="{{=it[p].id}}" onclick="coll(this);" tapmode class="icon-star icon-style col-me thumb-love icon-select">{{ }else{ }}</span><span data-id="{{=it[p].id}}" onclick="coll(this);" tapmode class="icon-star icon-style col-me">{{ } }}<b>{{=it[p].favoriteCount?it[p].favoriteCount:'0'}}</b></span>{{if(it[p].praiseCount){ }}<span class="icon-thumb-up lov-me thumb-love icon-style icon-select">{{ }else{ }}</span><span class="icon-thumb-up lov-me icon-style">{{ } }}<b>{{=it[p].praiseCount?it[p].praiseCount:'0'}}</b></span></p>{{ } }}
             </div>
@@ -88,7 +88,7 @@
             </div>
             <div class="chapti clearfix">{{if(it[p].taskprogress && parseInt(it[p].taskprogress) && !isEmpty(it[p].taskType)){ }}
               <p class="chapdetti"><span class="icon-play-o icon-style"></span><span class="timer"> {{=formatType(it[p].taskType,it[p].taskprogress)}}</span></p>{{ } }}
-              <p class="chapinti"><span>{{=it[p].nikeName}}</span><span>{{ if(!isEmpty(it[p].updateTime)) { }}  {{=formatDate(it[p].updateTime,'h')+':'+formatDate(it[p].updateTime,'m')}} {{ } }}</span><span> {{ if(!isEmpty(it[p].updateTime)) { }} {{=formatDate(it[p].updateTime,'Y')+'-'+formatDate(it[p].updateTime,'M')+'-'+formatDate(it[p].updateTime,'D')}} {{ } }}</span></p>
+              <p class="chapinti" style="display: inline-block;"><span>{{=it[p].nikeName}}</span><span>{{ if(!isEmpty(it[p].updateTime)) { }}  {{=formatDate(it[p].updateTime,'h')+':'+formatDate(it[p].updateTime,'m')}} {{ } }}</span><span> {{ if(!isEmpty(it[p].updateTime)) { }} {{=formatDate(it[p].updateTime,'Y')+'-'+formatDate(it[p].updateTime,'M')+'-'+formatDate(it[p].updateTime,'D')}} {{ } }}</span></p>
             </div>
           </div>{{ } }}
     </script>
@@ -98,6 +98,7 @@
     <script type="text/javascript" src="../script/db.js"></script>
     <script type="text/javascript" src="../script/saveTasksProgress.js"></script>
     <script type="text/javascript">
+
       var pageSize = 10;
       var total = '';
       var id;
@@ -136,11 +137,11 @@
                   });
                   return false;
               }
-              if (typ == 1) {
-                  tpl = $('#tpl1').html();
-              } else {
+              // if (typ == 1) {
+              //     tpl = $('#tpl1').html();
+              // } else {
                   tpl = $('#tpl2').html();
-              }
+              // }
               var content = doT.template(tpl);
               if (ret && ret.state == 'success') {
                   $api.setStorage('notes_info', ret.data[0]);

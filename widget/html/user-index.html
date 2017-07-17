@@ -184,6 +184,7 @@
        
             {{var data=it.courselist;}}
       		{{ for(var p in data) { }}
+          {{ if(!isEmpty(data[p].courseName)){ }}
             <li tapmode onclick="CourseDetail('{{=data[p].courseId}}','{{=data[p].chapterId}}','{{=data[p].subjectID}}','{{=data[p].categoryId}}','{{=data[p].courseName}}','{{=data[p].chapterName}}','{{=data[p].subjectName}}','{{=data[p].categoryName}}','{{=data[p].expirationTime}}','{{=data[p].versionId}}')">
 
               <h2>{{=data[p].courseName}}</h2>{{ if(!isEmpty(data[p].expirationTime)){ }}
@@ -212,6 +213,7 @@
                 <div class="num"><span>0/</span><b>{{=data[p].taskTotal?data[p].taskTotal:0}}</b></div>
               </div>{{ } }}
             </li>
+            {{ } }}
             {{ } }}
 
             </div>

@@ -521,7 +521,7 @@ function get_used_avg(flag) {
 
 function get_study(flag) {
     if (is_debug) {
-        var data = {"total":5,"courselist":[{"categoryIndex":10,"effectiveDay":280,"taskTotal":"258","isU":"false","courseId":"8a22ecb5545a87e801545af5048c0006","outline":"","teacherName":"QiQi Wu","orderID_item_id":"CC1B9893DE86E61180FBD42F60D012AB","lastmodifyTime":1492055005,"categoryName":"CMA中文","subjectName":"CMA 中文 Part-1","courseIndex":140,"subjectID":"ff808081486933e601489c799f0f0868","progressSum":7429,"teacherHonor":"吴奇奇","courseSource":"zhongbo","availability":"CMA Part I 中文 基础课,讲义有更新，更新内容：第2章 第1节 知识点3、第2章 第2节 知识点3、第3章 第1节 知识点2、第3章 第1节 知识点4、第5章 第2节 知识点3<br />\r\n<br />","courseBkImage":"/upload/201604/f57ba6cd71ae40e8b26309ad758acfff.jpg","categoryId":"ff808081486933e601489c4662f60851","taskprogress":1,"expirationTime":1503574622,"buyTime":1475220121,"teacherImage":"/upload/201606/09c9342818e24393a970aa93d25b9a4d.png","versionId":"ff808081486933e601489c867448086a","subjectIndex":50,"courseName":"CMA Part I 中文 基础课","showProgress":"12","createDate":"1493096858792.000000","chapterId":"8a22ecb55b1ec7e9015b228f54e00031","chapterName":"知识点1 战略规划概述","progress":"229","taskId":"1674316061a8bb81313bbb8b0ef48340","taskName":"知识点1 战略规划概述"},{"categoryIndex":100,"effectiveDay":180,"taskTotal":"47","isU":"false","courseId":"8a22ecb551cf56cb0151d24140aa028a","outline":"","teacherName":"OBU 明星讲师团","orderID_item_id":"8a22ecb55541a8f7015552b7d07f0083","lastmodifyTime":1492325498,"categoryName":"OBU","subjectName":"OBU 论文提高课","courseIndex":2,"subjectID":"8a22ecb551f17b3e0151f1e161900125","progressSum":693,"teacherHonor":"孙志远、贵荣广、多年OBU辅导经验","courseSource":"zhongbo","availability":"","courseBkImage":"/upload/201512/3421d9597f9044b785e5138665fec42e.jpg","categoryId":"8a22ecb551cf56cb0151d2152b5c0252","taskprogress":3,"expirationTime":1503485114,"buyTime":1465971626,"teacherImage":"/upload/201507/3bfaf8b86cb14985a194c01d9e9fbbb1.png","versionId":"8a22ecb551cf56cb0151d24140aa028a","subjectIndex":50,"courseName":"OBU 论文提高课","showProgress":"6","createDate":"1493092272553.000000","chapterId":"8a22ecb551d6da350151e8155bc81526","chapterName":"OBU 简介","progress":"75","taskId":"8a22ecb551ed44ca0151ed9c6d5300f1","taskName":"OBU-课程简介"},{"categoryIndex":15,"effectiveDay":280,"taskTotal":"61","isU":"false","courseId":"ff8080814eaf7474014eb44df2160843","outline":"","teacherName":"财务英语明星讲师团","orderID_item_id":"8a22ecb556ff11d00157213cf46c00d6","lastmodifyTime":1492306475,"categoryName":"CMA 英文","subjectName":"CMA 财务英语基础课","courseIndex":10,"subjectID":"ff8080814f3eb9ed014f48f2a7461389","progressSum":4750,"teacherHonor":"","courseSource":"zhongbo","availability":"","courseBkImage":"/upload/201508/5d3b49716c3d4b8a870051d55f7a5134.jpg","categoryId":"ff8080814997fb36014998b6ca0804ef","taskprogress":3,"expirationTime":1495526316,"buyTime":1473731425,"teacherImage":"/upload/201507/3bfaf8b86cb14985a194c01d9e9fbbb1.png","versionId":"ff8080814eaf7474014eb44df2160843","subjectIndex":0,"courseName":"CMA 财务英语基础课","showProgress":"4","createDate":"1493088979578.000000","chapterId":"ff8080814eaf7474014eb99c07d114c6","chapterName":"Bankruptcy","progress":"7","taskId":"ff8080814f6d5ae7014f6dc5f30a00db","taskName":"business entities"}]}
+        var data = {"total":5,"courselist":[{"categoryIndex":10,"taskTotal":"50","isU":2,"courseGroupId":"8a22ecb559b51562015a3ff0fd1a0304","courseBkImage":"/upload/201704/6bfe438eb80647e4a2ba95924c11e251.jpg","categoryId":"ff808081486933e601489c4662f60851","courseId":"8a22ecb559b51562015a44c703760394","outline":"","teacherName":"QiQi Wu","orderID_item_id":"8bfad4c45dca460b9451d7a9e5d8a9cb","lock_date":null,"categoryName":"CMA中文","subjectName":"CMA 中文 Part-1","courseIndex":1,"expirationTime":1507516339,"subjectID":"ff808081486933e601489c799f0f0868","lock_status":0,"teacherImage":"/upload/201606/09c9342818e24393a970aa93d25b9a4d.png","versionId":"8a22ecb559b51562015a44c703760394","teacherHonor":"吴奇奇","subjectIndex":50,"courseSource":"zhongbo","availability":"","courseName":"CMA Part I 中文 直播课","showProgress":"24","createDate":"1500258509841.000000","chapterId":"8a22ecb55b1ec7e9015b234006f8016f","chapterName":"2017年07月11日 20:00—21:30","progress":"0","taskId":"c9182fbca9be20fbdb0059e1503d82ba","taskName":"2017-7-11 第十三周直播一（上）"},{"categoryIndex":10,"taskTotal":"179","isU":2,"courseGroupId":"8a22ecb559b51562015a3ff0fd1a0304","courseBkImage":"/upload/201604/f57ba6cd71ae40e8b26309ad758acfff.jpg","categoryId":"ff808081486933e601489c4662f60851","courseId":"8a22ecb55aeff242015b1eb557a70593","outline":"","teacherName":"QiQi Wu","orderID_item_id":"8bfad4c45dca460b9451d7a9e5d8a9cb","lock_date":1490932280,"categoryName":"CMA中文","subjectName":"CMA 中文 Part-1","courseIndex":1,"expirationTime":1506478256,"subjectID":"ff808081486933e601489c799f0f0868","lock_status":0,"teacherImage":"/upload/201606/09c9342818e24393a970aa93d25b9a4d.png","versionId":"8a22ecb55aeff242015b1eb557a70593","teacherHonor":"吴奇奇","subjectIndex":50,"courseSource":"zhongbo","availability":"","courseName":"CMA Part I 中文 基础课（一步通关）","showProgress":"130","createDate":"1500258282028.000000","chapterId":"8a22ecb55b1ec7e9015b2752152f0249","chapterName":"知识点1 战略规划概述","progress":"0","taskId":"8a22ecb55b1ec7e9015b27ba119e02e5","taskName":"1-1-1-b测评练习-视频-2016 CMA P1 基础课"},{"categoryIndex":10,"taskTotal":"51","isU":2,"courseGroupId":"8a22ecb559b51562015a3ff0fd1a0304","courseBkImage":"/upload/201604/f57ba6cd71ae40e8b26309ad758acfff.jpg","categoryId":"ff808081486933e601489c4662f60851","courseId":"8a22ecb55581ba34015581cb949c0003","outline":"","teacherName":"QiQi Wu","orderID_item_id":"8bfad4c45dca460b9451d7a9e5d8a9cb","lock_date":null,"categoryName":"CMA中文","subjectName":"CMA 中文 Part-1","courseIndex":150,"expirationTime":1507516363,"subjectID":"ff808081486933e601489c799f0f0868","lock_status":0,"teacherImage":"/upload/201606/09c9342818e24393a970aa93d25b9a4d.png","versionId":"ff8080814997fb360149986602300200","teacherHonor":"吴奇奇","subjectIndex":50,"courseSource":"zhongbo","availability":"","courseName":"CMA Part I 中文 串讲课","showProgress":"19","createDate":"1500035774464.000000","chapterId":"8a22ecb5577562b70157b6de3ae70117","chapterName":"第二节 内部审计","progress":"165","taskId":"8a22ecb557d16e020157e10985641e9a","taskName":"第2节-内部审计"}]}
   data.courselist=data.courselist.slice(0,3)
   var tpl = $('#tpl_course').html();
         var content = doT.template(tpl);
@@ -609,6 +609,27 @@ function get_study(flag) {
                       }
                   }
               }
+              // console.log(JSON.stringify(filterLastProgress))
+
+              Array.prototype.unique = function() {
+                var result= [];
+                var hash= {};
+                for(var i = 0; i < this.length; i++) {
+                    
+                    var res = this[i];
+
+                    if(!hash[res.courseId]) {
+                        result.push(res);
+                        hash[res.courseId] = 1;
+                    }
+
+                }
+                return result;
+            }
+            //过滤重复课程
+            filterLastProgress = filterLastProgress.unique();
+              // console.log(JSON.stringify(filterLastProgress))
+
               // alert(JSON.stringify(filterLastProgress))
               var ret={
                 data : {
@@ -616,7 +637,7 @@ function get_study(flag) {
                   courselist : filterLastProgress.slice(0,3)
                 }
               }
-      
+              
               $('#course_content').html(content(ret.data));
 //               circleProgress();
               $('.progress-round').each(function(index){
