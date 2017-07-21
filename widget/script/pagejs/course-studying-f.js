@@ -7,7 +7,7 @@ var total = 0;
 
 
 //  var ret={
-//
+
 //   "data" : {
 //     "total" : 40,
 //     "courselist" : [ {
@@ -1097,48 +1097,48 @@ var total = 0;
 //   "msg" : ""
 // }
 // //
-//
+
 // var stooges = ret.data.courselist;
-//			var categoryIdArr = [];
-//			for(var i=0;i<stooges.length;i++){
-//				if(categoryIdArr && categoryIdArr.length){
-//					var isPush = true;
-//					for(var j=0;j<categoryIdArr.length;j++){
-//						if(stooges[i].subjectID == categoryIdArr[j].subjectID){
-//							isPush = false;
-//						}
-//					}
-//					if(isPush){
-//						categoryIdArr.push({
-//							subjectID :　stooges[i].subjectID,
-//							categoryName : stooges[i].categoryName,
-//							subjectName : stooges[i].subjectName,
-//							courseLists : []
-//						})
-//					}
-//				}else{
-//					categoryIdArr.push({
-//						subjectID :　stooges[i].subjectID,
-//						categoryName : stooges[i].categoryName,
-//						subjectName : stooges[i].subjectName,
-//						courseLists : []
-//					})
-//				}
-//				
-//			}
-//			
-//			var courseLists = [];
-//			for(var i=0;i<categoryIdArr.length;i++){
-//				for(var j=0;j<stooges.length;j++){
-//					if(categoryIdArr[i].subjectID == stooges[j].subjectID){
-//						categoryIdArr[i].courseLists.push(stooges[j]);
-//					}
-//				}
-//			}
-//			console.log(categoryIdArr);
+// 			var categoryIdArr = [];
+// 			for(var i=0;i<stooges.length;i++){
+// 				if(categoryIdArr && categoryIdArr.length){
+// 					var isPush = true;
+// 					for(var j=0;j<categoryIdArr.length;j++){
+// 						if(stooges[i].subjectID == categoryIdArr[j].subjectID){
+// 							isPush = false;
+// 						}
+// 					}
+// 					if(isPush){
+// 						categoryIdArr.push({
+// 							subjectID :　stooges[i].subjectID,
+// 							categoryName : stooges[i].categoryName,
+// 							subjectName : stooges[i].subjectName,
+// 							courseLists : []
+// 						})
+// 					}
+// 				}else{
+// 					categoryIdArr.push({
+// 						subjectID :　stooges[i].subjectID,
+// 						categoryName : stooges[i].categoryName,
+// 						subjectName : stooges[i].subjectName,
+// 						courseLists : []
+// 					})
+// 				}
+				
+// 			}
+			
+// 			var courseLists = [];
+// 			for(var i=0;i<categoryIdArr.length;i++){
+// 				for(var j=0;j<stooges.length;j++){
+// 					if(categoryIdArr[i].subjectID == stooges[j].subjectID){
+// 						categoryIdArr[i].courseLists.push(stooges[j]);
+// 					}
+// 				}
+// 			}
+// 			console.log(categoryIdArr);
 // 	console.log(categoryIdArr);
-//
-//
+
+
 // var tpl = $('#tpl').html();
 // var content = doT.template(tpl);
 // $('#content').html(content(categoryIdArr));

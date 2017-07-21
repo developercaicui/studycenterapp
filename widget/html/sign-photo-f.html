@@ -43,11 +43,12 @@
               modal: true
           });
           $('.set-photo').addClass('none');
+
           var headers = {
               'X-Requested-With': 'XMLHttpRequest'
           };
           api.ajax({
-              url: common_url + '/' + 'api/v2.1/commons/fileUpload',
+              url: common_url + '/' + 'api/zbids/member/edituserheadr',
               method: 'post',
               headers: headers,
               timeout: 120,
@@ -61,6 +62,7 @@
                   }
               }
           }, function (ret, err) {
+            console.log("edituserheadr::"+JSON.stringify(ret)+"=="+$api.getStorage('token'))
               api.hideProgress();
               if (err) {
                   api.toast({
@@ -84,6 +86,49 @@
                   });
               }
           });
+          
+          // var headers = {
+          //     'X-Requested-With': 'XMLHttpRequest'
+          // };
+          // api.ajax({
+          //     url: common_url + '/' + 'api/v2.1/commons/fileUpload',
+          //     method: 'post',
+          //     headers: headers,
+          //     timeout: 120,
+          //     cache: false,
+          //     data: {
+          //         values: {
+          //             'token': $api.getStorage('token')
+          //         },
+          //         files: {
+          //             'file': img
+          //         }
+          //     }
+          // }, function (ret, err) {
+          //   console.log("fileUpload::"+JSON.stringify(ret)+"=="+$api.getStorage('token'))
+          //     api.hideProgress();
+          //     if (err) {
+          //         api.toast({
+          //             msg: err.msg,
+          //             location: 'middle'
+          //         });
+          //         return false;
+          //     }
+          //     if (ret && ret.state == 'success') {
+          //         api.sendEvent({
+          //             name: 'photo_change',
+          //             extra: ret.data
+          //         });
+          //         setTimeout(function () {
+          //             api.closeFrame();
+          //         }, 500);
+          //     } else {
+          //         api.toast({
+          //             msg: ret.msg,
+          //             location: 'middle'
+          //         });
+          //     }
+          // });
       }
       function getPic(type, w, h) {
           $('.backdrop').unbind();
@@ -178,7 +223,6 @@
               }
           } else {
       
-      
               api.getPicture({
                   sourceType: type,
                   encodingType: 'jpg',
@@ -195,6 +239,7 @@
                           hidden: true
                       });
                   });
+                  
                   if (err) {
                       $api.setStorage('sign-photo', 1);
                       api.hideProgress();

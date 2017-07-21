@@ -78,7 +78,7 @@
                   });
                   return false;
               } else {
-                  param.j_captcha = captcha;
+                  param.captcha = captcha;
               }
           }
           if (is_ok) {
@@ -100,10 +100,17 @@
                       return false;
                   }
                   if (res.state == 'success') {
+                      // param.phone = phone;
+                      // param.type = 'send';
+                      // param.token = res.data.token;
+                      // ajaxRequest('api/v2.1/msg/code', 'post', param, function (ret, err) {//007.007 发送手机验证码
                       param.phone = phone;
-                      param.type = 'send';
+                      param.templateSn = '05';
+                      param.isResend = 0;
+                      param.content = "";
                       param.token = res.data.token;
-                      ajaxRequest('api/v2.1/msg/code', 'post', param, function (ret, err) {//007.007 发送手机验证码
+                      $api.setStorage('token', res.data.token);
+                      ajaxRequest('api/base/sms/sendsms/v1.0', 'post', param, function (ret, err) {//007.
                           api.hideProgress();
                           if (err) {
                               if (api.connectionType == 'none' || api.connectionType == 'unknown') {
@@ -200,11 +207,18 @@
                   }
                   if (res.state == 'success') {
                       var param = {};
-                      param.code = code;
+                      // param.code = code;
+                      // param.phone = phone;
+                      // param.type = 'validate';
+                      // param.token = res.data.token;
+                      // ajaxRequest('api/v2.1/msg/code', 'post', param, function (ret, err) {//007.007 发送手机验证码
                       param.phone = phone;
-                      param.type = 'validate';
+                      param.templateSn = '05';
+                      param.isResend = 0;
+                      param.content = "";
                       param.token = res.data.token;
-                      ajaxRequest('api/v2.1/msg/code', 'post', param, function (ret, err) {//007.007 发送手机验证码
+                      $api.setStorage('token', res.data.token);
+                      ajaxRequest('api/base/sms/sendsms/v1.0', 'post', param, function (ret, err) {//007.
                           api.hideProgress();
                           if (err) {
                               api.toast({

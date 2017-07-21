@@ -52,6 +52,30 @@
           var img = common_url + '/api/v2.1/captcha?timestamp=' + now / 1000;
           $('.img_captcha').removeClass('none');
           $('.get_img').attr('src', img);
+
+          //           var param = {};
+          //           param.token = $api.getStorage('token');
+          //           param.type = "regimgcode"
+          //           ajaxRequest('api/base/captcha/code/v1.0', 'get', param, function (ret, err) {//生成图片验证码
+          //               if (err) {
+          //                   if (api.connectionType == 'none' || api.connectionType == 'unknown') {
+          //                       is_ok = true;
+          //                   }
+          //                   api.toast({
+          //                       msg: err.msg,
+          //                       location: 'middle'
+          //                   });
+          //                   return false;
+          //               }
+          //               if (ret && ret.state == 'success') {
+          //                 var img = ret.data;
+          //                 $('.img_captcha').removeClass('none');
+          //                 $('.get_img').attr('src', img);  
+          //               }
+
+          //           })
+
+
       }
       function get_code(obj) {//获取短信验证码
           var phone = $.trim($('input[name=phone]').val());
@@ -81,7 +105,8 @@
                   });
                   return false;
               } else {
-                  param.j_captcha = captcha;
+                  // param.j_captcha = captcha;
+                  param.captcha = captcha;
               }
           }
           if (is_ok) {
@@ -102,11 +127,20 @@
                       return false;
                   }
                   if (res.state == 'success') {
+                      // param.phone = phone;
+                      // param.type = 'send';
+                      // param.token = res.data.token;
+                      // $api.setStorage('token', res.data.token);
+                      // ajaxRequest('api/v2.1/msg/code', 'post', param, function (ret, err) {//007.007 发送手机验证码地址
                       param.phone = phone;
-                      param.type = 'send';
+                      param.templateSn = '08';
+                      param.isResend = 0;
+                      param.content = "";
                       param.token = res.data.token;
-                      ajaxRequest('api/v2.1/msg/code', 'post', param, function (ret, err) {//007.007 发送手机验证码地址
+                      $api.setStorage('token', res.data.token);
+                      ajaxRequest('api/base/sms/sendsms/v1.0', 'post', param, function (ret, err) {//007.
                           api.hideProgress();
+                          console.log(JSON.stringify(ret))
                           if (err) {
                               if (api.connectionType == 'none' || api.connectionType == 'unknown') {
                                   is_ok = true;
@@ -117,7 +151,7 @@
                               });
                               return false;
                           }
-                          if (ret && ret.state == 'success' && ret.data == 'true') {
+                          if (ret && ret.state == 'success') {
                               //get_token();
                               var x = 60;
                               var t;
@@ -205,27 +239,31 @@
                   modal: true
               });
       
-              set_token(function (res, error) {
-                  if (error) {
-                      if (api.connectionType == 'none' || api.connectionType == 'unknown') {
-                          is_ok = true;
-                      }
-                      api.toast({
-                          msg: error.msg,
-                          location: 'middle'
-                      });
-                      return false;
-                  }
-                  if (res.state == 'success') {
+              // set_token(function (res, error) {
+              //     if (error) {
+              //         if (api.connectionType == 'none' || api.connectionType == 'unknown') {
+              //             is_ok = true;
+              //         }
+              //         api.toast({
+              //             msg: error.msg,
+              //             location: 'middle'
+              //         });
+              //         return false;
+              //     }
+              //     if (res.state == 'success') {
                       var param = {};
                       param.nickname = '';
                       param.phone = phone;
                       param.password = pwd;
                       param.code = code;
                       param.agreement = 1;
-                      param.token = res.data.token;
-                      ajaxRequest('api/v2.1/memberReg', 'post', param, function (ret, err) {//007.006  会员手机注册
+                      param.token = $api.getStorage('token');
+                      console.log(JSON.stringify(param))
+                      // ajaxRequest('api/v2.1/memberReg', 'post', param, function (ret, err) {//007.006  会员手机注册
+                      ajaxRequest('api/zbids/member/mobilereg', 'post', param, function (ret, err) {//007.006  会员手机注册
+
                           api.hideProgress();
+                          console.log(JSON.stringify(ret)+"==="+JSON.stringify(err))
                           if (err) {
                               api.toast({
                                   msg: err.msg,
@@ -234,7 +272,7 @@
                               return false;
                           }
                           if (ret && ret.state == 'success') {
-                              $api.setStorage('token', ret.data.token);
+                              
                               $api.setStorage('mine', ret.data);
                               $('input').val('');
                               api.openWin({
@@ -242,25 +280,25 @@
                                   url: './sign-edit.html',
                                   delay: 200
                               });
-                          } else {
+                          }else{
                               api.toast({
                                   msg: err_conf_007[ret.msg],
                                   location: 'middle'
                               });
                           }
                       });
-                  } else {
-                      var err = '';
-                      if (!isEmpty(err_conf_007[res.msg])) {
-                          err = err_conf_007[res.msg];
-                          api.toast({
-                              msg: err,
-                              location: 'middle'
-                          });
-                      }
+              //     } else {
+              //         var err = '';
+              //         if (!isEmpty(err_conf_007[res.msg])) {
+              //             err = err_conf_007[res.msg];
+              //             api.toast({
+              //                 msg: err,
+              //                 location: 'middle'
+              //             });
+              //         }
       
-                  }
-              });
+              //     }
+              // });
           } else {
               api.toast({
                   msg: '请先同意财萃网服务协议',

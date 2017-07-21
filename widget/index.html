@@ -338,10 +338,12 @@
     function bind_push() {
         var push = api.require('push');
         var username = get_loc_val('mine', 'nickName');
+        var memberId = getstor('memberId');
         push.bind({
             userName: username,
-            userId: api.deviceId
+            userId: memberId
         }, function(ret, err) {});
+        console.log("memberId::"+memberId)
     } 
 
     //去绑定

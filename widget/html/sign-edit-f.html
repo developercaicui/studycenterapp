@@ -74,16 +74,20 @@
               return false;
           }
           var obj = {};
-          obj.nickname = nickname;
-          obj.imgPath = imgPath;
-          obj.height = height;
-          obj.width = width;
+          obj.nickName = nickname;
+          // obj.imgPath = imgPath;
+          // obj.height = height;
+          // obj.width = width;
           obj.token = $api.getStorage('token');
           api.showProgress({
               title: '处理中',
               modal: true
           });
-          ajaxRequest('api/v2.1/cutAndSaveAvatar', 'post', obj, function (ret, err) {//007.012  完善用户信息
+
+          // ajaxRequest('api/v2.1/cutAndSaveAvatar', 'post', obj, function (ret, err) {//007.012  完善用户信息
+          ajaxRequest('api/zbids/member/editinfo', 'post', obj, function (ret, err) {//007.012  完善用户信息
+          
+            // console.log("完善用户信息::"+JSON.stringify(ret))
               api.hideProgress();
               if (err) {
                   api.toast({
@@ -93,8 +97,9 @@
                   return false;
               }
               if (ret && ret.state == 'success') {
-                  $api.setStorage('token', ret.data.token);
-                  ajaxRequest('api/v2/member/get', 'get', {token: ret.data.token}, function (res, error) {
+                  // $api.setStorage('token', ret.data.token);
+                  ajaxRequest('api/zbids/member/getmemberinfo', 'get', {token: $api.getStorage('token')}, function (res, error) {
+                    // console.log("member::"+JSON.stringify(res))
                       if (error) {
                           api.toast({
                               msg: error.msg,
@@ -116,7 +121,7 @@
                   });
               } else {
                   api.toast({
-                      msg: err_conf_007[ret.msg],
+                      msg: ret.msg,
                       location: 'middle'
                   });
               }
@@ -143,7 +148,7 @@
               imgPath = value.path;
               //alert(imgPath);
               mine.avatar = imgPath;
-              $('.head').attr('src', static_url + value.path);
+              $('.head').attr('src', static_url + '/' + value.path);
               $api.setStorage('mine', mine.avatar);
               width = value.width;
               $api.setStorage('width', width);

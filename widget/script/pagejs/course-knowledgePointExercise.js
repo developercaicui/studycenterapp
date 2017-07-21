@@ -111,6 +111,7 @@ function getNidExerciseDetail(exerciseId){
 	});
     ajaxRequest('api/teachsource/examen/getNidExerciseDetail', 'get', {exerciseId:exerciseId}, function(rets, errs) {
         if (rets && rets.state == 'success' && rets.data.length>0) {
+        	
         	var exam_infoArr = [];
         	exam_info = rets.data[0];
         	var htmlData = $("<div>");
@@ -127,7 +128,8 @@ function getNidExerciseDetail(exerciseId){
         			rets.data[0].context = JSON.stringify(contextArr);
         			
         		}
-        	}           	
+        	}
+        	// console.log(JSON.stringify(rets.data[0]))          	
 			for(var i in exerciseList){	                
                 exam_infoArr.push(rets.data[0]); 	                                           
             }
@@ -168,6 +170,7 @@ apiready = function() {
     	knowledge_point_id : knowledgePointExercise.knowledge_point_id,
     	member_id : getstor('memberId')
     }
+
     ajaxRequest('api/userAction/examen/get_user_knowledge_point_exercise_list', 'get', params, function(rets, errs) {
         if (rets && rets.state == 'success') {
         	knowledgeList = rets.data;
@@ -200,7 +203,6 @@ apiready = function() {
 		                    		$('.swiper-pagination-bullet[data-exerciseid='+knowledgeList[i].exercise_id+']').addClass("success");
 		                    	}else if(knowledgeList[i].status == "2"){
 		                    		$('.swiper-pagination-bullet[data-exerciseid='+knowledgeList[i].exercise_id+']').addClass("danger");
-		                    		errorNum++;
 		                    	}                    	
 		                    }                    
 		                    // console.log(JSON.stringify(knowledgeList))
@@ -274,7 +276,6 @@ apiready = function() {
 	        		$('.swiper-pagination-bullet[data-exerciseid='+knowledgeList[i].exercise_id+']').addClass("success");
 	        	}else if(knowledgeList[i].status == "2"){
 	        		$('.swiper-pagination-bullet[data-exerciseid='+knowledgeList[i].exercise_id+']').addClass("danger");
-	        		errorNum++;
 	        	}                    	
 	        }                    
 	        // console.log(JSON.stringify(knowledgeList))
@@ -286,7 +287,7 @@ apiready = function() {
 
 //保存答题记录
 function saveQuestionRecord(num){
-	var context = [],status = 2;
+	var context = [],status = 2,examenTotalNum = knowledgePointExercise.exercise_count;
 	$(".swiper-slide").eq(num).find(".selector-detail").each(function(key,val){
 		var selectDetail = {
 			"title": $(this).find("p").text(),
@@ -296,8 +297,6 @@ function saveQuestionRecord(num){
 			selectDetail.myChecked = true;
 			if($(this).attr("data-check") == "true"){
 				status = 1;
-			}else{
-				errorNum++;
 			}
 		}else{
 			selectDetail.myChecked = false;	
@@ -309,7 +308,14 @@ function saveQuestionRecord(num){
 	}else if(status == "2" || status == 2){
 		$('.swiper-pagination-bullet').eq(num).removeClass("success").addClass("danger");
 	} 
-	
+	var errorNum = 0,correctNum = 0;
+	$('.swiper-pagination-bullet').each(function(){
+		if($(this).hasClass("danger")){
+			errorNum++;
+		}else if($(this).hasClass("success")){
+			correctNum++;
+		}
+	})
 	var params = {
 		knowledgePointId : knowledgePointExercise.knowledge_point_id,
 		exerciseId : exerciseList[num],
@@ -329,13 +335,13 @@ function saveQuestionRecord(num){
 		totalTime : totalTime,
 		examenNum : 0,
 		examenName : task_info.title,
-		examenTotalNum : knowledgePointExercise.exercise_count,
-		examenType : task_info.taskType,
+		examenTotalNum : examenTotalNum,
+		examenType : "knowledge",
 		isFinish : 0,
 		taskId : task_info.taskId,
 		currentProgress : swiper.previousIndex,
 		exerciseTitle : exam_info.title,
-		correctNum : errorNum
+		correctNum : correctNum
 	}
 	// console.log(errorNum) 
 	// console.log(JSON.stringify(params)) 
@@ -354,6 +360,13 @@ function saveQuestionRecord(num){
 			});
 		}
 	}	
+	if(knowledgeList.length<1){
+		knowledgeList.push({
+			"exercise_id":params.exerciseId,
+			"context":params.context,
+			"status":params.status
+		});
+	}
 	// if(isPush){
 	// 	knowledgeList.push({"exercise_id":params.exerciseId,"context":params.context});
 	// }

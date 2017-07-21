@@ -115,12 +115,19 @@
                 <div tapmode url="{{=static_url+it.soundPath}}" onclick="playAudio(this)" bg time="{{=it.soundlen}}" class="voice-player"></div>{{ } }}
                 {{if(!isEmpty(it.imgPath)) { }}
                 <ul class="pic-group">
-                  {{ var imgPath=it.imgPath.split(','); }}
-                  {{ for(var i in imgPath) { }}
-                  {{if(i<=2){ }}
-                  <li style="background-image:url({{=static_url+imgPath[i]}})" tapmode onclick="openImageBrower('{{=it.imgPath}}','{{=i}}')"></li>{{ } }}
-                  {{ } }}
-                  {{ if(imgPath.length>=3) { }}<b>共{{=it.imgPath.split(',').length}}张</b>{{ } }}
+                  {{ var imgPath=it.imgPath.split(','),imgPathArr=[];}}
+                    {{ for(var i in imgPath) { }}
+                      {{ if(!isEmpty(imgPath[i])) { }}
+                        {{ imgPathArr.push(imgPath[i]);}}
+                      {{ } }}
+                    {{ } }}
+                    {{ for(var i in imgPathArr) { }}                    
+                    {{var imgPathList=getImgPath('{{=imgPathArr[i]}}');}}
+                    {{imgPathArr.length-1;}}
+                    {{if(i<=2) { }}
+                    <li style="background-image:url({{=imgPathList}})" tapmode onclick="openImageBrower('{{=it.imgPath}}','{{=i}}')"></li>{{ } }}
+                    {{ } }}                   
+                    {{if(imgPathArr.length>=3) { }}<b>共{{=imgPathArr.length}}张</b>{{ } }}
                 </ul>{{ } }}
               </div>
               <div class="qscmsg clearfix">{{if(it.taskprogress != '-1' && it.taskType != ' ' && it.courseId && it.courseId != ' ' && it.chapterId && it.chapterId != ' ' && it.taskId && it.taskId != ' '){ }}

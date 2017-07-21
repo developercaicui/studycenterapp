@@ -160,7 +160,7 @@
                   });
                   return false;
               } else {
-                  param.j_captcha = captcha;
+                  param.captcha = captcha;
               }
           }
           if (is_ok) {
@@ -181,10 +181,17 @@
                       return false;
                   }
                   if (res.state == 'success') {
-                      param.token = res.data.token;
+                      // param.token = res.data.token;
+                      // param.phone = phone;
+                      // param.type = 'send';
+                      // ajaxRequest('api/v2.1/msg/code', 'post', param, function (ret, err) {//007.007 发送手机验证码地址
                       param.phone = phone;
-                      param.type = 'send';
-                      ajaxRequest('api/v2.1/msg/code', 'post', param, function (ret, err) {//007.007 发送手机验证码地址
+                      param.templateSn = '09';
+                      param.isResend = 0;
+                      param.content = "";
+                      param.token = res.data.token;
+                      $api.setStorage('token', res.data.token);
+                      ajaxRequest('api/base/sms/sendsms/v1.0', 'post', param, function (ret, err) {//007.
                           api.hideProgress();
                           if (err) {
                               if (api.connectionType == 'none' || api.connectionType == 'unknown') {

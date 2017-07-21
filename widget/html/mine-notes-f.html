@@ -182,7 +182,7 @@
           if(api.pageParam.self){
             param.self = api.pageParam.self;
           }else{
-            param.self = 0;
+            param.self = 1;
           }
           
           if (page == 1 && show_pro && !is_loding) {
@@ -290,10 +290,14 @@
                   //          });*/
                   //     }
                   // });
-
+                  if (noteDa.length<1) {
+                      $('body').addClass('null');
+                      return false;
+                  }
                       var tpl = $('#tpl').html();
                       var content = doT.template(tpl);
                       if(api.pageParam.self){
+
                           $('#content').html(content({'res1': noteDa, 'res2': noteDa,'flag':true}));
                       }else{
                           $('#content').html(content({'res1': noteDa, 'res2': noteDa}));

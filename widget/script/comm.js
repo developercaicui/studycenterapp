@@ -589,6 +589,7 @@ function set_token(callback) {
         param.appKey = 'f7e4ebaa872f38db7b548b870c13e79e';
     }
     myajaxRequest('api/zbids/app/gettoken/v1.0', 'POST', param, function(ret, err) {
+    // myajaxRequest('api/v2.1/getToken', 'get', param, function(ret, err) {
         if (ret.state == 'success') {
             $api.setStorage('token', ret.data.token);
         }
