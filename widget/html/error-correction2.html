@@ -34,7 +34,12 @@
           api.sendEvent({
               name: 'close-correction2'
           });
-          
+          //设置ios状态栏背景色
+          if (api.systemType == 'ios') {
+              api.setStatusBarStyle({
+                  style: 'light'
+              });
+          }
           api.closeFrame();
           
       }
@@ -44,6 +49,13 @@
           var headerPos = $api.offset(header);
           var width = api.winWidth;
           var height = api.winHeight - headerPos.h;
+
+          //设置ios状态栏背景色
+          if (api.systemType == 'ios') {
+              api.setStatusBarStyle({
+                  style: 'dark'
+              });
+          }
           api.openFrame({
               name: 'error-correction-f2',
               url: 'error-correction-f2.html',

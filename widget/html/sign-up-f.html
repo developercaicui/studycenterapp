@@ -140,7 +140,6 @@
                       $api.setStorage('token', res.data.token);
                       ajaxRequest('api/base/sms/sendsms/v1.0', 'post', param, function (ret, err) {//007.
                           api.hideProgress();
-                          console.log(JSON.stringify(ret))
                           if (err) {
                               if (api.connectionType == 'none' || api.connectionType == 'unknown') {
                                   is_ok = true;
@@ -258,12 +257,10 @@
                       param.code = code;
                       param.agreement = 1;
                       param.token = $api.getStorage('token');
-                      console.log(JSON.stringify(param))
                       // ajaxRequest('api/v2.1/memberReg', 'post', param, function (ret, err) {//007.006  会员手机注册
                       ajaxRequest('api/zbids/member/mobilereg', 'post', param, function (ret, err) {//007.006  会员手机注册
 
                           api.hideProgress();
-                          console.log(JSON.stringify(ret)+"==="+JSON.stringify(err))
                           if (err) {
                               api.toast({
                                   msg: err.msg,
@@ -282,7 +279,7 @@
                               });
                           }else{
                               api.toast({
-                                  msg: err_conf_007[ret.msg],
+                                  msg: ret.msg,
                                   location: 'middle'
                               });
                           }

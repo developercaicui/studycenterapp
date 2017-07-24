@@ -215,10 +215,17 @@
             {{var is_show=isNowChapter(1, '{{=key}}', '{{=key2}}', -1,'{{=val2.chapterId}}');}}
             <li class="list {{=is_show}}">
               <dl>
-                <dt  tapmode onclick="toggleTasks(this)"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskslength="{{=val2.tasks.length}}" class="dot-status" style="left:0.3rem;"></i>
+              {{ if(val2.tasks==null){ }}
+                <dt  tapmode onclick="toggleTasks(this)"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskslength="0" class="dot-status" style="left:0.3rem;"></i>
                   <p style="padding-left: 0.4rem;">{{=val2.chapterTitle}}</p>
                   <ul class="count">{{=countTaskType(key,key2,-1)}}</ul>                 
-                </dt>               
+                </dt> 
+                {{ }else{ }}
+                  <dt tapmode onclick="toggleTasks(this)"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskslength="{{=val2.tasks.length}}" class="dot-status" style="left:0.3rem;"></i>
+                  <p style="padding-left: 0.4rem;">{{=val2.chapterTitle}}</p>
+                  <ul class="count">{{=countTaskType(key,key2,-1)}}</ul>                 
+                </dt> 
+                {{ } }}            
               </dl>
             </li><div class="fath">
             {{~val2.tasks:val4:key4}}

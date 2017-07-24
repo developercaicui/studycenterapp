@@ -310,7 +310,7 @@
             reload: true,
             scrollEnabled: false,
             index: 1,
-            preload: 1,
+            preload: 0,
             vScrollBarEnabled: false,
             hScrollBarEnabled: false,
             frames: [{ //中心
@@ -343,7 +343,6 @@
             userName: username,
             userId: memberId
         }, function(ret, err) {});
-        console.log("memberId::"+memberId)
     } 
 
     //去绑定
@@ -356,7 +355,7 @@
         });
         setTimeout(function() {
             api.setStatusBarStyle({
-                style: 'light'
+                style: 'dark'
             });
         }, 350);
     }
@@ -371,7 +370,7 @@
         });
         setTimeout(function() {
             api.setStatusBarStyle({
-                style: 'light'
+                style: 'dark'
             });
         }, 350);
     }
@@ -386,7 +385,7 @@
         });
         setTimeout(function() {
             api.setStatusBarStyle({
-                style: 'light'
+                style: 'dark'
             });
         }, 350);
     }
@@ -795,7 +794,7 @@
         });
 
         api.setStatusBarStyle({
-            style: 'light'
+            style: 'dark'
         });
         $('input').blur();
         $('.nologin').addClass('none');

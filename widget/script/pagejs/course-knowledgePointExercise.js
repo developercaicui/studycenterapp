@@ -20,6 +20,7 @@ var selectClick = false;//是否选择
 var errorNum = 0;//错题数量
 var totalTime = 0;//做题时间
 var examTime = null;
+var last_exercise_nid = 0;
 
 var exam_info = '';//测试题信息
 var user_exam = [];//用户答案
@@ -170,108 +171,128 @@ apiready = function() {
     	knowledge_point_id : knowledgePointExercise.knowledge_point_id,
     	member_id : getstor('memberId')
     }
+    ajaxRequest('api/userAction/examen/get_exercise_knowledge_member_status', 'POST',{
+    	knowledge_points : knowledgePointExercise.knowledge_point_id,
+    	type : "4",
+    	member_id : getstor('memberId')
+    }, function(data, error) {
+    	
+        if (data && data.state == 'success') {
+        	if(data.data.length>0){
+        		last_exercise_nid = data.data[0].last_exercise_nid;
+        	}
+        	ajaxRequest('api/userAction/examen/get_user_knowledge_point_exercise_list', 'get', params, function(rets, errs) {
+		        if (rets && rets.state == 'success') {
+		        	knowledgeList = rets.data;
+		        	
+				    var iframeSite = "http://www.caicui.com/upload/caicui_cache/exercise/"+knowledgePointExercise.exercise_filename;
+				    $.get(iframeSite, function(result){
 
-    ajaxRequest('api/userAction/examen/get_user_knowledge_point_exercise_list', 'get', params, function(rets, errs) {
-        if (rets && rets.state == 'success') {
-        	knowledgeList = rets.data;
-		    var iframeSite = "http://www.caicui.com/upload/caicui_cache/exercise/"+knowledgePointExercise.exercise_filename;
-		    $.get(iframeSite, function(result){
-		        exerciseList = result.replace(/\n/g,"").split(",");
-		        
-		        getNidExerciseDetail(exerciseList[0]);
+				        exerciseList = result.replace(/\n/g,"").split(",");
+				        getNidExerciseDetail(exerciseList[last_exercise_nid]);
 
-		        api.parseTapmode();
-		        api.hideProgress();   
-		        setTimeout(function(){
-		            swiper = new Swiper('.swiper-container', {
-		                nextButton : '.swiper-button-next',
-		                prevButton : '.swiper-button-prev',
-		                spaceBetween : 0,
-		                speed:100,
-		                // onlyExternal : true,
-		                pagination : '.swiper-pagination',
-		                paginationClickable : true,
-		                paginationBulletRender : function(index, className) {
-		                    return '<span class="' + className + '" data-exerciseid="'+exerciseList[index]+'">' + (index + 1) + '</span>';
-		                },
-		                onInit : function(swiper) {
-		                    $.each($('.course-test-title'), function (k, v) {
-		                        $(v).find('img').attr('src',static_url+$(v).find('img').attr('src'));
-		                    });
-		                    for(var i in knowledgeList){
-		                    	if(knowledgeList[i].status == "1"){
-		                    		$('.swiper-pagination-bullet[data-exerciseid='+knowledgeList[i].exercise_id+']').addClass("success");
-		                    	}else if(knowledgeList[i].status == "2"){
-		                    		$('.swiper-pagination-bullet[data-exerciseid='+knowledgeList[i].exercise_id+']').addClass("danger");
-		                    	}                    	
-		                    }                    
-		                    // console.log(JSON.stringify(knowledgeList))
-		                    $('.swiper-pagination-bullet').eq(15).nextAll().hide();
+				        api.parseTapmode();
+				        api.hideProgress();   
+				        setTimeout(function(){
+				            swiper = new Swiper('.swiper-container', {
+				                nextButton : '.swiper-button-next',
+				                prevButton : '.swiper-button-prev',
+				                spaceBetween : 0,
+				                speed:100,
+				                initialSlide : last_exercise_nid,
+				                // onlyExternal : true,
+				                pagination : '.swiper-pagination',
+				                paginationClickable : true,
+				                paginationBulletRender : function(index, className) {
+				                    return '<span class="' + className + '" data-exerciseid="'+exerciseList[index]+'">' + (index + 1) + '</span>';
+				                },
+				                onInit : function(swiper) {
+				                    $.each($('.course-test-title'), function (k, v) {
+				                        $(v).find('img').attr('src',static_url+$(v).find('img').attr('src'));
+				                    });
+				                    for(var i in knowledgeList){
+				                    	if(knowledgeList[i].status == "1"){
+				                    		$('.swiper-pagination-bullet[data-exerciseid='+knowledgeList[i].exercise_id+']').addClass("success");
+				                    	}else if(knowledgeList[i].status == "2"){
+				                    		$('.swiper-pagination-bullet[data-exerciseid='+knowledgeList[i].exercise_id+']').addClass("danger");
+				                    	}                    	
+				                    }                    
+				                    // console.log(JSON.stringify(knowledgeList))
+				                    $('.swiper-pagination-bullet').eq(15).nextAll().hide();
 
-		                    examTime = setInterval(function(){
-		                    	totalTime++;
-		                    },1000)
-		                },
-		                onSlideChangeEnd : function(swiper) {
-							//保存答题记录
-							var num = parseInt($('.swiper-pagination-bullet-active').text());
-		                	if(selectClick){
-		                		saveQuestionRecord(swiper.previousIndex)
-		                	}
+				                    examTime = setInterval(function(){
+				                    	totalTime++;
+				                    },1000)
+				                },
+				                onSlideChangeEnd : function(swiper) {
+									//保存答题记录
+									var num = parseInt($('.swiper-pagination-bullet-active').text());
+				                	if(selectClick){
+				                		saveQuestionRecord(swiper.previousIndex)
+				                	}
 
-		                    getNidExerciseDetail(exerciseList[swiper.activeIndex]);
-		                   
-		                    if(swiper.slides.length>15){
-		                        if (num > 8) {
-		                            $('.swiper-pagination-bullet').show().eq(num - 7).prevAll().hide();
-		                            $('.swiper-pagination-bullet').eq(num + 7).nextAll().hide();
-		                        }else{
-		                            $('.swiper-pagination-bullet').show().eq(15).nextAll().hide();
-		                        }
-		                    }
-		                    //切换测试题时保存学习进度
-		                    var now_progress = parseInt(swiper.activeIndex) + 1;
-		                    var total = swiper.slides.length;
-		                    if (now_progress == total) {
-		                        var state = 'complate';
-		                        //任务已完成
-		                    } else {
-		                        var state = 'init';
-		                        //任务未完成
-		                    }
-		                    // saveTaskProgress(now_progress, total, state);
-		                }
+				                    getNidExerciseDetail(exerciseList[swiper.activeIndex]);
+				                   
+				                    if(swiper.slides.length>15){
+				                        if (num > 8) {
+				                            $('.swiper-pagination-bullet').show().eq(num - 7).prevAll().hide();
+				                            $('.swiper-pagination-bullet').eq(num + 7).nextAll().hide();
+				                        }else{
+				                            $('.swiper-pagination-bullet').show().eq(15).nextAll().hide();
+				                        }
+				                    }
+				                    //切换测试题时保存学习进度
+				                    var now_progress = parseInt(swiper.activeIndex) + 1;
+				                    var total = swiper.slides.length;
+				                    if (now_progress == total) {
+				                        var state = 'complate';
+				                        //任务已完成
+				                    } else {
+				                        var state = 'init';
+				                        //任务未完成
+				                    }
+				                    // saveTaskProgress(now_progress, total, state);
+				                }
 
-		            });
-		            //根据任务进度，判断默认从第几页开始
-		            if (!isEmpty(last_progress) && last_progress > 1) {
-		                var tmpSlide = last_progress;
-		                if (tmpSlide > 1) {
-		                    swiper.slideTo(tmpSlide - 1, 1000, false);
-		                }
-		            }
-		            is_all_over = true;
-		            //保存任务进度
-		            var now_progress = parseInt(swiper.activeIndex) + 1;
-		            var total = swiper.slides.length;
-		            if (now_progress == total) {
-		                var state = 'complate';
-		                //任务已完成
-		            } else {
-		                var state = 'init';
-		                //任务未完成
-		            }
-		            // saveTaskProgress(now_progress, total, state);
-		        },800)
+				            });
+				            //根据任务进度，判断默认从第几页开始
+				            if (!isEmpty(last_progress) && last_progress > 1) {
+				                var tmpSlide = last_progress;
+				                if (tmpSlide > 1) {
+				                    swiper.slideTo(tmpSlide - 1, 1000, false);
+				                }
+				            }
+				            is_all_over = true;
+				            //保存任务进度
+				            var now_progress = parseInt(swiper.activeIndex) + 1;
+				            var total = swiper.slides.length;
+				            if (now_progress == total) {
+				                var state = 'complate';
+				                //任务已完成
+				            } else {
+				                var state = 'init';
+				                //任务未完成
+				            }
+				            // saveTaskProgress(now_progress, total, state);
+				        },1000)
+				    });
+				}
 		    });
-		}
+
+    	}else{
+    		api.toast({
+                  msg: "加载失败，请返回重试！"
+            });
+    	}
     });
+    
 
 
 	api.addEventListener({
 	      name: 'close-correction2'
 	  }, function(ret) {
-	      for(var i in knowledgeList){
+	  	setTimeout(function(){
+	  		for(var i in knowledgeList){
 	        	if(knowledgeList[i].status == "1"){
 	        		$('.swiper-pagination-bullet[data-exerciseid='+knowledgeList[i].exercise_id+']').addClass("success");
 	        	}else if(knowledgeList[i].status == "2"){
@@ -280,9 +301,8 @@ apiready = function() {
 	        }                    
 	        // console.log(JSON.stringify(knowledgeList))
 	        $('.swiper-pagination-bullet').eq(15).nextAll().hide();
+	  	},200)
 	  })
-
-
 };
 
 //保存答题记录
@@ -291,7 +311,7 @@ function saveQuestionRecord(num){
 	$(".swiper-slide").eq(num).find(".selector-detail").each(function(key,val){
 		var selectDetail = {
 			"title": $(this).find("p").text(),
-			"isChecked":$(this).attr("data-check")
+			"isChecked":($(this).attr("data-check") == "true" ? true : false)
 		}
 		if($(this).hasClass("question-selected")){
 			selectDetail.myChecked = true;
@@ -318,9 +338,9 @@ function saveQuestionRecord(num){
 	})
 	var params = {
 		knowledgePointId : knowledgePointExercise.knowledge_point_id,
-		exerciseId : exerciseList[num],
+		exerciseId : exam_info.id,
 		memberId : getstor('memberId'),
-		context: JSON.stringify(context),
+		context: "'"+JSON.stringify(context)+"'",
 		status: status,
 		subjectId : subjectId,
 		categoryId : categoryId,
@@ -344,7 +364,7 @@ function saveQuestionRecord(num){
 		correctNum : correctNum
 	}
 	// console.log(errorNum) 
-	// console.log(JSON.stringify(params)) 
+	// console.log(JSON.stringify(params.context)) 
 	// var isPush = true;
 	for(var i in knowledgeList){
 		if(knowledgeList[i].exercise_id == params.exerciseId){
@@ -973,7 +993,7 @@ function jiucuo() {
             //study_progress : study_progress,//任务学习的进度
             task_info: task_info,
             task_info_detail: task_info_detail,
-            data_exercise_id : exerciseList[swiper.activeIndex],
+            data_exercise_id : exam_info.id,
             exam_info : exam_info
                 //chapter_info : chapter_info
         }

@@ -2,7 +2,6 @@
 var course_detail;
 var pageName = 'catalog';
 var total = 0;
-
 var getStatusTime = null;
 var videoDownInfo =new Object(); //缓存每个节点的下载状态，一个节点一个id
 var videochangelist = ""; //记录每次定时器和数据库同步数据后发生改变的dom节点id
