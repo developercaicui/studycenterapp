@@ -95,7 +95,6 @@ apiready = function() {
 			return false;
 		}
 		if (ret && ret.state == 'success') {
-            
 			exam_info = ret.data;
 			var exam_tpl = $('#exam_tpl').html();
 			var content = doT.template(exam_tpl);
@@ -808,7 +807,7 @@ function jiucuo() {
     api.setScreenOrientation({
         orientation: 'portrait_up'
     });
-    
+    var exam_id = exam_info.items[swiper.activeIndex];
     api.openFrame({
         name: 'error-correction2',
         url: 'error-correction2.html',
@@ -820,7 +819,8 @@ function jiucuo() {
             progress: parseInt(swiper.activeIndex) + 1, //观看时间进度
             //study_progress : study_progress,//任务学习的进度
             task_info: task_info,
-            task_info_detail: task_info_detail
+            task_info_detail: task_info_detail,
+            exam_id : exam_id.id
                 //chapter_info : chapter_info
         }
     });

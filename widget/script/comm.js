@@ -1119,41 +1119,41 @@ function down(_this) {
     param.activestate = coursestatus.activestate;
     param.expirationTime = coursestatus.expirationTime;                
     param.isbuy = coursestatus.isbuy;                
-    
-    if(type == 3){
-        var data = {};
-        data.format = "json";
-        data.userid = $(_this).attr("videositeid");
-        data.videoid = JSON.parse(tasks).videoCcid;
-        data.time = Date.now();
-        var apikey = $(_this).attr("apikey"),
-            hash = md5("format="+data.format+"&userid="+data.userid+"&videoid="+data.videoid+"&time="+data.time+"&salt="+apikey);
-        data.hash = hash;
-        ajaxRequest({ 'origin': 'http://spark.bokecc.com/', 'pathname': 'api/video/v2' }, 'get',data, function(res, err) {              
 
-            if(res){  
-                if(isEmpty(res.video)){
-                    param.totalSize = "未知";
-                }else{
-                    param.totalSize = res.video.definition[1].filesize;
-                }           
+    // if(type == 3){
+    //     var data = {};
+    //     data.format = "json";
+    //     data.userid = $(_this).attr("videositeid");
+    //     data.videoid = JSON.parse(tasks).videoCcid;
+    //     data.time = Date.now();
+    //     var apikey = $(_this).attr("apikey"),
+    //         hash = md5("format="+data.format+"&userid="+data.userid+"&videoid="+data.videoid+"&time="+data.time+"&salt="+apikey);
+    //     data.hash = hash;
+    //     ajaxRequest({ 'origin': 'http://spark.bokecc.com/', 'pathname': 'api/video/v2' }, 'get',data, function(res, err) {              
+
+    //         if(res){  
+    //             if(isEmpty(res.video)){
+    //                 param.totalSize = "未知";
+    //             }else{
+    //                 param.totalSize = res.video.definition[1].filesize;
+    //             }           
                 
-                $api.setStorage('my_to_down', param);
-                var jsfun = "my_to_down();";
-                api.execScript({
-                    name: 'root',
-                    script: jsfun
-                });
-            }
-        })
-    }else{
+    //             $api.setStorage('my_to_down', param);
+    //             var jsfun = "my_to_down();";
+    //             api.execScript({
+    //                 name: 'root',
+    //                 script: jsfun
+    //             });
+    //         }
+    //     })
+    // }else{
         $api.setStorage('my_to_down', param);
         var jsfun = "my_to_down();";
         api.execScript({
             name: 'root',
             script: jsfun
         });
-    }
+    // }
     
     
 }
@@ -1233,8 +1233,8 @@ function mydown(result) {
             isbuy : param.isbuy,
             islock : param.islock,
             activestate : param.activestate,
-            videoNum : 10,
-            totalSize : param.totalSize
+            videoNum : 10
+            // totalSize : param.totalSize
         }
         var UserId = result.tasks.videoSiteId;
         

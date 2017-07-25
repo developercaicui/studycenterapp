@@ -166,6 +166,7 @@
     <script type="text/javascript">
       var is_ok = true;
       var progress;
+      var exercise_id;
       function sub() {
         var content = $.trim($('textarea[name=content]').val());
         if (content == '') {
@@ -192,9 +193,12 @@
         var type = task_info_detail.taskInfo.taskType;
         var title = task_info_detail.taskInfo.title;
         progress = progress;
-        var videoTime = task_info_detail.taskInfo.videoTime;
-
-
+        var exam_id = api.pageParam.exam_id;
+        if(!isEmpty(exam_id)){
+            exercise_id = exam_id;
+        }else{
+            exercise_id = task_info_detail.taskInfo.id;
+        }
         //var title=content.substr(0,20);
         var nickName = get_loc_val('mine', 'nickName');
         var param = {};
@@ -208,12 +212,11 @@
         
         // test<a class="content-addDom" data-nameJson="{"courseName":"ACCA F1 Accountant in Business","chapterName":"Chapter 1 Organisation and Types of Organisation","taskName":"ACCA F1 Accountant in Business-CH1章节测评","id":"ff8080814b0bf92b014b1cc581a0357d"}" href="javascript:;" data-course-id="ff8080814dad5062014db32051b801a2" data-chapter-id="ff8080814dad5062014db32051d501a7" data-task-id="8a22ecb555a050580155a51484e70259" data-type="exam" data-sort="1" data-exercise-id="ff8080814b0bf92b014b1cc581a0357d" data-title="ACCA F1 Accountant in Business-CH1章节测评" >试题：1题</a>
 
-
-
+// console.log(JSON.stringify(task_info_detail))
         param.memberId = getstor('memberId');//投诉人id
         param.memberName = nickName;//投诉人昵称
         param.cmptType = $(".pop-radio-label.active").find(".pop-radio-span").text();//投诉类型
-        param.cmptContent = content+'<a class="content-addDom" data-nameJson="'+JSON.stringify(nameJson)+'" href="javascript:;" data-course-id="'+courseId+'" data-chapter-id="'+chapterId+'" data-task-id="'+taskId+'" data-type="'+type+'" data-title="'+title+'" data-sort="'+progress+'" data-exercise-id="'+task_info_detail.taskInfo.id+'">试题：'+progress+'题</a>';//投诉内容
+        param.cmptContent = content+'<a class="content-addDom" data-nameJson="'+JSON.stringify(nameJson)+'" href="javascript:;" data-course-id="'+courseId+'" data-chapter-id="'+chapterId+'" data-task-id="'+taskId+'" data-type="'+type+'" data-title="'+title+'" data-sort="'+progress+'" data-exercise-id="'+exercise_id+'">试题：'+progress+'题</a>';//投诉内容
         param.contactWay = $(".pop-input-tel").val();//联系方式
         param.deviceDesc = systype;//设备描述
         api.showProgress({
