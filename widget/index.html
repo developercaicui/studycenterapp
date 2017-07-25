@@ -336,15 +336,19 @@
     }
 
     function bind_push() {
-        var push = api.require('push');
-        var username = get_loc_val('mine', 'nickName');
-        var memberId = getstor('memberId');
-        push.bind({
-            userName: username,
-            userId: "8a22ecb55474935701547591f52d044e"
-        }, function(ret, err) {
-            alert(JSON.stringify(ret)+"==="+JSON.stringify(err))
-        });
+        setTimeout(function(){
+            var push = api.require('push');
+            var username = get_loc_val('mine', 'nickName');
+            var memberId = getstor('memberId');
+
+            push.bind({
+                userName: username,
+                userId: memberId
+            }, function(ret, err) {
+                alert(username+"=="+memberId)
+            });
+        },1000)
+        
     } 
 
     //去绑定

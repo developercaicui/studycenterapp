@@ -28,7 +28,7 @@ function getdownrecord(){
         //------------------结束获取--------------------------
      	var usedTime,speedDown;
         var saverecordObj = JSON.parse(ret.data);
-        console.log(JSON.stringify(saverecordObj))
+        // console.log(JSON.stringify(saverecordObj))
         ///设置下一次读取下载的某个时间之后变化的所有记录
         lastgettime = saverecordObj.readTime;
         //循环处理每一条返回的下载记录，并统计分析最后变化值

@@ -70,11 +70,11 @@
         </div><div class="stydys">
         
         {{~it[p].courseLists:val:key}}
-      <div class="course-stydy">
+      <div class="course-stydy" tapmode onclick="to_active(this)">
         <div class="courseStyTp clearfix"><img src="{{=static_url+val.courseBkImage}}" class="pic">
           <ul class="wod">
             <li class="wodTit">{{=val.courseName}}</li>
-            <li tapmode onclick="to_active(this)" class="noActive">马上激活</li>
+            <li class="noActive">马上激活</li>
             <div class="none data"> {{=JSON.stringify(val)}}</div>
           </ul>
         </div>
@@ -659,7 +659,7 @@
       }
       //链接马上激活页面
       function to_active(obj) {
-          var data = $(obj).siblings('.data').html();
+          var data = $(obj).find('.data').html();
           api.openWin({
               name: 'course-active-top',
               url: 'course-active-top.html',
