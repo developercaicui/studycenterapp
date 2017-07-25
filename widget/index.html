@@ -341,8 +341,10 @@
         var memberId = getstor('memberId');
         push.bind({
             userName: username,
-            userId: memberId
-        }, function(ret, err) {});
+            userId: "8a22ecb55474935701547591f52d044e"
+        }, function(ret, err) {
+            alert(JSON.stringify(ret)+"==="+JSON.stringify(err))
+        });
     } 
 
     //去绑定
