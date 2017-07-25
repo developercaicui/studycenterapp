@@ -43,14 +43,15 @@
           }else{
             param.isU = false;
           }
-          param.orderItemId = data.orderItemId;
-          param.courseId = data.courseId;
           param.orderItemId = data.orderID_item_id;
-          param.examTime = $.trim($('input[name=examTime]').val());
+          var Ttime = $.trim($('input[name=examTime]').val());
+          
+          param.examTime = formatDate(Ttime,'Y')+'-'+formatDate(Ttime,'M')+'-'+formatDate(Ttime,'D')+' '+formatDate(Ttime,'h')+':'+formatDate(Ttime,'m')+':'+formatDate(Ttime,'s');
           api.showProgress({
               title: '激活中',
               modal: true
           });
+          console.log(JSON.stringify(param))
           // ajaxRequest('api/v2/course/active', 'get', param, function (ret, err) {//008.002 课程激活
           ajaxRequest('api/business/order/courseActive/v1.0', 'get', param, function (ret, err) {//008.002 课程激活
           
