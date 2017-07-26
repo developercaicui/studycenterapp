@@ -195,7 +195,8 @@
         progress = progress;
         var exam_id = api.pageParam.exam_id;
         if(!isEmpty(exam_id)){
-            exercise_id = exam_id;
+            exercise_id = exam_id.id;
+            title = exam_id.title;
         }else{
             exercise_id = task_info_detail.taskInfo.id;
         }
@@ -266,6 +267,9 @@
           var title = api.pageParam.task_info.title;
           if(!isEmpty(api.pageParam.exam_info)){
               title = api.pageParam.exam_info.title;
+          }
+          if(!isEmpty(api.pageParam.exam_id)){
+              title = api.pageParam.exam_id.title;
           }
           progress = api.pageParam.progress;//任务进度
           $(".taskInfo-time").find("span").eq(1).html(progress+"题");

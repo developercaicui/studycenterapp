@@ -399,6 +399,40 @@ function saveQuestionRecord(num){
       //         });
     	}
     });
+
+
+    var tmp_progress = errorNum+correctNum;
+    
+    var total = examenTotalNum;
+    if (total <= tmp_progress) {
+        var state = 'complate';
+    } else {
+        var state = 'init';
+    }
+    saveTaskProgress(tmp_progress, total, state);
+}
+
+function saveTaskProgress(now_progress, total, state) {
+  
+    var videoData = {
+        now_progress: now_progress,
+        total: total,
+        state: state,
+        task_info: task_info,
+        task_info_detail: task_info_detail,
+        course_detail: course_detail
+    };
+   
+    $api.setStorage('saveTaskProgress', videoData);
+   
+    var jsfun = "DosaveTaskProgress();";
+    api.execScript({
+        name: 'root',
+        script: jsfun
+    });
+
+    //数据库与服务器之间的同步
+
 }
 //数字转成ABC，用于选择题的选项编号
 function numToAbc(num) {

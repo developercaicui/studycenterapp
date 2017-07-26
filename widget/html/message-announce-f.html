@@ -93,7 +93,8 @@
                   modal: false
               });
           }
-          ajaxRequest('api/v2/message/list', 'get', param, function (ret, err) {//001.002 消息列表（old）type为必填项且error
+          ajaxRequest('api/study/message/list/v1.0', 'get', param, function (ret, err) {//001.002 消息列表（old）type为必填项且error
+          // ajaxRequest('api/v2/message/list', 'get', param, function (ret, err) {//001.002 消息列表（old）type为必填项且error
               is_loding = true;
               api.refreshHeaderLoadDone();
               if (show_pro) {
@@ -172,7 +173,9 @@
           var param = {};
           param.token = $api.getStorage('token');
           param.messageId = id;
-          ajaxRequest('api/v2/message/updateStatus', 'get', param, function (ret, err) {//001.003  更新消息为已读
+          param.isall = 0;
+          // ajaxRequest('api/v2/message/updateStatus', 'get', param, function (ret, err) {//001.003  更新消息为已读
+          ajaxRequest('api/study/message/updateStatus/v1.0', 'get', param, function (ret, err) {//001.003  更新消息为已读
               if (err) {
                   api.toast({
                       msg: err.msg,

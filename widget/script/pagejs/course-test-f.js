@@ -8,7 +8,7 @@ var chapter_info;//当前章节详情信息
 var task_info = '';//当前任务信息
 var task_info_detail;
 var task_arr;//所有的任务信息
-
+var selectClick = false;//是否选择
 var exam_info = '';//测试题信息
 var user_exam = [];//用户答案
 
@@ -148,6 +148,7 @@ apiready = function() {
 					$('.swiper-pagination-bullet').eq(14).nextAll().hide();
 				},
 				onSlideChangeEnd : function(swiper) {
+                    selectClick = false;
 					var num = parseInt($('.swiper-pagination-bullet-active').text());
 					if(swiper.slides.length>14){
 						if (num > 8) {
@@ -164,6 +165,9 @@ apiready = function() {
 					}
 					*/
 					//切换测试题时保存学习进度
+                    if(selectClick){
+                        saveQuestionRecord(swiper.previousIndex)
+                    }
 					var now_progress = parseInt(swiper.activeIndex) + 1;
 					var total = swiper.slides.length;
 					if (now_progress == total) {
@@ -302,6 +306,23 @@ function showAnalysis(obj, num) {
 function select_radio(obj, num, res) {
 	$(obj).addClass('question-selected');
 	$(obj).siblings().removeClass('question-selected');
+    selectClick = true;
+    if($(obj).attr("data-check") == "true"){
+        $('.swiper-pagination-bullet').eq(swiper.activeIndex).removeClass("danger").addClass("success");
+    }else{
+        $('.swiper-pagination-bullet').eq(swiper.activeIndex).removeClass("success").addClass("danger");
+    }
+    var errorNum = $(".danger").length;
+    var correctNum = $(".success").length;
+    var tmp_progress = errorNum+correctNum;
+    
+    var total = $('.swiper-pagination-bullet').length;
+    if (total <= tmp_progress) {
+        var state = 'complate';
+    } else {
+        var state = 'init';
+    }
+    saveTaskProgress(tmp_progress, total, state);
 }
 
 //用户选择多选试题选项
@@ -311,6 +332,24 @@ function select_checkbox(obj, num, res) {
 	} else {
 		$(obj).addClass('question-selected');
 	}
+    selectClick = true;
+     if($(obj).attr("data-check") == "true"){
+        $('.swiper-pagination-bullet').eq(swiper.activeIndex).removeClass("danger").addClass("success");
+    }else{
+        $('.swiper-pagination-bullet').eq(swiper.activeIndex).removeClass("success").addClass("danger");
+    }
+
+    var errorNum = $(".danger").length;
+    var correctNum = $(".success").length;
+    var tmp_progress = errorNum+correctNum;
+    
+    var total = $('.swiper-pagination-bullet').length;
+    if (total <= tmp_progress) {
+        var state = 'complate';
+    } else {
+        var state = 'init';
+    }
+    saveTaskProgress(tmp_progress, total, state);
 }
 
 //矩阵选择题，点击小圆圈选中和取消
@@ -321,7 +360,29 @@ function select_matrix(obj) {
 		$(obj).find('.circle_green').addClass('hide');
 	}
 }
+//保存任务进度
+function saveTaskProgress(now_progress, total, state) {
 
+    var videoData = {
+        now_progress: now_progress,
+        total: total,
+        state: state,
+        task_info: task_info,
+        task_info_detail: task_info_detail,
+        course_detail: course_detail
+    };
+
+    $api.setStorage('saveTaskProgress', videoData);
+
+    var jsfun = "DosaveTaskProgress();";
+    api.execScript({
+        name: 'root',
+        script: jsfun
+    });
+
+    //数据库与服务器之间的同步
+
+}
 //交卷
 function jiaojuan() {
 	if (is_all_over == false) {
@@ -820,7 +881,7 @@ function jiucuo() {
             //study_progress : study_progress,//任务学习的进度
             task_info: task_info,
             task_info_detail: task_info_detail,
-            exam_id : exam_id.id
+            exam_id : exam_id
                 //chapter_info : chapter_info
         }
     });

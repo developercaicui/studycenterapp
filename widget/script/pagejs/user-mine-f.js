@@ -207,11 +207,11 @@ apiready = function() {
 		var param = {};
 		param.pageNo = 0;
 		param.pageSize = 1;
-		param.typeId = '';
+		// param.typeId = '';
 		param.isRead = 0;
-		param.type = 1;
+		// param.type = 1;
 		param.token = $api.getStorage('token');
-		ajaxRequest('api/v2/message/list', 'get', param, function(ret, err) {
+		ajaxRequest('api/study/message/list/v1.0', 'get', param, function(ret, err) {
 			
 			if (err) {
 				api.toast({
