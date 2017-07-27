@@ -167,7 +167,17 @@
                   <li style="background-image:url({{=static_url+imgPath[i]}})" tapmode onclick="openImageBrower('{{=it.res1[p].imgPath}}','{{=i}}')"></li>{{ } }}
                   {{ } }}
                   {{ if(imgPath.length>=3) { }}<b>共{{=it.res1[p].imgPath.split(',').length}}张</b>{{ } }}
-                </ul>{{ } }}
+                </ul>{{ }else if(!isEmpty(it.res1[p].contentHtml)){ }}
+                  <ul class="pic-group">
+                    {{ var imgPath=getreolyImg(it.res1[p].contentHtml); }}
+                    {{ if(!isEmpty(imgPath)) { }}
+                      {{ for(var i in imgPath) { }}
+                      <li style="background-image:url({{=imgPath[i]}})" tapmode onclick="openImageBrower('{{=imgPath[i]}}','{{=i}}')"></li>
+                      {{ } }}
+                      {{ if(imgPath.length>=3) { }}<b>共{{=imgPath.length}}张</b>{{ } }}
+                    {{ } }}
+                </ul>
+                {{ } }}
               </div>
             </div>
           </div>{{ } }}

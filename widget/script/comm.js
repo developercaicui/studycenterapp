@@ -2324,6 +2324,20 @@ function getImgPath(imgPath){
 	 }
 }
 
+function getreolyImg(html){
+   var divHtml = $("<div>");
+   divHtml.html(html);
+   var divHtmlimg = divHtml.find("img");
+   if(divHtmlimg.length<1){
+        return '';
+   }
+   var divHtmlimgArr = [];
+   $.each(divHtmlimg,function(k,v){
+        divHtmlimgArr.push($(this).attr("src"));
+   })
+   return divHtmlimgArr;
+}
+
 function getVersionId(data){
     var versionId = data.versionId;
     var coursestatus ={};

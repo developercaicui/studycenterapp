@@ -1445,29 +1445,42 @@ function sub() {//回复，评论，问题补充
 				});
 				return false;
 			}
+            var aarr,imges="";
+            if(!isEmpty(aa)){
+               aarr = aa.split(",");
+                for(var i in aarr){
+                    imges += '<img src="http://cdnstatic.caicui.com/'+aarr[i]+'"><br>'
+                } 
+            }
+            
 			param = {
                 token : $api.getStorage('token'),
                 id : pageParam.id, //讨论主题id
-                content : $('.textarea').val(), //(必)
-                imgPath : isEmpty(aa) ? '' : aa,
-                soundPath : isEmpty(soundPath) ? '' : soundPath,
-                clientType : appType, // 客户端类型(必)
-                taskId:pageParam.taskId,
-                taskprogress:'',
-                soundlen : isEmpty(lx_duration) ? '' : lx_duration,
-                subjectId :pageParam.subjectId, //科目id(必)
-                courseId:pageParam.courseId,
-                taskType:pageParam.taskType,
-                title : 'title',
-                categoryId :pageParam.categoryId, //讨论证书(必)
-                chapterId : pageParam.chapterId //章节id
+                pageNo : 1, //(必)
+                pageSize : 20, //(必)
+                content : '<p>'+$('.textarea').val()+'</p><br>'+imges, //(必)
+                replaytype : 0 //(必)
+                // imgPath : isEmpty(aa) ? '' : aa
+                // soundPath : isEmpty(soundPath) ? '' : soundPath,
+                // clientType : appType, // 客户端类型(必)
+                // taskId:pageParam.taskId,
+                // taskprogress:'',
+                // soundlen : isEmpty(lx_duration) ? '' : lx_duration,
+                // subjectId :pageParam.subjectId, //科目id(必)
+                // courseId:pageParam.courseId,
+                // taskType:pageParam.taskType,
+                // title : 'title',
+                // categoryId :pageParam.categoryId, //讨论证书(必)
+                // chapterId : pageParam.chapterId //章节id
 			};
 			is_define = false;
 			api.showProgress({
 				title : '处理中',
 				modal : true
 			});
-			ajaxRequest('api/studytools/discussreply/v2.1', 'post', param, function(ret, err) {//003.303  参与讨论（回复）
+
+            // ajaxRequest('api/studytools/discussreply/v2.1', 'post', param, function(ret, err) {//003.303  参与讨论（回复）
+			ajaxRequest('api/studytools/bbsreply/v1.0', 'post', param, function(ret, err) {//003.303  参与讨论（回复）
 				api.hideProgress();
 				if (err) {
                     is_define = true;

@@ -122,6 +122,9 @@ function getNidExerciseDetail(exerciseId){
         			rets.data[0].context = htmlData.html().replace(/'/g,'');
         			var contextArr = JSON.parse(rets.data[0].context);
         			for(var i in contextArr){
+        				if(typeof(contextArr[i]) == "string"){
+	        				contextArr[i] = JSON.parse(contextArr[i]);
+	        			}
         				if(contextArr[i].title.indexOf("点击这里编辑")>0){
         					delete  contextArr[i];
         				}
