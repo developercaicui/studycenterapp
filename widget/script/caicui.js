@@ -845,7 +845,7 @@ function DosaveTaskProgress() {
 		post_param.state = stateNum;
 		post_param.isSupply = 0;
 		post_param.createDate = new Date().getTime();
-			console.log(JSON.stringify(post_param))
+			// console.log(JSON.stringify(post_param))
 
 		ajaxRequest({ 'origin': 'http://action.caicui.com/', 'pathname': 'api/userAction/course/taskProgress/v1.0/' }, 'get', {'token':user_token,'message':JSON.stringify(post_param)}, function(ret, err) {
 				if (err) {
@@ -855,7 +855,7 @@ function DosaveTaskProgress() {
 						});
 						return false;
 				}
-			console.log(JSON.stringify(ret))
+			// console.log(JSON.stringify(ret))
 		});
 }
 

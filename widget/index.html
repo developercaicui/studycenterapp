@@ -51,7 +51,9 @@
     <div class="islogin none">
         <div class="header homeheader">
             <div class="header-home">
+                <div tapmode onclick="openScanner()" style="position:absolute;left:0.3rem;">扫码</div>
                 <div class="center">
+                    
                     <i style="background: url(image/zbg.png) no-repeat;width: 1.76rem;height: 0.56rem;background-size: 100% 100%;"></i>
                     <i style="width: 1px;height: 0.5rem;background-color: #ccc;"></i>
                     <i class="icon-caicui"></i><i class="icon-caicui-e"></i>
@@ -152,7 +154,28 @@
     var clickCount = 1;
     var timePicker;
     var y, h;
+    function openScanner(){
+        var FNScanner = api.require('FNScanner');
+        FNScanner.openScanner({
+            autorotation: true
+        }, function(ret, err) {
+            alert(JSON.stringify(ret))
+            if(ret && ret.eventType == 'success'){
+                //扫码成功
+                var code = ret.content.split("=")[1];
+                //调接口
 
+            }else if(ret.eventType == 'fail'){
+                //扫码失败
+                api.toast({
+                    msg: '扫码失败，请重新尝试！',
+                    location: 'middle'
+                });
+
+            }
+            
+        });
+    }
     function to_set() { //打开设置
         api.setStatusBarStyle({
             style: 'dark'

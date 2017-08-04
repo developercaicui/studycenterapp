@@ -52,6 +52,8 @@ apiready = function() {
 
 
 	task_type = task_info.taskType;
+
+
 	if (api.pageParam.type == 'task') {
 		exe_task = true;
 		hasFrame = true;
@@ -61,10 +63,14 @@ apiready = function() {
 		link_title = api.pageParam.link_title;
 		link_url = api.pageParam.link_url;
 	}
-	//getChapterInfo();
-	//$('.left-next').text(course_detail.courseName);
-	//$('.left-next').text(chapterName);
-	$('.left-next').text(task_info_detail.chapterName);
+
+	if(!isEmpty(task_info_detail)){
+		$('.left-next').text(task_info_detail.chapterName);
+	}
+	if(!isEmpty(api.pageParam.chapterTitle)){
+		$('.left-next').text(api.pageParam.chapterTitle);
+	}
+	
 	//顶部显示课程标题
 
 	//监听切换事件
@@ -146,7 +152,11 @@ function frameContent() {
 			
 			 frame_name = 'course-knowledgePointExercise';
 			 frame_url = 'course-knowledgePointExercise.html';
-		} else if (task_info.taskType == 'pdfread') {
+		} else if (task_info.taskType == 'openCourse') {
+			//直播类型
+			 frame_name = 'course-openCourse';
+			 frame_url = 'course-openCourse.html';
+		}else if (task_info.taskType == 'pdfread') {
 			//文档类型,使用图片查看pdf
 			 frame_name = 'course-test-pdf';
 			 frame_url = 'course-test-pdf.html';
@@ -175,6 +185,9 @@ function frameContent() {
 	}
 	if(task_info.taskType == 'knowledgePointExercise'){
 		params.knowledgePointExercise = knowledgePointExercise;
+	}
+	if(task_info.taskType == 'openCourse'){
+		params.data = api.pageParam.data;
 	}
 	// alert(JSON.stringify(params.knowledgePointExercise))
 	api.openFrame({

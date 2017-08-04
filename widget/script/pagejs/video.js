@@ -90,7 +90,6 @@ apiready = function() {
 //      closeVideo();
 //  });
 
-
     is_check = false;
     //关闭课程考试页
     api.closeWin({
@@ -117,10 +116,11 @@ apiready = function() {
     task_arr = save_tasks(course_detail);
 
     task_info_detail = task_arr[task_info.taskId];
+    console.log(JSON.stringify(task_arr))
     //获取章节信息
     //getChapterInfo();
 
-    if (isEmpty(task_info) || task_info.taskType != 'video') {
+    if (isEmpty(task_info) || (task_info.taskType != 'video' && task_info.taskType != 'openCourse')) {
         api.alert({
             title: '温馨提示',
             msg: '数据异常，请返回重试',
@@ -202,11 +202,16 @@ apiready = function() {
     api.addEventListener({
         name: 'keyback'
     }, function(ret, err) {
-    	
-        last_progress = getVideoProgress(videoid);
-        last_progress = DB.getTaskProgressSync(task_info.taskId).progress;
+    	demo.stop(function(res) {
+            if (api.systemType == 'android') {
+                var tmp_progress = parseInt(res.ctime / 1000);
+            } else {
+                var tmp_progress = parseInt(res.ctime);
+            }
+            closeThisWin(tmp_progress);
+        })
 		
-        closeThisWin(last_progress);
+        
         //关闭页面
     });
     //监听关闭视频
@@ -338,7 +343,7 @@ function play_video() {
 
             demo.open(param, function(ret, err) {
                 //4G下是否播放视频
-                
+               
 // 				if ((isEmpty($api.getStorage("status"+videoid)) || $api.getStorage("status"+videoid) != 'YES')) {
 // //           if (!isFinish) {
 //                     if(api.connectionType == '4g' || api.connectionType == '4G' && (ret.btnType != 1 && ret.btnType !=2 && ret.btnType!=3&& ret.btnType != 4 && ret.btnType !=5 && ret.btnType!=6&& ret.btnType != 7 && ret.btnType !=8 && ret.btnType!=9 && ret.btnType!=-1 && ret.btnType!='-1' && ret.btnType!='play')){
@@ -744,31 +749,29 @@ function play_video() {
                             jumptime = last_progress;
                         }
                         if(api.systemType == 'android'){
-                          	demo.getStudyProgress({
-                                totime: jumptime
-                            }, function(res) {
-                                var ctime = res.cTime;
-                                var tmp_progress = parseInt(ctime / 1000);                          
-                                var total = videoTimes;
-                                if (total * 0.9 <= tmp_progress) {
-                                    var state = 'complate';
-                                } else {
-                                    var state = 'init';
-                                }
-                                saveTaskProgress(tmp_progress, total, state);
-                            });
+                            //此方法不知为何在提问上传图片后总是闪退
+                          	// demo.getStudyProgress({
+                           //      totime: jumptime
+                           //  }, function(res) {
+                           //      var ctime = res.cTime;
+                           //      var tmp_progress = parseInt(ctime / 1000);                          
+                           //      var total = videoTimes;
+                           //      if (total * 0.9 <= tmp_progress) {
+                           //          var state = 'complate';
+                           //      } else {
+                           //          var state = 'init';
+                           //      }
+                           //      saveTaskProgress(tmp_progress, total, state);
+                           //  });
                     
                         }else{
                              demo.iosGetStudyProgress({
                                 totime: jumptime
                             }, function(res) {
                                 var ctime = res.ctime;
-                                // alert(ctime);
-                                if (api.systemType == 'android') {
-                                    var tmp_progress = parseInt(ctime / 1000);
-                                } else {
-                                    var tmp_progress = parseInt(ctime);
-                                }
+                                
+                                var tmp_progress = parseInt(ctime);
+                                
                                 var total = videoTimes;
                                 if (total * 0.9 <= tmp_progress) {
                                     var state = 'complate';

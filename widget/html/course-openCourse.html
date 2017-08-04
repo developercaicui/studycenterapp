@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="../css/api.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/common-component.css">
+    <link rel="stylesheet" type="text/css" href="../css/font-icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/caicui.css">
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/zepto.js"></script>
+    <link rel="stylesheet" href="../css/swiper.min.css">
+    <link rel="stylesheet" href="../css/user-center.css">
+    <link rel="stylesheet" href="../css/about-video.css">
+    <style>
+        body{
+            background: #fff;
+        }
+        .course-content{
+            background-color:#fff;
+        }
+        .course-content.swiper-slide p{
+            font-size: 0.25rem;
+        }
+        .course-content.swiper-slide p:nth-child(1){
+            font-weight: bold;
+        }
+        .course-content.swiper-slide p:nth-child(2){
+            margin-top: 0.1rem;
+            font-size: 0.2rem;
+            color: #00a084;
+        }
+        .course-test-selector{
+            margin: 0.1rem auto 0 auto;
+        }
+        .course-test-title{
+            margin: 0.2rem auto 0 auto;
+        }
+        .selector-detail {
+            position: relative;
+            width: 100%;
+            background-color: #f0f2f1;
+            padding: 0.1rem;
+            border-radius:0;
+            border: 1px solid #929292;
+            box-sizing: border-box;
+            margin-top: 0.1rem;
+        }
+        .course-content.swiper-slide .selector-detail p{
+            font-size: 0.18rem;
+            color: #393939;
+            font-weight: normal;
+            margin-left: 0.05rem;
+        }
+        .answer-analysis-btn{
+            border-radius: 0.3rem;
+        }
+        .answer-analysis-cont{
+            display: block;
+            border: none;
+            padding:0; 
+            font-size: 0.2rem;
+            color: #777;
+            padding-top: 0.1rem;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="swiper-container">
+      <div id="exam_content" class="swiper-wrapper">
+      <div class="course-content swiper-slide swiper-slide-active">
+      <div class="course-test-title">
+         <p>5月20日直播</p> 
+         <p>直播时间：5月20日 19：30--20:30</p>
+      </div>
+      <div data-type="radio" data-num="0" class="course-test-selector exam-yf">
+          <div class="selector-detail clear-fix"><p><!-- 简　　介中博诚通为了ACCAer们顺利通过3月各个科目考试，让中博优秀明星讲师打造F1-P7串讲课程，此次共28场直播，对于各个科目深度解读，同学也可以在线老师互动提问问题，老师会对此进行解答学习目标 针对2017年3月ACCA全球大考，有效复习各个知识点，抓住重点难点，短期内快速提高成绩，让复习更高效，顺利通过考试。\r\n\r\n优秀学员交流地及老师内部资料获取\r\n\r\n想寻找一起学习ACCA的小伙伴加群： ACCA【DO】 26338966\r\n\r\n群内及时更新最新ACCA机考报名，缴费，代报名，ACCA机考考点，考试费用，OUB学位，等任何学员所关心的AC CA问题。\r\n\r\n也可获取最新考试资料，历年真题，考官文章，模拟题，相关英语材料等，群内有优秀学员和老师随时解答在做题或者跟ACCA相关的各种问题。欢迎加入这个大家庭。\r\n\r\n十个ACCA学员中有七个来自中博诚通\r\n\r\n中博诚通-财萃网，国际高端财经教育专家。成立于2004年，经过 12年沉淀，在全国拥有49家分部教学， 38家机考中心授权 ，凭借超高的通过率，荣获 10项ACCA官方授权的“黄金级教育机构”荣誉称号！拥有303名的精英讲师团队，针对于不同基础的学员，开设不同的授课类型（如ACCA精英班/ACCA基础班/ACCA网课）等班型！\r\n\r\n开课时间\r\n\r\n2月10日19：30~21：30\r\n\r\n教师简介\r\n\r\n张秀军&nbsp; Susie\r\n\r\nF2.F9全日制讲师，ACCA 准会员 CMA 会员\r\n\r\n留学英国多年，毕业于诺森比亚大学，工商管理学学士，全球财务管理硕士。ACCA 7年教龄，一直专注于财务管理领域，精准掌握考官思路，平均通过率遥遥领先于全球通过率。曾培养出一名全球第一，所带的班级多次达到100%的通过率。北京对外经贸大学特聘F9讲师，郑州航空航天大学特聘F9讲师。2008年曾出色的用全英文的授课方式完成了对中石油非洲员工的财务培训课程。 \r\n\r\n --></p> </div>
+      </div>
+      <div class="answer-analysis">
+          <div onclick="opencourseLive(this)" tapmode class="answer-analysis-btn">预约报名</div>
+          <div class="answer-analysis-cont">
+              课程预约后会在直播前一小时发送开播通知
+          </div>
+        </div>  
+      </div>
+    </div>
+
+    
+    <script type="text/javascript" src="../script/comm.js"></script>
+    <script type="text/javascript" src="../script/doT.min.js"></script>
+    <script type="text/javascript" src="../script/caicui.js"></script>
+    <script type="text/javascript" src="../script/db.js"></script>
+    <script type="text/javascript" src="../script/saveTasksProgress.js"></script>
+    <script type="text/javascript" src="../script/jquery.min.js"></script>
+    <script type="text/javascript" src="../script/swiper.js"></script>
+    <script type="text/javascript">
+      var task_info,startTime,endTime;
+       apiready = function () {
+          task_info = api.pageParam.task_info;
+          var title = task_info.title;
+
+          startTime = task_info.openCourseStartTime;
+          endTime = task_info.openCourseEndTime;
+          var content = task_info.openCourseContent;
+          
+
+          $(".course-test-title").find("p").eq(0).html(title);
+          $(".course-test-title").find("p").eq(1).html("直播时间:"+formatDate(startTime,'M')+"月"+formatDate(startTime,'D')+"日&nbsp;&nbsp;"+formatDate(startTime,'h')+":"+formatDate(startTime,'m')+"---"+formatDate(endTime,'h')+":"+formatDate(endTime,'m'));
+          
+          $(".selector-detail").find("p").html(content);
+
+          setLiveBtn();
+
+          // api.addEventListener({
+          //     name: 'close_live'
+          // }, function(ret, err) {
+          //     setLiveBtn();
+          // });
+      };
+
+      //进入直播间
+      function opencourseLive(obj){
+          if($(obj).hasClass("active")){
+              var pageParams = {};
+              pageParams.openCourseLiveManageId = task_info.openCourseLiveManageId;
+              pageParams.openCourseLiveRoomId = task_info.openCourseLiveRoomId;
+              pageParams.openCourseLiveRoomPassword = task_info.openCourseLiveRoomPassword;
+
+              //横屏切换到竖屏
+              api.setScreenOrientation({
+                  orientation: 'portrait_up'
+              });
+              //跳转到直播页面
+              api.openFrame({
+                  name: "course-live",
+                  url: "course-live.html",
+                  delay: 200,
+                  slidBackEnabled: false,//iOS7.0及以上系统中，禁止通过左右滑动返回上一个页面
+                  pageParam: task_info
+              });
+          }
+          
+
+      }
+      
+      function setLiveBtn(){
+          var nowTime = new Date().getTime();
+          $(".answer-analysis-btn").removeClass("active");
+          if(nowTime < startTime*1000){
+              $(".answer-analysis-btn").html("直播未开始");
+          }else if(nowTime >= startTime*1000 && nowTime < endTime*1000){
+              $(".answer-analysis-btn").html("进入直播间");
+              $(".answer-analysis-btn").addClass("active");
+          }else{
+              $(".answer-analysis-btn").html("直播已结束");
+          }
+      }
+    </script>
+  </body>
+</html>

@@ -455,7 +455,7 @@ var err_conf_007 = {
     '1013': '还没完善用户信息',
     'nologin': '没有登录'
 };
-var debug = false;
+var debug = true;
 var show_pro = true;
 var common_url, static_url;
 if (debug) {
@@ -1258,7 +1258,7 @@ function mydown(result) {
         if(api.systemType == "ios"){
 	        cache_model.inserCourseDetailJson({
 	            "userId" : memberId,
-	            "courseId" : param.  courseId,
+	            "courseId" : param.courseId,
 	            "courseJson" : JSON.stringify(param.courseJson)
 	        },function(ret,err){
 	//			alert(JSON.stringify(ret))

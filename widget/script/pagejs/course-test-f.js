@@ -64,6 +64,7 @@ var swiper;
 // });
 
 apiready = function() {
+    
 	//获取参数
 	courseId = api.pageParam.courseId;//课程id
 	course_detail = api.pageParam.course_detail;//课程详情
@@ -94,6 +95,7 @@ apiready = function() {
 			});
 			return false;
 		}
+        // console.log(JSON.stringify(ret))
 		if (ret && ret.state == 'success') {
 			exam_info = ret.data;
 			var exam_tpl = $('#exam_tpl').html();

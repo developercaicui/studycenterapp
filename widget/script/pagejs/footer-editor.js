@@ -361,6 +361,7 @@ function getPic(type, w, h) {
             targetHeight : h,
             allowEdit : false
         }, function(ret, err) {
+            
             $('.backdrop').click(function() {
                 $api.setStorage('sign-photo', 1);
                 //api.closeFrame();
@@ -370,14 +371,16 @@ function getPic(type, w, h) {
                 //api.closeFrame();
                 return false;
             }
+            
             if (ret && ret.data) {
                 if (!in_array(getFixName(ret.data), allowPicTtype)) {
-                    api.toast({
+                    api.toast({ 
                         msg: '无法上传此种格式的图片',
                         location: 'middle'
                     });
                     return false;
                 }
+
                 upload(ret.data);
             }
         });

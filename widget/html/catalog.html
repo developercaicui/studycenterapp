@@ -64,6 +64,10 @@
       		background: url(../image/video2.png) no-repeat;
 		    background-size: 100% 100%;
       }
+      .list.activeTask ul.count li.live:before{
+          background: url(../image/live2.png) no-repeat;
+        background-size: 100% 100%;
+      }
       .list.activeTask ul.count li.exam:before{
       		background: url(../image/task2.png) no-repeat;
 		    background-size: 100% 100%;
@@ -83,6 +87,16 @@
 		    position: absolute;
 		    left: .1rem;
 		}
+    .cache-list ul.count li.live:before{
+        content: "";
+        display: inline-block;
+        background: url(../image/live.png) no-repeat;
+        background-size: 100% 100%;
+        width: 0.40rem;
+        height: 0.35rem;
+        position: absolute;
+        left: .1rem;
+    }
 		.cache-list ul.count li.exam:before {
 		    content: "";
 		    display: inline-block;
@@ -103,6 +117,16 @@
 		    margin-top: .05rem;
         vertical-align: middle;
 		}
+    .taskLive{
+      display: inline-block;
+        background: url(../image/live.png) no-repeat;
+        background-size: 100% 100%;
+        width: 0.40rem;
+        height: 0.35rem;
+        margin-left: .5rem;
+        margin-top: .05rem;
+        vertical-align: middle;
+    }
 		.taskExam{
       display: inline-block;
         background: url(../image/task.png) no-repeat;
@@ -204,6 +228,20 @@
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                 </dd>
               </dl>
+            </div>{{ }else if(val4.taskType=='openCourse'){ }}
+            <div class="taskList {{=is_show}}">
+              <dl style="padding-left:0.7rem">
+                <dt tapmode onclick="openlive('{{=val4.openCourseLiveManageId}}','{{=val4.openCourseLiveRoomId}}','{{=val4.openCourseLiveRoomPassword}}',this,'{{=val3.chapterTitle}}')"><i type="1" data-chapId="{{=val3.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskLive"></span>
+                  <p style="padding-left: 0.9rem;top: 0.35rem;color:#787878;width: 82%;">{{=val4.title}}</p>
+                  <!--p  {{=progress+'='+val2.chapterId}}-->
+                </dt>
+                <dd>
+                  <div id="" class="" style="text-align: center;">
+                    <span></span>
+                  </div>
+                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                </dd>
+              </dl>
             </div>
             {{ } }}
             {{~}}</div>
@@ -261,6 +299,20 @@
               <dl style="padding-left:0.7rem">
                 <dt tapmode onclick="next(2,'{{=key}}','{{=key2}}','{{=key3}}',this,'{{=val2.chapterId}}','{{=val2.knowledgePointId}}')"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskExam"></span>
                   <p style="padding-left: 0.9rem;top: 0.35rem;color:#787878;width: 82%;">{{=val4.title}}</p>
+                  <!--p  {{=progress+'='+val2.chapterId}}-->
+                </dt>
+                <dd>
+                  <div id="" class="" style="text-align: center;">
+                    <span></span>
+                  </div>
+                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                </dd>
+              </dl>
+            </div>{{ }else if(val4.taskType=='openCourse'){ }}
+            <div class="taskList {{=is_show}}">
+              <dl style="padding-left:0.7rem">
+                <dt tapmode onclick="openlive('{{=val4.openCourseLiveManageId}}','{{=val4.openCourseLiveRoomId}}','{{=val4.openCourseLiveRoomPassword}}',this,'{{=val2.chapterTitle}}')"><i type="1" data-chapId="{{=val2.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskLive"></span>
+                  <p style="padding-left: 0.9rem;top: 0.35rem;color:#787878;width: 82%;">{{=val4.title}}&nbsp;&nbsp;</p>
                   <!--p  {{=progress+'='+val2.chapterId}}-->
                 </dt>
                 <dd>
@@ -330,6 +382,19 @@
                   <div class="down_data none">{{=JSON.stringify(val4)}}</div>
                 </dd>
               </dl>
+            </div>{{ }else if(val4.taskType=='openCourse'){ }}
+            <div class="taskList {{=is_show}}">
+              <dl style="padding-left:0.7rem">
+                <dt tapmode onclick="openlive('{{=val4.openCourseLiveManageId}}','{{=val4.openCourseLiveRoomId}}','{{=val4.openCourseLiveRoomPassword}}',this,'{{=val.chapterTitle}}')"><i type="1" data-chapId="{{=val.chapterId}}" data-taskid="{{=val4.taskId}}" class="dot-status"></i><span class="taskLive"></span>
+                  <p style="padding-left: 0.9rem;top: 0.35rem;color:#787878;width: 82%;">{{=val4.title}}</p>
+                </dt>
+                <dd>
+                  <div id="" class="" style="text-align: center;">
+                    <span></span>
+                  </div>
+                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                </dd>
+              </dl>
             </div>
             {{ } }}
             {{~}}</div>
@@ -338,7 +403,49 @@
     </script>
     <script type="text/javascript" src="../script/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8">
+    function openlive(openCourseLiveManageId,openCourseLiveRoomId,openCourseLiveRoomPassword,obj,chapterTitle){
+        clearInterval(getStatusTime);
+        var data = $.trim($(obj).next().find(".down_data").html()).replace(/<[^<]*>/g,'');
+        var liveinfo = JSON.parse(data);
+        
+        console.log(JSON.stringify(liveinfo))
+        if(!isEmpty(liveinfo.openCourseCcid) && !isEmpty(liveinfo.openCourseSiteId)){
+
+            judge_task(liveinfo, 0 ,3);
+
+            return false;
+
+        }
+        var pageParams = {};
+        //需要传递的参数
+        var pageParams = {
+            from: 'course-studying',
+            courseId: course_detail.courseId,//课程id
+            //study_progress: res_process,//学习进度
+            last_progress: 0,//学习进度
+            course_detail: course_detail,//课程详情
+            task_info: liveinfo,//当前要学习的任务信息
+            type: 'task'
+        };
+        
+        pageParams.data = $.trim($(obj).next().find(".down_data").html());
+        pageParams.chapterTitle = chapterTitle;
+        api.setScreenOrientation({
+            orientation: 'landscape_right'
+        });
+        //跳转到播放页面
+        api.openWin({
+            name: "course-test",
+            url: "course-test.html",
+            delay: 200,
+            slidBackEnabled: false,//iOS7.0及以上系统中，禁止通过左右滑动返回上一个页面
+            pageParam: pageParams
+        });        
+        
+    }
+
       function next(leave, num1, num2, num3, obj, cid,knowledgePointId) {
+
       	  clearInterval(getStatusTime);
       	  $api.setStorage("setchapterId",cid);
       	  var downState = $(obj).next().find(".down-progress").attr("type");
@@ -440,6 +547,7 @@
               'video': 0,
               'exam': 0,
               'knowledgePointExercise':0,
+              'openCourse':0,
               'doc': 0,
               'entry': 0
           };
@@ -451,6 +559,8 @@
                   tmp_num.exam++;
               } else if (tmp_tasks.taskType == 'knowledgePointExercise') {
                   tmp_num.knowledgePointExercise++;
+              } else if (tmp_tasks.taskType == 'openCourse') {
+                  tmp_num.openCourse++;
               } else if (tmp_tasks.taskType == 'pdfread') {
                   tmp_num.doc++;
               } else if (tmp_tasks.taskType == 'entry') {
@@ -466,6 +576,9 @@
           }
           if (tmp_num.knowledgePointExercise > 0) {
               tmp_html += '<li class="exam"><span class="multiples" style="font-size:.3rem;">' + tmp_num.knowledgePointExercise + '</span></li>';
+          }
+          if (tmp_num.openCourse > 0) {
+              tmp_html += '<li class="live" style="font-size:.3rem;"><span class="multiples">' + tmp_num.openCourse + '</span></li>';
           }
           if (tmp_num.doc > 0) {
               tmp_html += '<li><span class="multiples">' + tmp_num.doc + '</span></li>';
@@ -535,7 +648,7 @@
               return false;
           }
           //判断当前任务类型
-          if (task_info.taskType == 'video') {
+          if (task_info.taskType == 'video' || task_info.taskType == 'openCourse') {
               //视频类型
               var new_win_name = 'video';
               var new_win_url = 'video.html';

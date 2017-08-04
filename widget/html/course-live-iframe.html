@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="../css/api.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/common-component.css">
+    <link rel="stylesheet" type="text/css" href="../css/font-icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/caicui.css">
+    <script type="text/javascript" src="../script/zepto.js"></script>
+  </head>
+  <body style="position:relative;width: 100%;height: 500px;overflow: hidden;">
+    <form action="https://view.csslcloud.net/api/view/login" id="viewerForm" style="width: 100%;height: 1000px;opacity: 0; font-size: 20px;" method="post">
+        <div class="mt1">
+          <input type="text" placeholder="用户昵称" id="viewername" name="viewername">
+        </div>
+        
+        <div>
+          <input type="text" placeholder="直播密码" id="viewertoken" name="viewertoken">
+        </div>
+        
+         <div class="mt1">
+          <input type="text" placeholder="直播间id" id="roomid" name="roomid">
+        </div>
+
+         <div class="mt1">
+          <input type="text" placeholder="用户id" id="userid" name="userid">
+        </div>
+
+
+        <div>
+          <input type="submit" id="viewerSubmit" class="btn btn-large btn-info" value="进入直播">
+        </div>
+        <!-- <input type="text" id="roomid" name="roomid" value="">
+        <input type="text" id="userid" name="userid" value=""> -->
+      </form>
+    <script src="//view.csslcloud.net/js/_fix.js"></script>
+    <script type="text/javascript"> 
+      
+      
+          var roomid = GetQueryString('roomid');
+          var userid = GetQueryString('userid');
+
+          var viewername = GetQueryString('viewername');
+          var viewertoken = GetQueryString('viewertoken');
+
+          $('#viewername').val(viewername);
+          $('#viewertoken').val(viewertoken);
+          $('#roomid').val(roomid);
+          $('#userid').val(userid);
+          $('#viewerSubmit').click();
+          
+        function GetQueryString(name){
+          var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+          var r = window.location.search.substr(1).match(reg);
+          if(r!=null)return  unescape(r[2]); return null;
+        }
+    </script>
+  </body>
+</html>
