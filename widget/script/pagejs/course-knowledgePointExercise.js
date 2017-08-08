@@ -339,8 +339,7 @@ function saveQuestionRecord(num){
 			correctNum++;
 		}
 	})
-	console.log("'"+JSON.stringify(context)+"'");
-	return;
+	
 	var params = {
 		knowledgePointId : knowledgePointExercise.knowledge_point_id,
 		exerciseId : exam_info.id,
