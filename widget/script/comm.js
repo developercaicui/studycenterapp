@@ -455,7 +455,7 @@ var err_conf_007 = {
     '1013': '还没完善用户信息',
     'nologin': '没有登录'
 };
-var debug = true;
+var debug = false;
 var show_pro = true;
 var common_url, static_url;
 if (debug) {
