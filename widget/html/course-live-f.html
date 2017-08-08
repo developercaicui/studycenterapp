@@ -14,25 +14,41 @@
     <script type="text/javascript" src="../script/zepto.js"></script>
   </head>
   <body style="position:relative;width: 100%;height: 100%;overflow: hidden;">
-    <iframe width="100%" height="100%"></iframe>
-
+    <iframe style="position: absolute;z-index: 2;" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+    <div tapmode onclick="my_close(this)" style="width:0.3rem;height:0.3rem;position: absolute;right:0.2rem;top: 0.2rem;font-size: 0.2rem;z-index: 99999;color: #fff;display: none;background: url(../image/closefull.png) no-repeat;background-size:100% 100%;" class="btnFull"></div>
     <script type="text/javascript" src="../script/comm.js"></script>
     <script type="text/javascript" src="../script/doT.min.js"></script>
     <script type="text/javascript" src="../script/caicui.js"></script>
     <script type="text/javascript" src="../script/db.js"></script>
     <script type="text/javascript" src="../script/saveTasksProgress.js"></script>
-    <script type="text/javascript"> 
-      
+    <script type="text/javascript">
+
+      function my_close() {
+          //横屏切换到竖屏
+            api.setScreenOrientation({
+                orientation: 'portrait_up'
+            });
+          api.sendEvent({
+              name: 'close_live'
+          });  
+          api.closeFrame({name:"course-live-f"});
+
+      }
+      var values;
       apiready = function () {
 
           var params = api.pageParam;
-          var values;
-          if(!isEmpty(params.liveRoomPassword)){
+          if($api.getStorage("livemenu") == "true"){
+              $(".btnFull").css("display","block");
+              $api.setStorage("livemenu",false);
+          }
+          
+          if(!isEmpty(params.openCourseLiveRoomPassword)){
               values = {
                   roomid: params.openCourseLiveRoomId,
                   userid: params.openCourseLiveManageId,
                   viewername: get_loc_val('mine', 'nickName'),
-                  viewertoken: params.liveRoomPassword,
+                  viewertoken: params.openCourseLiveRoomPassword,
                   autoLogin: true
               }
 
@@ -51,21 +67,18 @@
 
           }
 
-          values.roomid = "FD9878C7F1462B8F9C33DC5901307461";
-          values.userid = "5A5317CD18F546D7";
+          // values.roomid = "FD9878C7F1462B8F9C33DC5901307461";
+          // values.userid = "5A5317CD18F546D7";
 
           // values.viewername = "8a22cc685215de9f01521b37b748020f";
           // values.viewertoken = "9bb38605-2a65-4c80-bb0e-013d075183ca";
           
-           api.showProgress({
-               title: '加载中',
-               modal: true
-           });
+           
           console.log('https://view.csslcloud.net/api/view/login?roomid='+values.roomid+"&userid="+values.userid+"&viewername="+values.viewername+"&viewertoken="+values.viewertoken)
+
            $("iframe").attr("src",'course-live-iframe.html?roomid='+values.roomid+"&userid="+values.userid+"&viewername="+values.viewername+"&viewertoken="+values.viewertoken)
 
-          api.hideProgress();
-    
+        
           
           // $('#viewerSubmit').click();
           

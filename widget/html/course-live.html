@@ -13,8 +13,8 @@
     <script type="text/javascript" src="../script/api.js"></script>
     <script type="text/javascript" src="../script/zepto.js"></script>
     <style>
- 
-    	#header{background: #fff;color:#000;}
+    body{background: none;}
+    	#header{background:none;color:#000;}
         .header{color:#000;border-bottom: 1px solid #d4d4d4;}
         .header .left:after{display: none;}
         .icon-arrow-left{color:#00a186;font-weight: bold;}
@@ -59,7 +59,7 @@
       <div tapmode onclick="my_close()" class="left back"><i class="icon-arrow-left"></i></div>
       <div class="left-next">直播间</div>
     </div>
-
+    <button tapmode onclick="changeWin(this)" style="width:2rem;position: absolute;right:0;top: 0.3rem;font-size: 0.26rem;border:none;outline: none;z-index: 99999;" class="btnFull">[ ]全屏</button>
     <script type="text/javascript" src="../script/comm.js"></script>
     <script type="text/javascript" src="../script/doT.min.js"></script>
     <script type="text/javascript" src="../script/caicui.js"></script>
@@ -69,15 +69,58 @@
       $(document).ready(function () {
           document.documentElement.style.fontSize = 100 * (document.documentElement.clientWidth / 1280) + 'px';
 
-      })
+      });
+
+      function changeWin(obj){
+
+            api.setScreenOrientation({
+              orientation: 'landscape_right'
+            });
+            $(obj).addClass("active");
+            var header = $api.byId('header');
+            $api.fixIos7Bar(header);
+            var headerPos = $api.offset(header);
+            var width = api.winWidth;
+            var height = api.winHeight;
+
+            api.closeFrame({name:"course-live-f"});
+            
+            $api.setStorage("livemenu",true);
+            api.openFrame({
+                name: 'course-live-f',
+                url: 'course-live-f.html',
+                bgColor: '#fff',
+                bounces: true,
+                opaque: true,
+                reload: true,
+                vScrollBarEnabled: false,
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: "auto",
+                    h: width
+                },
+                pageParam: api.pageParam
+            });
+
+
+      }
+
       apiready = function () {
-        
+
+          document.documentElement.style.fontSize = 100 * (document.documentElement.clientWidth / 720) + 'px';
+
           var header = $api.byId('header');
           $api.fixIos7Bar(header);
           var headerPos = $api.offset(header);
           var width = api.winWidth;
           var height = api.winHeight - headerPos.h;
-         
+          
+          if(api.systemType == "ios"){
+                $(".btnFull").css("top","0.6rem")
+            }
+
+          $api.setStorage("livemenu",false);
           api.openFrame({
               name: 'course-live-f',
               url: 'course-live-f.html',
@@ -94,11 +137,12 @@
               },
               pageParam: api.pageParam
           });
-          api.addEventListener({
-              name: 'keyback'
-          }, function (ret, err) {
-              my_close();
-          });
+
+           api.addEventListener({
+                name: 'close_live'
+            }, function(ret, err) {
+                location.reload();
+            });
       };
 
       function my_close() {

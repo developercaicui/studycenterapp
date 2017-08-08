@@ -82,7 +82,7 @@
       <div class="answer-analysis">
           <div onclick="opencourseLive(this)" tapmode class="answer-analysis-btn">预约报名</div>
           <div class="answer-analysis-cont">
-              课程预约后会在直播前一小时发送开播通知
+              <!-- 课程预约后会在直播前一小时发送开播通知 -->
           </div>
         </div>  
       </div>
@@ -98,7 +98,10 @@
     <script type="text/javascript" src="../script/swiper.js"></script>
     <script type="text/javascript">
       var task_info,startTime,endTime;
+      
        apiready = function () {
+          document.documentElement.style.fontSize = 100 * (document.documentElement.clientWidth / 460) + 'px';
+
           task_info = api.pageParam.task_info;
           var title = task_info.title;
 
@@ -129,10 +132,7 @@
               pageParams.openCourseLiveRoomId = task_info.openCourseLiveRoomId;
               pageParams.openCourseLiveRoomPassword = task_info.openCourseLiveRoomPassword;
 
-              //横屏切换到竖屏
-              api.setScreenOrientation({
-                  orientation: 'portrait_up'
-              });
+              
               //跳转到直播页面
               api.openFrame({
                   name: "course-live",

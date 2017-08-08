@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="../css/api.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/common-component.css">
+    <link rel="stylesheet" type="text/css" href="../css/font-icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/caicui.css">
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/zepto.js"></script>
+    <link rel="stylesheet" href="../css/Sstyle.css">
+    <style>
+      body{
+          background: #fff;
+      }
+    	#header{background: #fff;color:#000;}
+        .header{color:#000;border-bottom: 1px solid #d4d4d4;}
+        .header .left:after{display: none;}
+        .icon-arrow-left{color:#00a186;font-weight: bold;}
+        .header .left-next {
+            font-size: 0.36rem;
+            padding-left: 1rem;
+            max-width: 90%;
+            overflow: hidden;
+            word-wrap: normal;
+            text-overflow: ellipsis;
+            float: none;
+            white-space: pre;
+        }
+        
+    </style>
+  </head>
+  <body>
+    <div class="styHeight">
+    	<div id="header" class="header">
+	      <div tapmode onclick="my_close()" class="left back"><i class="icon-arrow-left"></i></div>
+	      <div class="left-next"></div>
+	      
+	    </div>   
+    </div>
+    <script type="text/javascript" src="../script/comm.js"></script>
+    <script type="text/javascript" src="../script/doT.min.js"></script>
+    <script type="text/javascript" src="../script/caicui.js"></script>
+    <script type="text/javascript" src="../script/db.js"></script>
+    <script type="text/javascript" src="../script/saveTasksProgress.js"></script>
+    <script src="../script/fx.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        var courseId;//课程id
+        var course_detail;//章节课程信息
+        //var study_progress;//当前的进度
+        var chapter_info;//当前章节详情信息
+        var task_info = '';//当前任务信息
+        var courseName;//播放器标题(只显示课程的标题，不显示章节和任务标题)
+        var chapterName;//播放器标题(只显示课程的标题，不显示章节和任务标题)
+        var task_arr;//所有的任务信息
+        var task_info_detail;
+        var last_progress = 0;
+        var task_type;//任务类别
+        var link_title;//外链标题
+        //设置ios状态栏背景色
+    apiready = function() {
+
+        api.setStatusBarStyle({
+          style : 'dark'
+        });
+        //监听返回键
+        api.addEventListener({
+          name : 'keyback'
+        }, function(ret, err) {
+          my_close();
+        });
+        //获取参数
+        courseId = api.pageParam.courseId;//课程id
+        course_detail = api.pageParam.course_detail;//课程详情
+        courseName = course_detail.courseName;//课程名字
+        //study_progress = api.pageParam.study_progress;//当前的进度
+        knowledgePointExercise = api.pageParam.knowledgePointExercise;
+        task_info = api.pageParam.task_info;//任务信息
+        if(!isEmpty(api.pageParam.chapterTitle)){
+          $('.left-next').text(api.pageParam.chapterTitle);
+        }
+
+        var header = $api.byId('header');
+    //  $api.fixIos7Bar(header);
+      var headerPos = $api.offset(header);
+      var width = api.winWidth;
+        var frame_name;
+        var frame_url;
+        var params;
+
+       frame_name = 'course-openCourse';
+       frame_url = 'course-openCourse.html';
+        params = {
+          courseId : courseId,
+          course_detail : course_detail,
+          //study_progress : study_progress,
+          task_info : task_info,
+          last_progress : last_progress,
+          task_info_detail : task_info_detail
+          //chapter_info : chapter_info
+        };
+        api.openFrame({
+            name : frame_name,
+            url : frame_url,
+            bounces : false,
+            opaque : true,
+            reload : true,
+            vScrollBarEnabled : false,
+            rect : {
+              x : 0,
+              y : headerPos.h,
+              w : width,
+              h : "auto"
+            },
+            pageParam : params
+        });
+    }
+
+    //关闭当前页面
+    function my_close() {
+        api.setScreenOrientation({
+            orientation : 'portrait_up'
+        });
+          api.closeWin();
+        
+    }
+
+    </script>
+  </body>
+</html>

@@ -104,7 +104,7 @@ apiready = function() {
 
     task_info = api.pageParam.task_info; //任务信息
     videoid = task_info.videoCcid;
-    //alert(JSON.stringify(task_info))
+    // alert(JSON.stringify(task_info))
     videoTimes = task_info.videoTime;
     
     isFinish = api.pageParam.isFinish;
@@ -116,7 +116,7 @@ apiready = function() {
     task_arr = save_tasks(course_detail);
 
     task_info_detail = task_arr[task_info.taskId];
-    console.log(JSON.stringify(task_arr))
+    // console.log(JSON.stringify(task_arr));
     //获取章节信息
     //getChapterInfo();
 
@@ -284,7 +284,7 @@ function check_net(videoid) {
 //播放视频函数
 function play_video() {
 
-    getCCconfig(function(CCconfig) {
+    getCCconfig(function(CCconfig) {console.log(CCconfig)
         if (CCconfig) {
             demo.init(); 
             var UserId = task_info.videoSiteId;
@@ -304,18 +304,41 @@ function play_video() {
             if( last_progress == videoTimes || last_progress == (videoTimes-1) || last_progress == (videoTimes+1)){
                 last_progress = 0;
             }
-            //alert(task_info.apiKey+'===='+UserId+'====='+(isEmpty(CCconfig[UserId]) ? 0 : 1));
+            // console.log(JSON.stringify(task_info));
             //用户学习进度
-            var param = {
-                //title : courseName.substring(0,40),
-                //title : chapterName.substring(0,40),
-                title: task_info_detail.chapterName.substring(0, 40),
-                videoId: videoid,
-                totime: last_progress,
-                apiKey: task_info.apiKey,
-                UserId: UserId,
-                isEncryption: isEmpty(CCconfig[UserId]) ? 0 : 1
-            };
+            var param;
+            if(task_info.taskType != "openCourse"){
+                param = {
+                    //title : courseName.substring(0,40),
+                    //title : chapterName.substring(0,40),
+                    title: task_info_detail.chapterName.substring(0, 40),
+                    videoId: videoid,
+                    totime: last_progress,
+                    apiKey: task_info.apiKey,
+                    UserId: UserId,
+                    isEncryption: isEmpty(CCconfig[UserId]) ? 0 : 1
+                };
+            }
+            if(task_info.taskType == "openCourse"){
+                var UserId = task_info.openCourseSiteId;
+                if(UserId == 'E5DD260925A6084B'){
+                    apiKey = '3tF0Ao1MWHEdFp4Lf4LuEgkU8LKpOPLi';
+                }else if(UserId == 'D550E277598F7D23'){
+                    apiKey = 'q6pLhLMSit3QuuYAD4TIyQ3pJNKiY0Ez';
+                }else if(UserId == '5A5317CD18F546D7'){
+                    apiKey = 'SKTGOMwf4iY4EuZYHtBqFRTOWjGFI9SZ';
+                }
+                param = {
+                    //title : courseName.substring(0,40),
+                    //title : chapterName.substring(0,40),
+                    title: "直播课",
+                    videoId: task_info.openCourseCcid,
+                    totime: 0,
+                    apiKey: apiKey,
+                    UserId: UserId,
+                    isEncryption: isEmpty(CCconfig[UserId]) ? 0 : 1
+                };
+            } 
 //          param.isFinish = !isEmpty($api.getStorage(param.videoId)) && $api.getStorage(param.videoId) == 'YES' ? true : false;
 			param.isFinish = isFinish;
 			

@@ -84,7 +84,7 @@ apiready = function() {
 	});
     
 	
-	ajaxRequest('api/v2.1/testcenter/testexamination', 'get', {
+	ajaxRequest({'origin':'http://api.caicui.com/','pathname': 'api/v2.1/testcenter/testexamination'}, 'get', {
 		examenId : examenId
 	}, function(ret, err) {//004.014获取试卷考题
 		if (err) {

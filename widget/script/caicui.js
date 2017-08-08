@@ -742,7 +742,8 @@ function buys(id, goods_price) {
 function getCCconfig(callback, is_force) {
 		var CCconfig = isEmpty($api.getStorage('CCconfig')) ? false : $api.getStorage('CCconfig');
 		if ((!CCconfig || is_force) && $api.getStorage('token')) {
-				ajaxRequest('api/v2.1/oauth/getConfig', 'post', {
+			
+				ajaxRequest({'origin':'http://api.caicui.com/','pathname': 'api/v2.1/oauth/getConfig'}, 'post', {
 						token: $api.getStorage('token'),
 						societyType: 'ccidinfo' 
 				}, function(ret, err) { //003.303.1  发布讨论
