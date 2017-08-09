@@ -446,7 +446,12 @@ function play_video() {
                 } else if (ret.btnType == 2) { //对应列表按钮
            			$api.setStorage("currentPlayVideoId",videoid);
                     //点击右上角按钮,保存进度,并打开横屏的章节页面
-                    
+                    if(task_info.taskType == "openCourse"){
+                        api.toast({
+                            msg : '直播课暂不支持此功能'
+                        });
+                        return false;
+                    }
                     demo.stop(function(res) {
                         if (res.ctime == 'nan' || res.ctime == 0) {
                             api.toast({
@@ -483,6 +488,12 @@ function play_video() {
                         }
                     });
                 } else if (ret.btnType == 3) { //对应播放上一个按钮
+                    if(task_info.taskType == "openCourse"){
+                        api.toast({
+                            msg : '直播课暂不支持此功能'
+                        });
+                        return false;
+                    }
                     is_check = false;
                     //播放上一个视频
                     demo.stop(function(res) {
@@ -511,6 +522,12 @@ function play_video() {
                     })
                 }
                 if (ret.btnType == 4) { //对应播放下一个按钮
+                    if(task_info.taskType == "openCourse"){
+                        api.toast({
+                            msg : '直播课暂不支持此功能'
+                        });
+                        return false;
+                    }
                     is_check = false;
                     //播放下一个视频
                     demo.stop(function(res) {
@@ -543,6 +560,12 @@ function play_video() {
                     alert("声音");
                 } else if (ret.btnType == 7) { //对应笔记按钮
                     //暂停视频,打开横屏的创建笔记页面
+                    if(task_info.taskType == "openCourse"){
+                        api.toast({
+                            msg : '直播课暂不支持此功能'
+                        });
+                        return false;
+                    }
                     demo.stop(function(res) {
                         if (res.ctime == 'nan' || res.ctime == 0) {
                             api.toast({
@@ -581,6 +604,12 @@ function play_video() {
                     });
                 } else if (ret.btnType == 8) { //对应提问按钮
                     //暂停视频,打开横屏的创建提问页面
+                    if(task_info.taskType == "openCourse"){
+                        api.toast({
+                            msg : '直播课暂不支持此功能'
+                        });
+                        return false;
+                    }
                     demo.stop(function(res) {
                         if (res.ctime == 'nan' || res.ctime == 0) {
                             api.toast({
@@ -619,6 +648,12 @@ function play_video() {
                     });
                 } else if (ret.btnType == 9) { //对应讲义按钮
                     //用户点击讲义按钮
+                    if(task_info.taskType == "openCourse"){
+                        api.toast({
+                            msg : '直播课暂不支持此功能'
+                        });
+                        return false;
+                    }
                     if (isEmpty(task_info.attachmentPath)) {
                         demo.stop(function(res) {});
                         api.toast({
@@ -684,6 +719,12 @@ function play_video() {
                     }
                 } else if (ret.btnType == 11) {//纠错
                     //暂停视频,打开纠错页面
+                    if(task_info.taskType == "openCourse"){
+                        api.toast({
+                            msg : '直播课暂不支持此功能'
+                        });
+                        return false;
+                    }
                     demo.stop(function(res) {
                         if (res.ctime == 'nan' || res.ctime == 0) {
                             api.toast({

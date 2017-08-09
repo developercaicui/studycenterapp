@@ -249,6 +249,7 @@ function initDom() {
                     api.hideProgress();
 	                return false;
 	           }
+               
                 $.each(JSON.parse(ret.data),function(k,v){
                     var ret_data = JSON.parse(v.courseJson);
                     var res = {

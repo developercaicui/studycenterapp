@@ -230,6 +230,7 @@ apiready = function() {
 				                onSlideChangeEnd : function(swiper) {
 									//保存答题记录
 									var num = parseInt($('.swiper-pagination-bullet-active').text());
+									console.log(selectClick)
 				                	if(selectClick){
 				                		saveQuestionRecord(swiper.previousIndex)
 				                	}

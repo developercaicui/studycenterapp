@@ -92,7 +92,7 @@
         display: inline-block;
         background: url(../image/live.png) no-repeat;
         background-size: 100% 100%;
-        width: 0.36rem;
+        width: 0.34rem;
         height: 0.36rem;
         position: absolute;
         left: .1rem;
@@ -121,7 +121,7 @@
       display: inline-block;
         background: url(../image/live.png) no-repeat;
         background-size: 100% 100%;
-        width: 0.36rem;
+        width: 0.34rem;
         height: 0.36rem;
         margin-left: .5rem;
         margin-top: .05rem;
@@ -408,7 +408,7 @@
         var data = $.trim($(obj).next().find(".down_data").html()).replace(/<[^<]*>/g,'');
         var liveinfo = JSON.parse(data);
         
-        console.log(JSON.stringify(liveinfo))
+        // console.log(JSON.stringify(liveinfo))
         if(!isEmpty(liveinfo.openCourseCcid) && !isEmpty(liveinfo.openCourseSiteId)){
 
             judge_task(liveinfo, 0 ,3);

@@ -28,6 +28,9 @@
             api.setScreenOrientation({
                 orientation: 'portrait_up'
             });
+            api.setStatusBarStyle({
+                  style: 'dark'
+              });
           api.sendEvent({
               name: 'close_live'
           });  
@@ -41,6 +44,11 @@
           if($api.getStorage("livemenu") == "true"){
               $(".btnFull").css("display","block");
               $api.setStorage("livemenu",false);
+
+              api.setStatusBarStyle({
+                  style: 'light'
+              });
+
           }
           
           if(!isEmpty(params.openCourseLiveRoomPassword)){
@@ -74,7 +82,7 @@
           // values.viewertoken = "9bb38605-2a65-4c80-bb0e-013d075183ca";
           
            
-          console.log('https://view.csslcloud.net/api/view/login?roomid='+values.roomid+"&userid="+values.userid+"&viewername="+values.viewername+"&viewertoken="+values.viewertoken)
+          // console.log('https://view.csslcloud.net/api/view/login?roomid='+values.roomid+"&userid="+values.userid+"&viewername="+values.viewername+"&viewertoken="+values.viewertoken)
 
            $("iframe").attr("src",'course-live-iframe.html?roomid='+values.roomid+"&userid="+values.userid+"&viewername="+values.viewername+"&viewertoken="+values.viewertoken)
 
