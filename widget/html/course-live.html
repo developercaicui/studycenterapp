@@ -59,7 +59,7 @@
       <div tapmode onclick="my_close()" class="left back"><i class="icon-arrow-left"></i></div>
       <div class="left-next">直播间</div>
     </div>
-    <button tapmode onclick="changeWin(this)" style="width:0.32rem;height:0.32rem;position: absolute;right:0.3rem;top: 0.3rem;font-size: 0.26rem;border:none;outline: none;z-index: 99999;background: url(../image/full.png) no-repeat;background-size:100% 100%; " class="btnFull"></button>
+    <button tapmode onclick="changeWin(this)" style="width:0.32rem;height:0.32rem;background: url(../image/full.png) no-repeat;background-size:100% 100%;position: absolute;right:0.3rem;top: 0.3rem;border:none;outline: none;z-index: 99999;" class="btnFull"></button>
     <script type="text/javascript" src="../script/comm.js"></script>
     <script type="text/javascript" src="../script/doT.min.js"></script>
     <script type="text/javascript" src="../script/caicui.js"></script>
@@ -80,7 +80,12 @@
             var header = $api.byId('header');
             $api.fixIos7Bar(header);
             var headerPos = $api.offset(header);
-            var width = api.winWidth;
+            if(api.systemType != "ios"){
+                var width = api.winWidth - 20;
+            }else{
+                var width = api.winWidth;
+            }
+            
             var height = api.winHeight;
 
             api.closeFrame({name:"course-live-f"});

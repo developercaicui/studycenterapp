@@ -92,7 +92,7 @@
         display: inline-block;
         background: url(../image/live.png) no-repeat;
         background-size: 100% 100%;
-        width: 0.34rem;
+        width: 0.32rem;
         height: 0.36rem;
         position: absolute;
         left: .1rem;
@@ -108,7 +108,7 @@
 		    left: .2rem;
 		}
 		.taskVideo{
-			display: inline-block;
+			  display: inline-block;
 		    background: url(../image/video.png) no-repeat;
 		    background-size: 100% 100%;
 		    width: 0.40rem;
@@ -118,17 +118,17 @@
         vertical-align: middle;
 		}
     .taskLive{
-      display: inline-block;
+        display: inline-block;
         background: url(../image/live.png) no-repeat;
         background-size: 100% 100%;
-        width: 0.34rem;
+        width: 0.32rem;
         height: 0.36rem;
         margin-left: .5rem;
         margin-top: .05rem;
         vertical-align: middle;
     }
 		.taskExam{
-      display: inline-block;
+        display: inline-block;
         background: url(../image/task.png) no-repeat;
         background-size: 100% 100%;
         width: 0.30rem;
@@ -239,7 +239,7 @@
                   <div id="" class="" style="text-align: center;">
                     <span></span>
                   </div>
-                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                  <div class="down_data none">{{=JSON.stringify(changeJson(val4))}}</div>
                 </dd>
               </dl>
             </div>
@@ -319,7 +319,7 @@
                   <div id="" class="" style="text-align: center;">
                     <span></span>
                   </div>
-                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                  <div class="down_data none">{{=JSON.stringify(changeJson(val4))}}</div>
                 </dd>
               </dl>
             </div>
@@ -392,7 +392,7 @@
                   <div id="" class="" style="text-align: center;">
                     <span></span>
                   </div>
-                  <div class="down_data none">{{=JSON.stringify(val4)}}</div>
+                  <div class="down_data none">{{=JSON.stringify(changeJson(val4))}}</div>
                 </dd>
               </dl>
             </div>
@@ -403,12 +403,15 @@
     </script>
     <script type="text/javascript" src="../script/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-    function openlive(openCourseLiveManageId,openCourseLiveRoomId,openCourseLiveRoomPassword,obj,chapterTitle){
+    function openlive(openCourseLiveManageId,openCourseLiveRoomId,openCourseLiveRoomPassword,obj,chapterTitle,liveDate){
         clearInterval(getStatusTime);
+
         var data = $.trim($(obj).next().find(".down_data").html()).replace(/<[^<]*>/g,'');
+        // var data = liveDate;
+        
         var liveinfo = JSON.parse(data);
         
-        // console.log(JSON.stringify(liveinfo))
+        
         if(!isEmpty(liveinfo.openCourseCcid) && !isEmpty(liveinfo.openCourseSiteId)){
 
             judge_task(liveinfo, 0 ,3);
@@ -442,6 +445,21 @@
             pageParam: pageParams
         });        
         
+    }
+
+    function changeJson(data){
+        if(data){
+            data.openCourseContent = stringToEntity(data.openCourseContent);
+           return data; 
+        }
+        
+    }
+
+    function stringToEntity(str){
+      var newStr = '';
+      var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"','#39':"'"};
+      newStr = str.replace(/&(lt|gt|nbsp|amp|quot|#39);/ig,function(all,t){return arrEntities[t];});
+      return newStr;
     }
 
       function next(leave, num1, num2, num3, obj, cid,knowledgePointId) {
