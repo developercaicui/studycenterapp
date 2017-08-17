@@ -800,12 +800,13 @@ function DosaveTaskProgress() {
 		var user_nickname = get_loc_val('mine', 'nickName');
 		var user_token = $api.getStorage('token');
 		var user_memberId = get_loc_val('mine', 'memberId');
+		var categoryName = course_detail.categoryName ? course_detail.categoryName.replace(/\&/," ") : course_detail.categoryName;
 		var post_param = {
 				token: user_token,
 				memberId: user_memberId,
 				memberName: user_nickname,
 				categoryId: course_detail.categoryId, //必须，证书id    ff808081473905e701475cd3c2080001
-				categoryName: course_detail.categoryName.replace(/\&/," "), // 证书名称
+				categoryName: categoryName, // 证书名称
 				subjectId: course_detail.subjectId, //必须，科目id  ff808081473905e7014762542d940078
 				subjectName: course_detail.subjectName.replace(/\&/," "), // 科目名称
 				courseId: course_detail.courseId, //必须，课程id    ff808081486933e6014889882d9c0590
