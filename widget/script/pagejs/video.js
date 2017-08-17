@@ -284,7 +284,7 @@ function check_net(videoid) {
 //播放视频函数
 function play_video() {
 
-    getCCconfig(function(CCconfig) {console.log(CCconfig)
+    getCCconfig(function(CCconfig) {
         if (CCconfig) {
             demo.init(); 
             var UserId = task_info.videoSiteId;

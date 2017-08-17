@@ -51,7 +51,7 @@
     <div class="islogin none">
         <div class="header homeheader">
             <div class="header-home">
-                <!-- <div tapmode onclick="openScanner()" style="position:absolute;left:0.3rem;background: url(image/scan.png) no-repeat;background-size: 100% 100%;width: 0.46rem;height: 0.46rem;top: 0.26rem;"></div> -->
+                <div tapmode onclick="openScanner()" style="position:absolute;left:0.36rem;background: url(image/scan.png) no-repeat;background-size: 100% 100%;width: 0.46rem;height: 0.46rem;top: 0.26rem;"></div>
                 <div class="center">
                     
                     <i style="background: url(image/zbg.png) no-repeat;width: 1.76rem;height: 0.56rem;background-size: 100% 100%;"></i>
@@ -162,17 +162,30 @@
         }, function(ret, err) {
             if(ret && ret.eventType == 'success'){
                 //扫码成功
+                
+                if(ret.content.indexOf("?code=")==-1){
+                    openApp(ret.content);
+                    return false;
+                }
+
                 var code = ret.content.split("=")[1];
+                if(isEmpty(code)){
+                    api.toast({
+                        msg: "二维码定位信息失败，请核对后再试！！",
+                        location: 'middle'
+                    });
+                    return false;
+                }
                 api.showProgress({
                   title:'加载中',
                   modal:false
-              });
+                });
                 //调接口
                 ajaxRequest('api/teachsource/course/handoutqrcodeinfo', 'get', {
                     qrCodeNo:code
                 }, function (ret, err) {
                     if (err) {
-                          
+                          api.hideProgress();
                           api.toast({
                               msg: err.msg,
                               location: 'middle'
@@ -180,12 +193,23 @@
                           return false;
                       }
                       if(ret && ret.state == 'success'){
+                        if(ret.data.length<1){
+                            api.toast({
+                                msg: "二维码定位信息失败，请核对后再试！",
+                                location: 'middle'
+                            });
+                            return false;
+                        }
                         var data = ret.data[0];
                         courseId = data.courseId;
-
+                        
                         ajaxRequest('api/teachsource/course/courseDetail', 'get', {
                               courseId: courseId
                           }, function (ret, err) {//004.006获取课程的详细信息
+                              api.showProgress({
+                                title:'加载中',
+                                modal:false
+                              });
                               if (err) {
                                   api.hideProgress();
                                   api.toast({
@@ -196,6 +220,7 @@
                               }
                               if (ret && ret.state == 'success') {
                                   if (!ret.data) {
+                                    api.hideProgress();
                                       api.toast({
                                           msg: '暂无任务',
                                           location: 'middle'
@@ -208,6 +233,7 @@
 
 // console.log(JSON.stringify(tasks))
                                   if (isEmpty(tasks)) {
+                                      api.hideProgress();
                                       api.toast({
                                           msg: '暂无任务',
                                           location: 'middle'
@@ -215,10 +241,21 @@
                                       return false;
                                   }
                                   setTimeout(function(){
+                                      api.showProgress({
+                                        title:'加载中',
+                                        modal:false
+                                      });
                                         var theTime = translateSec(data.qrCodeTaskList[0].position)
                                         judge_task(tasks, theTime);
                                   },1000)
                                   
+                              }else{
+                                  api.hideProgress();
+                                  api.toast({
+                                      msg: '加载失败，请重新尝试！',
+                                      location: 'middle'
+                                  });
+                                  return false;
                               }
                           });
                       }
@@ -253,7 +290,7 @@
     }
 
     function judge_task(task_info, lastProgress,downState,knowledgePointId) {
-      
+        
           if (isEmpty(course_detail) || isEmpty(course_detail.chapters) || isEmpty(task_info)) {
               api.toast({
                   msg: '获取课程信息失败',
@@ -401,6 +438,29 @@ function gets_tasks(courseDetail,taskId) {
                 }
         }
 }
+
+
+function openApp(url) {
+    if(isEmpty(url)){
+      return false;
+    }
+    if (api.systemType == 'android') {
+            api.openApp({
+              androidPkg : 'android.intent.action.VIEW',
+              mimeType : 'text/html',
+              uri : url
+          }, function(ret, err) {
+              
+          });
+        } else if(api.systemType == 'ios') {
+            api.openApp({
+              iosUrl :url 
+          }, function(ret, err) {
+              
+          });
+        }       
+}
+
     function to_set() { //打开设置
         api.setStatusBarStyle({
             style: 'dark'

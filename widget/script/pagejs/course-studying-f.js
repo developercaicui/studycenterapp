@@ -1304,7 +1304,7 @@ function getData(page) {
 		    //过滤重复课程
     		categoryIdArr = categoryIdArr.unique();
 
-// console.log(JSON.stringify(categoryIdArr))
+console.log(JSON.stringify(categoryIdArr))
 				
 				total = ret.data.total;
     			if (page == 1) {
@@ -1381,8 +1381,11 @@ apiready = function() {
 	});
 };
 //历史课程详情
-function course_det(_this,xyc, a, b,  e, f,g,h) {
-
+function course_det(_this,xyc, a, b,  e, f,g,h,l) {
+	if(l != 0){
+		api.toast({msg:'当前的课程已锁定,续费后即可解锁！',location:'middle'})
+		return false;
+	}
 	var c = $(_this).data('chaptername');
 	var d = $(_this).data('coursename');
 	//if(c=='undefined'||!c){

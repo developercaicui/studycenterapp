@@ -1,5 +1,10 @@
 var is_debug = false;
-function CourseDetail(co, ch, su, ca, cn,chapterName,subjectName,categoryName,expirationTime,versionId) {
+function CourseDetail(co, ch, su, ca, cn,chapterName,subjectName,categoryName,expirationTime,versionId,lock) {
+    if(lock != 0){
+        api.toast({msg:'当前的课程已锁定,续费后即可解锁！',location:'middle'})
+        return false;
+    }
+
     var course_detail = {};
     course_detail.chapterId = ch;
     course_detail.courseId = co;

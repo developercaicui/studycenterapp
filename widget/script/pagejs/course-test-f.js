@@ -62,7 +62,12 @@ var swiper;
 //     }
 
 // });
-
+function stringToEntity(str){
+      var newStr = '';
+      var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"','#39':"'"};
+      newStr = str.replace(/&(lt|gt|nbsp|amp|quot|#39);/ig,function(all,t){return arrEntities[t];});
+      return newStr;
+    }
 apiready = function() {
     
 	//获取参数
@@ -97,7 +102,9 @@ apiready = function() {
 		}
         // console.log(JSON.stringify(ret))
 		if (ret && ret.state == 'success') {
+            // ret.data = JSON.parse(stringToEntity(JSON.stringify(ret.data)))
 			exam_info = ret.data;
+            
 			var exam_tpl = $('#exam_tpl').html();
 			var content = doT.template(exam_tpl);
 			$('#exam_content').html(content(exam_info));

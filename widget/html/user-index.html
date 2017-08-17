@@ -185,7 +185,7 @@
             {{var data=it.courselist;}}
       		{{ for(var p in data) { }}
           {{ if(!isEmpty(data[p].courseName)){ }}
-            <li tapmode onclick="CourseDetail('{{=data[p].courseId}}','{{=data[p].chapterId}}','{{=data[p].subjectID}}','{{=data[p].categoryId}}','{{=data[p].courseName}}','{{=data[p].chapterName}}','{{=data[p].subjectName}}','{{=data[p].categoryName}}','{{=data[p].expirationTime}}','{{=data[p].versionId}}')">
+            <li tapmode onclick="CourseDetail('{{=data[p].courseId}}','{{=data[p].chapterId}}','{{=data[p].subjectID}}','{{=data[p].categoryId}}','{{=data[p].courseName}}','{{=data[p].chapterName}}','{{=data[p].subjectName}}','{{=data[p].categoryName}}','{{=data[p].expirationTime}}','{{=data[p].versionId}}','{{=data[p].lock_status}}')">
 
               <h2>{{=data[p].courseName}}</h2>{{ if(!isEmpty(data[p].expirationTime)){ }}
                 <span style="" class="hasTime">有效期至:{{=formatDate(data[p].expirationTime,'Y')+'-'+formatDate(data[p].expirationTime,'M')+'-'+formatDate(data[p].expirationTime,'D')}}</span>{{ } }}

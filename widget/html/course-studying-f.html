@@ -75,7 +75,7 @@
         
         {{~it[p].courseLists:val:key}}
           <div class="course-stydy">
-            <div tapmode data-chaptername="{{=val.chapterName}}" data-coursename="{{=val.courseName}}" onclick="course_det(this,'course-studying-top','{{=val.courseId}}','{{=val.chapterId}}','{{=val.categoryId}}','{{=val.subjectID}}','{{=val.expirationTime}}','{{=val.versionId}}')" class="courseStyTp clearfix"><img src="{{=static_url+val.courseBkImage}}" class="pic">
+            <div tapmode data-chaptername="{{=val.chapterName}}" data-coursename="{{=val.courseName}}" onclick="course_det(this,'course-studying-top','{{=val.courseId}}','{{=val.chapterId}}','{{=val.categoryId}}','{{=val.subjectID}}','{{=val.expirationTime}}','{{=val.versionId}}','{{=val.lock_status}}')" class="courseStyTp clearfix"><img src="{{=static_url+val.courseBkImage}}" class="pic">
               <ul class="wod">
                 <li class="wodTit">{{=val.courseName}}</li>{{ if(!isEmpty(val.expirationTime)){ }}
                 <!--li.hasTime 有效期至:{{=formatDate(val.expirationTime,'Y')+'-'+formatDate(val.expirationTime,'M')+'-'+formatDate(val.expirationTime,'D')}} {{=formatDate(val.expirationTime,'h')+':'+formatDate(val.expirationTime,'m')}}-->

@@ -451,8 +451,6 @@ function save_tasks(courseDetail) {
 		var data_arr;
 		if(courseDetail.chapters){
 			data_arr = courseDetail.chapters;
-		}else{
-		
 		}
 		
 		var courseName = courseDetail.courseName;
@@ -807,15 +805,15 @@ function DosaveTaskProgress() {
 				memberId: user_memberId,
 				memberName: user_nickname,
 				categoryId: course_detail.categoryId, //必须，证书id    ff808081473905e701475cd3c2080001
-				categoryName: course_detail.categoryName, // 证书名称
+				categoryName: course_detail.categoryName.replace(/\&/," "), // 证书名称
 				subjectId: course_detail.subjectId, //必须，科目id  ff808081473905e7014762542d940078
-				subjectName: course_detail.subjectName, // 科目名称
+				subjectName: course_detail.subjectName.replace(/\&/," "), // 科目名称
 				courseId: course_detail.courseId, //必须，课程id    ff808081486933e6014889882d9c0590
 				courseName: course_detail.courseName, //必须，课程名称    courseName
 				chapterId: task_info_detail.chapterId, //必须，章节id   chapterId
-				chapterName: task_info_detail.chapterName, //必须，章节名称   chapterName
+				chapterName: task_info_detail.chapterName.replace(/\&/," "), //必须，章节名称   chapterName
 				taskId: task_info.taskId, //必须，任务id    1
-				taskName: task_info.title, //任务名称
+				taskName: task_info.title.replace(/\&/," "), //任务名称
 				progress: now_progress, //必须，当前进度值，视频为秒，试卷为题数量，文档为页码   5
 				total: total, //必须，任务总长度   48
 				state: state, //必须，进度状态默认init，完成：complate   complate   
@@ -846,7 +844,7 @@ function DosaveTaskProgress() {
 		post_param.state = stateNum;
 		post_param.isSupply = 0;
 		post_param.createDate = new Date().getTime();
-			// console.log(JSON.stringify(post_param))
+			// console.log(JSON.stringify({'token':user_token,'message':JSON.stringify(post_param)}))
 
 		ajaxRequest({ 'origin': 'http://action.caicui.com/', 'pathname': 'api/userAction/course/taskProgress/v1.0/' }, 'get', {'token':user_token,'message':JSON.stringify(post_param)}, function(ret, err) {
 				if (err) {
