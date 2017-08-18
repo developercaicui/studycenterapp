@@ -51,7 +51,7 @@
     <div class="islogin none">
         <div class="header homeheader">
             <div class="header-home">
-                <!-- <div tapmode onclick="openScanner()" style="position:absolute;left:0.36rem;background: url(image/scan.png) no-repeat;background-size: 100% 100%;width: 0.46rem;height: 0.46rem;top: 0.26rem;"></div>-->
+                <div tapmode onclick="openScanner()" style="position:absolute;left:0.36rem;background: url(image/scan.png) no-repeat;background-size: 100% 100%;width: 0.46rem;height: 0.46rem;top: 0.26rem;"></div>
                 <div class="center">
                     
                     <i style="background: url(image/zbg.png) no-repeat;width: 1.76rem;height: 0.56rem;background-size: 100% 100%;"></i>
@@ -156,6 +156,13 @@
     var y, h;
     var courseId,course_detail,tasks;
     function openScanner(){
+        api.removeEventListener({
+            name: 'pause'
+        });
+        
+        api.removeEventListener({
+            name: 'resume'
+        });
         var FNScanner = api.require('FNScanner');
         FNScanner.openScanner({
             autorotation: true
@@ -171,7 +178,7 @@
                 var code = ret.content.split("=")[1];
                 if(isEmpty(code)){
                     api.toast({
-                        msg: "二维码定位信息失败，请核对后再试！！",
+                        msg: "二维码定位信息有误，请核对后再试！！",
                         location: 'middle'
                     });
                     return false;
@@ -184,6 +191,10 @@
                 ajaxRequest('api/teachsource/course/handoutqrcodeinfo', 'get', {
                     qrCodeNo:code
                 }, function (ret, err) {
+                    api.showProgress({
+                      title:'加载中',
+                      modal:false
+                    });
                     if (err) {
                           api.hideProgress();
                           api.toast({
@@ -195,7 +206,7 @@
                       if(ret && ret.state == 'success'){
                         if(ret.data.length<1){
                             api.toast({
-                                msg: "二维码定位信息失败，请核对后再试！",
+                                msg: "二维码定位信息有误，请核对后再试！",
                                 location: 'middle'
                             });
                             return false;
@@ -231,7 +242,6 @@
                                   course_detail = ret.data[0];
                                   tasks = gets_tasks(course_detail,data.qrCodeTaskList[0].taskId)
 
-// console.log(JSON.stringify(tasks))
                                   if (isEmpty(tasks)) {
                                       api.hideProgress();
                                       api.toast({
@@ -240,14 +250,9 @@
                                       });
                                       return false;
                                   }
-                                  setTimeout(function(){
-                                      api.showProgress({
-                                        title:'加载中',
-                                        modal:false
-                                      });
-                                        var theTime = translateSec(data.qrCodeTaskList[0].position)
-                                        judge_task(tasks, theTime);
-                                  },1000)
+                                  
+                                  var theTime = translateSec(data.qrCodeTaskList[0].position)
+                                  judge_task(tasks, theTime);
                                   
                               }else{
                                   api.hideProgress();
@@ -258,6 +263,13 @@
                                   return false;
                               }
                           });
+                      }else{
+                          api.hideProgress();
+                          api.toast({
+                              msg: '加载失败，请重新尝试！',
+                              location: 'middle'
+                          });
+                          return false;
                       }
                     
                 })
@@ -277,14 +289,14 @@
         var timeArr = $.trim(value).split(":");
         var theTime = 0;
         if(timeArr.length == 3){
-            theTime += timeArr[2];
-            theTime += timeArr[1]*60;
-            theTime += timeArr[0]*60*60;
+            theTime += parseInt(timeArr[2]);
+            theTime += parseInt(timeArr[1])*60;
+            theTime += parseInt(timeArr[0])*60*60;
         }else if(timeArr.length == 2){
-            theTime += timeArr[1];
-            theTime += timeArr[0]*60;
+            theTime += parseInt(timeArr[1]);
+            theTime += parseInt(timeArr[0])*60;
         }else{
-            theTime += timeArr[0];
+            theTime += parseInt(timeArr[0]);
         }
         return theTime;
     }
@@ -1526,11 +1538,11 @@ function openApp(url) {
                 name: "lbbresume"
             });
             if (is_resume) {
-                var jsfun = "relogin();";
-                api.execScript({
-                    name: 'root',
-                    script: jsfun
-                });
+                // var jsfun = "relogin();";
+                // api.execScript({
+                //     name: 'root',
+                //     script: jsfun
+                // });
             }
             if (api.systemType == 'ios') {
 //              cachemodel = api.require('lbbVideo');

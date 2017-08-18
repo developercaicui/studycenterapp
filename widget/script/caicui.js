@@ -800,7 +800,7 @@ function DosaveTaskProgress() {
 		var user_nickname = get_loc_val('mine', 'nickName');
 		var user_token = $api.getStorage('token');
 		var user_memberId = get_loc_val('mine', 'memberId');
-		var categoryName = course_detail.categoryName ? course_detail.categoryName.replace(/\&/," ") : course_detail.categoryName;
+		var categoryName = course_detail.categoryName ? course_detail.categoryName.replace(/\&/," ") : course_detail.categoryName
 		var post_param = {
 				token: user_token,
 				memberId: user_memberId,

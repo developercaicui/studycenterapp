@@ -1304,7 +1304,7 @@ function getData(page) {
 		    //过滤重复课程
     		categoryIdArr = categoryIdArr.unique();
 
-console.log(JSON.stringify(categoryIdArr))
+// console.log(JSON.stringify(categoryIdArr))
 				
 				total = ret.data.total;
     			if (page == 1) {

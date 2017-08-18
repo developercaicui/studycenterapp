@@ -161,7 +161,7 @@ function initDom(){
 	
      var param = {};
      param.courseId = api.pageParam.course_id;
-     //param.courseId = '8a22ecb5540d6ed101541819c76b0042';
+     // param.courseId = '8a22ecb5540d6ed101541819c76b0042';
      ajaxRequest('api/teachsource/course/courseDetail', 'get', param, function(ret, err) {
          api.parseTapmode();
          if (err) {
