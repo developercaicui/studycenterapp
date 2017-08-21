@@ -2416,3 +2416,16 @@ function getCurrentDownloadTaskState(){
     circleProgress();
     init_process();
 }
+
+//去除title多余标签
+function outTitle(title){
+    var title = title.replace(/\t|\n|\r|<.*?>/ig, function (tag) {
+        if (tag.indexOf('<img ') === 0) {
+            return tag;
+        } else {
+            return '';
+        }
+    })
+    
+    return title
+}

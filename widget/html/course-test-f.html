@@ -64,7 +64,7 @@
       <div class="course-content swiper-slide">
         <input type="checkbox" class="select-tag">
         <div class="course-test-title">
-          <p>{{ if(!isEmpty(value.title)) { }}  {{=value.title.replace(/\n|\r|\t|<[^<]*>/g,"")}} {{ } }}</p>
+          <p>{{ if(!isEmpty(value.title)) { }}  {{=outTitle(value.title)}} {{ } }}</p>
         </div>{{ if(value.questionTypes=='radio'){ }}
         <!--单项选择题-->
         <div data-type="{{=value.questionTypes}}" data-num="{{=key}}" class="course-test-selector exam-yf">{{~JSON.parse(value.context):val:kk}}

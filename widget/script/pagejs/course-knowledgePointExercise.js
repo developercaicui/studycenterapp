@@ -211,7 +211,14 @@ apiready = function() {
 				                },
 				                onInit : function(swiper) {
 				                    $.each($('.course-test-title'), function (k, v) {
-				                        $(v).find('img').attr('src',static_url+$(v).find('img').attr('src'));
+				                        if($(v).find('img').length>0){
+				                            var src = $(v).find('img').attr('src');
+				                            var srcSubstr = src.substr(-3);
+				                            if(srcSubstr == "jpg" || srcSubstr == "png" || srcSubstr == "gif" || srcSubstr == "svg"){
+				                                $(v).find('img').attr('src',static_url+$(v).find('img').attr('src'));
+				                            }  
+				                        }
+                        
 				                    });
 				                    for(var i in knowledgeList){
 				                    	if(knowledgeList[i].status == "1"){
@@ -230,7 +237,7 @@ apiready = function() {
 				                onSlideChangeEnd : function(swiper) {
 									//保存答题记录
 									var num = parseInt($('.swiper-pagination-bullet-active').text());
-									console.log(selectClick)
+									
 				                	if(selectClick){
 				                		saveQuestionRecord(swiper.previousIndex)
 				                	}
