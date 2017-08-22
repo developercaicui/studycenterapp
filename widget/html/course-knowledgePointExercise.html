@@ -63,7 +63,7 @@
           <p>{{ if(!isEmpty(value)) { }}  {{=outTitle(value.title)}} {{ } }}</p>
         </div>{{ if(value.questionTypes=='radio'){ }}
         <!--单项选择题-->
-        <div data-type="{{=value.questionTypes}}" data-num="{{=key}}" class="course-test-selector exam-yf">{{~JSON.parse(value.context):val:kk}}
+        <div data-type="{{=value.questionTypes}}" data-num="{{=key}}" class="course-test-selector exam-yf">{{~JSON.parse(stringToEntity(value.context)):val:kk}}
         {{ if(!isEmpty(val) && !isEmpty(val.title)) { }}
         {{var selectMy=get_mySelect('{{=val.myChecked}}');}}
           <div data-select="{{=numToAbc(kk)}}" onclick="select_radio(this,'{{=key}}')" tapmode data-check="{{=val.isChecked}}" class="selector-detail clear-fix {{=selectMy}}"><span>{{=numToAbc(kk)}}</span>
@@ -90,7 +90,7 @@
             <h3 class="showResult"></h3>
             <div class="answer-text"><i class="icon-folder"></i>
               {{ if(value.questionTypes=='blank') { }}
-              <div class="cont">{{=JSON.parse(value.context)[0].blank}}</div>
+              <div class="cont">{{=JSON.parse(stringToEntity(value.context))[0].blank}}</div>
               {{ }else{ }}
               <div class="cont">{{=value.answerResolution.replace(/<[^<]*>/g,'')}}</div>
               {{ } }}
@@ -109,8 +109,11 @@
     <script type="text/javascript" src="../script/swiper.js"></script>
     <script type="text/javascript" src="../script/pagejs/course-knowledgePointExercise.js"></script>
     <script type="text/javascript">
+    
       $(function () {
           $('.qesition_complete').css({height: document.documentElement.clientHeight - $('.footer-black').height()});
+
+          
       });
     </script>
   </body>

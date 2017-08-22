@@ -180,6 +180,16 @@ apiready = function() {
                         
                         
                     });
+                    $.each($('.answer-analysis'), function (k, v) {
+                        if($(v).find('img').length>0){
+                           var src = $(v).find('img').attr('src');
+                            var srcSubstr = src.substr(-3);
+                            if(srcSubstr == "jpg" || srcSubstr == "png" || srcSubstr == "gif" || srcSubstr == "svg"){
+                                $(v).find('img').attr('src',static_url+$(v).find('img').attr('src'));
+                            }  
+                        }
+                    });
+
 					$('.swiper-pagination-bullet').eq(14).nextAll().hide();
 				},
 				onSlideChangeEnd : function(swiper) {

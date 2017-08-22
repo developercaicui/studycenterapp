@@ -2419,7 +2419,7 @@ function getCurrentDownloadTaskState(){
 
 //去除title多余标签
 function outTitle(title){
-    var title = title.replace(/\t|\n|\r|<.*?>/ig, function (tag) {
+    var title = title.replace(/\t|\n|<.*?>/ig, function (tag) {
         if (tag.indexOf('<img ') === 0) {
             return tag;
         } else {
@@ -2428,4 +2428,11 @@ function outTitle(title){
     })
     
     return title
+}
+
+function stringToEntity(str){
+    var newStr = '';
+    var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"','#39':"'"};
+    newStr = str.replace(/&(lt|gt|nbsp|amp|quot|#39);/ig,function(all,t){return arrEntities[t];});
+    return newStr;
 }

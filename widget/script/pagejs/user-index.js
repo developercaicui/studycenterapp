@@ -636,6 +636,7 @@ function get_study(flag) {
               // console.log(JSON.stringify(filterLastProgress))
 
               // alert(JSON.stringify(filterLastProgress))
+              saveExpire(filterLastProgress);
               var ret={
                 data : {
                   total : learningcourseData.data.total,

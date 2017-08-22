@@ -25,8 +25,12 @@
             vertical-align: middle; 
         }
         .cont img{
-            width: 200px;
-            height: 200px;
+            width: 6rem;
+            height: 4rem;
+
+        }
+        .answer-text img{
+            float: initial;
         }
     </style>
   </head>
@@ -152,9 +156,9 @@
             <h3 class="showResult"></h3>
             <div class="answer-text"><i class="icon-folder"></i>
               {{ if(value.questionTypes=='blank') { }}
-              <div class="cont">{{=JSON.parse(value.context)[0].blank}}</div>
+              <div class="cont">{{=outTitle(JSON.parse(value.context)[0].blank)}}</div>
               {{ }else{ }}
-              <div class="cont">{{=value.answerResolution}}</div>
+              <div class="cont">{{=outTitle(value.answerResolution)}}</div>
               {{ } }}
             </div>
             <div class="user-data"></div>
