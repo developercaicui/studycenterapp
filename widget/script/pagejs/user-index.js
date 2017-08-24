@@ -665,7 +665,6 @@ function get_study(flag) {
                       break;
                   }
               }
-              saveExpire(ret.data.courselist);
               api.parseTapmode();
         			
         	});

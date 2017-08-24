@@ -51,7 +51,7 @@
     <div class="islogin none">
         <div class="header homeheader">
             <div class="header-home">
-                <div tapmode onclick="openScanner()" style="position:absolute;left:0.36rem;background: url(image/scan.png) no-repeat;background-size: 100% 100%;width: 0.46rem;height: 0.46rem;top: 0.26rem;"></div>
+                <div id="scanner" tapmode onclick="openScanner()" style="position:absolute;left:0.36rem;background: url(image/scan.png) no-repeat;background-size: 100% 100%;width: 0.46rem;height: 0.46rem;top: 0.26rem;"></div>
                 <div class="center">
                     
                     <i style="background: url(image/zbg.png) no-repeat;width: 1.76rem;height: 0.56rem;background-size: 100% 100%;"></i>
@@ -232,7 +232,13 @@
                     });
                     return false;
                 }
-
+                if(isEmpty(data.qrCodeTaskList[0])){
+                    api.toast({
+                        msg: "二维码定位信息有误，请核对后再试！",
+                        location: 'middle'
+                    });
+                    return false;
+                }
                 api.showProgress({
                   title:'加载中',
                   modal:false
@@ -262,6 +268,7 @@
                           }
 
                           course_detail = ret.data[0];
+                          
                           tasks = gets_tasks(course_detail,data.qrCodeTaskList[0].taskId);
 
                           if (isEmpty(tasks)) {
@@ -1455,8 +1462,11 @@ function openApp(url) {
 
     }
     var is_resume;
-    apiready = function() {      
-
+    apiready = function() { 
+         
+        if (api.systemType == 'ios') {
+            $("#scanner").hide();
+        }
 
         var tasksProgress = {
             categoryId: 'ff808081473905e701475cd3c2080001', // 证书id

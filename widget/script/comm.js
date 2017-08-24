@@ -1452,8 +1452,6 @@ function mydown(result) {
 						
 						}
 						
-						
-						
                         var lslcallback = function(ret, err) {
                             //alert(JSON.stringify(ret));
                             // api.sendEvent({
