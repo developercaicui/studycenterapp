@@ -1140,3 +1140,4 @@ function getVideoProgress(videoid) {
     }
     return 0;
 }
+

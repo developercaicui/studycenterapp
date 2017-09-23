@@ -1554,8 +1554,8 @@ function play(courseId) {
 		modal : false
 	});
 	//如果没有缓存信息，就从接口获取
-	var tmp_course_detail = $api.getStorage(courseId);
-	if (isEmpty(tmp_course_detail)) {
+	// var tmp_course_detail = $api.getStorage(courseId);
+	// if (isEmpty(tmp_course_detail)) {
 		//获取课程的详细信息
 		//api/v2.1/course/courseDetail，接口编号：004-006
 		ajaxRequest('api/teachsource/course/courseDetail', 'get', {
@@ -1577,12 +1577,12 @@ function play(courseId) {
 				getLastProgress(course_detail);
 			}
 		});
-	} else {
-		var course_detail = tmp_course_detail;
-		//存储课程详细信息
-		getLastProgress(course_detail);
-		//用户上次学习进度数据
-	}
+	// } else {
+	// 	var course_detail = tmp_course_detail;
+	// 	//存储课程详细信息
+	// 	getLastProgress(course_detail);
+	// 	//用户上次学习进度数据
+	// }
 }
 
 //判断任务类型，跳转相应的页面

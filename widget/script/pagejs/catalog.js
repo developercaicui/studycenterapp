@@ -181,7 +181,8 @@ function initDom(){
              var ret_data = ret.data;
              course_detail = ret_data[0];
 
-             
+            //课程详情数据
+            $api.setStorage(api.pageParam.course_id, course_detail);
 
              //设置知识点练习习题个数
              // if(!isEmpty(course_detail.knowledgePointId)){
