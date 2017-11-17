@@ -70,7 +70,7 @@
         </div><div class="stydys">
         
         {{~it[p].courseLists:val:key}}
-      <div class="course-stydy" tapmode onclick="to_active(this)">
+      <div class="course-stydy" tapmode onclick="to_active(this,'{{=val.lock_status}}')">
         <div class="courseStyTp clearfix"><img src="{{=static_url+val.courseBkImage}}" class="pic">
           <ul class="wod">
             <li class="wodTit">{{=val.courseName}}</li>
@@ -658,7 +658,11 @@
           });
       }
       //链接马上激活页面
-      function to_active(obj) {
+      function to_active(obj,lock) {
+         if(lock != 0){
+            api.toast({msg:'当前的课程已锁定,续费后即可解锁！',location:'middle'})
+            return false;
+         }
           var data = $(obj).find('.data').html();
           api.openWin({
               name: 'course-active-top',
