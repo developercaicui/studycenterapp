@@ -188,9 +188,9 @@ ons.js
 /A6995057458724/build/jade/template/set-video.jade
 /A6995057458724/build/jade/template/course-url.jade
 /A6995057458724/node_modules/browser-sync-ui/node_modules/weinre/webode_modules/weinre/node_modules/express/node_modules/connect/LICENSE
-/A6995057458724/node_modules/resp-modifiernode_modules/glob-stream/node_modules/minimatch/node_modules/brace-expansion/package.json
 /A6995057458724/node_modules/hawk/node_modulesdex.js
 /A6995057458724/node_modules/gulp/node_modules/liftoff/node_modules/findup-sync/node_modules/miatch/node_modules/micromatch/lib/chaest-ssl/tests/test-request-methods.js
+/A6995057458724/node_modules/resp-modifiernode_modules/glob-stream/node_modules/minimatch/node_modules/brace-expansion/package.json
 /A69es/gulp/node_modules/vinyl-fs/node_modules/glob-watcher/node_modules/gaze/node_modules/globule/node_modules/glob/node_modules/graceful-fs/test/ulimit.js
 /A6995057458724/node_modules/jade/node_modules/uglify-js/node_modules/yargs/node_modules/cliui/node_modules/center-align/node_modules/align-text/node_modules/kthrottle/LICENSE
 /A6995057458724/node_modules/socket.io-client/node_modules/engine.io-client/node_modules/engine.io-parser/Readme.md
@@ -1620,6 +1620,7 @@ dules/vinyl-sourcemaps-apply/node_modules/source-map/lib/base64-vlq.js
 /A6995057458724/node_modules/browser-sync/node_modules/opn/readme.md
 /A6995057458724/node_modules/eazy-logger/node_modules/tfunk/node_modules/chalk/node_modules/supports-color/readme.md
 /A6995057458724/build/jade/template/create-question.jade
+/A6995057458724/html/notice.html
 /A6995057458724/node_modules/normalize-package-data/node_modules/is-builtin-module/license
 /A6995057458724/node_modules/gulp/node_modules/gulp-util/node_modules/lodash._reinterpolate/package.json
 /A6995057458724/node_modules/fsevents/node_modules/tough-cookie/README.md
@@ -3068,8 +3069,8 @@ ode_modules/normalize-package-data/LICENSE
 /A6995057458724/node_modules/browser-stml/bind-three.html
 /A6995057458724/node_modules/browser-sync/node_modules/localtunnel/node_modules/request/node_modules/http-signature/node_moduleseazy-logger/node_modules/tfunk/node_modules/chalk/node_modules/strip-ansi/node_modules/ansi-regex/index.js
 /A6995057458724/node_modules/accord/node_modules/uglify-js/node_modules/yargs/node_modules/cliui/node_modules/center-align/node_modules/align-texmatch/node_modules/braces/node_modules/expand-range/node_modules/fill-range/node_modules/is-number/node_modules/kind-of/node_modules/is-buffer/README.md
-/A6995057458724/node_modules/weinr
 /A6995057458724/css/api.css
+/A6995057458724/node_modules/weinr
 /A6995057458724/node_modules/lodash/utility/callback.js
 /A6995057458724/script/doT.min.js
 /A6995057458724/node_modules/readdirp/node_modules/graceful-fs/fs.js

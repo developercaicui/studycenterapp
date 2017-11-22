@@ -1144,7 +1144,7 @@ var total = 0;
 // $('#content').html(content(categoryIdArr));
 
 	
-	
+var learnList = [],noticeTotal = 0,noticeIndex = 0,currentNotice = {},isFinish = false;	
 
 var is_loding=false;
 function getData(page) {
@@ -1190,6 +1190,20 @@ function getData(page) {
 		var content = doT.template(tpl);
 		if (ret && ret.state == 'success') {
 			var learningcourseData = ret;
+
+			var setListObj = {},setListArr = [];
+
+		      for(var i=0;i<ret.data.courselist.length;i++){
+		          if(!setListObj[ret.data.courselist[i].courseId]){
+		              setListArr.push(ret.data.courselist[i]);
+		              setListObj[ret.data.courselist[i].courseId] = "1"
+		          }
+		      }
+		      ret.data.courselist = setListArr;
+
+		      learnList = setListArr;
+		      noticeTotal = setListArr.length-1;
+
 			var learningcourse = ret.data.courselist;
     	var courseArr = [];
 			for(var i=0;i<learningcourse.length;i++){
@@ -1325,6 +1339,8 @@ function getData(page) {
     			progressBar();
     			api.parseTapmode();
 
+    			if(!isFinish) getNotice();//课程变更
+
     	})
 
 			
@@ -1337,7 +1353,44 @@ function getData(page) {
 	});
 
 }
+function getNotice(){
+  console.log(noticeIndex)
+  var courseGroupId = learnList[noticeIndex].courseGroupId;
+  var orderItemId = learnList[noticeIndex].orderID_item_id;
+  if(isEmpty(courseGroupId) || isEmpty(orderItemId)){
+    noticeIndex++;
+    if(noticeIndex > noticeTotal){
+      isFinish = true;
+      getData(1);
+      return false;
+    }
+    getNotice();
+  }
+  var courseParams = {
+    courseGroupId : courseGroupId,
+    orderItemId : orderItemId,
+  }
 
+  ajaxRequest('api/business/coursegroup/getmembernotprocnoticelist', 'get', courseParams, function (res, err) {
+    if(res && res.state == 'success'){
+      console.log(JSON.stringify(courseParams))
+      if(res.data.length < 1){
+        noticeIndex++;
+        if(noticeIndex > noticeTotal){
+          isFinish = true;
+          getData(1);
+          return false;
+        }
+        getNotice();
+      }else{
+        currentNotice = res.data[0];
+        myFrame('notice','full',false,this,'',res.data[0])
+
+      }
+    }
+  })
+
+}
 apiready = function() {
 	//获取页面的数据
 	getData(1);
@@ -1379,6 +1432,46 @@ apiready = function() {
 			orientation : 'portrait_up'
 		});
 	});
+
+	api.addEventListener({
+          name: 'closeNotice'
+      }, function (ret, err) {
+          noticeIndex++;
+          if(noticeIndex > noticeTotal){
+            isFinish = true;
+            getData(1);
+            return false;
+          }
+          // setTimeout(()=>{
+            getNotice();
+          // },600)
+      });
+
+      api.addEventListener({
+          name: 'updataNotice'
+      }, function (ret, err) {
+
+          var param = {
+            courseGroupId: currentNotice.courseGroupId,
+            itemId: currentNotice.orderItemId,
+            state: ret.value.state,
+          }
+
+          ajaxRequest('api/business/coursegroup/membercheck', 'get', param, function (res, err) {
+            if(res && res.state == 'success'){
+                noticeIndex++;
+                if(noticeIndex > noticeTotal){
+                  isFinish = true;
+                  getData(1);
+                  return false;
+                }
+                // setTimeout(()=>{
+                  getNotice();
+                // },600)
+            }
+          })
+          
+      });
 };
 //历史课程详情
 function course_det(_this,xyc, a, b,  e, f,g,h,l) {
@@ -1712,4 +1805,74 @@ function to_jh() {
 	api.sendEvent({
 		name : 'wjhkc'
 	});
+}
+
+// 打开自定义Frame(打开,尺寸,弹动,点击的当前对象,来自)
+function myFrame(e,s,b,obj,f,p){
+    var param={};
+    window.localStorage.frameSize = s;//在下个窗口取当前尺寸
+    var reload=false;
+    var mx, my, mh;
+    if(s == 'full'){
+        mx = 0;
+        my = 0;
+    }else if(s == 'large-h'){
+        mx = leftLw;
+        my = 0;
+    }else if(s == 'large' || s == 'large-f'){
+        api.closeFrame({
+            name: 'footer-editor'
+        });
+        mx = leftLw;
+        my = headLh;
+    }else if(s == 'small-h' || s == 'course-head'){
+        mx = leftSw;
+        my = headLh;
+    }else if(s == 'small' || s == 'small-f'){
+        mx = leftSw;
+        my = headSh;
+    }else if(s == 'video-h'){
+        mx = api.winWidth / 2;
+        my = 0;
+    }else if(s == 'video'){
+        mx = api.winWidth / 2;
+        my = headLh;
+    }
+    if(s == 'small-f' || s == 'large-f'){
+        mh = api.winHeight - my -  footSh
+    }else if(s == 'course-head'){
+        mh = headSh - headLh
+    }else{
+        mh = api.winHeight - my
+    }
+
+    if(e=='set-info' ||e=='notice'|| e=='course-chapter' || e=='correction-exam' || e=='correction-video'){
+        //param.courseId = 1231
+        reload=true;
+        if(e=='course-chapter'){
+            mh = "auto";
+        }
+    }
+    var bgCor = '#f3f3f3';
+    if(e == 'set-info' || e=='notice' || e == 'pop-msg' || e=='correction-exam' || e=='correction-video' || e=='course-version' || e=='course-msg'){
+        bgCor = 'rgba(0,0,0,0)'
+    }
+    if(p){
+       param = p;
+    }
+    api.openFrame({
+        name: e,
+        url: e+'.html',
+        bgColor : bgCor,
+        rect: {
+            x: mx,
+            y: my,
+            w: api.winWidth  - mx,
+            h: mh
+        },
+        pageParam:param,
+        bounces: b,
+        delay:200,
+        reload:reload
+    });
 }
